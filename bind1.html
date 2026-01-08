@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TKA Bahasa Indonesia SMP - Tes Interaktif</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .progress-bar {
+            background: #f0f0f0;
+            height: 8px;
+            border-radius: 4px;
+            margin: 20px 30px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            padding: 20px 30px;
+            background: #f8f9fa;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #6c757d;
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .welcome-screen, .result-screen {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .welcome-screen h2 {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .welcome-screen p {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 16px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            font-weight: bold;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            margin-left: 10px;
+        }
+
+        .question-section {
+            display: none;
+        }
+
+        .question-section.active {
+            display: block;
+        }
+
+        .text-box {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin-bottom: 25px;
+            border-radius: 8px;
+            line-height: 1.8;
+        }
+
+        .text-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .question {
+            margin-bottom: 30px;
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .question-number {
+            background: #667eea;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .competency-badge {
+            background: #e9ecef;
+            color: #495057;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+        }
+
+        .question-text {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 20px;
+            font-weight: 500;
+            line-height: 1.6;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            padding: 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+        }
+
+        .option:hover {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+
+        .option.selected {
+            border-color: #667eea;
+            background: #e8edff;
+        }
+
+        .option.correct {
+            border-color: #28a745;
+            background: #d4edda;
+        }
+
+        .option.incorrect {
+            border-color: #dc3545;
+            background: #f8d7da;
+        }
+
+        .option input[type="checkbox"], .option input[type="radio"] {
+            margin-right: 12px;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .category-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        .category-table th, .category-table td {
+            border: 1px solid #dee2e6;
+            padding: 12px;
+            text-align: left;
+        }
+
+        .category-table th {
+            background: #f8f9fa;
+            font-weight: bold;
+        }
+
+        .category-option {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .category-option label {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #e9ecef;
+        }
+
+        .result-screen h2 {
+            font-size: 32px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .score-circle {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 30px auto;
+            color: white;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .score-number {
+            font-size: 48px;
+            font-weight: bold;
+        }
+
+        .score-label {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .result-details {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+        }
+
+        .competency-breakdown {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .competency-card {
+            background: white;
+            border: 2px solid #e9ecef;
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .competency-card h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .competency-score {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+            }
+            
+            .stats {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📚 TKA Bahasa Indonesia SMP</h1>
+            <p>Tes Kemampuan Akademik - Keterampilan Membaca</p>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressBar"></div>
+        </div>
+
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-label">Soal Dijawab</div>
+                <div class="stat-value" id="answered">0</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Total Soal</div>
+                <div class="stat-value">60</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Progress</div>
+                <div class="stat-value" id="percentage">0%</div>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="welcome-screen" id="welcomeScreen">
+                <h2>Selamat Datang! 👋</h2>
+                <p>Tes ini terdiri dari 60 soal yang mengukur kemampuan membaca Anda dalam tiga kompetensi utama:</p>
+                <div class="competency-breakdown">
+                    <div class="competency-card">
+                        <h4>📖 Pemahaman Tekstual</h4>
+                        <p style="font-size: 14px; color: #666;">Memahami informasi eksplisit dalam teks</p>
+                    </div>
+                    <div class="competency-card">
+                        <h4>🔍 Pemahaman Inferensial</h4>
+                        <p style="font-size: 14px; color: #666;">Menarik kesimpulan dari informasi tersirat</p>
+                    </div>
+                    <div class="competency-card">
+                        <h4>⭐ Evaluasi & Apresiasi</h4>
+                        <p style="font-size: 14px; color: #666;">Menilai dan menanggapi teks</p>
+                    </div>
+                </div>
+                <p><strong>Petunjuk:</strong> Baca setiap teks dengan cermat, kemudian jawab pertanyaan yang tersedia. Klik "Mulai Tes" untuk memulai.</p>
+                <button class="btn" onclick="startTest()">Mulai Tes</button>
+            </div>
+
+            <div class="question-section" id="questionSection"></div>
+
+            <div class="result-screen" id="resultScreen" style="display: none;">
+                <h2>🎉 Tes Selesai!</h2>
+                <div class="score-circle">
+                    <div class="score-number" id="finalScore">0</div>
+                    <div class="score-label">dari 60</div>
+                </div>
+                <div class="result-details">
+                    <div class="result-item">
+                        <span>Nilai Akhir:</span>
+                        <strong id="scorePercentage">0%</strong>
+                    </div>
+                    <div class="result-item">
+                        <span>Jawaban Benar:</span>
+                        <strong id="correctAnswers">0</strong>
+                    </div>
+                    <div class="result-item">
+                        <span>Jawaban Salah:</span>
+                        <strong id="wrongAnswers">0</strong>
+                    </div>
+                </div>
+                <h3 style="margin: 30px 0 15px 0; color: #333;">Rincian Per Kompetensi</h3>
+                <div class="competency-breakdown" id="competencyResults"></div>
+                <button class="btn" onclick="resetTest()">Ulangi Tes</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            // PEMAHAMAN TEKSTUAL (22 soal)
+            {
+                text: `<div class="text-title">Teks Informasi: Energi Terbarukan</div>
+                Energi terbarukan adalah energi yang berasal dari sumber daya alam yang dapat diperbaharui secara alami. Panel surya mengubah cahaya matahari menjadi listrik melalui sel fotovoltaik. Turbin angin memanfaatkan kekuatan angin untuk memutar generator. Pembangkit listrik tenaga air menggunakan aliran air untuk menghasilkan energi. Indonesia memiliki potensi besar dalam pengembangan energi terbarukan karena letak geografisnya yang strategis. Pemerintah menargetkan 23% energi nasional berasal dari sumber terbarukan pada tahun 2025.`,
+                question: "Istilah 'sel fotovoltaik' dalam teks merujuk pada komponen yang berfungsi untuk ....",
+                type: "pg",
+                options: [
+                    "menyimpan energi listrik dari panel surya",
+                    "mengubah cahaya matahari menjadi energi listrik",
+                    "menangkap angin untuk menghasilkan listrik",
+                    "mengalirkan air ke turbin pembangkit listrik"
+                ],
+                correct: 1,
+                competency: "Pemahaman Tekstual",
+                subCompetency: "Mengidentifikasi penggunaan istilah dalam berbagai bidang"
+            },
+            {
+                text: `<div class="text-title">Teks Fiksi: Petualangan di Hutan Hujan</div>
+                Kabut tipis menyelimuti puncak-puncak pohon yang menjulang tinggi. Suara gemericik air sungai berpadu dengan kicauan burung eksotis. Akar-akar besar meliuk di tanah basah yang ditumbuhi lumut hijau tebal. Cahaya matahari menembus dedaunan, menciptakan permainan cahaya yang menakjubkan di lantai hutan. Udara lembap bercampur aroma tanah dan daun-daun basah. Di kejauhan, terdengar suara air terjun yang mengalir deras.`,
+                question: "Pilihan kata mana yang menunjukkan latar tempat pada teks tersebut?",
+                type: "multiple",
+                options: [
+                    "kabut tipis",
+                    "puncak-puncak pohon",
+                    "suara gemericik air",
+                    "lantai hutan"
+                ],
+                correct: [1, 3],
+                competency: "Pemahaman Tekstual",
+                subCompetency: "Mengidentifikasi objek dan/atau latar berdasarkan kosakata"
+            },
+            {
+                text: `<div class="text-title">Teks Informasi: Kerajinan Batik Nusantara</div>
+                Batik adalah warisan budaya Indonesia yang telah diakui UNESCO. Proses pembuatan batik dimulai dengan menggambar pola menggunakan malam (lilin) pada kain putih. Setelah itu, kain dicelupkan ke pewarna alami atau sintetis. Malam akan mencegah pewarna meresap ke bagian yang tertutup. Proses ini diulang untuk setiap warna yang diinginkan. Batik tulis memerlukan waktu berbulan-bulan, sedangkan batik cap dapat selesai dalam beberapa hari. Motif batik mencerminkan filosofi dan nilai-nilai budaya daerah asalnya.`,
+                question: "Informasi penting yang tersurat dalam teks adalah ....",
+                type: "pg",
+                options: [
+                    "Batik hanya dapat dibuat dengan pewarna alami",
+                    "Malam berfungsi mencegah pewarna meresap ke kain",
+                    "Semua batik memerlukan waktu berbulan-bulan",
+                    "UNESCO menciptakan batik sebagai warisan budaya"
+                ],
+                correct: 1,
+                competency: "Pemahaman Tekstual",
+                subCompetency: "Mengidentifikasi informasi penting yang tersurat dalam teks"
+            },
+            {
+                text: `<div class="text-title">Teks Informasi: Proses Fotosintesis</div>
+                Fotosintesis adalah proses pembuatan makanan pada tumbuhan hijau. Tumbuhan menyerap karbon dioksida dari udara melalui stomata di daun. Akar menyerap air dan mineral dari tanah. Klorofil dalam daun menangkap energi cahaya matahari. Energi ini digunakan untuk mengubah karbon dioksida dan air menjadi glukosa dan oksigen. Glukosa digunakan sebagai makanan tumbuhan, sedangkan oksigen dilepas ke udara. Proses ini sangat penting bagi kelangsungan hidup makhluk hidup di bumi.`,
+                question: "Berdasarkan teks, susunlah kerangka proses fotosintesis yang tepat!",
+                type: "category",
+                categoryQuestion: "Urutkan langkah-langkah berikut sesuai proses fotosintesis",
+                categories: [
+                    { statement: "Langkah 1: Penyerapan CO₂ melalui stomata", options: ["Benar", "Salah"] },
+                    { statement: "Langkah 2: Klorofil menangkap cahaya matahari", options: ["Benar", "Salah"] },
+                    { statement: "Langkah 3: Pelepasan karbon dioksida ke udara", options: ["Benar", "Salah"] },
+                    { statement: "Langkah 4: Pembentukan glukosa dan oksigen", options: ["Benar", "Salah"] }
+                ],
+                correct: [0, 0, 1, 0],
+                competency: "Pemahaman Tekstual",
+                subCompetency: "Menyusun kerangka berdasarkan bagian-bagian penting"
+            },
+            {
+                text: `<div class="text-title">Teks Informasi: Pemanasan Global</div>
+                Pemanasan global adalah peningkatan suhu rata-rata atmosfer bumi. Gas rumah kaca seperti karbon dioksida dan metana memerangkap panas di atmosfer. Pembakaran bahan bakar fosil merupakan penyumbang terbesar emisi karbon. Dampaknya meliputi pencairan es di kutub, naiknya permukaan air laut, dan perubahan pola cuaca ekstrem. Upaya mitigasi mencakup penggunaan energi terbarukan, penghijauan, dan pengurangan emisi industri.`,
+                question: "Istilah 'gas rumah kaca' dalam teks merujuk pada ....",
+                type: "pg",
+                options: [
+                    "gas yang digunakan di rumah untuk memasak",
+                    "gas yang memerangkap panas di atmosfer bumi",
+                    "gas yang dihasilkan oleh tanaman hijau",
+                    "gas yang dilepaskan saat es mencair"
+                ],
+                correct: 1,
+                competency: "Pemahaman Tekstual",
+                subCompetency: "Mengidentifikasi penggunaan istilah dalam berbagai bidang"
+            },
+            {
+                text: `<div class="text-title">Teks Fiksi: Malam di Desa</div>
+                Langit malam bertaburan bintang gemerlap. Kunang-kunang beterbangan di antara semak-semak yang mengelilingi sawah. Suara jangkrik bersahut-sahutan memecah kesunyian malam. Angin sepoi-sepoi membawa aroma tanaman padi yang menguning. Di kejauhan, cahaya lampu minyak dari rumah-rumah penduduk berkedip lembut. Bulan purnama menyinari jalan setapak yang berkelok di antara pematang sawah.`,
+                question: "Kosakata yang menggambarkan suasana malam di desa ditunjukkan oleh ....",
+                type: "multiple",
+                options: [
+                    "langit malam bertaburan bintang",
+                    "kunang-kunang beterbangan",
+                    "tanaman padi menguning",
+                    "suara jangkrik bersahut-sahutan"
+                ],
+                correct: [0, 1, 3],
+                competency: "Pemahaman Tekstual",
+                subCompetency: "Mengidentifikasi objek dan/atau latar berdasarkan kosakata"
+            },
+            {
+                text: `<div class="text-title">Teks Informasi: Sistem Peredaran Darah</div>
+                Sistem peredaran darah manusia terdiri dari jantung, pembuluh darah, dan darah. Jantung memompa darah ke seluruh tubuh melalui pembuluh arteri. Darah membawa oksigen dan nutrisi ke sel-sel tubuh. Pembuluh vena membawa darah kembali ke jantung. Jantung memiliki empat ruang: dua atrium dan dua ventrikel. Sistem ini bekerja tanpa henti sepanjang hidup manusia untuk menjaga kelangsungan hidup sel-sel tubuh.`,
+                question: "Informasi tersurat tentang fungsi pembuluh vena adalah ....",
+                type: "pg",
+                options: [
+                    "membawa oksigen ke sel-sel tubuh",
+                    "memompa darah ke seluruh tubuh",
+                    "membawa darah kembali ke jantung",
+                    "menyimpan nutrisi untuk tubuh"
+                ],
+                correct: 2,
+                competency: "Pemahaman Tekstual",
+                subCompetency: "Mengidentifikasi informasi penting yang tersurat dalam teks"
+            },
+            {
+                text: `<div class="text-title">Teks Informasi: Gunung Berapi Indonesia</div>
+                Indonesia memiliki lebih dari 130 gunung berapi aktif, merupakan bagian dari Cincin Api Pasifik. Gunung Merapi di Yogyakarta terkenal sebagai gunung paling aktif. Erupsi gunung berapi menghasilkan abu vulkanik yang menyuburkan tanah. Namun, letusan besar dapat membahayakan penduduk sekitar. PVMBG (Pusat Vulkanologi dan Mitigasi Bencana Geologi) memantau aktivitas gunung berapi secara kontinyu. Sistem peringatan dini telah dipasang di berbagai gunung untuk keselamatan masyarakat.`,
+                question: "Istilah teknis yang digunakan dalam bidang geologi adalah ....",
+                type: "multiple",
+                options: [
+                    "Cincin Api Pasifik",
+                    "abu vulkanik",
+                    "sistem peringatan dini",
+                    "erupsi"
+                ],
+                correct: [0, 1, 3],
+                competency: "Pemahaman Tekstual",
+                subCompetency: "Mengidentifikasi penggunaan istilah dalam berbagai bidang"
+            },
+            {
+                text: `<div class="text-title">Teks Fiksi: Pagi di Pelabuhan</div>
+                Fajar menyingsing di ufuk timur, mewarnai langit dengan gradasi jingga kemerahan. Kapal-kapal nelayan mulai sandar setelah melaut semalam. Tumpukan jaring dipenuhi ikan segar yang masih bergerak-gerak. Aroma laut yang khas bercampur dengan bau solar dari mesin kapal. Para pedagang ikan mulai berdatangan dengan keranjang-keranjang besar. Hiruk pikuk tawar-menawar memecah keheningan pagi.`,
+                question: "Latar waktu dalam teks tersebut ditunjukkan oleh kalimat ....",
+                type: "pg",
+                options: [
+                    "Kapal-kapal nelayan mulai sandar",
+                    "Fajar menyingsing di ufuk timur",
+                    "Aroma laut yang khas bercampur",
+                    "Para pedagang ikan mulai berdatangan"
+                ],
+                correct: 1,
+                competency: "Pemahaman Tekstual",
+                subCompetency: "Mengidentifikasi objek dan/atau latar berdasarkan kosakata"
+            },
+            {
+                text: `<div class="text-title">Teks Informasi: Teknologi 5G</div>
+                Teknologi 5G adalah generasi kelima jaringan seluler yang menawarkan kecepatan internet hingga 100 kali lebih cepat dari 4G. Latensi yang rendah memungkinkan komunikasi real-time untuk kendaraan otonom dan operasi jarak jauh. Teknologi ini menggunakan frekuensi gelombang milimeter yang lebih tinggi. 5G mendukung konektivitas masif untuk Internet of Things (IoT). Implementasinya memerlukan infrastruktur menara yang lebih padat dibanding generasi sebelumnya.`,
+                question: "Informasi penting tentang keunggulan 5G yang tersurat adalah ....",
+                type: "pg",
+                options: [
+                    "menggunakan frekuensi gelombang yang lebih rendah",
+                    "memiliki kecepatan hingga 100 kali lebih cepat dari 4G",
+                    "tidak memerlukan infrastruktur menara baru",
+                    "hanya dapat digunakan untuk telepon seluler"
+                ],
+                correct: 1,
+                competency: "Pemahaman Tekstual",
+                subCompetency: "Mengidentifikasi informasi penting yang tersurat dalam teks"
+            },
+            {
+                text: `<div class="text-title">Teks Informasi: Demokrasi Pancasila</div>
+                Demokrasi Pancasila adalah sistem demokrasi yang berdasarkan pada nilai-nilai Pancasila. Keputusan diambil melalui musyawarah untuk mencapai mufakat. Kebebasan berpendapat dijamin tetapi tetap menghormati nilai-nilai luhur bangsa. Sistem ini mengutamakan kepentingan bersama di atas kepentingan individu atau golongan. Pemilihan umum dilaksanakan secara langsung, umum, bebas, dan rahasia.`,
+                question: "Susunlah kerangka konsep demokrasi Pancasila berdasarkan teks!",
+                type: "category",
+                categoryQuestion: "Tentukan apakah pernyataan berikut merupakan ciri demokrasi Pancasila",
+                categories: [
+                    { statement: "Keputusan melalui musyawarah mufakat", options: ["Ya", "Bukan"] },
+                    { statement: "Kebebasan tanpa batas", options: ["Ya", "Bukan"] },
+                    { statement: "Mengutamakan kepentingan bersama", options: ["Ya", "Bukan"] },
+                    { statement: "Pemilu dilaksanakan secara demokratis", options: ["Ya", "Bukan"] }
+                ],
+                correct: [0, 1, 0, 0],
+                competency: "Pemahaman Tekstual",
+                subCompetency: "Menyusun kerangka berdasarkan bagian-bagian penting"
+            },
+            {
+                text: `<div class="text-title">Teks Informasi: Ekonomi Kreatif</div>
+                Ekonomi kreatif adalah sektor ekonomi yang mengandalkan kreativitas, keterampilan, dan talenta individu. Industri ini mencakup fashion, musik, film, desain, kuliner, dan kerajinan. Di Indonesia, ekonomi kreatif menyumbang 7,44% dari PDB nasional. Pemerintah mendorong pengembangan ekonomi kreatif melalui berbagai program inkubasi dan pendanaan. Digitalisasi membuka peluang besar bagi pelaku ekonomi kreatif untuk menjangkau pasar global.`,
+                question: "Istilah 'inkubasi' dalam konteks ekonomi kreatif merujuk pada ....",
+                type: "pg",
+                options: [
+                    "program penetasan telur untuk industri peternakan",
+                    "program pembinaan dan pengembangan usaha baru",
+                    "proses pembuatan produk kreatif secara massal",
+                    "cara menyimpan produk agar tahan lama"
+                ],
+                correct: 1,
+                competency: "Pemahaman Tekstual",
+                subCompetency: "Mengidentifikasi penggunaan istilah dalam berbagai bidang"
+            },
+            {
+                text: `<div class="text-title">Teks Fiksi: Senja di Kampung Nelayan</div>
+                Matahari terbenam perlahan di balik garis horizon. Ombak menghempas dermaga kayu dengan irama yang menenangkan. Warna oranye kemerahan memantul di permukaan air laut. Perahu-perahu kecil bergoyang mengikuti gerak ombak. Suara burung camar bersahut-sahutan di udara. Anak-anak bermain kejar-kejaran di tepi pantai yang berpasir halus.`,
+                question: "Kosakata yang menggambarkan keindahan senja adalah ....",
+                type: "multiple",
+                options: [
+                    "matahari terbenam perlahan",
+                    "perahu-perahu kecil bergoyang",
+                    "warna oranye kemerahan",
+                    "suara burung camar"
+                ],
+                correct: [0, 2],
+                competency: "Pemahaman Tekstual",
+                subCompetency: "Mengidentifikasi objek dan/atau latar berdasarkan kosakata"
+            },
+            {
+                text: `<div class="text-title">Teks Informasi: Revolusi Industri 4.0</div>
+                Revolusi Industri 4.0 menandai era otomasi dan pertukaran data dalam teknologi manufaktur. Teknologi utamanya meliputi Internet of Things, kecerdasan buatan, big data, dan robotika. Mesin dapat berkomunikasi satu sama lain tanpa intervensi manusia. Produksi menjadi lebih efisien dengan sistem cyber-physical. Namun, transformasi ini menuntut peningkatan keterampilan digital tenaga kerja. Pemerintah dan industri harus berkolaborasi dalam mempersiapkan SDM yang adaptif.`,
+                question: "Informasi tersurat tentang dampak Revolusi Industri 4.0 adalah ....",
+                type: "pg",
+                options: [
+                    "menghilangkan semua pekerjaan manusia",
+                    "membuat produksi menjadi lebih efisien",
+                    "mengurangi penggunaan teknologi",
+                    "menghentikan perkembangan industri"
+                ],
+                correct: 1,
+                competency: "Pemahaman Tekstual",
+                subCompetency: "Mengidentifikasi informasi penting yang tersurat dalam teks"
+            },
+            {
+                text: `<div class="text-title">Teks Informasi: Tari Tradisional Nusantara</div>
+                Tari tradisional Indonesia mencerminkan kekayaan budaya nusantara. Setiap daerah memiliki ciri khas gerakan, kostum, dan musik pengiring. Tari Saman dari Aceh terkenal dengan gerakan kompak dan dinamis. Tari Pendet dari Bali merupakan tari penyambutan. Tari Reog dari Ponorogo menampilkan topeng berkepala singa raksasa. Tarian ini tidak hanya seni pertunjukan, tetapi juga media pelestarian nilai budaya dan sejarah masyarakat.`,
+                question: "Istilah yang digunakan untuk menjelaskan karakteristik tari adalah ....",
+                type: "multiple",
+                options: [
+                    "gerakan kompak",
+                    "topeng berkepala singa",
+                    "tari penyambutan",
+                    "musik pengiring"
+                ],
+                correct: [0, 2, 3],
+                competency: "Pemahaman Tekstual",
+                subCompetency: "Mengidentifikasi penggunaan istilah dalam berbagai bidang"
+            },
+            {
+                text: `<div class="text-title">Teks Fiksi: Suasana Pasar Tradisional</div>
+                Pagi masih buta, pedagang sudah mulai membenahi lapaknya. Tumpukan sayuran hijau segar berbaris rapi di atas meja. Aroma rempah-rempah bercampur dengan wangi buah-buahan tropis. Suara tawar-menawar terdengar meriah di sana-sini. Ibu-ibu berkerumun mencari bahan makanan segar. Cahaya lampu neon menerangi gang-gang pasar yang ramai. Becak dan sepeda motor hilir mudik di depan pasar.`,
+                question: "Latar tempat dalam teks ditunjukkan oleh frasa ....",
+                type: "pg",
+                options: [
+                    "pagi masih buta",
+                    "gang-gang pasar",
+                    "ibu-ibu berkerumun",
+                    "suara tawar-menawar"
+                ],
+                correct: 1,
+                competency: "Pemahaman Tekstual",
+                subCompetency: "Mengidentifikasi objek dan/atau latar berdasarkan kosakata"
+            },
+            {
+                text: `<div class="text-title">Teks Informasi: Metamorfosis Kupu-kupu</div>
+                Metamorfosis kupu-kupu adalah proses perubahan bentuk yang menakjubkan. Dimulai dari telur yang menetas menjadi larva (ulat). Ulat memakan daun dalam jumlah besar untuk pertumbuhan. Setelah cukup besar, ulat membentuk kepompong (pupa). Di dalam kepompong terjadi transformasi struktur tubuh. Setelah beberapa minggu, kupu-kupu dewasa keluar dengan sayap yang indah. Proses ini disebut metamorfosis sempurna.`,
+                question: "Berdasarkan teks, susunlah urutan tahapan metamorfosis yang benar!",
+                type: "category",
+                categoryQuestion: "Tentukan urutan tahapan metamorfosis kupu-kupu",
+                categories: [
+                    { statement: "Tahap 1: Telur", options: ["Benar", "Salah"] },
+                    { statement: "Tahap 2: Kupu-kupu dewasa", options: ["Benar", "Salah"] },
+                    { statement: "Tahap 3: Larva (ulat)", options: ["Benar", "Salah"] },
+                    { statement: "Tahap 4: Pupa (kepompong)", options: ["Benar", "Salah"] }
+                ],
+                correct: [0, 1, 0, 0],
+                competency: "Pemahaman Tekstual",
+                subCompetency: "Menyusun kerangka berdasarkan bagian-bagian penting"
+            },
+            {
+                text: `<div class="text-title">Teks Informasi: Ekosistem Terumbu Karang</div>
+                Terumbu karang adalah ekosistem laut yang sangat produktif dan beragam. Karang adalah hewan kecil yang hidup berkoloni membentuk struktur keras dari kalsium karbonat. Terumbu karang menjadi rumah bagi ribuan spesies ikan, moluska, dan invertebrata laut. Ekosistem ini sangat sensitif terhadap perubahan suhu dan polusi. Pemutihan karang terjadi ketika karang mengeluarkan zooxanthellae akibat stres lingkungan. Konservasi terumbu karang penting untuk menjaga keseimbangan ekosistem laut.`,
+                question: "Informasi tersurat tentang ancaman terhadap terumbu karang adalah ....",
+                type: "pg",
+                options: [
+                    "serangan hewan predator laut",
+                    "perubahan suhu dan polusi",
+                    "terlalu banyak spesies ikan",
+                    "kurangnya cahaya matahari"
+                ],
+                correct: 1,
+                competency: "Pemahaman Tekstual",
+                subCompetency: "Mengidentifikasi informasi penting yang tersurat dalam teks"
+            },
+            {
+                text: `<div class="text-title">Teks Informasi: Sistem Tanam Hidroponik</div>
+                Hidroponik adalah metode bercocok tanam tanpa menggunakan tanah. Akar tanaman tumbuh dalam larutan nutrisi yang kaya mineral. Sistem ini menghemat air hingga 90% dibanding pertanian konvensional. Media tanam yang digunakan bisa berupa rockwool, hidroton, atau cocopeat. Tanaman tumbuh lebih cepat karena nutrisi tersedia secara optimal. Hidroponik cocok diterapkan di lahan terbatas seperti area perkotaan.`,
+                question: "Istilah 'media tanam' dalam konteks hidroponik merujuk pada ....",
+                type: "pg",
+                options: [
+                    "tanah yang digunakan untuk menanam",
+                    "bahan pengganti tanah tempat akar tumbuh",
+                    "pupuk yang dicampur dengan air",
+                    "wadah untuk menampung tanaman"
+                ],
+                correct: 1,
+                competency: "Pemahaman Tekstual",
+                subCompetency: "Mengidentifikasi penggunaan istilah dalam berbagai bidang"
+            },
+            {
+                text: `<div class="text-title">Teks Fiksi: Musim Hujan di Kota</div>
+                Langit mendung menutupi kota sejak pagi. Tetes-tetes air hujan mulai jatuh membasahi aspal jalanan. Aroma tanah basah tercium dari taman-taman kota. Orang-orang bergegas mencari tempat berteduh. Payung-payung warna-warni bermekaran di sepanjang trotoar. Suara gemuruh petir sesekali terdengar di kejauhan. Genangan air mulai terbentuk di pojok-pojok jalan.`,
+                question: "Kosakata yang menggambarkan kondisi cuaca adalah ....",
+                type: "multiple",
+                options: [
+                    "langit mendung",
+                    "payung warna-warni",
+                    "tetes-tetes air hujan",
+                    "gemuruh petir"
+                ],
+                correct: [0, 2, 3],
+                competency: "Pemahaman Tekstual",
+                subCompetency: "Mengidentifikasi objek dan/atau latar berdasarkan kosakata"
+            },
+            {
+                text: `<div class="text-title">Teks Informasi: Perdagangan Internasional</div>
+                Perdagangan internasional adalah pertukaran barang dan jasa antar negara. Ekspor adalah penjualan barang ke luar negeri, sedangkan impor adalah pembelian barang dari luar negeri. Neraca perdagangan surplus terjadi ketika nilai ekspor lebih besar dari impor. Tarif dan kuota adalah instrumen kebijakan perdagangan. WTO (World Trade Organization) mengatur aturan perdagangan global. Indonesia mengekspor komoditas seperti kelapa sawit, karet, dan batubara.`,
+                question: "Informasi tersurat tentang kondisi neraca perdagangan surplus adalah ....",
+                type: "pg",
+                options: [
+                    "nilai impor lebih besar dari ekspor",
+                    "nilai ekspor sama dengan impor",
+                    "nilai ekspor lebih besar dari impor",
+                    "tidak ada kegiatan ekspor impor"
+                ],
+                correct: 2,
+                competency: "Pemahaman Tekstual",
+                subCompetency: "Mengidentifikasi informasi penting yang tersurat dalam teks"
+            },
+            {
+                text: `<div class="text-title">Teks Informasi: Gerhana Matahari</div>
+                Gerhana matahari total terjadi ketika bulan berada di antara matahari dan bumi dalam satu garis lurus. Bayangan bulan menutupi piringan matahari sepenuhnya. Fenomena ini hanya dapat diamati dari jalur tertentu di permukaan bumi. Selama gerhana total, langit menjadi gelap seperti malam hari. Korona matahari terlihat sebagai cahaya putih di sekeliling bulan. Gerhana matahari tidak boleh dilihat langsung tanpa pelindung mata khusus.`,
+                question: "Susunlah kerangka penjelasan terjadinya gerhana matahari!",
+                type: "category",
+                categoryQuestion: "Tentukan urutan kejadian gerhana matahari",
+                categories: [
+                    { statement: "Bulan berada di antara matahari dan bumi", options: ["Ya", "Tidak"] },
+                    { statement: "Bumi berada di antara matahari dan bulan", options: ["Ya", "Tidak"] },
+                    { statement: "Bayangan bulan menutupi matahari", options: ["Ya", "Tidak"] },
+                    { statement: "Langit menjadi gelap", options: ["Ya", "Tidak"] }
+                ],
+                correct: [0, 1, 0, 0],
+                competency: "Pemahaman Tekstual",
+                subCompetency: "Menyusun kerangka berdasarkan bagian-bagian penting"
+            },
+
+            // PEMAHAMAN INFERENSIAL (22 soal)
+            {
+                text: `<div class="text-title">Teks Informasi: Perubahan Iklim</div>
+                Suhu rata-rata bumi meningkat 1,1°C sejak era pra-industri. Lapisan es Arktik menipis dengan kecepatan 13% per dekade. Tinggi permukaan laut naik 3,3 milimeter per tahun. Cuaca ekstrem seperti badai dan kekeringan semakin sering terjadi. Ekosistem terumbu karang mengalami pemutihan massal. Migrasi satwa liar berubah akibat pergeseran habitat. Negara-negara kepulauan menghadapi ancaman tenggelam.`,
+                question: "Berdasarkan data dalam teks, dapat disimpulkan bahwa ....",
+                type: "pg",
+                options: [
+                    "perubahan iklim hanya berdampak pada suhu udara",
+                    "perubahan iklim memberikan dampak multi-dimensi pada bumi",
+                    "kenaikan suhu bumi tidak mempengaruhi ekosistem laut",
+                    "negara kepulauan tidak terpengaruh perubahan iklim"
+                ],
+                correct: 1,
+                competency: "Pemahaman Inferensial",
+                subCompetency: "Menyimpulkan ide pokok dalam teks"
+            },
+            {
+                text: `<div class="text-title">Teks Fiksi: Persahabatan</div>
+                Rina dan Sari telah bersahabat sejak kelas satu. Mereka selalu berbagi cerita dan membantu satu sama lain. Suatu hari, Rina tidak masuk sekolah tanpa kabar. Sari merasa cemas dan langsung mengunjungi rumah Rina setelah sekolah. Ternyata Rina sakit demam tinggi. Tanpa diminta, Sari membantu memberikan catatan pelajaran dan menemani Rina. Orang tua Rina sangat tersentuh melihat kepedulian Sari.`,
+                question: "Nilai yang dapat disimpulkan dari cerita tersebut adalah ....",
+                type: "pg",
+                options: [
+                    "pentingnya belajar dengan giat",
+                    "kesetiaan dan kepedulian dalam persahabatan",
+                    "bahaya penyakit demam tinggi",
+                    "pentingnya menjaga kesehatan tubuh"
+                ],
+                correct: 1,
+                competency: "Pemahaman Inferensial",
+                subCompetency: "Menyimpulkan nilai-nilai dalam teks"
+            },
+            {
+                text: `<div class="text-title">Teks Informasi: Sampah Plastik di Laut</div>
+                Indonesia menghasilkan 67 juta ton sampah per tahun. Sekitar 15% adalah sampah plastik yang berakhir di laut. Mikroplastik ditemukan dalam tubuh ikan yang dikonsumsi manusia. Penyu sering mati karena memakan kantong plastik yang dikira ubur-ubur. Pulau sampah seluas ratusan kilometer persegi terbentuk di Samudera Pasifik. Program pengurangan plastik sekali pakai mulai digalakkan di berbagai daerah.`,
+                question: "Hubungan logis antara informasi dalam teks menunjukkan bahwa ....",
+                type: "pg",
+                options: [
+                    "sampah plastik hanya berdampak pada kehidupan laut",
+                    "produksi sampah plastik berbanding lurus dengan polusi laut",
+                    "mikroplastik tidak berbahaya bagi manusia
