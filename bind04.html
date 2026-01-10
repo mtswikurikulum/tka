@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TKA Bahasa Indonesia SMP - Paket D</title>
+    <style>
+        /* CSS Design & Layout - Tetap Sama Persis */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        .header h1 { font-size: 28px; margin-bottom: 10px; }
+        .header p { font-size: 16px; opacity: 0.9; }
+        .progress-bar {
+            background: #f0f0f0;
+            height: 8px;
+            border-radius: 4px;
+            margin: 20px 30px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            padding: 20px 30px;
+            background: #f8f9fa;
+            border-bottom: 2px solid #e9ecef;
+        }
+        .stat-item { text-align: center; }
+        .stat-label { font-size: 12px; color: #6c757d; margin-bottom: 5px; }
+        .stat-value { font-size: 24px; font-weight: bold; color: #667eea; }
+        .content { padding: 30px; }
+        .welcome-screen, .result-screen, .name-screen {
+            text-align: center;
+            padding: 40px 20px;
+        }
+        .welcome-screen h2, .name-screen h2 { font-size: 28px; color: #333; margin-bottom: 20px; }
+        .welcome-screen p, .name-screen p { font-size: 16px; color: #666; margin-bottom: 30px; line-height: 1.6; }
+        .name-input-group { max-width: 400px; margin: 30px auto; }
+        .name-input-group label {
+            display: block; text-align: left; font-weight: bold; color: #333; margin-bottom: 10px; font-size: 16px;
+        }
+        .name-input-group input {
+            width: 100%; padding: 15px; font-size: 16px; border: 2px solid #e9ecef; border-radius: 10px; transition: border-color 0.3s;
+        }
+        .name-input-group input:focus { outline: none; border-color: #667eea; }
+        .student-name-display {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white; padding: 15px 25px; border-radius: 15px; display: inline-block; margin-bottom: 20px; font-size: 18px; font-weight: bold;
+        }
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white; border: none; padding: 15px 40px; font-size: 16px; border-radius: 30px; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; font-weight: bold;
+        }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3); }
+        .btn-secondary { background: #6c757d; margin-left: 10px; }
+        .question-section { display: none; }
+        .question-section.active { display: block; }
+        .text-box {
+            background: #f8f9fa; border-left: 4px solid #667eea; padding: 20px; margin-bottom: 25px; border-radius: 8px; line-height: 1.8;
+        }
+        .text-title { font-size: 18px; font-weight: bold; color: #667eea; margin-bottom: 15px; }
+        .question { margin-bottom: 30px; }
+        .question-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .question-number { background: #667eea; color: white; padding: 8px 16px; border-radius: 20px; font-weight: bold; font-size: 14px; }
+        .competency-badge { background: #e9ecef; color: #495057; padding: 6px 12px; border-radius: 15px; font-size: 12px; }
+        .question-text { font-size: 16px; color: #333; margin-bottom: 20px; font-weight: 500; line-height: 1.6; }
+        .options { display: flex; flex-direction: column; gap: 12px; }
+        .option {
+            background: #f8f9fa; border: 2px solid #e9ecef; padding: 15px; border-radius: 10px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center;
+        }
+        .option:hover { border-color: #667eea; background: #f0f4ff; }
+        .option.selected { border-color: #667eea; background: #e8edff; }
+        .option.correct { border-color: #28a745; background: #d4edda; }
+        .option.incorrect { border-color: #dc3545; background: #f8d7da; }
+        .option input[type="checkbox"], .option input[type="radio"] { margin-right: 12px; width: 20px; height: 20px; cursor: pointer; }
+        .category-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        .category-table th, .category-table td { border: 1px solid #dee2e6; padding: 12px; text-align: left; }
+        .category-table th { background: #f8f9fa; font-weight: bold; }
+        .category-option { display: flex; justify-content: center; gap: 20px; }
+        .category-option label { cursor: pointer; display: flex; align-items: center; gap: 5px; }
+        .navigation { display: flex; justify-content: space-between; margin-top: 30px; padding-top: 20px; border-top: 2px solid #e9ecef; }
+        .result-screen h2 { font-size: 32px; color: #333; margin-bottom: 20px; }
+        .score-circle {
+            width: 200px; height: 200px; border-radius: 50%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 30px auto; color: white; box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+        .score-number { font-size: 48px; font-weight: bold; }
+        .score-label { font-size: 16px; opacity: 0.9; }
+        .result-details { background: #f8f9fa; padding: 20px; border-radius: 10px; margin: 20px 0; text-align: left; }
+        .result-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #dee2e6; }
+        .result-item:last-child { border-bottom: none; }
+        .competency-breakdown { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin: 20px 0; }
+        .competency-card { background: white; border: 2px solid #e9ecef; padding: 15px; border-radius: 10px; }
+        .competency-card h4 { color: #667eea; margin-bottom: 10px; font-size: 14px; }
+        .competency-score { font-size: 24px; font-weight: bold; color: #333; }
+        @media (max-width: 768px) {
+            .container { margin: 10px; }
+            .stats { flex-direction: column; gap: 15px; }
+            .navigation { flex-direction: column; gap: 10px; }
+            .btn { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📚 TKA Bahasa Indonesia SMP</h1>
+            <p>Tes Kemampuan Akademik - Paket D</p>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressBar"></div>
+        </div>
+
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-label">Soal Dijawab</div>
+                <div class="stat-value" id="answered">0</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Total Soal</div>
+                <div class="stat-value">30</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Progress</div>
+                <div class="stat-value" id="percentage">0%</div>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="welcome-screen" id="welcomeScreen">
+                <h2>Selamat Datang di Paket D! 👋</h2>
+                <p>Tes ini terdiri dari 30 soal yang mengukur kemampuan membaca Anda sesuai matriks kompetensi:</p>
+                <div class="competency-breakdown">
+                    <div class="competency-card">
+                        <h4>📖 Pemahaman Tekstual</h4>
+                        <p style="font-size: 14px; color: #666;">Informasi eksplisit & istilah</p>
+                    </div>
+                    <div class="competency-card">
+                        <h4>🔍 Pemahaman Inferensial</h4>
+                        <p style="font-size: 14px; color: #666;">Simpulan, prediksi & kiasan</p>
+                    </div>
+                    <div class="competency-card">
+                        <h4>⭐ Evaluasi & Apresiasi</h4>
+                        <p style="font-size: 14px; color: #666;">Relevansi, perbandingan & emosi</p>
+                    </div>
+                </div>
+                <p><strong>Petunjuk:</strong> Baca setiap teks dengan cermat. Klik "Mulai Tes" untuk memulai.</p>
+                <button class="btn" onclick="showNameInput()">Mulai Tes</button>
+            </div>
+
+            <div class="name-screen" id="nameScreen" style="display: none;">
+                <h2>✏️ Identitas Peserta</h2>
+                <p>Silakan masukkan nama Anda sebelum memulai tes</p>
+                <div class="name-input-group">
+                    <label for="studentName">Nama Lengkap:</label>
+                    <input type="text" id="studentName" placeholder="Masukkan nama Anda..." autofocus>
+                </div>
+                <button class="btn" onclick="startTest()">Mulai Mengerjakan</button>
+                <button class="btn btn-secondary" onclick="backToWelcome()">Kembali</button>
+            </div>
+
+            <div class="question-section" id="questionSection"></div>
+
+            <div class="result-screen" id="resultScreen" style="display: none;">
+                <div class="student-name-display" id="studentNameDisplay"></div>
+                <h2>🎉 Tes Selesai!</h2>
+                <div class="score-circle">
+                    <div class="score-number" id="finalScore">0</div>
+                    <div class="score-label">dari 30</div>
+                </div>
+                <div class="result-details">
+                    <div class="result-item">
+                        <span>Nilai Akhir:</span>
+                        <strong id="scorePercentage">0%</strong>
+                    </div>
+                    <div class="result-item">
+                        <span>Jawaban Benar:</span>
+                        <strong id="correctAnswers">0</strong>
+                    </div>
+                    <div class="result-item">
+                        <span>Jawaban Salah:</span>
+                        <strong id="wrongAnswers">0</strong>
+                    </div>
+                </div>
+                <h3 style="margin: 30px 0 15px 0; color: #333;">Rincian Per Kompetensi</h3>
+                <div class="competency-breakdown" id="competencyResults"></div>
+                <button class="btn" onclick="resetTest()">Ulangi Tes</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // DATA SOAL PAKET D - 30 SOAL (Sesuai Matriks Asesmen)
+        const questions = [
+            // --- PEMAHAMAN TEKSTUAL (11 Soal) ---
+            {
+                text: `<div class="text-title">Teks Informasi: Budidaya Ikan Lele</div>
+                Sistem bioflok menjadi pilihan modern dalam budidaya ikan lele. Metode ini menumbuhkan mikroorganisme dalam kolam yang berfungsi mengolah limbah kotoran ikan menjadi gumpalan (flok) kecil. Flok tersebut mengandung protein tinggi yang dapat dimakan kembali oleh ikan. Dengan sistem ini, peternak dapat menghemat pakan pelet dan mengurangi pergantian air kolam secara signifikan.`,
+                question: "Istilah 'bioflok' dalam teks tersebut merujuk pada ....",
+                type: "pg",
+                options: [
+                    "jenis ikan lele varietas unggul",
+                    "metode kolam tanah tradisional",
+                    "gumpalan mikroorganisme pengolah limbah",
+                    "merek pakan ikan buatan pabrik"
+                ],
+                correct: 2,
+                competency: "Pemahaman Tekstual",
+                subCompetency: "Mengidentifikasi penggunaan istilah dalam berbagai bidang"
+            },
+            {
+                text: `<div class="text-title">Teks Fiksi: Dapur Nenek</div>
+                Aroma gula merah yang dicairkan memenuhi ruangan berdinding anyaman bambu itu. Di sudut ruangan, tungku tanah liat mengepulkan asap putih tipis, menyisakan bara merah dari kayu bakar yang hampir habis. Caping-caping tua tergantung rapi di paku tiang kayu yang mulai lapuk. Di atas meja kayu jati yang kasar, tersaji jajanan pasar di atas tampah beralas daun pisang.`,
+                question: "Latar tempat yang digambarkan dalam teks adalah ....",
+                type: "multiple",
+                options: [
+                    "restoran modern",
+                    "dapur tradisional",
+                    "ruangan berpendingin udara",
+                    "ruangan dengan tungku kayu bakar"
+                ],
+                correct: [1, 3],
+                competency: "Pemahaman Tekstual",
+                subCompetency: "Mengidentifikasi objek/latar berdasarkan kosakata"
+            },
+            {
+                text: `<div class="text-title">Teks Informasi: Manfaat Vitamin C</div>
+                Vitamin C atau asam askorbat sangat penting bagi tubuh. Vitamin ini berfungsi sebagai antioksidan yang melindungi sel dari kerusakan akibat radikal bebas. Selain itu, vitamin C membantu produksi kolagen untuk kesehatan kulit, menyembuhkan luka, dan meningkatkan penyerapan zat besi dari makanan nabati. Tubuh manusia tidak dapat memproduksi vitamin C sendiri, sehingga harus diperoleh dari buah dan sayur.`,
+                question: "Informasi tersurat mengenai fungsi kolagen yang didukung oleh vitamin C adalah ....",
+                type: "pg",
+                options: [
+                    "meningkatkan nafsu makan",
+                    "melindungi tubuh dari radikal bebas",
+                    "menjaga kesehatan kulit dan menyembuhkan luka",
+                    "menggantikan sel darah merah"
+                ],
+                correct: 2,
+                competency: "Pemahaman Tekstual",
+                subCompetency: "Mengidentifikasi informasi penting yang tersurat"
+            },
+            {
+                text: `<div class="text-title">Teks Informasi: Daur Hidup Katak</div>
+                Daur hidup katak dimulai dari telur yang diletakkan di air. Telur menetas menjadi berudu (kecebong) yang bernapas dengan insang. Seiring waktu, berudu tumbuh kaki belakang lalu kaki depan, dan ekornya memendek. Tahap ini disebut katak muda. Akhirnya, katak dewasa terbentuk sempurna, bernapas dengan paru-paru dan kulit, serta hidup di dua alam.`,
+                question: "Urutkan tahapan daur hidup katak yang benar berdasarkan teks!",
+                type: "category",
+                categoryQuestion: "Tentukan urutan fase metamorfosis katak:",
+                categories: [
+                    { statement: "Fase 1: Telur", options: ["Benar", "Salah"] },
+                    { statement: "Fase 2: Katak Dewasa", options: ["Benar", "Salah"] },
+                    { statement: "Fase 3: Berudu (Kecebong)", options: ["Benar", "Salah"] },
+                    { statement: "Fase 4: Katak Muda", options: ["Benar", "Salah"] }
+                ],
+                correct: [0, 1, 0, 0],
+                competency: "Pemahaman Tekstual",
+                subCompetency: "Menyusun kerangka berdasarkan bagian penting"
+            },
+            {
+                text: `<div class="text-title">Teks Informasi: Inflasi Ekonomi</div>
+                Inflasi adalah kondisi di mana harga barang dan jasa secara umum mengalami kenaikan secara terus-menerus dalam jangka waktu tertentu. Penyebabnya bisa karena tingginya permintaan masyarakat atau naiknya biaya produksi. Akibat inflasi, nilai mata uang menjadi turun sehingga daya beli masyarakat melemah. Bank sentral biasanya menaikkan suku bunga untuk mengendalikan laju inflasi.`,
+                question: "Istilah 'daya beli' dalam teks berkaitan dengan ....",
+                type: "pg",
+                options: [
+                    "kemampuan masyarakat membeli barang/jasa",
+                    "kekuatan fisik untuk membawa barang",
+                    "jumlah uang yang dicetak bank",
+                    "biaya untuk memproduksi barang"
+                ],
+                correct: 0,
+                competency: "Pemahaman Tekstual",
+                subCompetency: "Mengidentifikasi penggunaan istilah dalam berbagai bidang"
+            },
+            {
+                text: `<div class="text-title">Teks Fiksi: Taman Kota</div>
+                Matahari tepat di atas kepala, membuat bayangan pohon-pohon trembesi memendek di atas paving block. Suara klakson kendaraan dari jalan raya terdengar samar, kalah oleh riuh rendah anak-anak yang bermain ayunan. Penjual es krim dikerumuni pembeli yang mencari kesegaran di tengah terik. Bangku-bangku taman yang terbuat dari besi terasa panas jika diduduki.`,
+                question: "Kapan peristiwa dalam teks tersebut terjadi?",
+                type: "pg",
+                options: [
+                    "pagi hari yang sejuk",
+                    "sore hari menjelang senja",
+                    "siang hari yang terik",
+                    "malam hari yang gelap"
+                ],
+                correct: 2,
+                competency: "Pemahaman Tekstual",
+                subCompetency: "Mengidentifikasi objek/latar berdasarkan kosakata"
+            },
+            {
+                text: `<div class="text-title">Teks Informasi: Kerajaan Majapahit</div>
+                Kerajaan Majapahit mencapai puncak kejayaannya pada masa pemerintahan Hayam Wuruk dengan patihnya yang terkenal, Gajah Mada. Gajah Mada mengucapkan Sumpah Palapa, yaitu janji untuk tidak memakan buah palapa (bersenang-senang) sebelum berhasil menyatukan wilayah Nusantara. Wilayah kekuasaan Majapahit saat itu meliputi Sumatera, Semenanjung Malaya, Kalimantan, Sulawesi, hingga sebagian Papua.`,
+                question: "Apa isi inti dari Sumpah Palapa yang diucapkan Gajah Mada?",
+                type: "pg",
+                options: [
+                    "janji untuk menanam buah palapa",
+                    "janji untuk mengalahkan Hayam Wuruk",
+                    "janji untuk menyatukan wilayah Nusantara",
+                    "janji untuk berpuasa selamanya"
+                ],
+                correct: 2,
+                competency: "Pemahaman Tekstual",
+                subCompetency: "Mengidentifikasi informasi penting yang tersurat"
+            },
+            {
+                text: `<div class="text-title">Teks Informasi: Fotosintesis Tumbuhan</div>
+                Pada daun tumbuhan terdapat celah kecil bernama stomata yang berfungsi sebagai tempat keluar masuknya udara. Karbon dioksida masuk melalui stomata, sedangkan oksigen hasil fotosintesis keluar melaluinya. Selain stomata, terdapat klorofil atau zat hijau daun yang berperan menangkap energi cahaya matahari untuk memproses makanan.`,
+                question: "Dalam teks biologi di atas, 'stomata' didefinisikan sebagai ....",
+                type: "pg",
+                options: [
+                    "zat pewarna hijau pada daun",
+                    "akar yang menyerap air",
+                    "celah kecil tempat pertukaran udara",
+                    "batang yang menyimpan cadangan makanan"
+                ],
+                correct: 2,
+                competency: "Pemahaman Tekstual",
+                subCompetency: "Mengidentifikasi penggunaan istilah dalam berbagai bidang"
+            },
+            {
+                text: `<div class="text-title">Teks Fiksi: Pantai Selatan</div>
+                Debur ombak bergulung-gulung menghantam karang cadas yang kokoh. Butiran pasir putih terasa hangat menyentuh telapak kaki. Angin laut yang kencang menerbangkan topi anyaman Rara. Di kejauhan, perahu-perahu nelayan tampak seperti titik hitam di garis cakrawala yang memisahkan biru laut dan langit. Aroma garam yang khas menusuk hidung.`,
+                question: "Objek yang menggambarkan latar pantai dalam teks adalah ....",
+                type: "multiple",
+                options: [
+                    "pasir putih",
+                    "karang cadas",
+                    "gedung bertingkat",
+                    "perahu nelayan"
+                ],
+                correct: [0, 1, 3],
+                competency: "Pemahaman Tekstual",
+                subCompetency: "Mengidentifikasi objek/latar berdasarkan kosakata"
+            },
+            {
+                text: `<div class="text-title">Teks Informasi: Keamanan Dompet Digital</div>
+                Pengguna dompet digital (e-wallet) harus waspada terhadap penipuan. Jangan pernah membagikan kode OTP (One Time Password) kepada siapa pun, termasuk pihak yang mengaku sebagai bank. Aktifkan fitur verifikasi dua langkah untuk keamanan ganda. Selain itu, hindari menggunakan koneksi WiFi publik saat melakukan transaksi keuangan karena rentan peretasan.`,
+                question: "Langkah pencegahan penipuan yang tersurat dalam teks adalah ....",
+                type: "pg",
+                options: [
+                    "sering mengganti nomor handphone",
+                    "tidak membagikan kode OTP kepada siapa pun",
+                    "menggunakan WiFi publik agar hemat kuota",
+                    "menghapus aplikasi dompet digital"
+                ],
+                correct: 1,
+                competency: "Pemahaman Tekstual",
+                subCompetency: "Mengidentifikasi informasi penting yang tersurat"
+            },
+            {
+                text: `<div class="text-title">Teks Prosedur: Membuat Teh Manis</div>
+                Untuk membuat teh manis hangat, pertama didihkan air secukupnya. Kedua, masukkan kantong teh ke dalam cangkir. Ketiga, tuangkan air mendidih ke dalam cangkir dan biarkan hingga air berubah warna kecokelatan. Keempat, tambahkan gula sesuai selera dan aduk hingga larut. Teh manis hangat siap dinikmati.`,
+                question: "Susunlah urutan langkah membuat teh manis yang benar!",
+                type: "category",
+                categoryQuestion: "Tentukan urutan langkah berikut:",
+                categories: [
+                    { statement: "Langkah 1: Didihkan air", options: ["Benar", "Salah"] },
+                    { statement: "Langkah 2: Tambahkan gula", options: ["Benar", "Salah"] },
+                    { statement: "Langkah 3: Tuang air ke cangkir berisi teh", options: ["Benar", "Salah"] },
+                    { statement: "Langkah 4: Masukkan kantong teh", options: ["Benar", "Salah"] }
+                ],
+                correct: [0, 1, 0, 0],
+                competency: "Pemahaman Tekstual",
+                subCompetency: "Menyusun kerangka berdasarkan bagian penting"
+            },
+
+            // --- PEMAHAMAN INFERENSIAL (11 Soal) ---
+            {
+                text: `<div class="text-title">Teks Informasi: Manfaat Membaca</div>
+                Membaca buku secara rutin dapat menstimulasi otak agar tetap aktif dan mencegah penurunan daya ingat. Selain menambah kosakata baru, membaca juga melatih kemampuan fokus dan konsentrasi. Orang yang gemar membaca cenderung memiliki empati lebih tinggi karena sering memahami sudut pandang berbagai karakter dalam cerita.`,
+                question: "Gagasan utama yang dapat disimpulkan dari teks tersebut adalah ....",
+                type: "pg",
+                options: [
+                    "membaca buku itu mahal harganya",
+                    "membaca memberikan manfaat positif bagi otak dan kepribadian",
+                    "hanya buku cerita yang bermanfaat untuk dibaca",
+                    "membaca membuat orang menjadi antisosial"
+                ],
+                correct: 1,
+                competency: "Pemahaman Inferensial",
+                subCompetency: "Menyimpulkan ide pokok/gagasan"
+            },
+            {
+                text: `<div class="text-title">Teks Fiksi: Pulpen Pinjaman</div>
+                Dian menemukan sebuah pulpen mahal tergeletak di bawah meja perpustakaan. Ia tahu itu milik Riko, anak orang kaya yang sombong di kelasnya. Teman-teman Dian menyarankan untuk mengambilnya saja sebagai balasan atas sikap Riko. Namun, Dian teringat pesan ibunya untuk tidak mengambil hak orang lain. Sore harinya, Dian mengembalikan pulpen itu kepada Riko. Riko terdiam, wajahnya memerah karena malu, lalu bergumam terima kasih pelan.`,
+                question: "Nilai moral yang ditunjukkan oleh tokoh Dian adalah ....",
+                type: "pg",
+                options: [
+                    "balas dendam itu perlu",
+                    "kejujuran dan integritas meski pada orang yang tidak disukai",
+                    "ketakutan terhadap orang kaya",
+                    "mencari pujian dari teman-teman"
+                ],
+                correct: 1,
+                competency: "Pemahaman Inferensial",
+                subCompetency: "Menyimpulkan nilai-nilai dalam teks"
+            },
+            {
+                text: `<div class="text-title">Teks Informasi: Kurang Tidur</div>
+                Tidur yang cukup (7-8 jam) penting untuk pemulihan tubuh. Saat kurang tidur, otak sulit memproses informasi dan konsentrasi menurun drastis. Emosi juga menjadi tidak stabil dan mudah marah. Dalam jangka panjang, kurang tidur kronis meningkatkan risiko penyakit jantung dan diabetes.`,
+                question: "Hubungan sebab-akibat yang logis dalam teks adalah ....",
+                type: "pg",
+                options: [
+                    "kurang tidur menyebabkan konsentrasi meningkat",
+                    "tidur cukup menyebabkan penyakit jantung",
+                    "kurang tidur menyebabkan penurunan fungsi kognitif dan emosional",
+                    "penyakit diabetes menyebabkan orang jadi rajin tidur"
+                ],
+                correct: 2,
+                competency: "Pemahaman Inferensial",
+                subCompetency: "Menjelaskan kelogisan hubungan antarinformasi"
+            },
+            {
+                text: `<div class="text-title">Teks Informasi: Adopsi AI</div>
+                Penggunaan Artificial Intelligence (AI) di dunia kerja semakin meluas. AI kini mampu menulis artikel, membuat desain grafis, hingga menganalisis data keuangan dalam hitungan detik. Banyak perusahaan mulai melatih karyawannya untuk menggunakan alat AI agar produktivitas meningkat. Pekerjaan repetitif (berulang) diprediksi akan sepenuhnya diambil alih oleh mesin.`,
+                question: "Prediksi yang mungkin terjadi di masa depan berdasarkan teks adalah ....",
+                type: "pg",
+                options: [
+                    "manusia akan berhenti bekerja total",
+                    "pekerjaan yang bersifat rutin/berulang akan hilang digantikan AI",
+                    "AI akan dilarang karena berbahaya",
+                    "perusahaan akan kembali ke cara manual"
+                ],
+                correct: 1,
+                competency: "Pemahaman Inferensial",
+                subCompetency: "Memprediksi peristiwa dalam teks"
+            },
+            {
+                text: `<div class="text-title">Puisi: Rindu</div>
+                Angin malam mengetuk jendela kamarku
+                Membisikkan nama yang lama tak kusapa
+                Bulan separuh bersembunyi di balik awan
+                Seolah malu melihat air mata yang jatuh
+                Jarak membentang bagai samudra tak bertepi`,
+                question: "Majas personifikasi 'Angin malam membisikkan nama' bermakna ....",
+                type: "pg",
+                options: [
+                    "angin benar-benar bisa berbicara",
+                    "suara angin mengingatkan penyair pada seseorang",
+                    "ada orang bernama Angin",
+                    "penyair sedang berbicara dengan angin"
+                ],
+                correct: 1,
+                competency: "Pemahaman Inferensial",
+                subCompetency: "Menjelaskan bahasa kias dalam teks fiksi"
+            },
+            {
+                text: `<div class="text-title">Teks Informasi: Hemat Air</div>
+                Air bersih adalah sumber daya terbatas. Membiarkan keran mengalir saat menyikat gigi membuang 6 liter air per menit. Memperbaiki pipa bocor dan menampung air hujan untuk menyiram tanaman adalah langkah kecil yang berdampak besar. Jika pola boros air terus berlanjut, krisis air bersih akan menjadi ancaman nyata bagi generasi mendatang.`,
+                question: "Simpulan utama paragraf di atas adalah ....",
+                type: "pg",
+                options: [
+                    "kita tidak perlu menyikat gigi agar hemat air",
+                    "perilaku hemat air penting untuk mencegah krisis di masa depan",
+                    "air hujan tidak bisa digunakan untuk tanaman",
+                    "pipa bocor tidak mempengaruhi ketersediaan air"
+                ],
+                correct: 1,
+                competency: "Pemahaman Inferensial",
+                subCompetency: "Menyimpulkan ide pokok/gagasan"
+            },
+            {
+                text: `<div class="text-title">Teks Fiksi: Pelatih Tegas</div>
+                Pak Bima selalu datang 15 menit sebelum latihan dimulai. Jika ada atlet yang terlambat, ia akan menghukumnya lari keliling lapangan, tak peduli atlet itu bintang tim atau bukan. Namun, saat timnya kalah, Pak Bima orang pertama yang menghibur dan menyemangati mereka. "Kekalahan adalah guru terbaik," katanya sambil menepuk bahu kapten tim yang menangis.`,
+                question: "Karakter Pak Bima dapat disimpulkan sebagai ....",
+                type: "pg",
+                options: [
+                    "pemarah dan pendendam",
+                    "disiplin, adil, namun suportif/mengayomi",
+                    "santai dan tidak peduli aturan",
+                    "pilih kasih terhadap atlet bintang"
+                ],
+                correct: 1,
+                competency: "Pemahaman Inferensial",
+                subCompetency: "Menyimpulkan tokoh dalam teks"
+            },
+            {
+                text: `<div class="text-title">Teks Informasi: Rantai Pasok</div>
+                Perang di negara penghasil gandum menyebabkan terhambatnya distribusi gandum ke seluruh dunia. Pasokan gandum global berkurang drastis. Akibatnya, harga tepung terigu di pasar internasional melambung tinggi. Hal ini memaksa produsen roti dan mi instan di dalam negeri menaikkan harga jual produk mereka.`,
+                question: "Hubungan logis antara perang dan harga mi instan adalah ....",
+                type: "pg",
+                options: [
+                    "perang tidak berhubungan dengan makanan",
+                    "gangguan distribusi bahan baku (gandum) menyebabkan kenaikan harga produk akhir",
+                    "produsen mi instan sengaja mencari untung saat perang",
+                    "harga mi instan naik karena permintaan turun"
+                ],
+                correct: 1,
+                competency: "Pemahaman Inferensial",
+                subCompetency: "Menjelaskan kelogisan hubungan antarinformasi"
+            },
+            {
+                text: `<div class="text-title">Teks Informasi: Sampah Plastik</div>
+                Kampanye pengurangan plastik sekali pakai semakin gencar. Supermarket mulai tidak menyediakan kantong plastik gratis. Produsen minuman berlomba membuat kemasan yang mudah didaur ulang. Kesadaran masyarakat membawa botol minum sendiri (tumbler) meningkat. Jika tren ini berlanjut, volume sampah plastik di TPA diprediksi akan berkurang secara bertahap.`,
+                question: "Prediksi dampak lingkungan dari tren tersebut adalah ....",
+                type: "pg",
+                options: [
+                    "sampah plastik akan hilang seketika",
+                    "pencemaran lingkungan akibat plastik akan berkurang secara bertahap",
+                    "masyarakat akan berhenti belanja di supermarket",
+                    "pabrik plastik akan tutup semua"
+                ],
+                correct: 1,
+                competency: "Pemahaman Inferensial",
+                subCompetency: "Memprediksi peristiwa dalam teks"
+            },
+            {
+                text: `<div class="text-title">Puisi: Pasar Tradisional</div>
+                Aroma terasi menyengat beradu wangi pandan
+                Bau amis ikan segar terbawa angin pagi
+                Renyah suara kerupuk digigit bocah kecil
+                Manis legit kue cucur menggoda lidah
+                Riuh rendah tawar menawar adalah musik kehidupan`,
+                question: "Citraan (imaji) yang paling dominan dalam baris pertama dan kedua adalah ....",
+                type: "pg",
+                options: [
+                    "citraan penglihatan (visual)",
+                    "citraan penciuman (pembauan)",
+                    "citraan pendengaran (auditif)",
+                    "citraan perabaan (taktil)"
+                ],
+                correct: 1,
+                competency: "Pemahaman Inferensial",
+                subCompetency: "Menjelaskan citraan dalam teks fiksi"
+            },
+            {
+                text: `<div class="text-title">Teks Fiksi: Teka-Teki</div>
+                Toni dan Lisa berdebat soal arah jalan pulang dari hutan. Toni bersikeras ke kanan, Lisa yakin ke kiri. Matahari mulai terbenam. Akhirnya mereka sepakat berhenti sejenak dan mengamati lumut di pohon. Lisa ingat pelajaran pramuka bahwa lumut tumbuh lebih tebal di sisi timur. Mereka pun sepakat mengikuti petunjuk alam itu dan akhirnya menemukan jalan keluar tepat sebelum gelap gulita.`,
+                question: "Peristiwa tersebut menyimpulkan bahwa ....",
+                type: "pg",
+                options: [
+                    "debat adalah cara terbaik menyelesaikan masalah",
+                    "kerjasama dan pengetahuan dapat memecahkan masalah",
+                    "mereka tersesat selamanya di hutan",
+                    "Toni lebih pintar daripada Lisa"
+                ],
+                correct: 1,
+                competency: "Pemahaman Inferensial",
+                subCompetency: "Menyimpulkan peristiwa dalam teks"
+            },
+
+            // --- EVALUASI DAN APRESIASI (8 Soal) ---
+            {
+                text: `<div class="text-title">Teks Informasi: Manajemen Waktu</div>
+                Banyak siswa merasa 24 jam sehari tidak cukup. Tugas sekolah menumpuk, belum lagi kegiatan ekstrakurikuler dan waktu bermain gadget. Akibatnya, mereka sering begadang dan mengantuk di sekolah. Kuncinya adalah prioritas. Membuat jadwal harian dan mengurangi scrolling media sosial yang tidak perlu dapat menghemat banyak waktu.`,
+                question: "Relevansi teks di atas dengan kehidupan pelajar masa kini adalah ....",
+                type: "pg",
+                options: [
+                    "sangat relevan karena masalah manajemen waktu umum dialami pelajar",
+                    "tidak relevan karena pelajar sekarang punya banyak waktu luang",
+                    "hanya relevan untuk orang dewasa yang bekerja",
+                    "tidak ada hubungannya dengan prestasi sekolah"
+                ],
+                correct: 0,
+                competency: "Evaluasi dan Apresiasi",
+                subCompetency: "Menilai relevansi peristiwa dengan kehidupan"
+            },
+            {
+                text: `<div class="text-title">Teks 1: Game Online</div>
+                Game online melatih kerja sama tim dan strategi. Pemain bisa berinteraksi dengan teman dari berbagai negara. Namun, risiko kecanduan dan paparan konten toksik cukup tinggi jika tidak diawasi.
+                
+                <div class="text-title">Teks 2: Permainan Tradisional</div>
+                Permainan tradisional seperti gobak sodor melatih fisik dan ketangkasan. Interaksi terjadi secara tatap muka yang mempererat ikatan sosial. Alat mainnya sederhana dan murah. Namun, kini makin sulit menemukan lahan luas untuk bermain.`,
+                question: "Bandingkan kedua teks! Manakah pernyataan yang benar?",
+                type: "multiple",
+                options: [
+                    "Teks 1 mengandalkan teknologi, Teks 2 mengandalkan fisik",
+                    "Kedua jenis permainan memiliki tantangan/kekurangan masing-masing",
+                    "Game online lebih sehat daripada permainan tradisional",
+                    "Permainan tradisional tidak membutuhkan teman"
+                ],
+                correct: [0, 1],
+                competency: "Evaluasi dan Apresiasi",
+                subCompetency: "Menilai kesesuaian berdasarkan perbandingan antarteks"
+            },
+            {
+                text: `<div class="text-title">Cerpen: Kucing Kesayangan</div>
+                Sudah tiga hari Si Belang tidak pulang. Mangkuk makannya masih penuh, tak tersentuh. Rani duduk di teras, matanya sembap menatap jalanan kosong. Setiap kali mendengar suara 'mengeong', ia langsung berlari ke pagar, berharap itu Belang. Namun, hanya kucing liar yang lewat. Rasa sepi di rumah itu terasa begitu menyiksa tanpa kehadiran teman bulunya.`,
+                question: "Respons emosional pembaca yang diharapkan dari cerita tersebut adalah ....",
+                type: "pg",
+                options: [
+                    "rasa gembira dan lega",
+                    "rasa kehilangan, sedih, dan empati",
+                    "rasa marah pada kucing",
+                    "rasa takut pada hewan"
+                ],
+                correct: 1,
+                competency: "Evaluasi dan Apresiasi",
+                subCompetency: "Menyimpulkan respons emosional terhadap unsur fiksi"
+            },
+            {
+                text: `<div class="text-title">Teks 1: Energi Fosil</div>
+                Minyak bumi dan batubara adalah energi tak terbarukan. Proses pembentukannya memakan waktu jutaan tahun. Pembakarannya menghasilkan emisi karbon tinggi yang memicu pemanasan global.
+                
+                <div class="text-title">Teks 2: Energi Terbarukan</div>
+                Sinar matahari, angin, vebt dan air adalah energi terbarukan yang tidak akan habis. Energi ini ramah lingkungan karena minim emisi. Meski investasi awalnya mahal, biaya operasionalnya cenderung murah.`,
+                question: "Tentukan keakuratan pernyataan berikut berdasarkan kedua teks!",
+                type: "category",
+                categoryQuestion: "Pilih Benar atau Salah sesuai perbandingan teks:",
+                categories: [
+                    { statement: "Energi fosil dapat diperbarui dengan cepat", options: ["Benar", "Salah"] },
+                    { statement: "Energi terbarukan lebih ramah lingkungan", options: ["Benar", "Salah"] },
+                    { statement: "Energi fosil menyebabkan pemanasan global", options: ["Benar", "Salah"] },
+                    { statement: "Kedua energi memiliki dampak lingkungan yang sama", options: ["Benar", "Salah"] }
+                ],
+                correct: [1, 0, 0, 1],
+                competency: "Evaluasi dan Apresiasi",
+                subCompetency: "Menilai keakuratan isi berdasarkan perbandingan"
+            },
+            {
+                text: `<div class="text-title">Teks Informasi: Kearifan Lokal vs Modernitas</div>
+                Rumah adat di desa itu berbentuk panggung untuk menghindari banjir dan binatang buas. Namun, banyak warga mulai merenovasinya menjadi rumah beton ala kota karena dianggap lebih modern dan bergengsi. Padahal, saat banjir besar datang, rumah beton itu terendam, sementara sisa rumah panggung tetap aman dan kering.`,
+                question: "Pesan relevan dari teks tersebut bagi kehidupan masyarakat adalah ....",
+                type: "pg",
+                options: [
+                    "modernitas selalu lebih baik dari tradisi",
+                    "kearifan lokal seringkali memiliki nilai fungsi yang teruji waktu",
+                    "rumah beton lebih murah daripada kayu",
+                    "kita harus menolak semua kemajuan teknologi"
+                ],
+                correct: 1,
+                competency: "Evaluasi dan Apresiasi",
+                subCompetency: "Menilai relevansi peristiwa dengan kehidupan"
+            },
+            {
+                text: `<div class="text-title">Teks 1: Berita Resmi</div>
+                Pemerintah Kota meresmikan jembatan penyeberangan baru di Jalan Merdeka pada Selasa (10/5). Jembatan ini dilengkapi lift untuk penyandang disabilitas dan lansia. Proyek ini menelan biaya 2 miliar rupiah dari APBD.
+                
+                <div class="text-title">Teks 2: Blog Pribadi</div>
+                Wah, akhirnya jembatan di Jalan Merdeka jadi juga, guys! Keren banget ada lift-nya, jadi ramah buat semua orang. Semoga gak cepet rusak ya fasilitasnya. Yuk, kita jaga bareng-bareng!`,
+                question: "Perbedaan gaya bahasa kedua teks tersebut adalah ....",
+                type: "pg",
+                options: [
+                    "Teks 1 santai, Teks 2 formal",
+                    "Teks 1 menggunakan bahasa baku, Teks 2 bahasa percakapan/gaul",
+                    "Kedua teks menggunakan bahasa asing",
+                    "Teks 2 lebih objektif daripada Teks 1"
+                ],
+                correct: 1,
+                competency: "Evaluasi dan Apresiasi",
+                subCompetency: "Menilai kesesuaian unsur/kebahasaan antarteks"
+            },
+            {
+                text: `<div class="text-title">Cerpen: Juara yang Bangkit</div>
+                Dito pernah gagal total di lomba pidato tahun lalu. Ia sempat ingin berhenti karena malu. Namun, ia memilih berlatih lebih keras di depan cermin setiap hari. Hari ini, saat namanya dipanggil sebagai juara satu, lututnya lemas bukan karena takut, tapi karena haru. Tepuk tangan penonton terdengar seperti ombak yang menghapus semua kegagalan masa lalunya.`,
+                question: "Respons emosional yang muncul terhadap perjuangan Dito adalah ....",
+                type: "pg",
+                options: [
+                    "rasa bosan mendengarkan pidato",
+                    "rasa terinspirasi dan bangga akan kegigihan",
+                    "rasa kasihan karena ia pernah gagal",
+                    "rasa iri hati atas kemenangannya"
+                ],
+                correct: 1,
+                competency: "Evaluasi dan Apresiasi",
+                subCompetency: "Menyimpulkan respons emosional terhadap unsur fiksi"
+            },
+            {
+                text: `<div class="text-title">Teks Informasi: Literasi Keuangan</div>
+                Banyak remaja tergoda gaya hidup konsumtif karena pengaruh media sosial. Membeli barang *branded* demi gengsi, padahal menggunakan uang saku atau tabungan orang tua. Penting bagi remaja belajar membedakan 'kebutuhan' dan 'keinginan'. Menabung dan berinvestasi sejak dini adalah kunci kebebasan finansial di masa depan.`,
+                question: "Apa relevansi teks ini dengan perilaku remaja sehari-hari?",
+                type: "pg",
+                options: [
+                    "sangat relevan untuk mengerem budaya boros di kalangan remaja",
+                    "tidak relevan karena remaja belum bekerja",
+                    "remaja harus membeli barang branded agar dihargai",
+                    "investasi hanya untuk orang tua"
+                ],
+                correct: 0,
+                competency: "Evaluasi dan Apresiasi",
+                subCompetency: "Menilai relevansi peristiwa dengan kehidupan"
+            }
+        ];
+
+        // LOGIKA APLIKASI (Sama Persis dengan File Sebelumnya)
+        let currentQuestion = 0;
+        let userAnswers = new Array(questions.length).fill(null);
+        let answeredCount = 0;
+        let studentName = '';
+
+        function showNameInput() {
+            document.getElementById('welcomeScreen').style.display = 'none';
+            document.getElementById('nameScreen').style.display = 'block';
+            document.getElementById('studentName').focus();
+            document.getElementById('studentName').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') startTest();
+            });
+        }
+
+        function backToWelcome() {
+            document.getElementById('nameScreen').style.display = 'none';
+            document.getElementById('welcomeScreen').style.display = 'block';
+        }
+
+        function startTest() {
+            const nameInput = document.getElementById('studentName').value.trim();
+            if (nameInput === '') {
+                alert('Silakan masukkan nama Anda terlebih dahulu!');
+                document.getElementById('studentName').focus();
+                return;
+            }
+            studentName = nameInput;
+            document.getElementById('nameScreen').style.display = 'none';
+            document.getElementById('questionSection').style.display = 'block';
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const q = questions[currentQuestion];
+            const section = document.getElementById('questionSection');
+            let optionsHTML = '';
+            
+            if (q.type === 'pg') {
+                optionsHTML = q.options.map((opt, idx) => `
+                    <div class="option" onclick="selectOption(${idx})">
+                        <input type="radio" name="q${currentQuestion}" value="${idx}" 
+                            ${userAnswers[currentQuestion] === idx ? 'checked' : ''}>
+                        <span>${opt}</span>
+                    </div>
+                `).join('');
+            } else if (q.type === 'multiple') {
+                optionsHTML = q.options.map((opt, idx) => `
+                    <div class="option" onclick="toggleMultiple(${idx})">
+                        <input type="checkbox" id="opt${idx}" value="${idx}"
+                            ${userAnswers[currentQuestion]?.includes(idx) ? 'checked' : ''}>
+                        <span>${opt}</span>
+                    </div>
+                `).join('');
+            } else if (q.type === 'category') {
+                optionsHTML = `
+                    <p style="margin-bottom: 15px; font-weight: 500;">${q.categoryQuestion}</p>
+                    <table class="category-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 60%;">Pernyataan</th>
+                                ${q.categories[0].options.map(opt => `<th>${opt}</th>`).join('')}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${q.categories.map((cat, idx) => `
+                                <tr>
+                                    <td>${cat.statement}</td>
+                                    ${cat.options.map((opt, optIdx) => `
+                                        <td>
+                                            <div class="category-option">
+                                                <label>
+                                                    <input type="radio" name="cat${idx}" value="${optIdx}"
+                                                        ${userAnswers[currentQuestion]?.[idx] === optIdx ? 'checked' : ''}
+                                                        onchange="selectCategory(${idx}, ${optIdx})">
+                                                </label>
+                                            </div>
+                                        </td>
+                                    `).join('')}
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                `;
+            }
+            
+            section.innerHTML = `
+                <div class="text-box">${q.text}</div>
+                <div class="question">
+                    <div class="question-header">
+                        <span class="question-number">Soal ${currentQuestion + 1} dari ${questions.length}</span>
+                        <span class="competency-badge">${q.competency}</span>
+                    </div>
+                    <div class="question-text">${q.question}</div>
+                    <div class="options">${optionsHTML}</div>
+                </div>
+                <div class="navigation">
+                    <button class="btn btn-secondary" onclick="previousQuestion()" 
+                        ${currentQuestion === 0 ? 'disabled' : ''}>
+                        ← Sebelumnya
+                    </button>
+                    <button class="btn" onclick="nextQuestion()">
+                        ${currentQuestion === questions.length - 1 ? 'Selesai' : 'Selanjutnya →'}
+                    </button>
+                </div>
+            `;
+            updateProgress();
+        }
+
+        function selectOption(idx) {
+            if (userAnswers[currentQuestion] === null) answeredCount++;
+            userAnswers[currentQuestion] = idx;
+            document.querySelectorAll('.option').forEach((opt, i) => opt.classList.toggle('selected', i === idx));
+            document.querySelector(`input[value="${idx}"]`).checked = true;
+            updateProgress();
+        }
+
+        function toggleMultiple(idx) {
+            if (userAnswers[currentQuestion] === null) {
+                userAnswers[currentQuestion] = [];
+                answeredCount++;
+            }
+            const answers = userAnswers[currentQuestion];
+            const index = answers.indexOf(idx);
+            if (index > -1) {
+                answers.splice(index, 1);
+                if (answers.length === 0) {
+                    userAnswers[currentQuestion] = null;
+                    answeredCount--;
+                }
+            } else {
+                answers.push(idx);
+            }
+            const checkbox = document.getElementById(`opt${idx}`);
+            checkbox.checked = !checkbox.checked;
+            checkbox.parentElement.classList.toggle('selected', checkbox.checked);
+            updateProgress();
+        }
+
+        function selectCategory(catIdx, optIdx) {
+            if (userAnswers[currentQuestion] === null) {
+                userAnswers[currentQuestion] = new Array(questions[currentQuestion].categories.length).fill(null);
+                answeredCount++;
+            }
+            userAnswers[currentQuestion][catIdx] = optIdx;
+            updateProgress();
+        }
+
+        function updateProgress() {
+            const progress = (answeredCount / questions.length) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+            document.getElementById('answered').textContent = answeredCount;
+            document.getElementById('percentage').textContent = Math.round(progress) + '%';
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                loadQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                loadQuestion();
+            }
+        }
+
+        function showResults() {
+            let correct = 0;
+            const competencyStats = {
+                'Pemahaman Tekstual': { correct: 0, total: 0 },
+                'Pemahaman Inferensial': { correct: 0, total: 0 },
+                'Evaluasi dan Apresiasi': { correct: 0, total: 0 }
+            };
+
+            questions.forEach((q, idx) => {
+                const userAnswer = userAnswers[idx];
+                let isCorrect = false;
+
+                if (q.type === 'pg') {
+                    isCorrect = userAnswer === q.correct;
+                } else if (q.type === 'multiple') {
+                    if (userAnswer && Array.isArray(userAnswer) && Array.isArray(q.correct)) {
+                        const sortedUser = [...userAnswer].sort();
+                        const sortedCorrect = [...q.correct].sort();
+                        isCorrect = JSON.stringify(sortedUser) === JSON.stringify(sortedCorrect);
+                    }
+                } else if (q.type === 'category') {
+                    if (userAnswer && Array.isArray(userAnswer) && Array.isArray(q.correct)) {
+                        isCorrect = JSON.stringify(userAnswer) === JSON.stringify(q.correct);
+                    }
+                }
+
+                if (isCorrect) {
+                    correct++;
+                    competencyStats[q.competency].correct++;
+                }
+                competencyStats[q.competency].total++;
+            });
+
+            const percentage = Math.round((correct / questions.length) * 100);
+
+            document.getElementById('questionSection').style.display = 'none';
+            document.getElementById('resultScreen').style.display = 'block';
+            document.getElementById('studentNameDisplay').textContent = studentName;
+            document.getElementById('finalScore').textContent = correct;
+            document.getElementById('scorePercentage').textContent = percentage + '%';
+            document.getElementById('correctAnswers').textContent = correct;
+            document.getElementById('wrongAnswers').textContent = questions.length - correct;
+
+            const competencyResults = document.getElementById('competencyResults');
+            competencyResults.innerHTML = Object.entries(competencyStats).map(([name, stats]) => {
+                const compPercentage = stats.total > 0 ? Math.round((stats.correct / stats.total) * 100) : 0;
+                return `
+                    <div class="competency-card">
+                        <h4>${name}</h4>
+                        <div class="competency-score">${stats.correct}/${stats.total}</div>
+                        <p style="font-size: 14px; color: #666; margin-top: 5px;">${compPercentage}% benar</p>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function resetTest() {
+            currentQuestion = 0;
+            userAnswers = new Array(questions.length).fill(null);
+            answeredCount = 0;
+            document.getElementById('resultScreen').style.display = 'none';
+            document.getElementById('welcomeScreen').style.display = 'block';
+            updateProgress();
+        }
+    </script>
+</body>
+</html>
