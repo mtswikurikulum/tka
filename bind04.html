@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TKA Bahasa Indonesia SMP - Paket D</title>
+    <style>
+        /* CSS Design & Layout - Tetap Sama Persis */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        .header h1 { font-size: 28px; margin-bottom: 10px; }
+        .header p { font-size: 16px; opacity: 0.9; }
+        .progress-bar {
+            background: #f0f0f0;
+            height: 8px;
+            border-radius: 4px;
+            margin: 20px 30px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            padding: 20px 30px;
+            background: #f8f9fa;
+            border-bottom: 2px solid #e9ecef;
+        }
+        .stat-item { text-align: center; }
+        .stat-label { font-size: 12px; color: #6c757d; margin-bottom: 5px; }
+        .stat-value { font-size: 24px; font-weight: bold; color: #667eea; }
+        .content { padding: 30px; }
+        .welcome-screen, .result-screen, .name-screen {
+            text-align: center;
+            padding: 40px 20px;
+        }
+        .welcome-screen h2, .name-screen h2 { font-size: 28px; color: #333; margin-bottom: 20px; }
+        .welcome-screen p, .name-screen p { font-size: 16px; color: #666; margin-bottom: 30px; line-height: 1.6; }
+        .name-input-group { max-width: 400px; margin: 30px auto; }
+        .name-input-group label {
+            display: block; text-align: left; font-weight: bold; color: #333; margin-bottom: 10px; font-size: 16px;
+        }
+        .name-input-group input {
+            width: 100%; padding: 15px; font-size: 16px; border: 2px solid #e9ecef; border-radius: 10px; transition: border-color 0.3s;
+        }
+        .name-input-group input:focus { outline: none; border-color: #667eea; }
+        .student-name-display {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white; padding: 15px 25px; border-radius: 15px; display: inline-block; margin-bottom: 20px; font-size: 18px; font-weight: bold;
+        }
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white; border: none; padding: 15px 40px; font-size: 16px; border-radius: 30px; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; font-weight: bold;
+        }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3); }
+        .btn-secondary { background: #6c757d; margin-left: 10px; }
+        .question-section { display: none; }
+        .question-section.active { display: block; }
+        .text-box {
+            background: #f8f9fa; border-left: 4px solid #667eea; padding: 20px; margin-bottom: 25px; border-radius: 8px; line-height: 1.8;
+        }
+        .text-title { font-size: 18px; font-weight: bold; color: #667eea; margin-bottom: 15px; }
+        .question { margin-bottom: 30px; }
+        .question-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .question-number { background: #667eea; color: white; padding: 8px 16px; border-radius: 20px; font-weight: bold; font-size: 14px; }
+        .competency-badge { background: #e9ecef; color: #495057; padding: 6px 12px; border-radius: 15px; font-size: 12px; }
+        .question-text { font-size: 16px; color: #333; margin-bottom: 20px; font-weight: 500; line-height: 1.6; }
+        .options { display: flex; flex-direction: column; gap: 12px; }
+        .option {
+            background: #f8f9fa; border: 2px solid #e9ecef; padding: 15px; border-radius: 10px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center;
+        }
+        .option:hover { border-color: #667eea; background: #f0f4ff; }
