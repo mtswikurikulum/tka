@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TKA Bahasa Indonesia SMP - Paket C</title>
+    <style>
+        /* CSS Design & Layout - Tetap Sama Persis */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        .header h1 { font-size: 28px; margin-bottom: 10px; }
+        .header p { font-size: 16px; opacity: 0.9; }
+        .progress-bar {
+            background: #f0f0f0;
+            height: 8px;
+            border-radius: 4px;
+            margin: 20px 30px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            padding: 20px 30px;
+            background: #f8f9fa;
+            border-bottom: 2px solid #e9ecef;
+        }
+        .stat-item { text-align: center; }
+        .stat-label { font-size: 12px; color: #6c757d; margin-bottom: 5px; }
+        .stat-value { font-size: 24px; font-weight: bold; color: #667eea; }
+        .content { padding: 30px; }
+        .welcome-screen, .result-screen, .name-screen {
+            text-align: center;
+            padding: 40px 20px;
+        }
+        .welcome-screen h2, .name-screen h2 { font-size: 28px; color: #333; margin-bottom: 20px; }
+        .welcome-screen p, .name-screen p { font-size: 16px; color: #666; margin-bottom: 30px; line-height: 1.6; }
+        .name-input-group { max-width: 400px; margin: 30px auto; }
+        .name-input-group label {
+            display: block; text-align: left; font-weight: bold; color: #333; margin-bottom: 10px; font-size: 16px;
+        }
+        .name-input-group input {
+            width: 100%; padding: 15px; font-size: 16px; border: 2px solid #e9ecef; border-radius: 10px; transition: border-color 0.3s;
+        }
+        .name-input-group input:focus { outline: none; border-color: #667eea; }
+        .student-name-display {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white; padding: 15px 25px; border-radius: 15px; display: inline-block; margin-bottom: 20px; font-size: 18px; font-weight: bold;
+        }
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white; border: none; padding: 15px 40px; font-size: 16px; border-radius: 30px; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; font-weight: bold;
+        }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3); }
+        .btn-secondary { background: #6c757d; margin-left: 10px; }
+        .question-section { display: none; }
+        .question-section.active { display: block; }
+        .text-box {
+            background: #f8f9fa; border-left: 4px solid #667eea; padding: 20px; margin-bottom: 25px; border-radius: 8px; line-height: 1.8;
+        }
+        .text-title { font-size: 18px; font-weight: bold; color: #667eea; margin-bottom: 15px; }
+        .question { margin-bottom: 30px; }
+        .question-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .question-number { background: #667eea; color: white; padding: 8px 16px; border-radius: 20px; font-weight: bold; font-size: 14px; }
+        .competency-badge { background: #e9ecef; color: #495057; padding: 6px 12px; border-radius: 15px; font-size: 12px; }
+        .question-text { font-size: 16px; color: #333; margin-bottom: 20px; font-weight: 500; line-height: 1.6; }
+        .options { display: flex; flex-direction: column; gap: 12px; }
+        .option {
+            background: #f8f9fa; border: 2px solid #e9ecef; padding: 15px; border-radius: 10px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center;
+        }
+        .option:hover { border-color: #667eea; background: #f0f4ff; }
+        .option.selected { border-color: #667eea; background: #e8edff; }
+        .option.correct { border-color: #28a745; background: #d4edda; }
+        .option.incorrect { border-color: #dc3545; background: #f8d7da; }
+        .option input[type="checkbox"], .option input[type="radio"] { margin-right: 12px; width: 20px; height: 20px; cursor: pointer; }
+        .category-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        .category-table th, .category-table td { border: 1px solid #dee2e6; padding: 12px; text-align: left; }
+        .category-table th { background: #f8f9fa; font-weight: bold; }
+        .category-option { display: flex; justify-content: center; gap: 20px; }
+        .category-option label { cursor: pointer; display: flex; align-items: center; gap: 5px; }
+        .navigation { display: flex; justify-content: space-between; margin-top: 30px; padding-top: 20px; border-top: 2px solid #e9ecef; }
+        .result-screen h2 { font-size: 32px; color: #333; margin-bottom: 20px; }
+        .score-circle {
+            width: 200px; height: 200px; border-radius: 50%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 30px auto; color: white; box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+        .score-number { font-size: 48px; font-weight: bold; }
+        .score-label { font-size: 16px; opacity: 0.9; }
+        .result-details { background: #f8f9fa; padding: 20px; border-radius: 10px; margin: 20px 0; text-align: left; }
+        .result-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #dee2e6; }
+        .result-item:last-child { border-bottom: none; }
+        .competency-breakdown { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin: 20px 0; }
+        .competency-card { background: white; border: 2px solid #e9ecef; padding: 15px; border-radius: 10px; }
+        .competency-card h4 { color: #667eea; margin-bottom: 10px; font-size: 14px; }
+        .competency-score { font-size: 24px; font-weight: bold; color: #333; }
+        @media (max-width: 768px) {
+            .container { margin: 10px; }
+            .stats { flex-direction: column; gap: 15px; }
+            .navigation { flex-direction: column; gap: 10px; }
+            .btn { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📚 TKA Bahasa Indonesia SMP</h1>
+            <p>Tes Kemampuan Akademik - Paket C</p>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressBar"></div>
+        </div>
+
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-label">Soal Dijawab</div>
+                <div class="stat-value" id="answered">0</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Total Soal</div>
+                <div class="stat-value">30</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Progress</div>
+                <div class="stat-value" id="percentage">0%</div>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="welcome-screen" id="welcomeScreen">
+                <h2>Selamat Datang di Paket C! 👋</h2>
+                <p>Tes ini terdiri dari 30 soal yang mengukur kemampuan membaca Anda sesuai matriks kompetensi:</p>
+                <div class="competency-breakdown">
+                    <div class="competency-card">
+                        <h4>📖 Pemahaman Tekstual</h4>
+                        <p style="font-size: 14px; color: #666;">Informasi eksplisit & istilah</p>
+                    </div>
+                    <div class="competency-card">
+                        <h4>🔍 Pemahaman Inferensial</h4>
+                        <p style="font-size: 14px; color: #666;">Simpulan, prediksi & kiasan</p>
+                    </div>
+                    <div class="competency-card">
+                        <h4>⭐ Evaluasi & Apresiasi</h4>
+                        <p style="font-size: 14px; color: #666;">Relevansi, perbandingan & emosi</p>
+                    </div>
+                </div>
+                <p><strong>Petunjuk:</strong> Baca setiap teks dengan cermat. Klik "Mulai Tes" untuk memulai.</p>
+                <button class="btn" onclick="showNameInput()">Mulai Tes</button>
+            </div>
+
+            <div class="name-screen" id="nameScreen" style="display: none;">
+                <h2>✏️ Identitas Peserta</h2>
+                <p>Silakan masukkan nama Anda sebelum memulai tes</p>
+                <div class="name-input-group">
+                    <label for="studentName">Nama Lengkap:</label>
+                    <input type="text" id="studentName" placeholder="Masukkan nama Anda..." autofocus>
+                </div>
+                <button class="btn" onclick="startTest()">Mulai Mengerjakan</button>
+                <button class="btn btn-secondary" onclick="backToWelcome()">Kembali</button>
+            </div>
+
+            <div class="question-section" id="questionSection"></div>
+
+            <div class="result-screen" id="resultScreen" style="display: none;">
+                <div class="student-name-display" id="studentNameDisplay"></div>
+                <h2>🎉 Tes Selesai!</h2>
+                <div class="score-circle">
+                    <div class="score-number" id="finalScore">0</div>
+                    <div class="score-label">dari 30</div>
+                </div>
+                <div class="result-details">
+                    <div class="result-item">
+                        <span>Nilai Akhir:</span>
+                        <strong id="scorePercentage">0%</strong>
+                    </div>
+                    <div class="result-item">
+                        <span>Jawaban Benar:</span>
+                        <strong id="correctAnswers">0</strong>
+                    </div>
+                    <div class="result-item">
+                        <span>Jawaban Salah:</span>
+                        <strong id="wrongAnswers">0</strong>
+                    </div>
+                </div>
+                <h3 style="margin: 30px 0 15px 0; color: #333;">Rincian Per Kompetensi</h3>
+                <div class="competency-breakdown" id="competencyResults"></div>
+                <button class="btn" onclick="resetTest()">Ulangi Tes</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // DATA SOAL PAKET C - 30 SOAL (Sesuai Matriks)
+        const questions = [
+            // --- PEMAHAMAN TEKSTUAL (11 Soal) ---
+            {
+                text: `<div class="text-title">Teks Informasi: Energi Biogas</div>
+                Biogas adalah sumber energi alternatif yang dihasilkan dari fermentasi bahan organik oleh bakteri anaerob. Bahan baku utamanya meliputi kotoran ternak, limbah pertanian, dan sampah organik rumah tangga. Proses ini menghasilkan gas metana yang dapat digunakan untuk memasak dan pembangkit listrik. Pemanfaatan biogas efektif mengurangi ketergantungan pada bahan bakar fosil serta mengatasi masalah pencemaran lingkungan akibat limbah ternak.`,
+                question: "Istilah 'bakteri anaerob' dalam teks bermakna bakteri yang ....",
+                type: "pg",
+                options: [
+                    "membutuhkan oksigen untuk hidup",
+                    "hidup dan bekerja tanpa bantuan oksigen",
+                    "hanya hidup di dalam perut ternak",
+                    "berasal dari sampah plastik"
+                ],
+                correct: 1,
+                competency: "Pemahaman Tekstual",
+                subCompetency: "Mengidentifikasi penggunaan istilah dalam berbagai bidang"
+            },
+            {
+                text: `<div class="text-title">Teks Fiksi: Pendakian Gunung</div>
+                Angin gunung berhembus menusuk tulang saat Raka mencapai pos tiga. Kabut tebal mulai turun, menyamarkan pandangan ke arah puncak yang berbatu cadas. Di sekelilingnya, pohon-pohon edelweis tumbuh liar di antara bebatuan vulkanik. Suara elang jawa sesekali terdengar melengking memecah kesunyian tebing curam itu. Raka mengeratkan jaket tebalnya sambil menatap jalur setapak yang semakin menanjak.`,
+                question: "Kosakata yang menunjukkan latar tempat pegunungan adalah ....",
+                type: "multiple",
+                options: [
+                    "pos tiga",
+                    "pohon edelweis",
+                    "jaket tebal",
+                    "bebatuan vulkanik"
+                ],
+                correct: [0, 1, 3],
+                competency: "Pemahaman Tekstual",
+                subCompetency: "Mengidentifikasi objek/latar berdasarkan kosakata"
+            },
+            {
+                text: `<div class="text-title">Teks Informasi: Nutrisi Ikan Gabus</div>
+                Ikan gabus dikenal memiliki kandungan albumin yang sangat tinggi. Albumin adalah jenis protein yang penting untuk proses penyembuhan luka dan pembentukan jaringan sel baru. Konsumsi ekstrak ikan gabus sering disarankan bagi pasien pasca-operasi untuk mempercepat pemulihan. Selain itu, ikan ini juga mengandung asam amino esensial dan lemak sehat yang baik untuk pertumbuhan anak-anak.`,
+                question: "Informasi tersurat mengenai manfaat albumin pada ikan gabus adalah ....",
+                type: "pg",
+                options: [
+                    "menambah nafsu makan anak",
+                    "mempercepat penyembuhan luka dan pembentukan sel",
+                    "menggantikan seluruh kebutuhan protein tubuh",
+                    "menyembuhkan segala jenis penyakit"
+                ],
+                correct: 1,
+                competency: "Pemahaman Tekstual",
+                subCompetency: "Mengidentifikasi informasi penting yang tersurat"
+            },
+            {
+                text: `<div class="text-title">Teks Informasi: Pembuatan Kertas Daur Ulang</div>
+                Proses daur ulang kertas dimulai dengan pengumpulan kertas bekas. Kertas tersebut kemudian direndam dalam air hingga menjadi bubur kertas (pulp). Setelah itu, bubur kertas dicampur dengan lem kanji dan pewarna alami. Adonan kemudian dicetak menggunakan saringan kawat halus dan dikeringkan di bawah sinar matahari. Lembaran kering yang dihasilkan dapat disetrika agar permukaannya lebih halus.`,
+                question: "Urutkan tahapan pembuatan kertas daur ulang yang benar!",
+                type: "category",
+                categoryQuestion: "Tentukan urutan langkah-langkah berikut:",
+                categories: [
+                    { statement: "Langkah 1: Perendaman kertas menjadi pulp", options: ["Benar", "Salah"] },
+                    { statement: "Langkah 2: Pencampuran dengan lem dan pewarna", options: ["Benar", "Salah"] },
+                    { statement: "Langkah 3: Penyetrikaan lembaran basah", options: ["Benar", "Salah"] },
+                    { statement: "Langkah 4: Pencetakan dan pengeringan", options: ["Benar", "Salah"] }
+                ],
+                correct: [0, 0, 1, 0],
+                competency: "Pemahaman Tekstual",
+                subCompetency: "Menyusun kerangka berdasarkan bagian penting"
+            },
+            {
+                text: `<div class="text-title">Teks Informasi: Kecerdasan Buatan (AI)</div>
+                Kecerdasan Buatan atau AI bekerja menggunakan algoritma kompleks untuk memproses data. Machine learning adalah cabang AI di mana komputer belajar dari data tanpa diprogram secara eksplisit. Deep learning meniru cara kerja otak manusia menggunakan jaringan saraf tiruan. Teknologi ini kini diterapkan dalam pengenalan wajah, asisten virtual, hingga mobil otonom.`,
+                question: "Kata 'algoritma' dalam teks merujuk pada ....",
+                type: "pg",
+                options: [
+                    "alat fisik dalam komputer",
+                    "urutan langkah logis penyelesaian masalah",
+                    "jaringan internet yang sangat cepat",
+                    "robot yang berbentuk manusia"
+                ],
+                correct: 1,
+                competency: "Pemahaman Tekstual",
+                subCompetency: "Mengidentifikasi penggunaan istilah dalam berbagai bidang"
+            },
+            {
+                text: `<div class="text-title">Teks Fiksi: Perpustakaan Tua</div>
+                Ruangan itu berbau debu dan kertas lapuk. Rak-rak kayu jati setinggi langit-langit berderet rapi, penuh sesak dengan buku-buku bersampul kulit tebal. Cahaya matahari sore masuk malu-malu lewat jendela kaca patri yang buram. Suasana begitu hening, hanya suara lembaran kertas yang dibalik terdengar sesekali. Di pojok ruangan, sebuah jam antik berdetak monoton.`,
+                question: "Frasa yang menggambarkan suasana hening dan kuno adalah ....",
+                type: "multiple",
+                options: [
+                    "buku bersampul kulit tebal",
+                    "jam antik berdetak monoton",
+                    "rak kayu jati",
+                    "cahaya matahari sore"
+                ],
+                correct: [0, 1],
+                competency: "Pemahaman Tekstual",
+                subCompetency: "Mengidentifikasi objek/latar berdasarkan kosakata"
+            },
+            {
+                text: `<div class="text-title">Teks Informasi: Candi Borobudur</div>
+                Candi Borobudur adalah monumen Buddha terbesar di dunia yang dibangun pada masa Dinasti Syailendra. Bangunan ini berbentuk punden berundak yang terdiri dari sembilan tingkat. Tiga tingkat teratas berbentuk lingkaran dengan stupa induk di puncaknya. Dinding candi dihiasi dengan 2.672 panel relief yang menceritakan kisah kehidupan Buddha. Pemugaran besar-besaran pernah dilakukan UNESCO untuk menyelamatkan situs ini.`,
+                question: "Berapa jumlah panel relief yang menghiasi dinding Candi Borobudur?",
+                type: "pg",
+                options: [
+                    "Sembilan tingkat",
+                    "Tiga tingkat lingkaran",
+                    "2.672 panel",
+                    "Tak terhitung"
+                ],
+                correct: 2,
+                competency: "Pemahaman Tekstual",
+                subCompetency: "Mengidentifikasi informasi penting yang tersurat"
+            },
+            {
+                text: `<div class="text-title">Teks Informasi: Struktur Sel Hewan</div>
+                Sel hewan memiliki organel-organel yang menjalankan fungsi kehidupan. Mitokondria berfungsi sebagai tempat respirasi sel untuk menghasilkan energi. Nukleus atau inti sel mengatur seluruh aktivitas sel. Ribosom bertugas dalam sintesis protein. Berbeda dengan sel tumbuhan, sel hewan tidak memiliki dinding sel yang kaku dan kloroplas.`,
+                question: "Istilah 'mitokondria' dalam teks biologi di atas berfungsi sebagai ....",
+                type: "pg",
+                options: [
+                    "pusat kendali sel",
+                    "pembentuk dinding sel",
+                    "penghasil energi melalui respirasi",
+                    "tempat pembuatan makanan"
+                ],
+                correct: 2,
+                competency: "Pemahaman Tekstual",
+                subCompetency: "Mengidentifikasi penggunaan istilah dalam berbagai bidang"
+            },
+            {
+                text: `<div class="text-title">Teks Fiksi: Pasar Terapung</div>
+                Fajar belum sepenuhnya merekah, namun Sungai Barito sudah ramai. Jukung-jukung (perahu kecil) berdesakan, sarat dengan muatan buah dan sayur. Para ibu memakai caping lebar, dengan cekatan mendayung sambil menawarkan dagangan. Transaksi dilakukan di atas air yang bergelombang tenang. Aroma kopi panas dari perahu warung menguar di udara pagi yang sejuk.`,
+                question: "Latar waktu dan tempat pada kutipan tersebut adalah ....",
+                type: "pg",
+                options: [
+                    "siang hari di pasar modern",
+                    "pagi hari di sungai",
+                    "malam hari di pelabuhan",
+                    "sore hari di danau"
+                ],
+                correct: 1,
+                competency: "Pemahaman Tekstual",
+                subCompetency: "Mengidentifikasi objek/latar berdasarkan kosakata"
+            },
+            {
+                text: `<div class="text-title">Teks Informasi: Fenomena El Nino</div>
+                El Nino adalah fenomena pemanasan Suhu Muka Laut (SML) di atas kondisi normal yang terjadi di Samudera Pasifik bagian tengah. Pemanasan ini meningkatkan potensi pertumbuhan awan di Samudera Pasifik dan mengurangi curah hujan di wilayah Indonesia. Akibatnya, Indonesia mengalami kekeringan panjang. Sektor pertanian menjadi yang paling terdampak karena gagal panen akibat kurangnya pasokan air.`,
+                question: "Dampak langsung El Nino bagi wilayah Indonesia yang tersurat dalam teks adalah ....",
+                type: "pg",
+                options: [
+                    "meningkatnya curah hujan drastis",
+                    "terjadinya banjir bandang",
+                    "berkurangnya curah hujan dan kekeringan",
+                    "suhu laut menjadi sangat dingin"
+                ],
+                correct: 2,
+                competency: "Pemahaman Tekstual",
+                subCompetency: "Mengidentifikasi informasi penting yang tersurat"
+            },
+            {
+                text: `<div class="text-title">Teks Informasi: Hukum Permintaan</div>
+                Dalam ekonomi, hukum permintaan menjelaskan hubungan antara harga dan jumlah barang yang diminta. Jika harga suatu barang naik, maka jumlah permintaan terhadap barang tersebut akan turun (ceteris paribus). Sebaliknya, jika harga turun, permintaan akan naik. Faktor lain seperti selera konsumen dan pendapatan juga memengaruhi, namun harga tetap menjadi variabel utama dalam kurva permintaan.`,
+                question: "Susunlah logika hukum permintaan berdasarkan teks!",
+                type: "category",
+                categoryQuestion: "Tentukan kebenaran pernyataan berikut sesuai hukum permintaan:",
+                categories: [
+                    { statement: "Harga Naik -> Permintaan Turun", options: ["Benar", "Salah"] },
+                    { statement: "Harga Turun -> Permintaan Turun", options: ["Benar", "Salah"] },
+                    { statement: "Harga Turun -> Permintaan Naik", options: ["Benar", "Salah"] },
+                    { statement: "Harga Naik -> Permintaan Naik", options: ["Benar", "Salah"] }
+                ],
+                correct: [0, 1, 0, 1],
+                competency: "Pemahaman Tekstual",
+                subCompetency: "Menyusun kerangka berdasarkan bagian penting"
+            },
+
+            // --- PEMAHAMAN INFERENSIAL (11 Soal) ---
+            {
+                text: `<div class="text-title">Teks Informasi: Transformasi Digital UMKM</div>
+                Banyak UMKM (Usaha Mikro Kecil Menengah) beralih ke platform digital. Data menunjukkan peningkatan transaksi online sebesar 40% tahun ini. Toko fisik mulai sepi pengunjung, sementara jasa kurir paket kewalahan melayani pengiriman. Pelaku usaha yang bertahan dengan cara konvensional mengeluhkan penurunan omzet drastis. Pemerintah gencar mengadakan pelatihan digital marketing gratis.`,
+                question: "Simpulan yang tepat mengenai situasi ekonomi dalam teks adalah ....",
+                type: "pg",
+                options: [
+                    "semua toko fisik pasti akan bangkrut",
+                    "adaptasi digital menjadi kunci keberlangsungan UMKM saat ini",
+                    "pemerintah melarang penjualan secara konvensional",
+                    "jasa kurir merugikan pedagang kecil"
+                ],
+                correct: 1,
+                competency: "Pemahaman Inferensial",
+                subCompetency: "Menyimpulkan ide pokok/gagasan"
+            },
+            {
+                text: `<div class="text-title">Teks Fiksi: Dompet yang Hilang</div>
+                Budi melihat sebuah dompet tebal terjatuh dari saku seorang bapak yang terburu-buru naik bus. Tanpa pikir panjang, Budi memungutnya dan berlari mengejar bus yang mulai melaju. Napasnya tersengal saat ia berhasil mengetuk pintu bus. Bapak itu terkejut dan memeriksa sakunya. Saat dompet kembali ke tangannya, mata bapak itu berkaca-kaca. Ia hendak memberi uang imbalan, namun Budi menolaknya halus dan segera pamit.`,
+                question: "Nilai moral utama yang tergambar dari tokoh Budi adalah ....",
+                type: "pg",
+                options: [
+                    "kecerobohan dalam bertindak",
+                    "keberanian melawan bahaya",
+                    "kejujuran dan ketulusan tanpa pamrih",
+                    "kepandaian mencari kesempatan"
+                ],
+                correct: 2,
+                competency: "Pemahaman Inferensial",
+                subCompetency: "Menyimpulkan nilai-nilai dalam teks"
+            },
+            {
+                text: `<div class="text-title">Teks Informasi: Deforestasi</div>
+                Hutan hujan tropis ditebang untuk membuka lahan perkebunan sawit. Hilangnya pepohonan menyebabkan tanah tidak mampu menyerap air hujan dengan baik. Akar pohon yang seharusnya mengikat tanah kini tiada. Ketika musim hujan tiba dengan intensitas tinggi, air meluncur deras membawa lapisan tanah permukaan menuruni lereng bukit menuju permukiman warga.`,
+                question: "Hubungan sebab-akibat yang logis berdasarkan teks adalah ....",
+                type: "pg",
+                options: [
+                    "penebangan hutan menyebabkan tanah menjadi lebih subur",
+                    "hujan deras menyebabkan hutan tumbuh kembali",
+                    "hilangnya tutupan hutan meningkatkan risiko tanah longsor dan banjir",
+                    "perkebunan sawit mencegah terjadinya banjir"
+                ],
+                correct: 2,
+                competency: "Pemahaman Inferensial",
+                subCompetency: "Menjelaskan kelogisan hubungan antarinformasi"
+            },
+            {
+                text: `<div class="text-title">Teks Informasi: Kendaraan Listrik</div>
+                Infrastruktur pengisian daya kendaraan listrik (SPKLU) terus ditambah oleh PLN. Pabrikan mobil berlomba-lomba merilis model listrik dengan harga terjangkau. Subsidi pemerintah untuk pembelian motor listrik juga telah disahkan. Kesadaran masyarakat akan polusi udara semakin tinggi, membuat mereka mencari alternatif transportasi yang lebih bersih.`,
+                question: "Prediksi yang paling mungkin terjadi dalam 5 tahun ke depan adalah ....",
+                type: "pg",
+                options: [
+                    "penjualan kendaraan berbahan bakar bensin akan meningkat pesat",
+                    "populasi kendaraan listrik di jalan raya akan bertambah signifikan",
+                    "PLN akan menghentikan pasokan listrik untuk rumah tangga",
+                    "masyarakat akan kembali menggunakan sepeda onthel"
+                ],
+                correct: 1,
+                competency: "Pemahaman Inferensial",
+                subCompetency: "Memprediksi peristiwa dalam teks"
+            },
+            {
+                text: `<div class="text-title">Puisi: Rembulan</div>
+                Rembulan tersenyum di balik awan kelabu
+                Mengintip bumi yang lelap dalam mimpi
+                Cahayanya adalah selimut perak yang lembut
+                Menghapus jejak takut pada pekat malam
+                Ia setia menjaga hingga fajar menyapa
+                Meski seringkali diabaikan pungguk yang rindu`,
+                question: "Majas personifikasi 'Rembulan tersenyum' bermakna ....",
+                type: "pg",
+                options: [
+                    "bulan memiliki wajah dan mulut",
+                    "bulan bersinar indah dan menenangkan",
+                    "bulan sedang menertawakan bumi",
+                    "awan kelabu menutupi bulan"
+                ],
+                correct: 1,
+                competency: "Pemahaman Inferensial",
+                subCompetency: "Menjelaskan bahasa kias dalam teks fiksi"
+            },
+            {
+                text: `<div class="text-title">Teks Informasi: Urban Farming</div>
+                Urban farming atau pertanian perkotaan memanfaatkan lahan sempit seperti atap rumah atau pekarangan vertikal. Metode ini mendukung ketahanan pangan keluarga. Selain menyediakan sayuran segar bebas pestisida, aktivitas ini juga mengurangi stres bagi warga kota. Panas kota juga dapat diredam dengan banyaknya tanaman hijau di area permukiman.`,
+                question: "Gagasan utama paragraf tersebut adalah ....",
+                type: "pg",
+                options: [
+                    "urban farming hanya untuk hiasan rumah",
+                    "manfaat ganda urban farming bagi warga kota",
+                    "sayuran di kota lebih mahal harganya",
+                    "warga kota stres karena macet"
+                ],
+                correct: 1,
+                competency: "Pemahaman Inferensial",
+                subCompetency: "Menyimpulkan ide pokok dalam teks"
+            },
+            {
+                text: `<div class="text-title">Teks Fiksi: Guru Kilat</div>
+                Pak Harun dikenal sebagai guru paling disiplin. Jika bel masuk berbunyi, pintu kelasnya sudah tertutup rapat. Tak ada toleransi bagi keterlambatan, bahkan satu menit pun. Namun, setiap sore, ia terlihat sabar mengajar anak-anak pemulung membaca di gubuk reyot belakang sekolah tanpa dibayar sepeser pun. Suaranya yang lantang di kelas berubah lembut saat menuntun tangan kecil memegang pensil.`,
+                question: "Watak Pak Harun yang dapat disimpulkan adalah ....",
+                type: "pg",
+                options: [
+                    "kejam dan tidak punya hati",
+                    "tegas dalam aturan namun berhati mulia",
+                    "suka mencari muka di depan kepala sekolah",
+                    "pemarah dan tidak sabaran"
+                ],
+                correct: 1,
+                competency: "Pemahaman Inferensial",
+                subCompetency: "Menyimpulkan tokoh dalam teks"
+            },
+            {
+                text: `<div class="text-title">Teks Informasi: Gaya Hidup Sedentari</div>
+                Gaya hidup sedentari (kurang gerak) semakin umum di era digital. Orang duduk berjam-jam di depan komputer atau gawai. Pola makan tinggi kalori dan gula memperparah kondisi. Data kesehatan menunjukkan lonjakan kasus diabetes tipe 2 dan obesitas pada usia muda. Dokter menegaskan bahwa olahraga rutin 30 menit sehari dapat menurunkan risiko penyakit metabolik secara drastis.`,
+                question: "Hubungan logis antara kurang gerak dan penyakit adalah ....",
+                type: "pg",
+                options: [
+                    "kurang gerak menyebabkan tubuh menghemat energi sehingga lebih sehat",
+                    "penyakit diabetes disebabkan oleh terlalu banyak olahraga",
+                    "kurang aktivitas fisik meningkatkan risiko penumpukan kalori dan penyakit",
+                    "era digital membuat orang otomatis menjadi sehat"
+                ],
+                correct: 2,
+                competency: "Pemahaman Inferensial",
+                subCompetency: "Menjelaskan kelogisan hubungan antarinformasi"
+            },
+            {
+                text: `<div class="text-title">Teks Informasi: Wisata Luar Angkasa</div>
+                Perusahaan swasta mulai sukses menerbangkan warga sipil ke orbit bumi. Biaya perjalanan memang masih miliaran rupiah, namun teknologi roket guna ulang (reusable rocket) terus dikembangkan untuk menekan biaya. Minat miliarder dunia untuk berwisata ke luar angkasa sangat tinggi. Beberapa perusahaan bahkan merencanakan pembangunan hotel di stasiun luar angkasa.`,
+                question: "Prediksi jangka panjang dari tren di atas adalah ....",
+                type: "pg",
+                options: [
+                    "wisata luar angkasa akan menjadi lebih terjangkau dan komersial",
+                    "pemerintah akan melarang total penerbangan ke luar angkasa",
+                    "luar angkasa akan ditinggalkan karena tidak menarik",
+                    "semua manusia akan pindah ke Mars tahun depan"
+                ],
+                correct: 0,
+                competency: "Pemahaman Inferensial",
+                subCompetency: "Memprediksi peristiwa dalam teks"
+            },
+            {
+                text: `<div class="text-title">Puisi: Lautan</div>
+                Debur ombak menghantam karang cadas
+                Meneriakkan lagu kebebasan yang abadi
+                Angin asin membelai wajah nelayan tua
+                Camar memekik menyambar ikan di permukaan
+                Biru membentang tanpa batas, menyatu dengan langit`,
+                question: "Citraan yang dominan dalam kutipan puisi di atas adalah ....",
+                type: "pg",
+                options: [
+                    "penglihatan (visual) dan pendengaran (auditif)",
+                    "penciuman (olfaktori) saja",
+                    "perabaan (taktil) dan pengecapan",
+                    "gerak (kinestetik) saja"
+                ],
+                correct: 0,
+                competency: "Pemahaman Inferensial",
+                subCompetency: "Menjelaskan citraan dalam teks fiksi"
+            },
+            {
+                text: `<div class="text-title">Teks Fiksi: Kesalahpahaman</div>
+                Dina mendiamkan Sarah selama seminggu karena mengira Sarah membocorkan rahasianya. Sarah bingung namun tetap berusaha menyapa Dina. Akhirnya, terungkap bahwa yang bercerita adalah adik Dina sendiri yang tidak sengaja mendengar. Dina merasa sangat malu dan menyesal. Ia mendatangi rumah Sarah dengan membawa cokelat kesukaan sahabatnya itu. Sarah menyambutnya dengan pelukan hangat tanpa bertanya apa-apa.`,
+                question: "Peristiwa akhir cerita menunjukkan bahwa ....",
+                type: "pg",
+                options: [
+                    "persahabatan mereka hancur selamanya",
+                    "Dina gengsi untuk meminta maaf",
+                    "Sarah pendendam dan tidak mau memaafkan",
+                    "kesalahpahaman terselesaikan dengan kebesaran hati dan maaf"
+                ],
+                correct: 3,
+                competency: "Pemahaman Inferensial",
+                subCompetency: "Menyimpulkan peristiwa dalam teks"
+            },
+
+            // --- EVALUASI DAN APRESIASI (8 Soal) ---
+            {
+                text: `<div class="text-title">Teks Informasi: Cyberbullying</div>
+                Komentar jahat di media sosial sering dianggap sepele oleh pelakunya. Padahal, bagi korban, dampaknya bisa sangat fatal mulai dari depresi, menarik diri dari lingkungan, hingga keinginan bunuh diri. Jejak digital sulit dihapus, membuat trauma korban berkepanjangan. Undang-undang ITE kini mengatur sanksi tegas bagi pelaku perundungan siber.`,
+                question: "Relevansi teks tersebut dengan kehidupan remaja saat ini adalah ....",
+                type: "pg",
+                options: [
+                    "tidak relevan karena remaja jarang main medsos",
+                    "sangat relevan karena banyak remaja berinteraksi di dunia maya",
+                    "hanya relevan bagi orang dewasa yang bekerja",
+                    "tidak ada hubungannya dengan hukum"
+                ],
+                correct: 1,
+                competency: "Evaluasi dan Apresiasi",
+                subCompetency: "Menilai relevansi peristiwa dengan kehidupan"
+            },
+            {
+                text: `<div class="text-title">Teks 1: Pasar Tradisional</div>
+                Pasar tradisional menawarkan interaksi hangat antara penjual dan pembeli. Proses tawar-menawar adalah seni komunikasi yang mengakrabkan. Produk yang dijual biasanya segar karena langsung dari petani. Namun, kondisi pasar seringkali becek dan kurang nyaman.
+                
+                <div class="text-title">Teks 2: Supermarket</div>
+                Supermarket menawarkan kenyamanan belanja dengan pendingin ruangan dan lantai bersih. Harga barang sudah pasti (fixed price) sehingga tidak perlu tawar-menawar. Produk dikemas rapi dan higienis. Namun, interaksi sosial sangat minim.`,
+                question: "Bandingkan kedua teks tersebut! Pernyataan yang benar adalah ....",
+                type: "multiple",
+                options: [
+                    "Teks 1 menonjolkan aspek sosial, Teks 2 menonjolkan kenyamanan",
+                    "Kedua teks membahas tempat belanja dengan kelebihan masing-masing",
+                    "Pasar tradisional lebih higienis daripada supermarket",
+                    "Supermarket memungkinkan tawar-menawar harga"
+                ],
+                correct: [0, 1],
+                competency: "Evaluasi dan Apresiasi",
+                subCompetency: "Menilai kesesuaian berdasarkan perbandingan antarteks"
+            },
+            {
+                text: `<div class="text-title">Cerpen: Perpisahan di Stasiun</div>
+                Peluit kereta berbunyi panjang, menyayat hati Maya. Tangan ibunya melambai perlahan dari balik kaca jendela yang mulai bergerak. Maya berlari kecil mengikuti gerbong, air matanya tak terbendung. Ia tahu, ini demi cita-citanya melanjutkan studi di kota seberang. Senyum tegar ibunya menjadi bekal terberat sekaligus terkuat baginya. Kereta pun menghilang di tikungan, meninggalkan Maya dengan sejuta rindu yang baru saja dimulai.`,
+                question: "Respons emosional yang paling sesuai setelah membaca teks adalah ....",
+                type: "pg",
+                options: [
+                    "merasa takut ketinggalan kereta",
+                    "merasa haru dan sedih akan perpisahan",
+                    "merasa marah pada petugas stasiun",
+                    "merasa gembira karena bebas dari orang tua"
+                ],
+                correct: 1,
+                competency: "Evaluasi dan Apresiasi",
+                subCompetency: "Menyimpulkan respons emosional terhadap unsur fiksi"
+            },
+            {
+                text: `<div class="text-title">Teks 1: Buku Cetak</div>
+                Membaca buku cetak memberikan sensasi fisik membalik halaman dan aroma kertas yang khas. Mata tidak cepat lelah karena tidak terpapar cahaya biru. Buku cetak tidak membutuhkan baterai. Namun, memakan tempat penyimpanan dan berat dibawa.
+                
+                <div class="text-title">Teks 2: Buku Digital (E-book)</div>
+                E-book praktis karena ribuan buku bisa disimpan dalam satu gawai ringan. Fitur pencarian kata memudahkan riset. Harga e-book biasanya lebih murah. Namun, bergantung pada baterai dan dapat menyebabkan kelelahan mata jika dibaca terlalu lama.`,
+                question: "Tentukan keakuratan pernyataan berikut berdasarkan kedua teks!",
+                type: "category",
+                categoryQuestion: "Pilih Benar atau Salah sesuai perbandingan teks:",
+                categories: [
+                    { statement: "Buku cetak lebih praktis dibawa dalam jumlah banyak", options: ["Benar", "Salah"] },
+                    { statement: "E-book berpotensi menyebabkan kelelahan mata", options: ["Benar", "Salah"] },
+                    { statement: "Buku cetak bergantung pada daya baterai", options: ["Benar", "Salah"] },
+                    { statement: "Keduanya memiliki kelebihan dan kekurangan tersendiri", options: ["Benar", "Salah"] }
+                ],
+                correct: [1, 0, 1, 0],
+                competency: "Evaluasi dan Apresiasi",
+                subCompetency: "Menilai keakuratan isi berdasarkan perbandingan"
+            },
+            {
+                text: `<div class="text-title">Teks Informasi: Kearifan Lokal Hutan Adat</div>
+                Masyarakat adat di pedalaman menjaga hutan mereka dengan aturan adat yang ketat. Menebang pohon tertentu dilarang keras. Mereka percaya hutan adalah ibu yang memberi kehidupan. Saat perusahaan besar menawarkan uang untuk lahan mereka, kepala adat menolak tegas. "Uang bisa habis, tapi hutan akan menghidupi cucu kami selamanya," ujarnya.`,
+                question: "Relevansi sikap masyarakat adat dengan isu lingkungan global adalah ....",
+                type: "pg",
+                options: [
+                    "sikap mereka menghambat pembangunan modern",
+                    "prinsip keberlanjutan mereka adalah solusi krisis iklim dunia",
+                    "mereka tidak butuh uang sama sekali",
+                    "aturan adat tidak berlaku di dunia modern"
+                ],
+                correct: 1,
+                competency: "Evaluasi dan Apresiasi",
+                subCompetency: "Menilai relevansi peristiwa dengan kehidupan"
+            },
+            {
+                text: `<div class="text-title">Teks 1: Berita Banjir (Faktual)</div>
+                Banjir setinggi 1 meter merendam Kelurahan Melati pada Senin (12/2). Penyebab utama adalah luapan sungai akibat pendangkalan dan sampah. Tim SAR telah mengevakuasi 50 KK ke tempat yang lebih aman. Bantuan logistik mulai disalurkan oleh BPBD setempat.
+                
+                <div class="text-title">Teks 2: Puisi Banjir (Ekspresif)</div>
+                Air marah melahap jalanan kami
+                Sampah-sampah dosa manusia kembali pulang
+                Rumah-rumah menggigil kedinginan
+                Tangis bayi pecah di antara genangan keruh
+                Alam menagih janji yang tak pernah ditepati`,
+                question: "Perbedaan gaya penyampaian kedua teks di atas adalah ....",
+                type: "pg",
+                options: [
+                    "Teks 1 menggunakan bahasa kiasan, Teks 2 bahasa baku",
+                    "Teks 1 objektif informatif, Teks 2 subjektif emosional",
+                    "Kedua teks sama-sama bertujuan menghibur pembaca",
+                    "Teks 2 lebih akurat datanya dibanding Teks 1"
+                ],
+                correct: 1,
+                competency: "Evaluasi dan Apresiasi",
+                subCompetency: "Menilai kesesuaian unsur/kebahasaan antarteks"
+            },
+            {
+                text: `<div class="text-title">Cerpen: Pelari Tanpa Sepatu</div>
+                Kaki telanjang Andi melepuh di aspal panas lintasan lari. Sepatu satu-satunya jebol seminggu lalu. Penonton menatap iba, bahkan ada yang mencemooh. Namun, tatapan Andi lurus ke garis finis. Ia berlari demi hadiah uang untuk pengobatan ayahnya. Saat ia memotong pita finis di urutan pertama, ia tidak bersorak, melainkan bersujud syukur sambil menangis. Penonton pun berdiri memberikan tepuk tangan gemuruh.`,
+                question: "Respons perasaan yang muncul terhadap perjuangan tokoh Andi adalah ....",
+                type: "pg",
+                options: [
+                    "rasa jijik karena tidak pakai sepatu",
+                    "rasa kagum, empati, dan terinspirasi",
+                    "rasa lucu dan ingin tertawa",
+                    "rasa marah pada panitia lomba"
+                ],
+                correct: 1,
+                competency: "Evaluasi dan Apresiasi",
+                subCompetency: "Menyimpulkan respons emosional terhadap unsur fiksi"
+            },
+            {
+                text: `<div class="text-title">Teks Informasi: Tren Makanan Sehat</div>
+                Kesadaran akan kesehatan membuat katering makanan sehat (healthy food) menjamur. Menu-menu rendah garam, tanpa gorengan, dan organik semakin diminati meski harganya lebih mahal. Masyarakat mulai menyadari bahwa investasi kesehatan lebih penting daripada mengobati penyakit di kemudian hari. Influencer kebugaran turut mempopulerkan gaya hidup ini di media sosial.`,
+                question: "Bagaimana relevansi tren ini dengan kondisi kesehatan masyarakat umum?",
+                type: "pg",
+                options: [
+                    "sangat relevan sebagai upaya preventif penyakit degeneratif",
+                    "tidak relevan karena makanan sehat rasanya tidak enak",
+                    "hanya tren sesaat yang tidak ada gunanya",
+                    "masyarakat lebih suka makanan cepat saji selamanya"
+                ],
+                correct: 0,
+                competency: "Evaluasi dan Apresiasi",
+                subCompetency: "Menilai relevansi peristiwa dengan kehidupan"
+            }
+        ];
+
+        // LOGIKA APLIKASI (Sama Persis dengan File Sebelumnya)
+        let currentQuestion = 0;
+        let userAnswers = new Array(questions.length).fill(null);
+        let answeredCount = 0;
+        let studentName = '';
+
+        function showNameInput() {
+            document.getElementById('welcomeScreen').style.display = 'none';
+            document.getElementById('nameScreen').style.display = 'block';
+            document.getElementById('studentName').focus();
+            document.getElementById('studentName').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') startTest();
+            });
+        }
+
+        function backToWelcome() {
+            document.getElementById('nameScreen').style.display = 'none';
+            document.getElementById('welcomeScreen').style.display = 'block';
+        }
+
+        function startTest() {
+            const nameInput = document.getElementById('studentName').value.trim();
+            if (nameInput === '') {
+                alert('Silakan masukkan nama Anda terlebih dahulu!');
+                document.getElementById('studentName').focus();
+                return;
+            }
+            studentName = nameInput;
+            document.getElementById('nameScreen').style.display = 'none';
+            document.getElementById('questionSection').style.display = 'block';
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const q = questions[currentQuestion];
+            const section = document.getElementById('questionSection');
+            let optionsHTML = '';
+            
+            if (q.type === 'pg') {
+                optionsHTML = q.options.map((opt, idx) => `
+                    <div class="option" onclick="selectOption(${idx})">
+                        <input type="radio" name="q${currentQuestion}" value="${idx}" 
+                            ${userAnswers[currentQuestion] === idx ? 'checked' : ''}>
+                        <span>${opt}</span>
+                    </div>
+                `).join('');
+            } else if (q.type === 'multiple') {
+                optionsHTML = q.options.map((opt, idx) => `
+                    <div class="option" onclick="toggleMultiple(${idx})">
+                        <input type="checkbox" id="opt${idx}" value="${idx}"
+                            ${userAnswers[currentQuestion]?.includes(idx) ? 'checked' : ''}>
+                        <span>${opt}</span>
+                    </div>
+                `).join('');
+            } else if (q.type === 'category') {
+                optionsHTML = `
+                    <p style="margin-bottom: 15px; font-weight: 500;">${q.categoryQuestion}</p>
+                    <table class="category-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 60%;">Pernyataan</th>
+                                ${q.categories[0].options.map(opt => `<th>${opt}</th>`).join('')}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${q.categories.map((cat, idx) => `
+                                <tr>
+                                    <td>${cat.statement}</td>
+                                    ${cat.options.map((opt, optIdx) => `
+                                        <td>
+                                            <div class="category-option">
+                                                <label>
+                                                    <input type="radio" name="cat${idx}" value="${optIdx}"
+                                                        ${userAnswers[currentQuestion]?.[idx] === optIdx ? 'checked' : ''}
+                                                        onchange="selectCategory(${idx}, ${optIdx})">
+                                                </label>
+                                            </div>
+                                        </td>
+                                    `).join('')}
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                `;
+            }
+            
+            section.innerHTML = `
+                <div class="text-box">${q.text}</div>
+                <div class="question">
+                    <div class="question-header">
+                        <span class="question-number">Soal ${currentQuestion + 1} dari ${questions.length}</span>
+                        <span class="competency-badge">${q.competency}</span>
+                    </div>
+                    <div class="question-text">${q.question}</div>
+                    <div class="options">${optionsHTML}</div>
+                </div>
+                <div class="navigation">
+                    <button class="btn btn-secondary" onclick="previousQuestion()" 
+                        ${currentQuestion === 0 ? 'disabled' : ''}>
+                        ← Sebelumnya
+                    </button>
+                    <button class="btn" onclick="nextQuestion()">
+                        ${currentQuestion === questions.length - 1 ? 'Selesai' : 'Selanjutnya →'}
+                    </button>
+                </div>
+            `;
+            updateProgress();
+        }
+
+        function selectOption(idx) {
+            if (userAnswers[currentQuestion] === null) answeredCount++;
+            userAnswers[currentQuestion] = idx;
+            document.querySelectorAll('.option').forEach((opt, i) => opt.classList.toggle('selected', i === idx));
+            document.querySelector(`input[value="${idx}"]`).checked = true;
+            updateProgress();
+        }
+
+        function toggleMultiple(idx) {
+            if (userAnswers[currentQuestion] === null) {
+                userAnswers[currentQuestion] = [];
+                answeredCount++;
+            }
+            const answers = userAnswers[currentQuestion];
+            const index = answers.indexOf(idx);
+            if (index > -1) {
+                answers.splice(index, 1);
+                if (answers.length === 0) {
+                    userAnswers[currentQuestion] = null;
+                    answeredCount--;
+                }
+            } else {
+                answers.push(idx);
+            }
+            const checkbox = document.getElementById(`opt${idx}`);
+            checkbox.checked = !checkbox.checked;
+            checkbox.parentElement.classList.toggle('selected', checkbox.checked);
+            updateProgress();
+        }
+
+        function selectCategory(catIdx, optIdx) {
+            if (userAnswers[currentQuestion] === null) {
+                userAnswers[currentQuestion] = new Array(questions[currentQuestion].categories.length).fill(null);
+                answeredCount++;
+            }
+            userAnswers[currentQuestion][catIdx] = optIdx;
+            updateProgress();
+        }
+
+        function updateProgress() {
+            const progress = (answeredCount / questions.length) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+            document.getElementById('answered').textContent = answeredCount;
+            document.getElementById('percentage').textContent = Math.round(progress) + '%';
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                loadQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                loadQuestion();
+            }
+        }
+
+        function showResults() {
+            let correct = 0;
+            const competencyStats = {
+                'Pemahaman Tekstual': { correct: 0, total: 0 },
+                'Pemahaman Inferensial': { correct: 0, total: 0 },
+                'Evaluasi dan Apresiasi': { correct: 0, total: 0 }
+            };
+
+            questions.forEach((q, idx) => {
+                const userAnswer = userAnswers[idx];
+                let isCorrect = false;
+
+                if (q.type === 'pg') {
+                    isCorrect = userAnswer === q.correct;
+                } else if (q.type === 'multiple') {
+                    if (userAnswer && Array.isArray(userAnswer) && Array.isArray(q.correct)) {
+                        const sortedUser = [...userAnswer].sort();
+                        const sortedCorrect = [...q.correct].sort();
+                        isCorrect = JSON.stringify(sortedUser) === JSON.stringify(sortedCorrect);
+                    }
+                } else if (q.type === 'category') {
+                    if (userAnswer && Array.isArray(userAnswer) && Array.isArray(q.correct)) {
+                        isCorrect = JSON.stringify(userAnswer) === JSON.stringify(q.correct);
+                    }
+                }
+
+                if (isCorrect) {
+                    correct++;
+                    competencyStats[q.competency].correct++;
+                }
+                competencyStats[q.competency].total++;
+            });
+
+            const percentage = Math.round((correct / questions.length) * 100);
+
+            document.getElementById('questionSection').style.display = 'none';
+            document.getElementById('resultScreen').style.display = 'block';
+            document.getElementById('studentNameDisplay').textContent = studentName;
+            document.getElementById('finalScore').textContent = correct;
+            document.getElementById('scorePercentage').textContent = percentage + '%';
+            document.getElementById('correctAnswers').textContent = correct;
+            document.getElementById('wrongAnswers').textContent = questions.length - correct;
+
+            const competencyResults = document.getElementById('competencyResults');
+            competencyResults.innerHTML = Object.entries(competencyStats).map(([name, stats]) => {
+                const compPercentage = stats.total > 0 ? Math.round((stats.correct / stats.total) * 100) : 0;
+                return `
+                    <div class="competency-card">
+                        <h4>${name}</h4>
+                        <div class="competency-score">${stats.correct}/${stats.total}</div>
+                        <p style="font-size: 14px; color: #666; margin-top: 5px;">${compPercentage}% benar</p>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function resetTest() {
+            currentQuestion = 0;
+            userAnswers = new Array(questions.length).fill(null);
+            answeredCount = 0;
+            document.getElementById('resultScreen').style.display = 'none';
+            document.getElementById('welcomeScreen').style.display = 'block';
+            updateProgress();
+        }
+    </script>
+</body>
+</html>
