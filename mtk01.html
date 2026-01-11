@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TKA Matematika SMP - Tryout</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .progress-bar {
+            background: #f0f0f0;
+            height: 8px;
+            border-radius: 4px;
+            margin: 20px 30px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            padding: 20px 30px;
+            background: #f8f9fa;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #6c757d;
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .welcome-screen, .name-screen {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .welcome-screen h2, .name-screen h2 {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+            text-align: left;
+        }
+
+        .info-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .info-card h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .info-card p {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .name-input-group {
+            max-width: 400px;
+            margin: 30px auto;
+        }
+
+        .name-input-group label {
+            display: block;
+            text-align: left;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .name-input-group input {
+            width: 100%;
+            padding: 15px;
+            font-size: 16px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            transition: border-color 0.3s;
+        }
+
+        .name-input-group input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 16px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            font-weight: bold;
+            margin: 5px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+        }
+
+        .question-section {
+            display: none;
+        }
+
+        .question-box {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin-bottom: 25px;
+            border-radius: 8px;
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .question-number {
+            background: #667eea;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .difficulty-badge {
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .difficulty-easy {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .difficulty-medium {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .difficulty-hard {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .topic-badge {
+            background: #e9ecef;
+            color: #495057;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+        }
+
+        .question-text {
+            font-size: 16px;
+            color: #333;
+            margin: 15px 0;
+            line-height: 1.8;
+        }
+
+        .math-formula {
+            font-family: 'Courier New', monospace;
+            background: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            display: inline-block;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .option {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            padding: 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+        }
+
+        .option:hover {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+
+        .option.selected {
+            border-color: #667eea;
+            background: #e8edff;
+        }
+
+        .option input {
+            margin-right: 12px;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #e9ecef;
+        }
+
+        .result-screen {
+            display: none;
+            padding: 40px 20px;
+        }
+
+        .student-name-display {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 15px;
+            display: inline-block;
+            margin-bottom: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .score-circle {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 30px auto;
+            color: white;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .score-number {
+            font-size: 48px;
+            font-weight: bold;
+        }
+
+        .score-label {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .result-details {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+        }
+
+        .review-section {
+            margin-top: 30px;
+        }
+
+        .review-question {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .review-question.correct {
+            border-left: 4px solid #28a745;
+        }
+
+        .review-question.wrong {
+            border-left: 4px solid #dc3545;
+        }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .review-status {
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .review-status.correct {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .review-status.wrong {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .explanation {
+            background: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 5px;
+        }
+
+        .explanation-title {
+            font-weight: bold;
+            color: #2196F3;
+            margin-bottom: 10px;
+        }
+
+        .answer-comparison {
+            margin-top: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+
+        .answer-line {
+            margin: 5px 0;
+            padding: 5px;
+        }
+
+        .answer-line.your-answer {
+            color: #dc3545;
+        }
+
+        .answer-line.correct-answer {
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+            }
+            
+            .stats {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+
+            .question-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        .warning-message {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 20px 0;
+            color: #856404;
+        }
+
+        .warning-message strong {
+            display: block;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔢 TKA Matematika SMP</h1>
+            <p>Tes Kemampuan Akademik - Tryout</p>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressBar"></div>
+        </div>
+
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-label">Soal Dijawab</div>
+                <div class="stat-value" id="answered">0</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Total Soal</div>
+                <div class="stat-value">30</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Progress</div>
+                <div class="stat-value" id="percentage">0%</div>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="welcome-screen" id="welcomeScreen">
+                <h2>Selamat Datang di Tryout Matematika! 📐</h2>
+                <p>Ujilah kemampuan matematika Anda dengan 30 soal yang mencakup semua materi SMP</p>
+                
+                <div class="info-grid">
+                    <div class="info-card">
+                        <h3>📊 Jumlah Soal</h3>
+                        <p>30 soal mencakup Bilangan, Aljabar, Geometri, dan Data & Peluang</p>
+                    </div>
+                    <div class="info-card">
+                        <h3>⚡ Tingkat Kesulitan</h3>
+                        <p>25% Mudah, 50% Sedang, 25% Sulit</p>
+                    </div>
+                    <div class="info-card">
+                        <h3>✅ Wajib Diisi</h3>
+                        <p>Semua soal harus dijawab sebelum melihat hasil</p>
+                    </div>
+                    <div class="info-card">
+                        <h3>📝 Pembahasan Lengkap</h3>
+                        <p>Setiap soal dilengkapi dengan pembahasan detail</p>
+                    </div>
+                </div>
+
+                <button class="btn" onclick="showNameInput()">Mulai Tryout</button>
+            </div>
+
+            <div class="name-screen" id="nameScreen" style="display: none;">
+                <h2>✏️ Identitas Peserta</h2>
+                <p>Silakan masukkan nama Anda sebelum memulai tryout</p>
+                <div class="name-input-group">
+                    <label for="studentName">Nama Lengkap:</label>
+                    <input type="text" id="studentName" placeholder="Masukkan nama Anda..." autofocus>
+                </div>
+                <button class="btn" onclick="startTest()">Mulai Mengerjakan</button>
+                <button class="btn btn-secondary" onclick="backToWelcome()">Kembali</button>
+            </div>
+
+            <div class="question-section" id="questionSection"></div>
+
+            <div class="result-screen" id="resultScreen">
+                <div style="text-align: center;">
+                    <div class="student-name-display" id="studentNameDisplay"></div>
+                    <h2>🎉 Tryout Selesai!</h2>
+                    <div class="score-circle">
+                        <div class="score-number" id="finalScore">0</div>
+                        <div class="score-label">dari 30</div>
+                    </div>
+                    <div class="result-details">
+                        <div class="result-item">
+                            <span>Nilai:</span>
+                            <strong id="scorePercentage">0%</strong>
+                        </div>
+                        <div class="result-item">
+                            <span>Jawaban Benar:</span>
+                            <strong id="correctAnswers">0</strong>
+                        </div>
+                        <div class="result-item">
+                            <span>Jawaban Salah:</span>
+                            <strong id="wrongAnswers">0</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 style="margin: 30px 0 15px 0; color: #333; text-align: center;">📚 Pembahasan Soal</h3>
+                <div id="reviewSection" class="review-section"></div>
+
+                <div style="text-align: center; margin-top: 30px;">
+                    <button class="btn" onclick="resetTest()">Ulangi Tryout</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            // BILANGAN REAL (6 soal)
+            {
+                question: "Hasil dari 2³ × 2⁵ : 2⁴ adalah ....",
+                options: ["2⁴", "2⁶", "2¹²", "2²"],
+                correct: 0,
+                difficulty: "Mudah",
+                topic: "Bilangan Real",
+                explanation: "Menggunakan sifat perpangkatan: 2³ × 2⁵ : 2⁴ = 2^(3+5-4) = 2⁴ = 16"
+            },
+            {
+                question: "Harga 3 kg apel adalah Rp45.000,00. Jika Ibu membeli 5 kg apel, berapa yang harus dibayar?",
+                options: ["Rp60.000,00", "Rp75.000,00", "Rp90.000,00", "Rp105.000,00"],
+                correct: 1,
+                difficulty: "Mudah",
+                topic: "Bilangan Real",
+                explanation: "Perbandingan senilai: 3 kg = Rp45.000<br>1 kg = Rp15.000<br>5 kg = 5 × Rp15.000 = Rp75.000"
+            },
+            {
+                question: "FPB dari 36, 48, dan 60 adalah ....",
+                options: ["6", "12", "18", "24"],
+                correct: 1,
+                difficulty: "Sedang",
+                topic: "Bilangan Real",
+                explanation: "Faktorisasi prima:<br>36 = 2² × 3²<br>48 = 2⁴ × 3<br>60 = 2² × 3 × 5<br>FPB = 2² × 3 = 12"
+            },
+            {
+                question: "Jika a/b = 3/4 dan b/c = 2/3, maka a:b:c = ....",
+                options: ["3:4:6", "6:8:12", "9:12:18", "1:2:3"],
+                correct: 0,
+                difficulty: "Sedang",
+                topic: "Bilangan Real",
+                explanation: "a:b = 3:4 dan b:c = 2:3<br>Samakan nilai b:<br>a:b = 3:4 (kalikan 2) → 6:8<br>b:c = 2:3 (kalikan 4) → 8:12<br>Jadi a:b:c = 6:8:12 atau disederhanakan 3:4:6"
+            },
+            {
+                question: "Hasil dari √72 + √18 - √8 adalah ....",
+                options: ["5√2", "6√2", "7√2", "8√2"],
+                correct: 2,
+                difficulty: "Sedang",
+                topic: "Bilangan Real",
+                explanation: "√72 = √(36×2) = 6√2<br>√18 = √(9×2) = 3√2<br>√8 = √(4×2) = 2√2<br>Hasil = 6√2 + 3√2 - 2√2 = 7√2"
+            },
+            {
+                question: "Sebuah peta memiliki skala 1:200.000. Jarak dua kota pada peta adalah 6 cm. Jarak sebenarnya kedua kota tersebut adalah ....",
+                options: ["12 km", "120 km", "1.200 km", "12.000 km"],
+                correct: 0,
+                difficulty: "Sulit",
+                topic: "Bilangan Real",
+                explanation: "Jarak sebenarnya = jarak peta × skala<br>= 6 cm × 200.000<br>= 1.200.000 cm<br>= 12.000 m = 12 km"
+            },
+
+            // PERSAMAAN DAN PERTIDAKSAMAAN LINIER (3 soal)
+            {
+                question: "Penyelesaian dari persamaan 3x - 7 = 2x + 5 adalah ....",
+                options: ["x = 2", "x = 6", "x = 12", "x = -2"],
+                correct: 2,
+                difficulty: "Mudah",
+                topic: "Persamaan Linier",
+                explanation: "3x - 7 = 2x + 5<br>3x - 2x = 5 + 7<br>x = 12"
+            },
+            {
+                question: "Diketahui sistem persamaan:<br>2x + y = 10<br>x - y = 2<br>Nilai x + y adalah ....",
+                options: ["4", "6", "8", "10"],
+                correct: 1,
+                difficulty: "Sedang",
+                topic: "Persamaan Linier",
+                explanation: "Metode eliminasi:<br>2x + y = 10<br>x - y = 2<br>──────── +<br>3x = 12 → x = 4<br>Substitusi: 4 - y = 2 → y = 2<br>Jadi x + y = 4 + 2 = 6"
+            },
+            {
+                question: "Himpunan penyelesaian dari pertidaksamaan 5x - 3 < 2x + 12 adalah ....",
+                options: ["x < 3", "x < 5", "x > 3", "x > 5"],
+                correct: 1,
+                difficulty: "Sedang",
+                topic: "Pertidaksamaan Linier",
+                explanation: "5x - 3 < 2x + 12<br>5x - 2x < 12 + 3<br>3x < 15<br>x < 5"
+            },
+
+            // BENTUK ALJABAR (3 soal)
+            {
+                question: "Hasil dari (2x + 3)(x - 4) adalah ....",
+                options: ["2x² - 5x - 12", "2x² + 5x - 12", "2x² - 5x + 12", "2x² + 11x - 12"],
+                correct: 0,
+                difficulty: "Mudah",
+                topic: "Bentuk Aljabar",
+                explanation: "(2x + 3)(x - 4)<br>= 2x² - 8x + 3x - 12<br>= 2x² - 5x - 12"
+            },
+            {
+                question: "Faktorisasi dari x² - 9 adalah ....",
+                options: ["(x - 3)(x - 3)", "(x + 3)(x + 3)", "(x - 3)(x + 3)", "(x - 9)(x + 1)"],
+                correct: 2,
+                difficulty: "Mudah",
+                topic: "Bentuk Aljabar",
+                explanation: "x² - 9 adalah selisih dua kuadrat<br>x² - 9 = x² - 3²<br>= (x - 3)(x + 3)"
+            },
+            {
+                question: "Jika x² - 6x + 8 = 0, maka nilai x yang memenuhi adalah ....",
+                options: ["x = 2 atau x = 4", "x = -2 atau x = -4", "x = 1 atau x = 8", "x = -1 atau x = -8"],
+                correct: 0,
+                difficulty: "Sedang",
+                topic: "Bentuk Aljabar",
+                explanation: "x² - 6x + 8 = 0<br>Faktorisasi: (x - 2)(x - 4) = 0<br>x - 2 = 0 atau x - 4 = 0<br>x = 2 atau x = 4"
+            },
+
+            // FUNGSI (2 soal)
+            {
+                question: "Diketahui fungsi f(x) = 2x + 5. Nilai f(3) adalah ....",
+                options: ["8", "11", "13", "16"],
+                correct: 1,
+                difficulty: "Mudah",
+                topic: "Fungsi",
+                explanation: "f(x) = 2x + 5<br>f(3) = 2(3) + 5<br>= 6 + 5<br>= 11"
+            },
+            {
+                question: "Jika f(x) = x² - 3x + 2 dan g(x) = 2x + 1, maka (f + g)(x) = ....",
+                options: ["x² - x + 3", "x² + x + 3", "x² - 5x + 1", "x² - x + 1"],
+                correct: 0,
+                difficulty: "Sedang",
+                topic: "Fungsi",
+                explanation: "(f + g)(x) = f(x) + g(x)<br>= (x² - 3x + 2) + (2x + 1)<br>= x² - 3x + 2x + 2 + 1<br>= x² - x + 3"
+            },
+
+            // BARISAN DAN DERET (2 soal)
+            {
+                question: "Suku ke-10 dari barisan aritmatika 3, 7, 11, 15, ... adalah ....",
+                options: ["35", "39", "43", "47"],
+                correct: 1,
+                difficulty: "Sedang",
+                topic: "Barisan dan Deret",
+                explanation: "a = 3, b = 4 (beda)<br>Un = a + (n-1)b<br>U₁₀ = 3 + (10-1)4<br>= 3 + 36<br>= 39"
+            },
+            {
+                question: "Jumlah 8 suku pertama dari deret geometri 2 + 6 + 18 + ... adalah ....",
+                options: ["6.560", "6.562", "6.580", "6.582"],
+                correct: 0,
+                difficulty: "Sulit",
+                topic: "Barisan dan Deret",
+                explanation: "a = 2, r = 3<br>Sn = a(rⁿ - 1)/(r - 1)<br>S₈ = 2(3⁸ - 1)/(3 - 1)<br>= 2(6561 - 1)/2<br>= 6.560"
+            },
+
+            // OBJEK GEOMETRI (4 soal)
+            {
+                question: "Jumlah sudut dalam segitiga adalah ....",
+                options: ["90°", "180°", "270°", "360°"],
+                correct: 1,
+                difficulty: "Mudah",
+                topic: "Objek Geometri",
+                explanation: "Jumlah sudut dalam segitiga selalu 180°. Ini adalah teorema dasar geometri."
+            },
+            {
+                question: "Dua garis sejajar dipotong garis transversal. Jika sudut luar berseberangan adalah 70°, maka sudut dalam sepihak adalah ....",
+                options: ["70°", "110°", "120°", "180°"],
+                correct: 1,
+                difficulty: "Sedang",
+                topic: "Objek Geometri",
+                explanation: "Sudut luar berseberangan = 70°<br>Sudut dalam sepihak = 180° - 70° = 110°<br>(sudut dalam sepihak berjumlah 180°)"
+            },
+            {
+                question: "Panjang sisi miring segitiga siku-siku dengan sisi 9 cm dan 12 cm adalah ....",
+                options: ["13 cm", "15 cm", "17 cm", "21 cm"],
+                correct: 1,
+                difficulty: "Sedang",
+                topic: "Objek Geometri",
+                explanation: "Teorema Pythagoras:<br>c² = a² + b²<br>c² = 9² + 12²<br>c² = 81 + 144<br>c² = 225<br>c = 15 cm"
+            },
+            {
+                question: "Dua segitiga sebangun dengan perbandingan sisi 2:3. Jika luas segitiga pertama 16 cm², maka luas segitiga kedua adalah ....",
+                options: ["24 cm²", "32 cm²", "36 cm²", "48 cm²"],
+                correct: 2,
+                difficulty: "Sulit",
+                topic: "Objek Geometri",
+                explanation: "Perbandingan luas = kuadrat perbandingan sisi<br>L₁ : L₂ = 2² : 3² = 4 : 9<br>16 : L₂ = 4 : 9<br>L₂ = (16 × 9)/4 = 36 cm²"
+            },
+
+            // TRANSFORMASI GEOMETRI (2 soal)
+            {
+                question: "Bayangan titik A(3, 4) oleh translasi T = (2, -1) adalah ....",
+                options: ["A'(5, 3)", "A'(1, 5)", "A'(5, 5)", "A'(1, 3)"],
+                correct: 0,
+                difficulty: "Sedang",
+                topic: "Transformasi Geometri",
+                explanation: "Translasi: (x', y') = (x + a, y + b)<br>A'(3 + 2, 4 + (-1))<br>A'(5, 3)"
+            },
+            {
+                question: "Bayangan titik B(4, 2) oleh refleksi terhadap sumbu X adalah ....",
+                options: ["B'(4, -2)", "B'(-4, 2)", "B'(-4, -2)", "B'(2, 4)"],
+                correct: 0,
+                difficulty: "Sedang",
+                topic: "Transformasi Geometri",
+                explanation: "Refleksi terhadap sumbu X:<br>(x, y) → (x, -y)<br>B(4, 2) → B'(4, -2)"
+            },
+
+            // PENGUKURAN (4 soal)
+            {
+                question: "Luas persegi panjang dengan panjang 12 cm dan lebar 8 cm adalah ....",
+                options: ["40 cm²", "80 cm²", "96 cm²", "120 cm²"],
+                correct: 2,
+                difficulty: "Mudah",
+                topic: "Pengukuran",
+                explanation: "Luas = panjang × lebar<br>= 12 × 8<br>= 96 cm²"
+            },
+            {
+                question: "Keliling lingkaran dengan diameter 14 cm adalah .... (π = 22/7)",
+                options: ["22 cm", "44 cm", "88 cm", "154 cm"],
+                correct: 1,
+                difficulty: "Mudah",
+                topic: "Pengukuran",
+                explanation: "Keliling = π × d<br>= 22/7 × 14<br>= 44 cm"
+            },
+            {
+                question: "Volume kubus dengan panjang rusuk 5 cm adalah ....",
+                options: ["25 cm³", "75 cm³", "125 cm³", "150 cm³"],
+                correct: 2,
+                difficulty: "Mudah",
+                topic: "Pengukuran",
+                explanation: "Volume kubus = s³<br>= 5³<br>= 125 cm³"
+            },
+            {
+                question: "Luas permukaan balok dengan ukuran 6 cm × 4 cm × 3 cm adalah ....",
+                options: ["72 cm²", "108 cm²", "144 cm²", "216 cm²"],
+                correct: 1,
+                difficulty: "Sulit",
+                topic: "Pengukuran",
+                explanation: "Luas permukaan = 2(pl + pt + lt)<br>= 2(6×4 + 6×3 + 4×3)<br>= 2(24 + 18 + 12)<br>= 2(54)<br>= 108 cm²"
+            },
+
+            // DATA (3 soal)
+            {
+                question: "Mean dari data: 5, 7, 8, 9, 11 adalah ....",
+                options: ["7", "8", "9", "10"],
+                correct: 1,
+                difficulty: "Mudah",
+                topic: "Data",
+                explanation: "Mean = jumlah data / banyak data<br>= (5 + 7 + 8 + 9 + 11) / 5<br>= 40 / 5<br>= 8"
+            },
+            {
+                question: "Median dari data: 12, 15, 10, 18, 14, 16, 11 adalah ....",
+                options: ["12", "14", "15", "16"],
+                correct: 1,
+                difficulty: "Sedang",
+                topic: "Data",
+                explanation: "Urutkan data: 10, 11, 12, 14, 15, 16, 18<br>Median = data tengah<br>= data ke-4<br>= 14"
+            },
+            {
+                question: "Modus dari data: 7, 8, 9, 7, 10, 7, 8, 11, 7 adalah ....",
+                options: ["7", "8", "9", "10"],
+                correct: 0,
+                difficulty: "Mudah",
+                topic: "Data",
+                explanation: "Modus = data yang paling sering muncul<br>7 muncul 4 kali (paling banyak)<br>Jadi modus = 7"
+            },
+
+            // PELUANG (1 soal)
+            {
+                question: "Sebuah dadu dilempar satu kali. Peluang muncul mata dadu bilangan prima adalah ....",
+                options: ["1/6", "1/3", "1/2", "2/3"],
+                correct: 2,
+                difficulty: "Sedang",
+                topic: "Peluang",
+                explanation: "Bilangan prima pada dadu: 2, 3, 5 (3 angka)<br>Total kemungkinan: 6<br>Peluang = 3/6 = 1/2"
+            }
+        ];
+
+        let currentQuestion = 0;
+        let userAnswers = new Array(questions.length).fill(null);
+        let answeredCount = 0;
+        let studentName = '';
+
+        function showNameInput() {
+            document.getElementById('welcomeScreen').style.display = 'none';
+            document.getElementById('nameScreen').style.display = 'block';
+            document.getElementById('studentName').focus();
+            
+            document.getElementById('studentName').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    startTest();
+                }
+            });
+        }
+
+        function backToWelcome() {
+            document.getElementById('nameScreen').style.display = 'none';
+            document.getElementById('welcomeScreen').style.display = 'block';
+        }
+
+        function startTest() {
+            const nameInput = document.getElementById('studentName').value.trim();
+            
+            if (nameInput === '') {
+                alert('Silakan masukkan nama Anda terlebih dahulu!');
+                document.getElementById('studentName').focus();
+                return;
+            }
+            
+            studentName = nameInput;
+            document.getElementById('nameScreen').style.display = 'none';
+            document.getElementById('questionSection').style.display = 'block';
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const q = questions[currentQuestion];
+            const section = document.getElementById('questionSection');
+            
+            const difficultyClass = q.difficulty === 'Mudah' ? 'difficulty-easy' : 
+                                   q.difficulty === 'Sedang' ? 'difficulty-medium' : 'difficulty-hard';
+            
+            const optionsHTML = q.options.map((opt, idx) => `
+                <div class="option ${userAnswers[currentQuestion] === idx ? 'selected' : ''}" onclick="selectOption(${idx})">
+                    <input type="radio" name="q${currentQuestion}" value="${idx}" 
+                        ${userAnswers[currentQuestion] === idx ? 'checked' : ''}>
+                    <span>${opt}</span>
+                </div>
+            `).join('');
+            
+            section.innerHTML = `
+                <div class="question-box">
+                    <div class="question-header">
+                        <span class="question-number">Soal ${currentQuestion + 1} dari 30</span>
+                        <span class="difficulty-badge ${difficultyClass}">${q.difficulty}</span>
+                        <span class="topic-badge">${q.topic}</span>
+                    </div>
+                    <div class="question-text">${q.question}</div>
+                    <div class="options">${optionsHTML}</div>
+                </div>
+                <div class="navigation">
+                    <button class="btn btn-secondary" onclick="previousQuestion()" 
+                        ${currentQuestion === 0 ? 'disabled' : ''}>
+                        ← Sebelumnya
+                    </button>
+                    <button class="btn" onclick="nextQuestion()">
+                        ${currentQuestion === questions.length - 1 ? 'Selesai' : 'Selanjutnya →'}
+                    </button>
+                </div>
+            `;
+
+            updateProgress();
+        }
+
+        function selectOption(idx) {
+            if (userAnswers[currentQuestion] === null) answeredCount++;
+            userAnswers[currentQuestion] = idx;
+            
+            document.querySelectorAll('.option').forEach((opt, i) => {
+                opt.classList.toggle('selected', i === idx);
+            });
+            document.querySelector(`input[value="${idx}"]`).checked = true;
+            updateProgress();
+        }
+
+        function updateProgress() {
+            const progress = (answeredCount / questions.length) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+            document.getElementById('answered').textContent = answeredCount;
+            document.getElementById('percentage').textContent = Math.round(progress) + '%';
+        }
+
+        function nextQuestion() {
+            if (currentQuestion === questions.length - 1) {
+                // Check if all questions answered
+                if (answeredCount < questions.length) {
+                    alert('Harap jawab semua soal sebelum menyelesaikan tryout!');
+                    return;
+                }
+                showResults();
+            } else {
+                currentQuestion++;
+                loadQuestion();
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                loadQuestion();
+            }
+        }
+
+        function showResults() {
+            let correct = 0;
+            const reviewHTML = [];
+
+            questions.forEach((q, idx) => {
+                const userAnswer = userAnswers[idx];
+                const isCorrect = userAnswer === q.correct;
+                
+                if (isCorrect) correct++;
+
+                const statusClass = isCorrect ? 'correct' : 'wrong';
+                const statusText = isCorrect ? '✓ Benar' : '✗ Salah';
+
+                reviewHTML.push(`
+                    <div class="review-question ${statusClass}">
+                        <div class="review-header">
+                            <div>
+                                <strong>Soal ${idx + 1}</strong>
+                                <span class="topic-badge" style="margin-left: 10px;">${q.topic}</span>
+                            </div>
+                            <span class="review-status ${statusClass}">${statusText}</span>
+                        </div>
+                        <div class="question-text">${q.question}</div>
+                        <div class="answer-comparison">
+                            ${!isCorrect ? `<div class="answer-line your-answer">❌ Jawaban Anda: ${q.options[userAnswer]}</div>` : ''}
+                            <div class="answer-line correct-answer">✓ Jawaban Benar: ${q.options[q.correct]}</div>
+                        </div>
+                        <div class="explanation">
+                            <div class="explanation-title">💡 Pembahasan:</div>
+                            <div>${q.explanation}</div>
+                        </div>
+                    </div>
+                `);
+            });
+
+            const percentage = Math.round((correct / questions.length) * 100);
+
+            document.getElementById('questionSection').style.display = 'none';
+            document.getElementById('resultScreen').style.display = 'block';
+            document.getElementById('studentNameDisplay').textContent = studentName;
+            document.getElementById('finalScore').textContent = correct;
+            document.getElementById('scorePercentage').textContent = percentage + '%';
+            document.getElementById('correctAnswers').textContent = correct;
+            document.getElementById('wrongAnswers').textContent = questions.length - correct;
+            document.getElementById('reviewSection').innerHTML = reviewHTML.join('');
+
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+
+        function resetTest() {
+            currentQuestion = 0;
+            userAnswers = new Array(questions.length).fill(null);
+            answeredCount = 0;
+            studentName = '';
+            document.getElementById('studentName').value = '';
+            document.getElementById('resultScreen').style.display = 'none';
+            document.getElementById('welcomeScreen').style.display = 'block';
+            updateProgress();
+            window.scrollTo(0, 0);
+        }
+    </script>
+</body>
+</html>
