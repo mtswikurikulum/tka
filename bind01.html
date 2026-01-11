@@ -81,13 +81,14 @@
         .question-section.active { display: block; }
         .text-box {
             background: #f8f9fa; border-left: 4px solid #667eea; padding: 20px; margin-bottom: 25px; border-radius: 8px; line-height: 1.8;
+            text-align: left;
         }
         .text-title { font-size: 18px; font-weight: bold; color: #667eea; margin-bottom: 15px; }
         .question { margin-bottom: 30px; }
         .question-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
         .question-number { background: #667eea; color: white; padding: 8px 16px; border-radius: 20px; font-weight: bold; font-size: 14px; }
         .competency-badge { background: #e9ecef; color: #495057; padding: 6px 12px; border-radius: 15px; font-size: 12px; }
-        .question-text { font-size: 16px; color: #333; margin-bottom: 20px; font-weight: 500; line-height: 1.6; }
+        .question-text { font-size: 16px; color: #333; margin-bottom: 20px; font-weight: 500; line-height: 1.6; text-align: left; }
         .options { display: flex; flex-direction: column; gap: 12px; }
         .option {
             background: #f8f9fa; border: 2px solid #e9ecef; padding: 15px; border-radius: 10px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center;
@@ -116,6 +117,23 @@
         .competency-card { background: white; border: 2px solid #e9ecef; padding: 15px; border-radius: 10px; }
         .competency-card h4 { color: #667eea; margin-bottom: 10px; font-size: 14px; }
         .competency-score { font-size: 24px; font-weight: bold; color: #333; }
+        
+        /* STYLE TAMBAHAN UNTUK REVIEW PEMBAHASAN */
+        .review-section { margin-top: 40px; text-align: left; }
+        .review-item {
+            background: white; border: 1px solid #dee2e6; border-radius: 10px; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .review-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid #f0f0f0; padding-bottom: 10px; }
+        .status-badge { padding: 5px 12px; border-radius: 15px; font-size: 12px; font-weight: bold; text-transform: uppercase; }
+        .status-correct { background: #d4edda; color: #155724; }
+        .status-wrong { background: #f8d7da; color: #721c24; }
+        .review-question-text { font-weight: 600; color: #333; margin-bottom: 15px; }
+        .answer-box { font-size: 14px; margin-bottom: 5px; }
+        .answer-label { font-weight: bold; color: #666; margin-right: 5px; }
+        .explanation-box {
+            margin-top: 15px; background: #fff8e1; border-left: 4px solid #ffc107; padding: 15px; border-radius: 4px; font-size: 14px; color: #555;
+        }
+
         @media (max-width: 768px) {
             .container { margin: 10px; }
             .stats { flex-direction: column; gap: 15px; }
@@ -208,13 +226,16 @@
                 </div>
                 <h3 style="margin: 30px 0 15px 0; color: #333;">Rincian Per Kompetensi</h3>
                 <div class="competency-breakdown" id="competencyResults"></div>
-                <button class="btn" onclick="resetTest()">Ulangi Tes</button>
+                
+                <div class="review-section" id="reviewSection"></div>
+
+                <button class="btn" onclick="resetTest()" style="margin-top: 20px;">Ulangi Tes</button>
             </div>
         </div>
     </div>
 
     <script>
-        // DATA SOAL PAKET A - 30 SOAL
+        // DATA SOAL PAKET A - 30 SOAL DENGAN PEMBAHASAN
         const questions = [
             // --- PEMAHAMAN TEKSTUAL (11 Soal) ---
             {
@@ -230,7 +251,8 @@
                 ],
                 correct: 1,
                 competency: "Pemahaman Tekstual",
-                subCompetency: "Mengidentifikasi penggunaan istilah dalam berbagai bidang"
+                subCompetency: "Mengidentifikasi penggunaan istilah dalam berbagai bidang",
+                explanation: "Dalam teks disebutkan secara eksplisit: 'Istilah emisi karbon merujuk pada pelepasan gas-gas tersebut ke udara'."
             },
             {
                 text: `<div class="text-title">Teks Fiksi: Hutan Pinus</div>
@@ -245,7 +267,8 @@
                 ],
                 correct: [0, 1],
                 competency: "Pemahaman Tekstual",
-                subCompetency: "Mengidentifikasi objek/latar berdasarkan kosakata"
+                subCompetency: "Mengidentifikasi objek/latar berdasarkan kosakata",
+                explanation: "Teks menyebutkan 'deretan pohon pinus' dan 'tenda-tenda perkemahan'. Pilihan lain tidak sesuai dengan deskripsi."
             },
             {
                 text: `<div class="text-title">Teks Informasi: Koperasi Sekolah</div>
@@ -260,7 +283,8 @@
                 ],
                 correct: 2,
                 competency: "Pemahaman Tekstual",
-                subCompetency: "Mengidentifikasi informasi penting yang tersurat"
+                subCompetency: "Mengidentifikasi informasi penting yang tersurat",
+                explanation: "Teks menyatakan: 'Modal koperasi berasal dari simpanan pokok dan simpanan wajib anggota.'"
             },
             {
                 text: `<div class="text-title">Teks Informasi: Daur Hidup Kupu-Kupu</div>
@@ -276,7 +300,8 @@
                 ],
                 correct: [0, 0, 1, 0],
                 competency: "Pemahaman Tekstual",
-                subCompetency: "Menyusun kerangka berdasarkan bagian penting"
+                subCompetency: "Menyusun kerangka berdasarkan bagian penting",
+                explanation: "Urutan yang benar: Telur -> Ulat (Larva) -> Kepompong (Pupa) -> Kupu-kupu. Jadi fase 3 salah (seharusnya kepompong), fase 4 salah (seharusnya kupu-kupu)."
             },
             {
                 text: `<div class="text-title">Teks Informasi: Dunia Digital</div>
@@ -291,7 +316,8 @@
                 ],
                 correct: 1,
                 competency: "Pemahaman Tekstual",
-                subCompetency: "Mengidentifikasi penggunaan istilah dalam berbagai bidang"
+                subCompetency: "Mengidentifikasi penggunaan istilah dalam berbagai bidang",
+                explanation: "Teks mendefinisikan browser sebagai 'aplikasi penjelajah web' untuk mengakses informasi internet."
             },
             {
                 text: `<div class="text-title">Teks Fiksi: Senja di Pantai</div>
@@ -306,7 +332,8 @@
                 ],
                 correct: 2,
                 competency: "Pemahaman Tekstual",
-                subCompetency: "Mengidentifikasi objek/latar berdasarkan kosakata"
+                subCompetency: "Mengidentifikasi objek/latar berdasarkan kosakata",
+                explanation: "Kata kunci 'matahari tenggelam' (sore/senja) dan 'pasir putih', 'ombak' (pantai)."
             },
             {
                 text: `<div class="text-title">Teks Informasi: Vitamin A</div>
@@ -321,7 +348,8 @@
                 ],
                 correct: 1,
                 competency: "Pemahaman Tekstual",
-                subCompetency: "Mengidentifikasi informasi penting yang tersurat"
+                subCompetency: "Mengidentifikasi informasi penting yang tersurat",
+                explanation: "Teks menyatakan: 'Wortel dikenal kaya akan vitamin A yang sangat baik untuk kesehatan mata.'"
             },
             {
                 text: `<div class="text-title">Teks Informasi: Proklamasi Kemerdekaan</div>
@@ -336,7 +364,8 @@
                 ],
                 correct: 1,
                 competency: "Pemahaman Tekstual",
-                subCompetency: "Mengidentifikasi informasi penting yang tersurat"
+                subCompetency: "Mengidentifikasi informasi penting yang tersurat",
+                explanation: "Tertulis jelas: 'Peristiwa bersejarah ini dilaksanakan di Jalan Pegangsaan Timur No. 56, Jakarta.'"
             },
             {
                 text: `<div class="text-title">Teks Fiksi: Pasar Malam</div>
@@ -351,7 +380,8 @@
                 ],
                 correct: [0, 1, 3],
                 competency: "Pemahaman Tekstual",
-                subCompetency: "Mengidentifikasi objek/latar berdasarkan kosakata"
+                subCompetency: "Mengidentifikasi objek/latar berdasarkan kosakata",
+                explanation: "Bianglala, penjual obat, dan komidi putar adalah elemen keramaian yang disebutkan. 'Suasana hening' salah."
             },
             {
                 text: `<div class="text-title">Teks Informasi: MRT Jakarta</div>
@@ -366,7 +396,8 @@
                 ],
                 correct: 2,
                 competency: "Pemahaman Tekstual",
-                subCompetency: "Mengidentifikasi informasi penting yang tersurat"
+                subCompetency: "Mengidentifikasi informasi penting yang tersurat",
+                explanation: "Teks menyebutkan tujuannya adalah 'mengurangi kemacetan parah... serta mendorong masyarakat beralih... ke transportasi umum'."
             },
             {
                 text: `<div class="text-title">Teks Prosedur: Membuat Nasi Goreng</div>
@@ -382,7 +413,8 @@
                 ],
                 correct: [0, 1, 0, 0],
                 competency: "Pemahaman Tekstual",
-                subCompetency: "Menyusun kerangka berdasarkan bagian penting"
+                subCompetency: "Menyusun kerangka berdasarkan bagian penting",
+                explanation: "Urutan logis: Panaskan minyak -> Tumis bumbu -> Masukkan nasi -> Sajikan. (Langkah 2 dan 3 di tabel tertukar)."
             },
 
             // --- PEMAHAMAN INFERENSIAL (11 Soal) ---
@@ -399,7 +431,8 @@
                 ],
                 correct: 1,
                 competency: "Pemahaman Inferensial",
-                subCompetency: "Menyimpulkan ide pokok/gagasan"
+                subCompetency: "Menyimpulkan ide pokok/gagasan",
+                explanation: "Teks menghubungkan polusi dengan penyakit ISPA dan himbauan masker, menyimpulkan dampak buruk kesehatan."
             },
             {
                 text: `<div class="text-title">Teks Fiksi: Pertolongan Kecil</div>
@@ -414,7 +447,8 @@
                 ],
                 correct: 0,
                 competency: "Pemahaman Inferensial",
-                subCompetency: "Menyimpulkan nilai-nilai dalam teks"
+                subCompetency: "Menyimpulkan nilai-nilai dalam teks",
+                explanation: "Tindakan menyelamatkan kucing yang kedinginan menunjukkan rasa peduli dan kasih sayang."
             },
             {
                 text: `<div class="text-title">Teks Informasi: Hutan Gundul</div>
@@ -429,7 +463,8 @@
                 ],
                 correct: 1,
                 competency: "Pemahaman Inferensial",
-                subCompetency: "Menjelaskan kelogisan hubungan antarinformasi"
+                subCompetency: "Menjelaskan kelogisan hubungan antarinformasi",
+                explanation: "Rantai sebab akibat: Hutan gundul -> Air tak terserap -> Sungai meluap -> Banjir."
             },
             {
                 text: `<div class="text-title">Teks Informasi: Kecerdasan Buatan (AI)</div>
@@ -444,7 +479,8 @@
                 ],
                 correct: 1,
                 competency: "Pemahaman Inferensial",
-                subCompetency: "Memprediksi peristiwa dalam teks"
+                subCompetency: "Memprediksi peristiwa dalam teks",
+                explanation: "Karena pekerjaan rutin diganti robot, maka pekerjaan kreatif/emosional (yang sulit ditiru) akan lebih berharga."
             },
             {
                 text: `<div class="text-title">Puisi: Matahari</div>
@@ -463,7 +499,8 @@
                 ],
                 correct: 1,
                 competency: "Pemahaman Inferensial",
-                subCompetency: "Menjelaskan bahasa kias dalam teks fiksi"
+                subCompetency: "Menjelaskan bahasa kias dalam teks fiksi",
+                explanation: "'Raja siang' adalah kiasan untuk Matahari."
             },
             {
                 text: `<div class="text-title">Teks Informasi: Kesehatan Mata</div>
@@ -478,7 +515,8 @@
                 ],
                 correct: 1,
                 competency: "Pemahaman Inferensial",
-                subCompetency: "Menyimpulkan ide pokok/gagasan"
+                subCompetency: "Menyimpulkan ide pokok/gagasan",
+                explanation: "Teks menjelaskan risiko mata lelah/kering akibat penggunaan gawai berlebihan oleh remaja."
             },
             {
                 text: `<div class="text-title">Teks Fiksi: Prajurit Kecil</div>
@@ -493,7 +531,8 @@
                 ],
                 correct: 1,
                 competency: "Pemahaman Inferensial",
-                subCompetency: "Menyimpulkan tokoh dalam teks"
+                subCompetency: "Menyimpulkan tokoh dalam teks",
+                explanation: "Sikap tetap sekolah dan membantu ibu meski diejek dan cacat fisik menunjukkan mental pantang menyerah."
             },
             {
                 text: `<div class="text-title">Teks Informasi: Hukum Penawaran</div>
@@ -508,7 +547,8 @@
                 ],
                 correct: 1,
                 competency: "Pemahaman Inferensial",
-                subCompetency: "Menjelaskan kelogisan hubungan antarinformasi"
+                subCompetency: "Menjelaskan kelogisan hubungan antarinformasi",
+                explanation: "Prinsip ekonomi dalam teks: Harga tinggi -> Petani semangat jual -> Penawaran meningkat."
             },
             {
                 text: `<div class="text-title">Teks Informasi: Sampah Plastik</div>
@@ -523,7 +563,8 @@
                 ],
                 correct: 1,
                 competency: "Pemahaman Inferensial",
-                subCompetency: "Memprediksi peristiwa dalam teks"
+                subCompetency: "Memprediksi peristiwa dalam teks",
+                explanation: "Plastik lebih banyak dari ikan dan mikroplastik masuk ke makanan manusia menunjukkan kerusakan ekosistem dan ancaman."
             },
             {
                 text: `<div class="text-title">Puisi: Sawah</div>
@@ -542,7 +583,8 @@
                 ],
                 correct: 0,
                 competency: "Pemahaman Inferensial",
-                subCompetency: "Menjelaskan citraan dalam teks fiksi"
+                subCompetency: "Menjelaskan citraan dalam teks fiksi",
+                explanation: "'Permadani hijau' dan 'bulir emas' adalah objek yang ditangkap oleh mata (visual)."
             },
             {
                 text: `<div class="text-title">Teks Fiksi: Sepeda Hilang</div>
@@ -557,7 +599,8 @@
                 ],
                 correct: 1,
                 competency: "Pemahaman Inferensial",
-                subCompetency: "Menyimpulkan peristiwa dalam teks"
+                subCompetency: "Menyimpulkan peristiwa dalam teks",
+                explanation: "Sepeda hilang karena lupa dikunci (ceroboh) walau sebentar. Ini mengajarkan agar tidak ceroboh."
             },
 
             // --- EVALUASI DAN APRESIASI (8 Soal) ---
@@ -574,7 +617,8 @@
                 ],
                 correct: 0,
                 competency: "Evaluasi dan Apresiasi",
-                subCompetency: "Menilai relevansi peristiwa dengan kehidupan"
+                subCompetency: "Menilai relevansi peristiwa dengan kehidupan",
+                explanation: "Isu 'insecure' dan kecemasan akibat medsos adalah masalah nyata yang sangat relevan dengan remaja saat ini."
             },
             {
                 text: `<div class="text-title">Teks 1: Buku Fisik</div>
@@ -592,7 +636,8 @@
                 ],
                 correct: [0, 1],
                 competency: "Evaluasi dan Apresiasi",
-                subCompetency: "Menilai kesesuaian berdasarkan perbandingan antarteks"
+                subCompetency: "Menilai kesesuaian berdasarkan perbandingan antarteks",
+                explanation: "Teks 1 menonjolkan sensasi (aroma/mata), Teks 2 menonjolkan fungsi (praktis). Keduanya membahas kelebihan masing-masing."
             },
             {
                 text: `<div class="text-title">Cerpen: Bencana Alam</div>
@@ -607,7 +652,8 @@
                 ],
                 correct: 1,
                 competency: "Evaluasi dan Apresiasi",
-                subCompetency: "Menyimpulkan respons emosional terhadap unsur fiksi"
+                subCompetency: "Menyimpulkan respons emosional terhadap unsur fiksi",
+                explanation: "Cerita menggabungkan ketakutan bencana dengan keharuan atas solidaritas warga."
             },
             {
                 text: `<div class="text-title">Teks 1: Sepeda</div>
@@ -626,7 +672,8 @@
                 ],
                 correct: [0, 1, 0, 0],
                 competency: "Evaluasi dan Apresiasi",
-                subCompetency: "Menilai keakuratan isi berdasarkan perbandingan"
+                subCompetency: "Menilai keakuratan isi berdasarkan perbandingan",
+                explanation: "Sepeda (ramah lingkungan, sehat). Motor (efisien, polusi). Jadi pernyataan 2 salah karena motor tidak lebih baik untuk jantung."
             },
             {
                 text: `<div class="text-title">Teks Informasi: Budaya Antre</div>
@@ -641,7 +688,8 @@
                 ],
                 correct: 0,
                 competency: "Evaluasi dan Apresiasi",
-                subCompetency: "Menilai relevansi peristiwa dengan kehidupan"
+                subCompetency: "Menilai relevansi peristiwa dengan kehidupan",
+                explanation: "Teks menekankan pentingnya kesabaran dan dampak negatif jika tidak antre (keributan), relevan dengan disiplin."
             },
             {
                 text: `<div class="text-title">Teks 1: Undangan Resmi</div>
@@ -659,7 +707,8 @@
                 ],
                 correct: 1,
                 competency: "Evaluasi dan Apresiasi",
-                subCompetency: "Menilai kesesuaian unsur/kebahasaan antarteks"
+                subCompetency: "Menilai kesesuaian unsur/kebahasaan antarteks",
+                explanation: "Teks 1 menggunakan bahasa surat resmi, Teks 2 menggunakan bahasa pergaulan sehari-hari."
             },
             {
                 text: `<div class="text-title">Cerpen: Juara Kelas</div>
@@ -674,7 +723,8 @@
                 ],
                 correct: 1,
                 competency: "Evaluasi dan Apresiasi",
-                subCompetency: "Menyimpulkan respons emosional terhadap unsur fiksi"
+                subCompetency: "Menyimpulkan respons emosional terhadap unsur fiksi",
+                explanation: "Kisah kesuksesan anak petani dengan usaha keras memancing rasa haru dan inspirasi."
             },
             {
                 text: `<div class="text-title">Teks Informasi: Jajanan Sehat</div>
@@ -689,11 +739,12 @@
                 ],
                 correct: 0,
                 competency: "Evaluasi dan Apresiasi",
-                subCompetency: "Menilai relevansi peristiwa dengan kehidupan"
+                subCompetency: "Menilai relevansi peristiwa dengan kehidupan",
+                explanation: "Sangat relevan karena menyangkut kesehatan siswa dan kebiasaan jajan di sekolah."
             }
         ];
 
-        // LOGIKA APLIKASI (Sama Persis dengan File Sebelumnya)
+        // LOGIKA APLIKASI
         let currentQuestion = 0;
         let userAnswers = new Array(questions.length).fill(null);
         let answeredCount = 0;
@@ -864,6 +915,25 @@
             }
         }
 
+        // Helper untuk format teks jawaban di review
+        function formatAnswer(q, answerIdx) {
+            if (answerIdx === null) return "Tidak dijawab";
+
+            if (q.type === 'pg') {
+                return q.options[answerIdx];
+            } else if (q.type === 'multiple') {
+                if (!Array.isArray(answerIdx) || answerIdx.length === 0) return "Tidak dijawab";
+                return answerIdx.map(i => q.options[i]).join(', ');
+            } else if (q.type === 'category') {
+                 if (!Array.isArray(answerIdx)) return "Tidak dijawab";
+                 return answerIdx.map((opt, i) => {
+                     let choice = (opt !== null) ? q.categories[0].options[opt] : "-";
+                     return `${q.categories[i].statement}: ${choice}`;
+                 }).join('<br>');
+            }
+            return "-";
+        }
+
         function showResults() {
             let correct = 0;
             const competencyStats = {
@@ -872,10 +942,13 @@
                 'Evaluasi dan Apresiasi': { correct: 0, total: 0 }
             };
 
+            let reviewHTML = '<h3 style="margin-bottom:20px; text-align:center;">🔍 Review Jawaban & Pembahasan</h3>';
+
             questions.forEach((q, idx) => {
                 const userAnswer = userAnswers[idx];
                 let isCorrect = false;
 
+                // Logika Penilaian
                 if (q.type === 'pg') {
                     isCorrect = userAnswer === q.correct;
                 } else if (q.type === 'multiple') {
@@ -895,6 +968,41 @@
                     competencyStats[q.competency].correct++;
                 }
                 competencyStats[q.competency].total++;
+
+                // Generate Review HTML
+                const statusClass = isCorrect ? 'status-correct' : 'status-wrong';
+                const statusText = isCorrect ? 'BENAR' : 'SALAH';
+                
+                reviewHTML += `
+                    <div class="review-item">
+                        <div class="review-header">
+                            <span style="font-weight:bold;">No. ${idx + 1}</span>
+                            <span class="status-badge ${statusClass}">${statusText}</span>
+                        </div>
+                        <div class="review-question-text">${q.question}</div>
+                        
+                        <div class="answer-box">
+                            <span class="answer-label">Jawaban Kamu:</span>
+                            <div style="${isCorrect ? 'color:#155724' : 'color:#dc3545'}">
+                                ${formatAnswer(q, userAnswer)}
+                            </div>
+                        </div>
+                        
+                        ${!isCorrect ? `
+                        <div class="answer-box" style="margin-top:10px;">
+                            <span class="answer-label">Jawaban Benar:</span>
+                            <div style="color:#155724">
+                                ${formatAnswer(q, q.correct)}
+                            </div>
+                        </div>
+                        ` : ''}
+
+                        <div class="explanation-box">
+                            <strong>💡 Pembahasan:</strong><br>
+                            ${q.explanation}
+                        </div>
+                    </div>
+                `;
             });
 
             const percentage = Math.round((correct / questions.length) * 100);
@@ -907,6 +1015,7 @@
             document.getElementById('correctAnswers').textContent = correct;
             document.getElementById('wrongAnswers').textContent = questions.length - correct;
 
+            // Render Statistik Kompetensi
             const competencyResults = document.getElementById('competencyResults');
             competencyResults.innerHTML = Object.entries(competencyStats).map(([name, stats]) => {
                 const compPercentage = stats.total > 0 ? Math.round((stats.correct / stats.total) * 100) : 0;
@@ -918,6 +1027,9 @@
                     </div>
                 `;
             }).join('');
+
+            // Render Review Section
+            document.getElementById('reviewSection').innerHTML = reviewHTML;
         }
 
         function resetTest() {
