@@ -437,7 +437,7 @@
     <div class="container">
         <div class="header">
             <h1>🔢 TKA Matematika SMP</h1>
-            <p>Tes Kemampuan Akademik - Paket B</p>
+            <p>Tes Kemampuan Akademik - Paket A</p>
         </div>
 
         <div class="progress-bar">
@@ -535,486 +535,489 @@
     </div>
 
     <script>
-        // Data Soal dari CSV
         const questions = [
     {
         "id": 1,
-        "topic": "Bilangan (L1)",
+        "question": "Dalam sebuah kompetisi matematika, setiap jawaban benar diberi skor 4, salah -2, dan tidak dijawab -1. Dari 40 soal, Budi menjawab benar 28 soal dan salah 5 soal. Skor total yang diperoleh Budi adalah ....",
+        "topic": "Bilangan (L2)",
+        "explanation": "Benar: 28\u00d74=112Salah: 5\u00d7(\u22122)=\u221210Tidak dijawab: (40\u221228\u22125)=7\u00d7(\u22121)=\u22127Total: 112\u221210\u22127=95.",
         "type": "PG",
-        "question": "Hasil operasi dari $3\\frac{1}{2} + 2\\frac{1}{4} \\div \\frac{1}{2}$ adalah ....",
         "options": [
-            "7",
-            "8",
-            "9",
-            "10"
+            "102",
+            "96",
+            "95",
+            "88"
         ],
-        "correct": 1,
-        "explanation": "$3,5 + (2,25 \\div 0,5) = 3,5 + 4,5 = 8$."
+        "correct": 2
     },
     {
         "id": 2,
+        "question": "Bentuk sederhana dari 248\u200b+75\u200b\u2212312\u200b adalah ....",
         "topic": "Bilangan (L2)",
-        "type": "PGK-MCMA",
-        "question": "Diketahui $a$ dan $b$ adalah bilangan bulat positif. Pilihlah pernyataan yang benar mengenai sifat perpangkatan berikut!",
+        "explanation": "216\u00d73\u200b+25\u00d73\u200b\u221234\u00d73\u200b=2(4)3\u200b+53\u200b\u22123(2)3\u200b=83\u200b+53\u200b\u221263\u200b=73\u200b.",
+        "type": "PG",
         "options": [
-            "$a^m \\times a^n = a^{m+n}$",
-            "$(a^m)^n = a^{m+n}$",
-            "$a^m \\div a^n = a^{m-n}$",
-            "$a^{-n} = -a^n$"
+            "53\u200b",
+            "63\u200b",
+            "73\u200b",
+            "93\u200b"
         ],
-        "correct": [
-            0,
-            2
-        ],
-        "explanation": "Pernyataan 2 salah, seharusnya $a^{mn}$. Pernyataan 4 salah, seharusnya $1/a^n$. Pernyataan 1 dan 3 adalah sifat dasar eksponen yang benar."
+        "correct": 2
     },
     {
         "id": 3,
-        "topic": "Bilangan (L2)",
-        "type": "PGK-Kategori",
-        "question": "Ibu ingin belanja: Beras (Rp62.500), Minyak (Rp28.900), dan Telur (Rp24.500). Ibu membawa uang Rp120.000. Tentukan Benar/Salah strategi estimasi berikut!",
+        "question": "Amuba membelah diri menjadi dua setiap 15 menit. Jika mula-mula ada 20 amuba, banyak amuba setelah 1,5 jam adalah ....",
+        "topic": "Bilangan (L3)",
+        "explanation": "Durasi: 1,5 jam = 90 menit.Banyak pembelahan (n): 90/15=6 kali.Rumus: Un=a\u00d7rn\u219220\u00d726=20\u00d764=1.280.",
+        "type": "PG",
         "options": [
-            "Jika semua harga dibulatkan ke atas ke puluhan ribu terdekat, uang ibu cukup.",
-            "Estimasi total belanjaan ibu sekitar Rp116.000.",
-            "Estimasi terbaik adalah membulatkan ke ribuan terdekat menjadi 63rb + 29rb + 25rb."
+            "320",
+            "640",
+            "1.280",
+            "2.560"
         ],
-        "correct": [
-            false,
-            true,
-            true
-        ],
-        "explanation": "1. Pembulatan ke atas: 70+30+30=130rb (Tidak Cukup/Salah). <br>2. 62,5+29+24,5 $\\approx$ 116 (Benar). <br>3. Strategi ini aman untuk memastikan uang cukup (Benar)."
+        "correct": 2
     },
     {
         "id": 4,
-        "topic": "Bilangan (L3)",
-        "type": "PGK-MCMA",
-        "question": "Diketahui bilangan $X = (12)^4$. Pilihlah faktorisasi prima yang benar terkait bilangan X!",
+        "question": "Himpunan penyelesaian dari pertidaksamaan 3(x\u22122)\u2264x+8 untuk x bilangan bulat adalah ....",
+        "topic": "Aljabar (L2)",
+        "explanation": "3x\u22126\u2264x+83x\u2212x\u22648+62x\u226414\u2192x\u22647.Himpunan bilangan bulat \u22647 adalah {...,5,6,7}.",
+        "type": "PG",
         "options": [
-            "Basis bilangan primanya adalah 2 dan 3.",
-            "Pangkat dari faktor 2 adalah 4.",
-            "Bentuk faktorisasinya adalah $2^8 \\times 3^4$.",
-            "X habis dibagi oleh 9."
+            "{...,4,5,6}",
+            "{...,5,6,7}",
+            "{7,8,9,...}",
+            "{...,6,7,8}"
         ],
-        "correct": [
-            0,
-            2,
-            3
-        ],
-        "explanation": "$12^4 = (2^2 \\times 3)^4 = 2^8 \\times 3^4$. <br>1. Benar (2 dan 3). <br>2. Salah (pangkatnya 8). <br>3. Benar. <br>4. Benar ($3^4$ mengandung faktor 9)."
+        "correct": 1
     },
     {
         "id": 5,
-        "topic": "Bilangan (L2)",
+        "question": "Harga 2 baju dan 1 celana adalah Rp140.000,00. Harga 3 baju dan 2 celana adalah Rp235.000,00. Harga 1 baju dan 1 celana adalah ....",
+        "topic": "Aljabar (L2)",
+        "explanation": "Misal Baju=x, Celana=y.1) 2x+y=140.0002) 3x+2y=235.000Dari (1) y=140.000\u22122x, subst ke (2).Didapat x=45.000,y=50.000.x+y=95.000.",
         "type": "PG",
-        "question": "Sebuah proyek bangunan direncanakan selesai dalam 30 hari oleh 12 pekerja. Agar proyek selesai dalam 20 hari, maka tambahan pekerja yang dibutuhkan adalah ....",
         "options": [
-            "6 orang",
-            "8 orang",
-            "18 orang",
-            "20 orang"
+            "Rp85.000,00",
+            "Rp90.000,00",
+            "Rp95.000,00",
+            "Rp105.000,00"
         ],
-        "correct": 0,
-        "explanation": "Perbandingan berbalik nilai: $30 \\times 12 = 20 \\times n \\rightarrow 360 = 20n \\rightarrow n=18$. <br>Tambahan = $18 - 12 = 6$ orang."
+        "correct": 2
     },
     {
         "id": 6,
-        "topic": "Bilangan (L3)",
-        "type": "PGK-Kategori",
-        "question": "Pak Ali meminjam uang di bank sebesar Rp10.000.000,00 dengan bunga tunggal 8% per tahun selama 2 tahun.",
+        "question": "Diketahui fungsi f(x)=ax+b. Jika f(2)=5 dan f(\u22121)=\u22124, nilai dari f(3) adalah ....",
+        "topic": "Aljabar (L1)",
+        "explanation": "2a+b=5\u2212a+b=\u22124 (kurangkan)3a=9\u2192a=3.3(2)+b=5\u2192b=\u22121.f(3)=3(3)\u22121=8.",
+        "type": "PG",
         "options": [
-            "Besar bunga per tahun adalah Rp800.000,00.",
-            "Total uang yang harus dikembalikan adalah Rp11.600.000,00.",
-            "Jika dicicil setiap bulan, angsurannya kurang dari Rp450.000,00."
+            "8",
+            "9",
+            "10",
+            "11"
         ],
-        "correct": [
-            true,
-            true,
-            false
-        ],
-        "explanation": "1. $8\\% \\times 10jt = 800rb$ (B). <br>2. Total = $10jt + (2 \\times 800rb) = 11,6jt$ (B). <br>3. Cicilan = $11,6jt / 24 \\approx 483.333$ (S)."
+        "correct": 0
     },
     {
         "id": 7,
-        "topic": "Bilangan (L1)",
+        "question": "Sebuah tangga sepanjang 10 meter disandarkan pada tembok. Jika jarak kaki tangga ke tembok adalah 6 meter, tinggi tembok yang dicapai tangga adalah ....",
+        "topic": "Geometri (L2)",
+        "explanation": "Menggunakan Pythagoras: t=102\u221262\u200b=100\u221236\u200b=64\u200b=8.",
         "type": "PG",
-        "question": "Bentuk baku (notasi ilmiah) dari 0,0000345 adalah ....",
         "options": [
-            "$3,45 \\times 10^{-4}$",
-            "$3,45 \\times 10^{-5}$",
-            "$34,5 \\times 10^{-5}$",
-            "$34,5 \\times 10^{-6}$"
+            "6 m",
+            "7 m",
+            "8 m",
+            "9 m"
         ],
-        "correct": 1,
-        "explanation": "Geser koma ke kanan 5 kali untuk mendapatkan angka satuan di depan koma (3,45), sehingga pangkatnya -5."
+        "correct": 2
     },
     {
         "id": 8,
-        "topic": "Aljabar (L1)",
+        "question": "Luas permukaan kubus yang memiliki panjang rusuk 9 cm adalah ....",
+        "topic": "Geometri (L2)",
+        "explanation": "Rumus LP Kubus: 6\u00d7s2=6\u00d792=6\u00d781=486.",
         "type": "PG",
-        "question": "Bentuk sederhana dari $4(2x - 3y) - 2(x + 5y)$ adalah ....",
         "options": [
-            "$6x - 2y$",
-            "$6x - 22y$",
-            "$10x - 2y$",
-            "$10x + 7y$"
+            "243\u00a0cm2",
+            "486\u00a0cm2",
+            "729\u00a0cm2",
+            "864\u00a0cm2"
         ],
-        "correct": 1,
-        "explanation": "$8x - 12y - 2x - 10y = (8-2)x + (-12-10)y = 6x - 22y$."
+        "correct": 1
     },
     {
         "id": 9,
-        "topic": "Aljabar (L2)",
-        "type": "PGK-Kategori",
-        "question": "\"Umur Ayah 3 kali umur Budi. Selisih umur mereka 30 tahun.\" Misal umur Budi = $x$.",
+        "question": "Sebuah taman berbentuk lingkaran dengan diameter 28 m. Di tengah taman akan dibuat kolam air mancur berbentuk lingkaran berdiameter 14 m. Sisa lahan akan ditanami rumput. Luas lahan yang ditanami rumput adalah ....",
+        "topic": "Geometri (L3)",
+        "explanation": "Lbesar\u200b=\u03c0\u00d714\u00d714=616.Lkecil\u200b=\u03c0\u00d77\u00d77=154.Sisa = 616\u2212154=462.",
+        "type": "PG",
         "options": [
-            "Model matematikanya adalah $3x - x = 30$.",
-            "Umur Budi adalah 10 tahun.",
-            "Umur Ayah adalah 40 tahun."
+            "154\u00a0m2",
+            "308\u00a0m2",
+            "462\u00a0m2",
+            "616\u00a0m2"
         ],
-        "correct": [
-            true,
-            false,
-            false
-        ],
-        "explanation": "1. Ayah=3x, Budi=x. Selisih $3x-x=30$ (B). <br>2. $2x=30 \\rightarrow x=15$ (S, harusnya 15). <br>3. Ayah $3(15)=45$ (S, harusnya 45)."
+        "correct": 2
     },
     {
         "id": 10,
-        "topic": "Aljabar (L3)",
-        "type": "PGK-Kategori",
-        "question": "Diketahui SPLDV: $x + y = 5$ dan $2x - y = 4$. Analisislah solusinya!",
+        "question": "Rata-rata nilai ulangan matematika dari 10 siswa adalah 75. Jika nilai Andi dimasukkan, rata-ratanya menjadi 76. Nilai Andi adalah ....",
+        "topic": "Data (L2)",
+        "explanation": "Total awal = 10\u00d775=750.Total baru = 11\u00d776=836.Nilai Andi = 836\u2212750=86.",
+        "type": "PG",
         "options": [
-            "Nilai $x$ yang memenuhi adalah 3.",
-            "Nilai $y$ yang memenuhi adalah 2.",
-            "Titik potong kedua garis berada di kuadran I."
+            "76",
+            "80",
+            "85",
+            "86"
         ],
-        "correct": [
-            true,
-            true,
-            true
-        ],
-        "explanation": "Jumlahkan kedua pers: $3x = 9 \\rightarrow x = 3$. <br>Substitusi: $3 + y = 5 \\rightarrow y = 2$. <br>Titik $(3, 2)$ ada di Kuadran I (positif, positif)."
+        "correct": 3
     },
     {
         "id": 11,
-        "topic": "Aljabar (L2)",
+        "question": "Median dari data: 7, 6, 8, 9, 6, 7, 5, 8, 8, 7 adalah ....",
+        "topic": "Data (L1)",
+        "explanation": "Urutkan: 5, 6, 6, 7, 7, 7, 8, 8, 8, 9.Data ke-10 (genap). Median = data ke-5 & 6 dibagi 2.(7+7)/2=7.",
         "type": "PG",
-        "question": "Himpunan penyelesaian dari $2x - 3 < 7$ untuk $x$ bilangan cacah adalah ....",
         "options": [
-            "$\\{0, 1, 2, 3, 4\\}$",
-            "$\\{0, 1, 2, 3, 4, 5\\}$",
-            "$\\{1, 2, 3, 4\\}$",
-            "$\\{1, 2, 3, 4, 5\\}$"
+            "6",
+            "6,5",
+            "7",
+            "7,5"
         ],
-        "correct": 0,
-        "explanation": "$2x < 10 \\rightarrow x < 5$. Bilangan cacah dimulai dari 0 dan kurang dari 5 adalah $\\{0, 1, 2, 3, 4\\}$."
+        "correct": 2
     },
     {
         "id": 12,
-        "topic": "Aljabar (L2)",
-        "type": "PGK-MCMA",
-        "question": "Diketahui fungsi $f: A \\rightarrow B$ dengan $f(x) = 2x+1$. Domain $A=\\{1, 2, 3\\}$. Pilihlah pernyataan yang benar!",
+        "question": "Dua buah dadu dilambungkan bersamaan. Peluang muncul mata dadu berjumlah 9 adalah ....",
+        "topic": "Data (L2)",
+        "explanation": "Kejadian jumlah 9: (3,6), (4,5), (5,4), (6,3) \u2192 ada 4.Ruang sampel: 36.Peluang: 4/36=1/9.",
+        "type": "PG",
         "options": [
-            "Range fungsi adalah $\\{3, 5, 7\\}$.",
-            "Kodomain harus sama persis dengan Range.",
-            "Himpunan pasangan berurutannya $\\{(1,3), (2,5), (3,7)\\}$.",
-            "Nilai $f(2) = 4$."
+            "1/9",
+            "1/6",
+            "4/36",
+            "5/36"
         ],
-        "correct": [
-            0,
-            2
-        ],
-        "explanation": "1. $f(1)=3, f(2)=5, f(3)=7$ (Benar). <br>2. Tidak harus (Salah). <br>3. Sesuai hasil (Benar). <br>4. $f(2)=5$ (Salah)."
+        "correct": 0
     },
     {
         "id": 13,
-        "topic": "Aljabar (L2)",
-        "type": "PG",
-        "question": "Suku ke-20 dari barisan aritmatika 5, 9, 13, 17, ... adalah ....",
+        "question": "Diketahui himpunan S={1,2,3,...,10}. Dari himpunan tersebut dipilih dua bilangan secara acak. Manakah pernyataan yang benar mengenai sifat bilangan yang mungkin terpilih?",
+        "topic": "Bilangan (L2)",
+        "explanation": "A: Benar (2 dan 3 prima).B: Benar (4=22, 9=32).C: Salah (FPB 6 dan 8 adalah 2).D: Benar.",
+        "type": "PGK-MCMA",
         "options": [
-            "76",
-            "81",
-            "85",
-            "91"
+            "Pasangan (2, 3) adalah pasangan bilangan prima.",
+            "Pasangan (4, 9) adalah pasangan bilangan kuadrat.",
+            "FPB dari 6 dan 8 adalah 4.",
+            "KPK dari 3 dan 5 adalah 15."
         ],
-        "correct": 1,
-        "explanation": "$a=5, b=4$. $U_{20} = a + 19b = 5 + 19(4) = 5 + 76 = 81$."
+        "correct": [
+            0,
+            1,
+            3
+        ]
     },
     {
         "id": 14,
-        "topic": "Aljabar (L3)",
+        "question": "Seorang arsitek merancang gedung dengan pola ketinggian lantai mengikuti barisan aritmatika. Lantai 1 setinggi 4m, lantai 2 setinggi 7m (akumulasi 4+3), dan seterusnya dengan beda tinggi antar lantai 3m. Pilihlah pernyataan yang benar!",
+        "topic": "Bilangan (L3)",
+        "explanation": "Un\u200b=a+(n\u22121)b. a=4,b=3.A: U5\u200b=4+4(3)=16 (Benar).B: U10\u200b=4+9(3)=31 (Benar).C: Benar.D: Salah (beda 3m).",
         "type": "PGK-MCMA",
-        "question": "Di gedung pertunjukan, baris terdepan ada 15 kursi, baris belakangnya selalu bertambah 4 kursi. Ada 10 baris kursi.",
         "options": [
-            "Banyak kursi baris terakhir adalah 51.",
-            "Total kapasitas gedung adalah 330 kursi.",
-            "Kapasitas gedung dapat dihitung dengan rumus $S_n$ aritmatika.",
-            "Kursi baris ke-5 ada 30 buah."
+            "Tinggi lantai ke-5 adalah 16m dari dasar.",
+            "Tinggi lantai ke-10 adalah 31m dari dasar.",
+            "Ketinggian lantai membentuk barisan 4, 7, 10, 13...",
+            "Beda barisan tersebut adalah 4m."
         ],
         "correct": [
             0,
             1,
             2
-        ],
-        "explanation": "$a=15, b=4, n=10$. <br>1. $U_{10} = 15+9(4) = 51$ (B). <br>2. $S_{10} = 10/2(15+51) = 5(66) = 330$ (B). <br>3. Benar. <br>4. $U_5 = 15+4(4) = 31$ (S)."
+        ]
     },
     {
         "id": 15,
+        "question": "Diketahui himpunan $A = {x | 2 < x \\le 8, x \\in \\text{bilangan genap}}$ dan B={faktordari12}. Manakah pernyataan yang benar?",
         "topic": "Aljabar (L2)",
-        "type": "PGK-Kategori",
-        "question": "Perhatikan persamaan garis $k: 2y - 4x = 8$.",
+        "explanation": "A: {4,6,8} (Benar).B: Benar.C: Irisan {4,6} (Benar).D: Salah (23=8).",
+        "type": "PGK-MCMA",
         "options": [
-            "Gradien garis $k$ adalah 2.",
-            "Garis $k$ melalui titik $(0, 4)$.",
-            "Garis $k$ tegak lurus dengan garis $y = 2x + 5$."
+            "Anggota himpunan A adalah {4,6,8}.",
+            "Anggota himpunan B adalah {1,2,3,4,6,12}.",
+            "A\u2229B={4,6}.",
+            "Banyak anggota himpunan kuasa dari A adalah 6."
         ],
         "correct": [
-            true,
-            true,
-            false
-        ],
-        "explanation": "1. $2y = 4x+8 \\rightarrow y=2x+4$, gradien $m=2$ (B). <br>2. Jika $x=0, y=4$ (B). <br>3. Syarat tegak lurus $m_1 \\cdot m_2 = -1$. Ini $2 \\cdot 2 = 4 \\neq -1$ (S)."
+            0,
+            1,
+            2
+        ]
     },
     {
         "id": 16,
-        "topic": "Geometri & Pengukuran (L1)",
-        "type": "PG",
-        "question": "Diketahui dua garis sejajar dipotong garis transversal. Jika besar sudut sepihak dalam adalah $A$ dan $B$, maka hubungan yang benar adalah ....",
+        "question": "Toko \"Segar\" menjual paket buah. Paket I (2kg apel, 1kg jeruk) seharga Rp80.000. Paket II (1kg apel, 2kg jeruk) seharga Rp70.000. Manakah kesimpulan yang benar?",
+        "topic": "Aljabar (L3)",
+        "explanation": "SPLDV: 2a+j=80, a+2j=70.Didapat a=30.000,j=20.000.A: 30>20 (Benar).B: Benar.C: Benar.D: 30+20=50 (Salah).",
+        "type": "PGK-MCMA",
         "options": [
-            "$\\angle A = \\angle B$",
-            "$\\angle A + \\angle B = 90^\\circ$",
-            "$\\angle A + \\angle B = 180^\\circ$",
-            "$\\angle A = 2\\angle B$"
+            "Harga 1kg apel lebih mahal dari 1kg jeruk.",
+            "Harga 1kg apel adalah Rp30.000.",
+            "Harga 1kg jeruk adalah Rp20.000.",
+            "Harga paket 1kg apel dan 1kg jeruk adalah Rp60.000."
         ],
-        "correct": 2,
-        "explanation": "Sifat sudut dalam sepihak adalah berjumlah $180^\\circ$ (suplemen)."
+        "correct": [
+            0,
+            1,
+            2
+        ]
     },
     {
         "id": 17,
-        "topic": "Geometri & Pengukuran (L2)",
+        "question": "Perhatikan sifat-sifat bangun datar berikut. Pilihlah sifat yang dimiliki oleh Belah Ketupat!",
+        "topic": "Geometri (L2)",
+        "explanation": "A: Benar.B: Benar.C: Salah (Layang-layang punya sifat ini, belah ketupat punya 2 pasang).D: Benar (Sudut sepihak dalam).",
         "type": "PGK-MCMA",
-        "question": "Diketahui kelompok sisi segitiga. Pilihlah yang membentuk segitiga siku-siku!",
         "options": [
-            "3 cm, 4 cm, 5 cm",
-            "6 cm, 8 cm, 12 cm",
-            "5 cm, 12 cm, 13 cm",
-            "8 cm, 15 cm, 17 cm"
+            "Keempat sisinya sama panjang.",
+            "Kedua diagonalnya berpotongan tegak lurus.",
+            "Memiliki tepat satu pasang sudut yang sama besar.",
+            "Jumlah sudut yang berdekatan adalah 180 derajat."
+        ],
+        "correct": [
+            0,
+            1,
+            3
+        ]
+    },
+    {
+        "id": 18,
+        "question": "Titik P(2,\u22123) dicerminkan terhadap sumbu-x, kemudian ditranslasikan oleh T[\u22121,5]. Manakah pernyataan yang benar mengenai posisi titik P?",
+        "topic": "Geometri (L3)",
+        "explanation": "Cermin sb-x: (x,\u2212y)\u2192(2,3) (Opsi A Benar).Translasi: (2\u22121,3+5)\u2192(1,8) (Opsi C Benar).Posisi (1,8) di Kuadran I (Opsi D Benar).",
+        "type": "PGK-MCMA",
+        "options": [
+            "Bayangan setelah pencerminan adalah P\u2032(2,3).",
+            "Bayangan setelah pencerminan adalah P\u2032(\u22122,\u22123).",
+            "Bayangan akhir setelah translasi adalah P\u2032\u2032(1,8).",
+            "Titik akhir berada di kuadran I."
         ],
         "correct": [
             0,
             2,
             3
-        ],
-        "explanation": "Cek Tripel Pythagoras ($a^2+b^2=c^2$). <br>1. $9+16=25$ (Ya). <br>2. $36+64=100 \\neq 144$ (Tidak). <br>3. $25+144=169$ (Ya). <br>4. $64+225=289$ (Ya)."
-    },
-    {
-        "id": 18,
-        "topic": "Geometri & Pengukuran (L3)",
-        "type": "PGK-Kategori",
-        "question": "Sebuah kapsul obat berbentuk tabung dengan kedua ujung berupa setengah bola. Jari-jari 3mm, tinggi tabung 10mm.",
-        "options": [
-            "Luas permukaan kapsul sama dengan luas selimut tabung ditambah luas satu bola utuh.",
-            "Luas selimut tabung adalah $60\\pi \\text{ mm}^2$.",
-            "Luas permukaan total adalah $96\\pi \\text{ mm}^2$."
-        ],
-        "correct": [
-            true,
-            true,
-            true
-        ],
-        "explanation": "1. $Setengah + Setengah = 1$ bola (B). <br>2. $2\\pi(3)(10) = 60\\pi$ (B). <br>3. Bola $4\\pi(3^2) = 36\\pi$. Total $60\\pi + 36\\pi = 96\\pi$ (B)."
+        ]
     },
     {
         "id": 19,
-        "topic": "Geometri & Pengukuran (L2)",
-        "type": "PG",
-        "question": "Sebuah limas persegi memiliki keliling alas 40 cm dan tinggi limas 12 cm. Volume limas tersebut adalah ....",
-        "options": [
-            "$400 \\text{ cm}^3$",
-            "$1.200 \\text{ cm}^3$",
-            "$1.600 \\text{ cm}^3$",
-            "$4.800 \\text{ cm}^3$"
-        ],
-        "correct": 0,
-        "explanation": "Sisi alas = $40/4 = 10$. Luas alas = $10 \\times 10 = 100$. <br>Vol = $\\frac{1}{3} \\times La \\times t = \\frac{1}{3} \\times 100 \\times 12 = 400$."
-    },
-    {
-        "id": 20,
-        "topic": "Geometri & Pengukuran (L2)",
+        "question": "Sebuah tabung memiliki jari-jari 7 cm dan tinggi 10 cm. Pilihlah pernyataan yang benar! (\u03c0=22/7)",
+        "topic": "Geometri (L2)",
+        "explanation": "A: \u03c0r2=22/7\u00d749=154 (Benar).B: 2\u03c0rt=2\u00d722/7\u00d77\u00d710=440 (Benar).C: 154\u00d710=1540 (Benar).D: 2\u03c0r=44 cm (Salah).",
         "type": "PGK-MCMA",
-        "question": "Dua segitiga dikatakan sebangun jika memenuhi syarat ....",
         "options": [
-            "Sudut-sudut yang bersesuaian sama besar.",
-            "Sisi-sisi yang bersesuaian sama panjang.",
-            "Perbandingan sisi-sisi yang bersesuaian senilai.",
-            "Luas kedua segitiga sama besar."
-        ],
-        "correct": [
-            0,
-            2
-        ],
-        "explanation": "Syarat kesebangunan adalah sudut sama besar atau rasio sisi sama. Syarat 2 dan 4 adalah untuk kongruensi, bukan sekadar sebangun."
-    },
-    {
-        "id": 21,
-        "topic": "Geometri & Pengukuran (L2)",
-        "type": "PGK-Kategori",
-        "question": "Titik $A(3, 5)$ ditransformasikan.",
-        "options": [
-            "Jika dicerminkan terhadap sumbu-y, bayangannya $(-3, 5)$.",
-            "Jika ditranslasi oleh $\\binom{2}{-3}$, bayangannya $(5, 2)$.",
-            "Jika dirotasi $90^\\circ$ pusat $O$, bayangannya $(5, -3)$."
-        ],
-        "correct": [
-            true,
-            true,
-            false
-        ],
-        "explanation": "1. Refleksi y: $(-x, y)$ (B). <br>2. $3+2=5, 5-3=2$ (B). <br>3. Rotasi 90: $(-y, x)$ harusnya $(-5, 3)$ (S)."
-    },
-    {
-        "id": 22,
-        "topic": "Geometri & Pengukuran (L2)",
-        "type": "PG",
-        "question": "Panjang busur lingkaran dengan jari-jari 21 cm dan sudut pusat $60^\\circ$ adalah .... ($\\pi = \\frac{22}{7}$)",
-        "options": [
-            "11 cm",
-            "22 cm",
-            "44 cm",
-            "66 cm"
-        ],
-        "correct": 1,
-        "explanation": "P. Busur = $\\frac{60}{360} \\times 2\\pi r = \\frac{1}{6} \\times 2 \\times \\frac{22}{7} \\times 21 = \\frac{1}{6} \\times 132 = 22$."
-    },
-    {
-        "id": 23,
-        "topic": "Geometri & Pengukuran (L3)",
-        "type": "PGK-MCMA",
-        "question": "Sebuah kerucut memiliki jari-jari $r$ dan tinggi $t$. Jika jari-jarinya diperbesar 2 kali dan tingginya tetap, maka:",
-        "options": [
-            "Luas alasnya menjadi 4 kali semula.",
-            "Volumenya menjadi 2 kali semula.",
-            "Volumenya menjadi 4 kali semula.",
-            "Luas selimutnya menjadi 2 kali semula."
-        ],
-        "correct": [
-            0,
-            2
-        ],
-        "explanation": "$V = \\frac{1}{3}\\pi r^2 t$. Jika $r' = 2r$, maka $(2r)^2 = 4r^2$. <br>1. Luas alas $\\propto r^2$ (x4) (B). <br>3. Volume $\\propto r^2$ (x4) (B). <br>2 Salah. <br>4 Salah ($s$ tidak linier 2x)."
-    },
-    {
-        "id": 24,
-        "topic": "Data & Peluang (L1)",
-        "type": "PG",
-        "question": "Diagram batang menunjukkan hasil panen: Jagung 40 ton, Padi 60 ton, Kedelai 20 ton. Persentase hasil panen Padi dari total panen adalah ....",
-        "options": [
-            "30%",
-            "40%",
-            "50%",
-            "60%"
-        ],
-        "correct": 2,
-        "explanation": "Total = $40+60+20 = 120$. Padi = $\\frac{60}{120} \\times 100\\% = 50\\%$."
-    },
-    {
-        "id": 25,
-        "topic": "Data & Peluang (L3)",
-        "type": "PGK-MCMA",
-        "question": "Rata-rata nilai 4 siswa adalah 80. Jika nilai Doni dimasukkan, rata-rata menjadi 82. Pilihlah pernyataan yang benar!",
-        "options": [
-            "Total nilai 4 siswa awal adalah 320.",
-            "Total nilai 5 siswa adalah 410.",
-            "Nilai Doni adalah 90.",
-            "Nilai Doni di bawah rata-rata kelas."
+            "Luas alas tabung adalah 154\u00a0cm2.",
+            "Luas selimut tabung adalah 440\u00a0cm2.",
+            "Volume tabung adalah 1.540\u00a0cm3.",
+            "Panjang selimut tabung jika dibentangkan adalah 22 cm."
         ],
         "correct": [
             0,
             1,
             2
-        ],
-        "explanation": "1. $4 \\times 80=320$ (B). <br>2. $5 \\times 82=410$ (B). <br>3. Doni = $410-320=90$ (B). <br>4. $90 > 82$ (Salah)."
+        ]
     },
     {
-        "id": 26,
-        "topic": "Data & Peluang (L2)",
-        "type": "PG",
-        "question": "Modus dan median dari data: 6, 8, 7, 8, 5, 9, 8, 7 adalah ....",
+        "id": 20,
+        "question": "Data nilai kelas 9A: 6, 6, 7, 7, 7, 8, 8, 9, 10, 10. Manakah interpretasi data yang tepat?",
+        "topic": "Data (L3)",
+        "explanation": "A: 7 muncul 3x (Benar).B: Data ke 5 & 6 (7 & 8) \u21927,5 (Benar).C: Sum=78, Mean=7,8. (7,8 > 7, Salah).D: 10\u22126=4 (Benar).",
+        "type": "PGK-MCMA",
         "options": [
-            "8 dan 7",
-            "8 dan 7,5",
-            "7 dan 8",
-            "8 dan 8"
+            "Modus data adalah 7.",
+            "Median data adalah 7,5.",
+            "Rata-rata (mean) data lebih kecil dari 7.",
+            "Jangkauan (range) data adalah 4."
         ],
-        "correct": 1,
-        "explanation": "Urut: 5, 6, 7, 7, 8, 8, 8, 9. <br>Modus = 8 (muncul 3x). <br>Median (data ke 4&5) = $\\frac{7+8}{2} = 7,5$."
+        "correct": [
+            0,
+            1,
+            3
+        ]
     },
     {
-        "id": 27,
-        "topic": "Data & Peluang (L3)",
+        "id": 21,
+        "question": "Dalam sebuah kotak terdapat 5 bola merah, 3 bola kuning, dan 2 bola hijau. Diambil satu bola secara acak. Pilihlah pernyataan peluang yang benar!",
+        "topic": "Data (L2)",
+        "explanation": "Total = 10.A: 5/10=0,5 (Benar).B: 2/10=0,2 (Benar).C: Bukan Kuning (Merah+Hijau)=7. 7/10=0,7 (Benar).D: 7/10=0,7 (Salah).",
+        "type": "PGK-MCMA",
+        "options": [
+            "Peluang terambil bola merah adalah 0,5.",
+            "Peluang terambil bola hijau adalah 0,2.",
+            "Peluang terambil bola bukan kuning adalah 0,7.",
+            "Peluang terambil bola merah atau hijau adalah 0,8."
+        ],
+        "correct": [
+            0,
+            1,
+            2
+        ]
+    },
+    {
+        "id": 22,
+        "question": "Diketahui pecahan: A=2/3, B=0,6, C=65%.",
+        "topic": "Bilangan (L2)",
+        "explanation": "A=0,66...; B=0,60; C=0,65.1. 0,66>0,60 (B).2. 0,60<0,65<0,66 (B).3. 65/100=0,65 (B).",
         "type": "PGK-Kategori",
-        "question": "Data A: 5, 5, 5, 5, 5. Data B: 1, 3, 5, 7, 9.",
         "options": [
-            "Rata-rata kedua data sama.",
-            "Jangkauan (range) data A lebih besar dari data B.",
-            "Data B lebih bervariasi (menyebar) dibanding data A."
+            "Nilai A lebih besar dari B.",
+            "Urutan dari terkecil adalah B, C, A.",
+            "Nilai C sama dengan 0,65."
+        ],
+        "correct": [
+            true,
+            true,
+            true
+        ]
+    },
+    {
+        "id": 23,
+        "question": "Toko A memberikan diskon tunggal 50%. Toko B memberikan diskon ganda 40% + 10% untuk barang yang sama seharga Rp100.000.",
+        "topic": "Bilangan (L3)",
+        "explanation": "1. 100rb\u00d750%=50rb (B).2. Diskon B: 40%+(10%\u00d760%)=46% (S).3. Harga B = Rp54.000 > A (S).",
+        "type": "PGK-Kategori",
+        "options": [
+            "Harga akhir di Toko A adalah Rp50.000.",
+            "Besar diskon di Toko B totalnya adalah 50%.",
+            "Harga di Toko B lebih murah daripada Toko A."
+        ],
+        "correct": [
+            true,
+            false,
+            false
+        ]
+    },
+    {
+        "id": 24,
+        "question": "Diketahui persamaan garis g:y=3x\u22125.",
+        "topic": "Aljabar (L2)",
+        "explanation": "1. y=mx+c, m=3 (B).2. c=\u22125, harusnya (0,\u22125) (S).3. Gradien sama (m=3), maka sejajar (B).",
+        "type": "PGK-Kategori",
+        "options": [
+            "Gradien garis g adalah 3.",
+            "Garis g memotong sumbu y di titik (0, 5).",
+            "Garis g sejajar dengan garis y=3x+2."
         ],
         "correct": [
             true,
             false,
             true
-        ],
-        "explanation": "1. Mean keduanya 5 (B). <br>2. Range A=0, Range B=8. $0 > 8$ (Salah). <br>3. Benar karena range B lebih besar."
+        ]
     },
     {
-        "id": 28,
-        "topic": "Data & Peluang (L1)",
-        "type": "PG",
-        "question": "Sebuah dadu dilempar satu kali. Peluang muncul mata dadu faktor dari 6 adalah ....",
-        "options": [
-            "$\\frac{1}{2}$",
-            "$\\frac{2}{3}$",
-            "$\\frac{1}{3}$",
-            "$\\frac{5}{6}$"
-        ],
-        "correct": 1,
-        "explanation": "Faktor 6 di dadu: {1, 2, 3, 6} ada 4 angka. <br>$P = \\frac{4}{6} = \\frac{2}{3}$."
-    },
-    {
-        "id": 29,
-        "topic": "Data & Peluang (L2)",
-        "type": "PGK-MCMA",
-        "question": "Tiga koin dilempar bersamaan sebanyak 80 kali. Pilihlah pernyataan prediksi yang benar!",
-        "options": [
-            "Ruang sampel satu kali pelemparan ada 8.",
-            "Peluang muncul ketiganya angka adalah $\\frac{1}{8}$.",
-            "Frekuensi harapan muncul ketiganya angka adalah 10 kali.",
-            "Pasti akan muncul tepat 10 kali ketiganya angka."
-        ],
-        "correct": [
-            0,
-            1,
-            2
-        ],
-        "explanation": "1. $2^3=8$ (B). <br>2. (AAA) hanya 1, jadi $1/8$ (B). <br>3. $Fh = \\frac{1}{8} \\times 80 = 10$ (B). <br>4. Harapan bukan kepastian (S)."
-    },
-    {
-        "id": 30,
-        "topic": "Data & Peluang (L3)",
+        "id": 25,
+        "question": "Sebuah persegi panjang memiliki panjang (x+5) cm dan lebar (x\u22122) cm. Kelilingnya adalah 30 cm.",
+        "topic": "Aljabar (L3)",
+        "explanation": "1. 2(x+5+x\u22122)=30\u21922(2x+3)=30\u21924x+6=30 (B).2. 4x=24\u2192x=6 (B).3. p=11,l=4\u2192L=44 (B).",
         "type": "PGK-Kategori",
-        "question": "Perbedaan Peluang Teoretik dan Empiris.",
         "options": [
-            "Peluang teoretik didasarkan pada rumus/ruang sampel ideal.",
-            "Peluang empiris didasarkan pada hasil percobaan nyata.",
-            "Semakin banyak percobaan, peluang empiris cenderung mendekati teoretik."
+            "Model matematika kelilingnya adalah 4x+6=30.",
+            "Nilai x adalah 6.",
+            "Luas persegi panjang tersebut adalah 44\u00a0cm2."
         ],
         "correct": [
             true,
             true,
             true
+        ]
+    },
+    {
+        "id": 26,
+        "question": "Diketahui fungsi f(x)=x2\u22121 dengan daerah asal {\u22121,0,1}.",
+        "topic": "Aljabar (L2)",
+        "explanation": "1. f(\u22121)=0,f(0)=\u22121,f(1)=0. Range {0,\u22121} (B).2. Kuadratik = Parabola (S).3. 22\u22121=3 (B).",
+        "type": "PGK-Kategori",
+        "options": [
+            "Range fungsi tersebut adalah {0,\u22121}.",
+            "Grafik fungsi tersebut berupa garis lurus.",
+            "Nilai fungsi untuk x=2 adalah 3."
         ],
-        "explanation": "Semua pernyataan adalah konsep dasar hubungan peluang teoretik dan empiris (Hukum Bilangan Besar)."
+        "correct": [
+            true,
+            false,
+            true
+        ]
+    },
+    {
+        "id": 27,
+        "question": "Perhatikan hubungan antar sudut.",
+        "topic": "Geometri (L2)",
+        "explanation": "1. Definisi pelurus (B).2. Definisi bertolak belakang (B).3. Penyiku 90\u221230=60 (S).",
+        "type": "PGK-Kategori",
+        "options": [
+            "Sudut yang saling berpelurus jumlahnya 180\u2218.",
+            "Sudut yang saling bertolak belakang besarnya sama.",
+            "Sudut penyiku dari 30\u2218 adalah 150\u2218."
+        ],
+        "correct": [
+            true,
+            true,
+            false
+        ]
+    },
+    {
+        "id": 28,
+        "question": "Sebuah foto berukuran 30\u00a0cm\u00d740\u00a0cm ditempel pada karton sebangun. Sisa karton kiri, kanan, atas foto 3 cm.",
+        "topic": "Geometri (L3)",
+        "explanation": "1. 30+3+3=36 (B).2. Sebangun: 30/36=40/tkarton\u200b\u2192t=48. Sisa bawah 48\u221240\u22123=5 (S).3. 36\u00d748=1728 (B).",
+        "type": "PGK-Kategori",
+        "options": [
+            "Lebar karton adalah 36 cm.",
+            "Sisa karton bagian bawah adalah 3 cm.",
+            "Luas karton adalah 1.728\u00a0cm2."
+        ],
+        "correct": [
+            true,
+            false,
+            true
+        ]
+    },
+    {
+        "id": 29,
+        "question": "Diagram lingkaran menunjukkan hobi siswa: Bola (40%), Renang (25%), Basket (X%), Voli (15%). Total siswa 200.",
+        "topic": "Data (L2)",
+        "explanation": "1. 100\u2212(40+25+15)=20% (B).2. 25%\u00d7200=50 (B).3. (40%\u221215%)\u00d7200=25%\u00d7200=50 (S).",
+        "type": "PGK-Kategori",
+        "options": [
+            "Persentase siswa hobi Basket adalah 20%.",
+            "Banyak siswa hobi Renang adalah 50 orang.",
+            "Selisih siswa hobi Bola dan Voli adalah 40 orang."
+        ],
+        "correct": [
+            true,
+            true,
+            false
+        ]
+    },
+    {
+        "id": 30,
+        "question": "Rata-rata tinggi 5 orang adalah 160 cm. Orang ke-6 masuk dengan tinggi 170 cm.",
+        "topic": "Data (L3)",
+        "explanation": "1. 170>160, rata-rata naik (B).2. Belum tentu, tergantung sebaran data awal (S).3. (5\u00d7160)+170=800+170=970 (B).",
+        "type": "PGK-Kategori",
+        "options": [
+            "Rata-rata tinggi badan akan naik.",
+            "Median data pasti berubah.",
+            "Jumlah total tinggi badan menjadi 970 cm."
+        ],
+        "correct": [
+            true,
+            false,
+            true
+        ]
     }
 ];
 
