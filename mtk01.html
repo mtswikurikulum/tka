@@ -211,28 +211,6 @@
             font-size: 14px;
         }
 
-        .difficulty-badge {
-            padding: 6px 12px;
-            border-radius: 15px;
-            font-size: 12px;
-            font-weight: bold;
-        }
-
-        .difficulty-easy {
-            background: #d4edda;
-            color: #155724;
-        }
-
-        .difficulty-medium {
-            background: #fff3cd;
-            color: #856404;
-        }
-
-        .difficulty-hard {
-            background: #f8d7da;
-            color: #721c24;
-        }
-
         .topic-badge {
             background: #e9ecef;
             color: #495057;
@@ -246,15 +224,6 @@
             color: #333;
             margin: 15px 0;
             line-height: 1.8;
-        }
-
-        .math-formula {
-            font-family: 'Courier New', monospace;
-            background: #fff;
-            padding: 10px;
-            border-radius: 5px;
-            margin: 10px 0;
-            display: inline-block;
         }
 
         .options {
@@ -290,6 +259,36 @@
             width: 20px;
             height: 20px;
             cursor: pointer;
+        }
+
+        .category-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        .category-table th, .category-table td {
+            border: 1px solid #dee2e6;
+            padding: 12px;
+            text-align: left;
+        }
+
+        .category-table th {
+            background: #f8f9fa;
+            font-weight: bold;
+        }
+
+        .category-option {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .category-option label {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
 
         .navigation {
@@ -437,6 +436,16 @@
             font-weight: bold;
         }
 
+        .instruction-text {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 12px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            font-weight: 500;
+            color: #856404;
+        }
+
         @media (max-width: 768px) {
             .container {
                 margin: 10px;
@@ -460,20 +469,6 @@
                 flex-direction: column;
                 align-items: flex-start;
             }
-        }
-
-        .warning-message {
-            background: #fff3cd;
-            border: 2px solid #ffc107;
-            border-radius: 10px;
-            padding: 15px;
-            margin: 20px 0;
-            color: #856404;
-        }
-
-        .warning-message strong {
-            display: block;
-            margin-bottom: 5px;
         }
     </style>
 </head>
@@ -514,15 +509,15 @@
                         <p>30 soal mencakup Bilangan, Aljabar, Geometri, dan Data & Peluang</p>
                     </div>
                     <div class="info-card">
-                        <h3>⚡ Tingkat Kesulitan</h3>
-                        <p>25% Mudah, 50% Sedang, 25% Sulit</p>
+                        <h3>📝 Jenis Soal</h3>
+                        <p>Pilihan Ganda, PG Kompleks (MCMA), dan Benar/Salah</p>
                     </div>
                     <div class="info-card">
                         <h3>✅ Wajib Diisi</h3>
                         <p>Semua soal harus dijawab sebelum melihat hasil</p>
                     </div>
                     <div class="info-card">
-                        <h3>📝 Pembahasan Lengkap</h3>
+                        <h3>💡 Pembahasan Lengkap</h3>
                         <p>Setiap soal dilengkapi dengan pembahasan detail</p>
                     </div>
                 </div>
@@ -579,264 +574,331 @@
 
     <script>
         const questions = [
-            // BILANGAN REAL (6 soal)
+            // BAGIAN I: PILIHAN GANDA (Soal 1-12)
             {
-                question: "Hasil dari 2³ × 2⁵ : 2⁴ adalah ....",
-                options: ["2⁴", "2⁶", "2¹²", "2²"],
-                correct: 0,
-                difficulty: "Mudah",
-                topic: "Bilangan Real",
-                explanation: "Menggunakan sifat perpangkatan: 2³ × 2⁵ : 2⁴ = 2^(3+5-4) = 2⁴ = 16"
-            },
-            {
-                question: "Harga 3 kg apel adalah Rp45.000,00. Jika Ibu membeli 5 kg apel, berapa yang harus dibayar?",
-                options: ["Rp60.000,00", "Rp75.000,00", "Rp90.000,00", "Rp105.000,00"],
-                correct: 1,
-                difficulty: "Mudah",
-                topic: "Bilangan Real",
-                explanation: "Perbandingan senilai: 3 kg = Rp45.000<br>1 kg = Rp15.000<br>5 kg = 5 × Rp15.000 = Rp75.000"
-            },
-            {
-                question: "FPB dari 36, 48, dan 60 adalah ....",
-                options: ["6", "12", "18", "24"],
-                correct: 1,
-                difficulty: "Sedang",
-                topic: "Bilangan Real",
-                explanation: "Faktorisasi prima:<br>36 = 2² × 3²<br>48 = 2⁴ × 3<br>60 = 2² × 3 × 5<br>FPB = 2² × 3 = 12"
-            },
-            {
-                question: "Jika a/b = 3/4 dan b/c = 2/3, maka a:b:c = ....",
-                options: ["3:4:6", "6:8:12", "9:12:18", "1:2:3"],
-                correct: 0,
-                difficulty: "Sedang",
-                topic: "Bilangan Real",
-                explanation: "a:b = 3:4 dan b:c = 2:3<br>Samakan nilai b:<br>a:b = 3:4 (kalikan 2) → 6:8<br>b:c = 2:3 (kalikan 4) → 8:12<br>Jadi a:b:c = 6:8:12 atau disederhanakan 3:4:6"
-            },
-            {
-                question: "Hasil dari √72 + √18 - √8 adalah ....",
-                options: ["5√2", "6√2", "7√2", "8√2"],
+                question: "Dalam sebuah kompetisi matematika, setiap jawaban benar diberi skor 4, salah -2, dan tidak dijawab -1. Dari 40 soal, Budi menjawab benar 28 soal dan salah 5 soal. Skor total yang diperoleh Budi adalah ....",
+                type: "pg",
+                options: ["102", "96", "95", "88"],
                 correct: 2,
-                difficulty: "Sedang",
-                topic: "Bilangan Real",
-                explanation: "√72 = √(36×2) = 6√2<br>√18 = √(9×2) = 3√2<br>√8 = √(4×2) = 2√2<br>Hasil = 6√2 + 3√2 - 2√2 = 7√2"
+                topic: "Bilangan (L2)",
+                explanation: "Benar: 28×4=112<br>Salah: 5×(−2)=−10<br>Tidak dijawab: (40−28−5)=7×(−1)=−7<br>Total: 112−10−7=95"
             },
             {
-                question: "Sebuah peta memiliki skala 1:200.000. Jarak dua kota pada peta adalah 6 cm. Jarak sebenarnya kedua kota tersebut adalah ....",
-                options: ["12 km", "120 km", "1.200 km", "12.000 km"],
-                correct: 0,
-                difficulty: "Sulit",
-                topic: "Bilangan Real",
-                explanation: "Jarak sebenarnya = jarak peta × skala<br>= 6 cm × 200.000<br>= 1.200.000 cm<br>= 12.000 m = 12 km"
-            },
-
-            // PERSAMAAN DAN PERTIDAKSAMAAN LINIER (3 soal)
-            {
-                question: "Penyelesaian dari persamaan 3x - 7 = 2x + 5 adalah ....",
-                options: ["x = 2", "x = 6", "x = 12", "x = -2"],
+                question: "Bentuk sederhana dari 2√48 + √75 - 3√12 adalah ....",
+                type: "pg",
+                options: ["5√3", "6√3", "7√3", "9√3"],
                 correct: 2,
-                difficulty: "Mudah",
-                topic: "Persamaan Linier",
-                explanation: "3x - 7 = 2x + 5<br>3x - 2x = 5 + 7<br>x = 12"
+                topic: "Bilangan (L2)",
+                explanation: "2√(16×3) + √(25×3) - 3√(4×3)<br>= 2(4)√3 + 5√3 - 3(2)√3<br>= 8√3 + 5√3 - 6√3<br>= 7√3"
             },
             {
-                question: "Diketahui sistem persamaan:<br>2x + y = 10<br>x - y = 2<br>Nilai x + y adalah ....",
-                options: ["4", "6", "8", "10"],
-                correct: 1,
-                difficulty: "Sedang",
-                topic: "Persamaan Linier",
-                explanation: "Metode eliminasi:<br>2x + y = 10<br>x - y = 2<br>──────── +<br>3x = 12 → x = 4<br>Substitusi: 4 - y = 2 → y = 2<br>Jadi x + y = 4 + 2 = 6"
-            },
-            {
-                question: "Himpunan penyelesaian dari pertidaksamaan 5x - 3 < 2x + 12 adalah ....",
-                options: ["x < 3", "x < 5", "x > 3", "x > 5"],
-                correct: 1,
-                difficulty: "Sedang",
-                topic: "Pertidaksamaan Linier",
-                explanation: "5x - 3 < 2x + 12<br>5x - 2x < 12 + 3<br>3x < 15<br>x < 5"
-            },
-
-            // BENTUK ALJABAR (3 soal)
-            {
-                question: "Hasil dari (2x + 3)(x - 4) adalah ....",
-                options: ["2x² - 5x - 12", "2x² + 5x - 12", "2x² - 5x + 12", "2x² + 11x - 12"],
-                correct: 0,
-                difficulty: "Mudah",
-                topic: "Bentuk Aljabar",
-                explanation: "(2x + 3)(x - 4)<br>= 2x² - 8x + 3x - 12<br>= 2x² - 5x - 12"
-            },
-            {
-                question: "Faktorisasi dari x² - 9 adalah ....",
-                options: ["(x - 3)(x - 3)", "(x + 3)(x + 3)", "(x - 3)(x + 3)", "(x - 9)(x + 1)"],
+                question: "Amuba membelah diri menjadi dua setiap 15 menit. Jika mula-mula ada 20 amuba, banyak amuba setelah 1,5 jam adalah ....",
+                type: "pg",
+                options: ["320", "640", "1.280", "2.560"],
                 correct: 2,
-                difficulty: "Mudah",
-                topic: "Bentuk Aljabar",
-                explanation: "x² - 9 adalah selisih dua kuadrat<br>x² - 9 = x² - 3²<br>= (x - 3)(x + 3)"
+                topic: "Bilangan (L3)",
+                explanation: "Durasi: 1,5 jam = 90 menit<br>Banyak pembelahan (n): 90/15 = 6 kali<br>Rumus: Un = a × r^n → 20 × 2^6 = 20 × 64 = 1.280"
             },
             {
-                question: "Jika x² - 6x + 8 = 0, maka nilai x yang memenuhi adalah ....",
-                options: ["x = 2 atau x = 4", "x = -2 atau x = -4", "x = 1 atau x = 8", "x = -1 atau x = -8"],
-                correct: 0,
-                difficulty: "Sedang",
-                topic: "Bentuk Aljabar",
-                explanation: "x² - 6x + 8 = 0<br>Faktorisasi: (x - 2)(x - 4) = 0<br>x - 2 = 0 atau x - 4 = 0<br>x = 2 atau x = 4"
-            },
-
-            // FUNGSI (2 soal)
-            {
-                question: "Diketahui fungsi f(x) = 2x + 5. Nilai f(3) adalah ....",
-                options: ["8", "11", "13", "16"],
+                question: "Himpunan penyelesaian dari pertidaksamaan 3(x−2) ≤ x+8 untuk x bilangan bulat adalah ....",
+                type: "pg",
+                options: ["{...,4,5,6}", "{...,5,6,7}", "{7,8,9,...}", "{...,6,7,8}"],
                 correct: 1,
-                difficulty: "Mudah",
-                topic: "Fungsi",
-                explanation: "f(x) = 2x + 5<br>f(3) = 2(3) + 5<br>= 6 + 5<br>= 11"
+                topic: "Aljabar (L2)",
+                explanation: "3x−6 ≤ x+8<br>3x−x ≤ 8+6<br>2x ≤ 14 → x ≤ 7<br>Himpunan bilangan bulat ≤7 adalah {...,5,6,7}"
             },
             {
-                question: "Jika f(x) = x² - 3x + 2 dan g(x) = 2x + 1, maka (f + g)(x) = ....",
-                options: ["x² - x + 3", "x² + x + 3", "x² - 5x + 1", "x² - x + 1"],
-                correct: 0,
-                difficulty: "Sedang",
-                topic: "Fungsi",
-                explanation: "(f + g)(x) = f(x) + g(x)<br>= (x² - 3x + 2) + (2x + 1)<br>= x² - 3x + 2x + 2 + 1<br>= x² - x + 3"
-            },
-
-            // BARISAN DAN DERET (2 soal)
-            {
-                question: "Suku ke-10 dari barisan aritmatika 3, 7, 11, 15, ... adalah ....",
-                options: ["35", "39", "43", "47"],
-                correct: 1,
-                difficulty: "Sedang",
-                topic: "Barisan dan Deret",
-                explanation: "a = 3, b = 4 (beda)<br>Un = a + (n-1)b<br>U₁₀ = 3 + (10-1)4<br>= 3 + 36<br>= 39"
-            },
-            {
-                question: "Jumlah 8 suku pertama dari deret geometri 2 + 6 + 18 + ... adalah ....",
-                options: ["6.560", "6.562", "6.580", "6.582"],
-                correct: 0,
-                difficulty: "Sulit",
-                topic: "Barisan dan Deret",
-                explanation: "a = 2, r = 3<br>Sn = a(rⁿ - 1)/(r - 1)<br>S₈ = 2(3⁸ - 1)/(3 - 1)<br>= 2(6561 - 1)/2<br>= 6.560"
-            },
-
-            // OBJEK GEOMETRI (4 soal)
-            {
-                question: "Jumlah sudut dalam segitiga adalah ....",
-                options: ["90°", "180°", "270°", "360°"],
-                correct: 1,
-                difficulty: "Mudah",
-                topic: "Objek Geometri",
-                explanation: "Jumlah sudut dalam segitiga selalu 180°. Ini adalah teorema dasar geometri."
-            },
-            {
-                question: "Dua garis sejajar dipotong garis transversal. Jika sudut luar berseberangan adalah 70°, maka sudut dalam sepihak adalah ....",
-                options: ["70°", "110°", "120°", "180°"],
-                correct: 1,
-                difficulty: "Sedang",
-                topic: "Objek Geometri",
-                explanation: "Sudut luar berseberangan = 70°<br>Sudut dalam sepihak = 180° - 70° = 110°<br>(sudut dalam sepihak berjumlah 180°)"
-            },
-            {
-                question: "Panjang sisi miring segitiga siku-siku dengan sisi 9 cm dan 12 cm adalah ....",
-                options: ["13 cm", "15 cm", "17 cm", "21 cm"],
-                correct: 1,
-                difficulty: "Sedang",
-                topic: "Objek Geometri",
-                explanation: "Teorema Pythagoras:<br>c² = a² + b²<br>c² = 9² + 12²<br>c² = 81 + 144<br>c² = 225<br>c = 15 cm"
-            },
-            {
-                question: "Dua segitiga sebangun dengan perbandingan sisi 2:3. Jika luas segitiga pertama 16 cm², maka luas segitiga kedua adalah ....",
-                options: ["24 cm²", "32 cm²", "36 cm²", "48 cm²"],
+                question: "Harga 2 baju dan 1 celana adalah Rp140.000,00. Harga 3 baju dan 2 celana adalah Rp235.000,00. Harga 1 baju dan 1 celana adalah ....",
+                type: "pg",
+                options: ["Rp85.000,00", "Rp90.000,00", "Rp95.000,00", "Rp105.000,00"],
                 correct: 2,
-                difficulty: "Sulit",
-                topic: "Objek Geometri",
-                explanation: "Perbandingan luas = kuadrat perbandingan sisi<br>L₁ : L₂ = 2² : 3² = 4 : 9<br>16 : L₂ = 4 : 9<br>L₂ = (16 × 9)/4 = 36 cm²"
+                topic: "Aljabar (L2)",
+                explanation: "Misal Baju=x, Celana=y<br>1) 2x+y=140.000<br>2) 3x+2y=235.000<br>Dari (1) y=140.000−2x, subst ke (2)<br>Didapat x=45.000, y=50.000<br>x+y=95.000"
             },
-
-            // TRANSFORMASI GEOMETRI (2 soal)
             {
-                question: "Bayangan titik A(3, 4) oleh translasi T = (2, -1) adalah ....",
-                options: ["A'(5, 3)", "A'(1, 5)", "A'(5, 5)", "A'(1, 3)"],
+                question: "Diketahui fungsi f(x)=ax+b. Jika f(2)=5 dan f(−1)=−4, nilai dari f(3) adalah ....",
+                type: "pg",
+                options: ["8", "9", "10", "11"],
                 correct: 0,
-                difficulty: "Sedang",
-                topic: "Transformasi Geometri",
-                explanation: "Translasi: (x', y') = (x + a, y + b)<br>A'(3 + 2, 4 + (-1))<br>A'(5, 3)"
+                topic: "Aljabar (L1)",
+                explanation: "2a+b=5<br>−a+b=−4 (kurangkan)<br>3a=9 → a=3<br>3(2)+b=5 → b=−1<br>f(3)=3(3)−1=8"
             },
             {
-                question: "Bayangan titik B(4, 2) oleh refleksi terhadap sumbu X adalah ....",
-                options: ["B'(4, -2)", "B'(-4, 2)", "B'(-4, -2)", "B'(2, 4)"],
+                question: "Sebuah tangga sepanjang 10 meter disandarkan pada tembok. Jika jarak kaki tangga ke tembok adalah 6 meter, tinggi tembok yang dicapai tangga adalah ....",
+                type: "pg",
+                options: ["6 m", "7 m", "8 m", "9 m"],
+                correct: 2,
+                topic: "Geometri (L2)",
+                explanation: "Menggunakan Pythagoras:<br>t = √(10² − 6²)<br>= √(100 − 36)<br>= √64 = 8 m"
+            },
+            {
+                question: "Luas permukaan kubus yang memiliki panjang rusuk 9 cm adalah ....",
+                type: "pg",
+                options: ["243 cm²", "486 cm²", "729 cm²", "864 cm²"],
+                correct: 1,
+                topic: "Geometri (L2)",
+                explanation: "Rumus LP Kubus: 6 × s²<br>= 6 × 9²<br>= 6 × 81<br>= 486 cm²"
+            },
+            {
+                question: "Sebuah taman berbentuk lingkaran dengan diameter 28 m. Di tengah taman akan dibuat kolam air mancur berbentuk lingkaran berdiameter 14 m. Sisa lahan akan ditanami rumput. Luas lahan yang ditanami rumput adalah ....",
+                type: "pg",
+                options: ["154 m²", "308 m²", "462 m²", "616 m²"],
+                correct: 2,
+                topic: "Geometri (L3)",
+                explanation: "L_besar = π × 14 × 14 = 616 m²<br>L_kecil = π × 7 × 7 = 154 m²<br>Sisa = 616 − 154 = 462 m²"
+            },
+            {
+                question: "Rata-rata nilai ulangan matematika dari 10 siswa adalah 75. Jika nilai Andi dimasukkan, rata-ratanya menjadi 76. Nilai Andi adalah ....",
+                type: "pg",
+                options: ["76", "80", "85", "86"],
+                correct: 3,
+                topic: "Data (L2)",
+                explanation: "Total awal = 10 × 75 = 750<br>Total baru = 11 × 76 = 836<br>Nilai Andi = 836 − 750 = 86"
+            },
+            {
+                question: "Median dari data: 7, 6, 8, 9, 6, 7, 5, 8, 8, 7 adalah ....",
+                type: "pg",
+                options: ["6", "6,5", "7", "7,5"],
+                correct: 2,
+                topic: "Data (L1)",
+                explanation: "Urutkan: 5, 6, 6, 7, 7, 7, 8, 8, 8, 9<br>Data ke-10 (genap). Median = (data ke-5 + data ke-6) / 2<br>= (7+7)/2 = 7"
+            },
+            {
+                question: "Dua buah dadu dilambungkan bersamaan. Peluang muncul mata dadu berjumlah 9 adalah ....",
+                type: "pg",
+                options: ["1/9", "1/6", "4/36", "5/36"],
                 correct: 0,
-                difficulty: "Sedang",
-                topic: "Transformasi Geometri",
-                explanation: "Refleksi terhadap sumbu X:<br>(x, y) → (x, -y)<br>B(4, 2) → B'(4, -2)"
+                topic: "Data (L2)",
+                explanation: "Kejadian jumlah 9: (3,6), (4,5), (5,4), (6,3) → ada 4<br>Ruang sampel: 36<br>Peluang: 4/36 = 1/9"
             },
 
-            // PENGUKURAN (4 soal)
+            // BAGIAN II: PG KOMPLEKS - MCMA (Soal 13-21)
             {
-                question: "Luas persegi panjang dengan panjang 12 cm dan lebar 8 cm adalah ....",
-                options: ["40 cm²", "80 cm²", "96 cm²", "120 cm²"],
-                correct: 2,
-                difficulty: "Mudah",
-                topic: "Pengukuran",
-                explanation: "Luas = panjang × lebar<br>= 12 × 8<br>= 96 cm²"
+                question: "Diketahui himpunan S={1,2,3,...,10}. Dari himpunan tersebut dipilih dua bilangan secara acak. Manakah pernyataan yang benar mengenai sifat bilangan yang mungkin terpilih?<br><br><em>Pilihlah jawaban yang benar! Jawaban benar lebih dari satu.</em>",
+                type: "multiple",
+                options: [
+                    "Pasangan (2, 3) adalah pasangan bilangan prima",
+                    "Pasangan (4, 9) adalah pasangan bilangan kuadrat",
+                    "FPB dari 6 dan 8 adalah 4",
+                    "KPK dari 3 dan 5 adalah 15"
+                ],
+                correct: [0, 1, 3],
+                topic: "Bilangan (L2)",
+                explanation: "A: Benar (2 dan 3 prima)<br>B: Benar (4=2², 9=3²)<br>C: Salah (FPB 6 dan 8 adalah 2)<br>D: Benar (KPK 3 dan 5 adalah 15)"
             },
             {
-                question: "Keliling lingkaran dengan diameter 14 cm adalah .... (π = 22/7)",
-                options: ["22 cm", "44 cm", "88 cm", "154 cm"],
-                correct: 1,
-                difficulty: "Mudah",
-                topic: "Pengukuran",
-                explanation: "Keliling = π × d<br>= 22/7 × 14<br>= 44 cm"
+                question: "Seorang arsitek merancang gedung dengan pola ketinggian lantai mengikuti barisan aritmatika. Lantai 1 setinggi 4m, lantai 2 setinggi 7m (akumulasi 4+3), dan seterusnya dengan beda tinggi antar lantai 3m. Pilihlah pernyataan yang benar!<br><br><em>Jawaban benar lebih dari satu.</em>",
+                type: "multiple",
+                options: [
+                    "Tinggi lantai ke-5 adalah 16m dari dasar",
+                    "Tinggi lantai ke-10 adalah 31m dari dasar",
+                    "Ketinggian lantai membentuk barisan 4, 7, 10, 13...",
+                    "Beda barisan tersebut adalah 4m"
+                ],
+                correct: [0, 1, 2],
+                topic: "Bilangan (L3)",
+                explanation: "Un = a + (n−1)b, a=4, b=3<br>A: U₅ = 4 + 4(3) = 16 (Benar)<br>B: U₁₀ = 4 + 9(3) = 31 (Benar)<br>C: Benar<br>D: Salah (beda 3m)"
             },
             {
-                question: "Volume kubus dengan panjang rusuk 5 cm adalah ....",
-                options: ["25 cm³", "75 cm³", "125 cm³", "150 cm³"],
-                correct: 2,
-                difficulty: "Mudah",
-                topic: "Pengukuran",
-                explanation: "Volume kubus = s³<br>= 5³<br>= 125 cm³"
+                question: "Diketahui himpunan A = {x | 2 < x ≤ 8, x ∈ bilangan genap} dan B = {faktor dari 12}. Manakah pernyataan yang benar?<br><br><em>Jawaban benar lebih dari satu.</em>",
+                type: "multiple",
+                options: [
+                    "Anggota himpunan A adalah {4,6,8}",
+                    "Anggota himpunan B adalah {1,2,3,4,6,12}",
+                    "A∩B = {4,6}",
+                    "Banyak anggota himpunan kuasa dari A adalah 6"
+                ],
+                correct: [0, 1, 2],
+                topic: "Aljabar (L2)",
+                explanation: "A: {4,6,8} (Benar)<br>B: Faktor 12 = {1,2,3,4,6,12} (Benar)<br>C: Irisan = {4,6} (Benar)<br>D: 2³ = 8, bukan 6 (Salah)"
             },
             {
-                question: "Luas permukaan balok dengan ukuran 6 cm × 4 cm × 3 cm adalah ....",
-                options: ["72 cm²", "108 cm²", "144 cm²", "216 cm²"],
-                correct: 1,
-                difficulty: "Sulit",
-                topic: "Pengukuran",
-                explanation: "Luas permukaan = 2(pl + pt + lt)<br>= 2(6×4 + 6×3 + 4×3)<br>= 2(24 + 18 + 12)<br>= 2(54)<br>= 108 cm²"
+                question: "Toko 'Segar' menjual paket buah. Paket I (2kg apel, 1kg jeruk) seharga Rp80.000. Paket II (1kg apel, 2kg jeruk) seharga Rp70.000. Manakah kesimpulan yang benar?<br><br><em>Jawaban benar lebih dari satu.</em>",
+                type: "multiple",
+                options: [
+                    "Harga 1kg apel lebih mahal dari 1kg jeruk",
+                    "Harga 1kg apel adalah Rp30.000",
+                    "Harga 1kg jeruk adalah Rp20.000",
+                    "Harga paket 1kg apel dan 1kg jeruk adalah Rp60.000"
+                ],
+                correct: [0, 1, 2],
+                topic: "Aljabar (L3)",
+                explanation: "SPLDV: 2a+j=80, a+2j=70<br>Didapat a=30.000, j=20.000<br>A: 30>20 (Benar)<br>B: Benar<br>C: Benar<br>D: 30+20=50 (Salah)"
+            },
+            {
+                question: "Perhatikan sifat-sifat bangun datar berikut. Pilihlah sifat yang dimiliki oleh Belah Ketupat!<br><br><em>Jawaban benar lebih dari satu.</em>",
+                type: "multiple",
+                options: [
+                    "Keempat sisinya sama panjang",
+                    "Kedua diagonalnya berpotongan tegak lurus",
+                    "Memiliki tepat satu pasang sudut yang sama besar",
+                    "Jumlah sudut yang berdekatan adalah 180 derajat"
+                ],
+                correct: [0, 1, 3],
+                topic: "Geometri (L2)",
+                explanation: "A: Benar<br>B: Benar<br>C: Salah (Layang-layang punya sifat ini, belah ketupat punya 2 pasang)<br>D: Benar (Sudut sepihak dalam)"
+            },
+            {
+                question: "Titik P(2,−3) dicerminkan terhadap sumbu-x, kemudian ditranslasikan oleh T[−1,5]. Manakah pernyataan yang benar mengenai posisi titik P?<br><br><em>Jawaban benar lebih dari satu.</em>",
+                type: "multiple",
+                options: [
+                    "Bayangan setelah pencerminan adalah P'(2,3)",
+                    "Bayangan setelah pencerminan adalah P'(−2,−3)",
+                    "Bayangan akhir setelah translasi adalah P''(1,8)",
+                    "Titik akhir berada di kuadran I"
+                ],
+                correct: [0, 2, 3],
+                topic: "Geometri (L3)",
+                explanation: "Cermin sb-x: (x,−y) → (2,3) (Opsi A Benar)<br>Translasi: (2−1, 3+5) → (1,8) (Opsi C Benar)<br>Posisi (1,8) di Kuadran I (Opsi D Benar)"
+            },
+            {
+                question: "Sebuah tabung memiliki jari-jari 7 cm dan tinggi 10 cm. Pilihlah pernyataan yang benar! (π=22/7)<br><br><em>Jawaban benar lebih dari satu.</em>",
+                type: "multiple",
+                options: [
+                    "Luas alas tabung adalah 154 cm²",
+                    "Luas selimut tabung adalah 440 cm²",
+                    "Volume tabung adalah 1.540 cm³",
+                    "Panjang selimut tabung jika dibentangkan adalah 22 cm"
+                ],
+                correct: [0, 1, 2],
+                topic: "Geometri (L2)",
+                explanation: "A: πr² = 22/7×49 = 154 (Benar)<br>B: 2πrt = 2×22/7×7×10 = 440 (Benar)<br>C: 154×10 = 1540 (Benar)<br>D: 2πr = 44 cm (Salah)"
+            },
+            {
+                question: "Data nilai kelas 9A: 6, 6, 7, 7, 7, 8, 8, 9, 10, 10. Manakah interpretasi data yang tepat?<br><br><em>Jawaban benar lebih dari satu.</em>",
+                type: "multiple",
+                options: [
+                    "Modus data adalah 7",
+                    "Median data adalah 7,5",
+                    "Rata-rata (mean) data lebih kecil dari 7",
+                    "Jangkauan (range) data adalah 4"
+                ],
+                correct: [0, 1, 3],
+                topic: "Data (L3)",
+                explanation: "A: 7 muncul 3x (Benar)<br>B: Data ke 5 & 6 (7 & 8) → 7,5 (Benar)<br>C: Sum=78, Mean=7,8 (7,8 > 7, Salah)<br>D: 10−6=4 (Benar)"
+            },
+            {
+                question: "Dalam sebuah kotak terdapat 5 bola merah, 3 bola kuning, dan 2 bola hijau. Diambil satu bola secara acak. Pilihlah pernyataan peluang yang benar!<br><br><em>Jawaban benar lebih dari satu.</em>",
+                type: "multiple",
+                options: [
+                    "Peluang terambil bola merah adalah 0,5",
+                    "Peluang terambil bola hijau adalah 0,2",
+                    "Peluang terambil bola bukan kuning adalah 0,7",
+                    "Peluang terambil bola merah atau hijau adalah 0,8"
+                ],
+                correct: [0, 1, 2],
+                topic: "Data (L2)",
+                explanation: "Total = 10<br>A: 5/10=0,5 (Benar)<br>B: 2/10=0,2 (Benar)<br>C: Bukan Kuning (Merah+Hijau)=7. 7/10=0,7 (Benar)<br>D: 7/10=0,7 (Salah)"
             },
 
-            // DATA (3 soal)
+            // BAGIAN III: PGK KATEGORI - BENAR/SALAH (Soal 22-30)
             {
-                question: "Mean dari data: 5, 7, 8, 9, 11 adalah ....",
-                options: ["7", "8", "9", "10"],
-                correct: 1,
-                difficulty: "Mudah",
-                topic: "Data",
-                explanation: "Mean = jumlah data / banyak data<br>= (5 + 7 + 8 + 9 + 11) / 5<br>= 40 / 5<br>= 8"
+                question: "Diketahui pecahan: A=2/3, B=0,6, C=65%.<br><br><em>Tentukan Benar atau Salah untuk setiap pernyataan berikut!</em>",
+                type: "category",
+                categories: [
+                    { statement: "Nilai A lebih besar dari B", options: ["Benar", "Salah"] },
+                    { statement: "Urutan dari terkecil adalah B, C, A", options: ["Benar", "Salah"] },
+                    { statement: "Nilai C sama dengan 0,65", options: ["Benar", "Salah"] }
+                ],
+                correct: [0, 0, 0],
+                topic: "Bilangan (L2)",
+                explanation: "A=0,66...; B=0,60; C=0,65<br>1. 0,66>0,60 (Benar)<br>2. 0,60<0,65<0,66 (Benar)<br>3. 65/100=0,65 (Benar)"
             },
             {
-                question: "Median dari data: 12, 15, 10, 18, 14, 16, 11 adalah ....",
-                options: ["12", "14", "15", "16"],
-                correct: 1,
-                difficulty: "Sedang",
-                topic: "Data",
-                explanation: "Urutkan data: 10, 11, 12, 14, 15, 16, 18<br>Median = data tengah<br>= data ke-4<br>= 14"
+                question: "Toko A memberikan diskon tunggal 50%. Toko B memberikan diskon ganda 40% + 10% untuk barang yang sama seharga Rp100.000.<br><br><em>Tentukan Benar atau Salah untuk setiap pernyataan berikut!</em>",
+                type: "category",
+                categories: [
+                    { statement: "Harga akhir di Toko A adalah Rp50.000", options: ["Benar", "Salah"] },
+                    { statement: "Besar diskon di Toko B totalnya adalah 50%", options: ["Benar", "Salah"] },
+                    { statement: "Harga di Toko B lebih murah daripada Toko A", options: ["Benar", "Salah"] }
+                ],
+                correct: [0, 1, 1],
+                topic: "Bilangan (L3)",
+                explanation: "1. 100rb×50%=50rb (Benar)<br>2. Diskon B: 40%+(10%×60%)=46% (Salah)<br>3. Harga B = Rp54.000 > A (Salah)"
             },
             {
-                question: "Modus dari data: 7, 8, 9, 7, 10, 7, 8, 11, 7 adalah ....",
-                options: ["7", "8", "9", "10"],
-                correct: 0,
-                difficulty: "Mudah",
-                topic: "Data",
-                explanation: "Modus = data yang paling sering muncul<br>7 muncul 4 kali (paling banyak)<br>Jadi modus = 7"
+                question: "Diketahui persamaan garis g: y=3x−5.<br><br><em>Tentukan Benar atau Salah untuk setiap pernyataan berikut!</em>",
+                type: "category",
+                categories: [
+                    { statement: "Gradien garis g adalah 3", options: ["Benar", "Salah"] },
+                    { statement: "Garis g memotong sumbu y di titik (0, 5)", options: ["Benar", "Salah"] },
+                    { statement: "Garis g sejajar dengan garis y=3x+2", options: ["Benar", "Salah"] }
+                ],
+                correct: [0, 1, 0],
+                topic: "Aljabar (L2)",
+                explanation: "1. y=mx+c, m=3 (Benar)<br>2. c=−5, harusnya (0,−5) (Salah)<br>3. Gradien sama (m=3), maka sejajar (Benar)"
             },
-
-            // PELUANG (1 soal)
             {
-                question: "Sebuah dadu dilempar satu kali. Peluang muncul mata dadu bilangan prima adalah ....",
-                options: ["1/6", "1/3", "1/2", "2/3"],
-                correct: 2,
-                difficulty: "Sedang",
-                topic: "Peluang",
-                explanation: "Bilangan prima pada dadu: 2, 3, 5 (3 angka)<br>Total kemungkinan: 6<br>Peluang = 3/6 = 1/2"
+                question: "Sebuah persegi panjang memiliki panjang (x+5) cm dan lebar (x−2) cm. Kelilingnya adalah 30 cm.<br><br><em>Tentukan Benar atau Salah untuk setiap pernyataan berikut!</em>",
+                type: "category",
+                categories: [
+                    { statement: "Model matematika kelilingnya adalah 4x+6=30", options: ["Benar", "Salah"] },
+                    { statement: "Nilai x adalah 6", options: ["Benar", "Salah"] },
+                    { statement: "Luas persegi panjang tersebut adalah 44 cm²", options: ["Benar", "Salah"] }
+                ],
+                correct: [0, 0, 0],
+                topic: "Aljabar (L3)",
+                explanation: "1. 2(x+5+x−2)=30 → 2(2x+3)=30 → 4x+6=30 (Benar)<br>2. 4x=24 → x=6 (Benar)<br>3. p=11, l=4 → L=44 (Benar)"
+            },
+            {
+                question: "Diketahui fungsi f(x)=x²−1 dengan daerah asal {−1,0,1}.<br><br><em>Tentukan Benar atau Salah untuk setiap pernyataan berikut!</em>",
+                type: "category",
+                categories: [
+                    { statement: "Range fungsi tersebut adalah {0,−1}", options: ["Benar", "Salah"] },
+                    { statement: "Grafik fungsi tersebut berupa garis lurus", options: ["Benar", "Salah"] },
+                    { statement: "Nilai fungsi untuk x=2 adalah 3", options: ["Benar", "Salah"] }
+                ],
+                correct: [0, 1, 0],
+                topic: "Aljabar (L2)",
+                explanation: "1. f(−1)=0, f(0)=−1, f(1)=0. Range {0,−1} (Benar)<br>2. Kuadratik = Parabola (Salah)<br>3. 2²−1=3 (Benar)"
+            },
+            {
+                question: "Perhatikan hubungan antar sudut.<br><br><em>Tentukan Benar atau Salah untuk setiap pernyataan berikut!</em>",
+                type: "category",
+                categories: [
+                    { statement: "Sudut yang saling berpelurus jumlahnya 180°", options: ["Benar", "Salah"] },
+                    { statement: "Sudut yang saling bertolak belakang besarnya sama", options: ["Benar", "Salah"] },
+                    { statement: "Sudut penyiku dari 30° adalah 150°", options: ["Benar", "Salah"] }
+                ],
+                correct: [0, 0, 1],
+                topic: "Geometri (L2)",
+                explanation: "1. Definisi pelurus (Benar)<br>2. Definisi bertolak belakang (Benar)<br>3. Penyiku 90−30=60 (Salah)"
+            },
+            {
+                question: "Sebuah foto berukuran 30 cm × 40 cm ditempel pada karton sebangun. Sisa karton kiri, kanan, atas foto 3 cm.<br><br><em>Tentukan Benar atau Salah untuk setiap pernyataan berikut!</em>",
+                type: "category",
+                categories: [
+                    { statement: "Lebar karton adalah 36 cm", options: ["Benar", "Salah"] },
+                    { statement: "Sisa karton bagian bawah adalah 3 cm", options: ["Benar", "Salah"] },
+                    { statement: "Luas karton adalah 1.728 cm²", options: ["Benar", "Salah"] }
+                ],
+                correct: [0, 1, 0],
+                topic: "Geometri (L3)",
+                explanation: "1. 30+3+3=36 (Benar)<br>2. Sebangun: 30/36=40/t → t=48. Sisa bawah 48−40−3=5 (Salah)<br>3. 36×48=1728 (Benar)"
+            },
+            {
+                question: "Diagram lingkaran menunjukkan hobi siswa: Bola (40%), Renang (25%), Basket (X%), Voli (15%). Total siswa 200.<br><br><em>Tentukan Benar atau Salah untuk setiap pernyataan berikut!</em>",
+                type: "category",
+                categories: [
+                    { statement: "Persentase siswa hobi Basket adalah 20%", options: ["Benar", "Salah"] },
+                    { statement: "Banyak siswa hobi Renang adalah 50 orang", options: ["Benar", "Salah"] },
+                    { statement: "Selisih siswa hobi Bola dan Voli adalah 40 orang", options: ["Benar", "Salah"] }
+                ],
+                correct: [0, 0, 1],
+                topic: "Data (L2)",
+                explanation: "1. 100−(40+25+15)=20% (Benar)<br>2. 25%×200=50 (Benar)<br>3. (40%−15%)×200=50 (Salah, harusnya 50 bukan 40)"
+            },
+            {
+                question: "Rata-rata tinggi 5 orang adalah 160 cm. Orang ke-6 masuk dengan tinggi 170 cm.<br><br><em>Tentukan Benar atau Salah untuk setiap pernyataan berikut!</em>",
+                type: "category",
+                categories: [
+                    { statement: "Rata-rata tinggi badan akan naik", options: ["Benar", "Salah"] },
+                    { statement: "Median data pasti berubah", options: ["Benar", "Salah"] },
+                    { statement: "Jumlah total tinggi badan menjadi 970 cm", options: ["Benar", "Salah"] }
+                ],
+                correct: [0, 1, 0],
+                topic: "Data (L3)",
+                explanation: "1. 170>160, rata-rata naik (Benar)<br>2. Belum tentu, tergantung sebaran data awal (Salah)<br>3. (5×160)+170=800+170=970 (Benar)"
             }
         ];
 
@@ -881,22 +943,59 @@
             const q = questions[currentQuestion];
             const section = document.getElementById('questionSection');
             
-            const difficultyClass = q.difficulty === 'Mudah' ? 'difficulty-easy' : 
-                                   q.difficulty === 'Sedang' ? 'difficulty-medium' : 'difficulty-hard';
+            let optionsHTML = '';
             
-            const optionsHTML = q.options.map((opt, idx) => `
-                <div class="option ${userAnswers[currentQuestion] === idx ? 'selected' : ''}" onclick="selectOption(${idx})">
-                    <input type="radio" name="q${currentQuestion}" value="${idx}" 
-                        ${userAnswers[currentQuestion] === idx ? 'checked' : ''}>
-                    <span>${opt}</span>
-                </div>
-            `).join('');
+            if (q.type === 'pg') {
+                optionsHTML = q.options.map((opt, idx) => `
+                    <div class="option ${userAnswers[currentQuestion] === idx ? 'selected' : ''}" onclick="selectOption(${idx})">
+                        <input type="radio" name="q${currentQuestion}" value="${idx}" 
+                            ${userAnswers[currentQuestion] === idx ? 'checked' : ''}>
+                        <span>${opt}</span>
+                    </div>
+                `).join('');
+            } else if (q.type === 'multiple') {
+                optionsHTML = q.options.map((opt, idx) => `
+                    <div class="option ${userAnswers[currentQuestion]?.includes(idx) ? 'selected' : ''}" onclick="toggleMultiple(${idx})">
+                        <input type="checkbox" id="opt${idx}" value="${idx}"
+                            ${userAnswers[currentQuestion]?.includes(idx) ? 'checked' : ''}>
+                        <span>${opt}</span>
+                    </div>
+                `).join('');
+            } else if (q.type === 'category') {
+                optionsHTML = `
+                    <table class="category-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 60%;">Pernyataan</th>
+                                ${q.categories[0].options.map(opt => `<th>${opt}</th>`).join('')}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${q.categories.map((cat, idx) => `
+                                <tr>
+                                    <td>${cat.statement}</td>
+                                    ${cat.options.map((opt, optIdx) => `
+                                        <td>
+                                            <div class="category-option">
+                                                <label>
+                                                    <input type="radio" name="cat${idx}" value="${optIdx}"
+                                                        ${userAnswers[currentQuestion]?.[idx] === optIdx ? 'checked' : ''}
+                                                        onchange="selectCategory(${idx}, ${optIdx})">
+                                                </label>
+                                            </div>
+                                        </td>
+                                    `).join('')}
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                `;
+            }
             
             section.innerHTML = `
                 <div class="question-box">
                     <div class="question-header">
                         <span class="question-number">Soal ${currentQuestion + 1} dari 30</span>
-                        <span class="difficulty-badge ${difficultyClass}">${q.difficulty}</span>
                         <span class="topic-badge">${q.topic}</span>
                     </div>
                     <div class="question-text">${q.question}</div>
@@ -927,6 +1026,48 @@
             updateProgress();
         }
 
+        function toggleMultiple(idx) {
+            if (userAnswers[currentQuestion] === null) {
+                userAnswers[currentQuestion] = [];
+                answeredCount++;
+            }
+            
+            const answers = userAnswers[currentQuestion];
+            const index = answers.indexOf(idx);
+            
+            if (index > -1) {
+                answers.splice(index, 1);
+                if (answers.length === 0) {
+                    userAnswers[currentQuestion] = null;
+                    answeredCount--;
+                }
+            } else {
+                answers.push(idx);
+            }
+            
+            const checkbox = document.getElementById(`opt${idx}`);
+            checkbox.checked = !checkbox.checked;
+            checkbox.parentElement.classList.toggle('selected', checkbox.checked);
+            updateProgress();
+        }
+
+        function selectCategory(catIdx, optIdx) {
+            if (userAnswers[currentQuestion] === null) {
+                userAnswers[currentQuestion] = new Array(questions[currentQuestion].categories.length).fill(null);
+                answeredCount++;
+            }
+            
+            userAnswers[currentQuestion][catIdx] = optIdx;
+            
+            // Check if all categories are answered
+            const allAnswered = userAnswers[currentQuestion].every(ans => ans !== null);
+            if (!allAnswered && answeredCount > 0) {
+                // Don't count as fully answered yet
+            }
+            
+            updateProgress();
+        }
+
         function updateProgress() {
             const progress = (answeredCount / questions.length) * 100;
             document.getElementById('progressBar').style.width = progress + '%';
@@ -936,7 +1077,6 @@
 
         function nextQuestion() {
             if (currentQuestion === questions.length - 1) {
-                // Check if all questions answered
                 if (answeredCount < questions.length) {
                     alert('Harap jawab semua soal sebelum menyelesaikan tryout!');
                     return;
@@ -961,12 +1101,62 @@
 
             questions.forEach((q, idx) => {
                 const userAnswer = userAnswers[idx];
-                const isCorrect = userAnswer === q.correct;
-                
+                let isCorrect = false;
+
+                if (q.type === 'pg') {
+                    isCorrect = userAnswer === q.correct;
+                } else if (q.type === 'multiple') {
+                    if (userAnswer && Array.isArray(userAnswer) && Array.isArray(q.correct)) {
+                        const sortedUser = [...userAnswer].sort();
+                        const sortedCorrect = [...q.correct].sort();
+                        isCorrect = JSON.stringify(sortedUser) === JSON.stringify(sortedCorrect);
+                    }
+                } else if (q.type === 'category') {
+                    if (userAnswer && Array.isArray(userAnswer) && Array.isArray(q.correct)) {
+                        isCorrect = JSON.stringify(userAnswer) === JSON.stringify(q.correct);
+                    }
+                }
+
                 if (isCorrect) correct++;
 
                 const statusClass = isCorrect ? 'correct' : 'wrong';
                 const statusText = isCorrect ? '✓ Benar' : '✗ Salah';
+
+                let answerDisplay = '';
+                if (q.type === 'pg') {
+                    answerDisplay = `
+                        <div class="answer-comparison">
+                            ${!isCorrect ? `<div class="answer-line your-answer">❌ Jawaban Anda: ${q.options[userAnswer]}</div>` : ''}
+                            <div class="answer-line correct-answer">✓ Jawaban Benar: ${q.options[q.correct]}</div>
+                        </div>
+                    `;
+                } else if (q.type === 'multiple') {
+                    const correctOptions = q.correct.map(i => q.options[i]).join(', ');
+                    const userOptions = userAnswer ? userAnswer.map(i => q.options[i]).join(', ') : 'Tidak dijawab';
+                    answerDisplay = `
+                        <div class="answer-comparison">
+                            ${!isCorrect ? `<div class="answer-line your-answer">❌ Jawaban Anda: ${userOptions}</div>` : ''}
+                            <div class="answer-line correct-answer">✓ Jawaban Benar: ${correctOptions}</div>
+                        </div>
+                    `;
+                } else if (q.type === 'category') {
+                    answerDisplay = `
+                        <div class="answer-comparison">
+                            ${q.categories.map((cat, i) => {
+                                const userAns = userAnswer?.[i];
+                                const correctAns = q.correct[i];
+                                const match = userAns === correctAns;
+                                return `
+                                    <div style="margin: 8px 0; padding: 8px; background: ${match ? '#d4edda' : '#f8d7da'}; border-radius: 5px;">
+                                        <strong>${cat.statement}</strong><br>
+                                        ${!match ? `Jawaban Anda: ${cat.options[userAns] || 'Tidak dijawab'}<br>` : ''}
+                                        Jawaban Benar: ${cat.options[correctAns]}
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                    `;
+                }
 
                 reviewHTML.push(`
                     <div class="review-question ${statusClass}">
@@ -978,10 +1168,7 @@
                             <span class="review-status ${statusClass}">${statusText}</span>
                         </div>
                         <div class="question-text">${q.question}</div>
-                        <div class="answer-comparison">
-                            ${!isCorrect ? `<div class="answer-line your-answer">❌ Jawaban Anda: ${q.options[userAnswer]}</div>` : ''}
-                            <div class="answer-line correct-answer">✓ Jawaban Benar: ${q.options[q.correct]}</div>
-                        </div>
+                        ${answerDisplay}
                         <div class="explanation">
                             <div class="explanation-title">💡 Pembahasan:</div>
                             <div>${q.explanation}</div>
@@ -1001,7 +1188,6 @@
             document.getElementById('wrongAnswers').textContent = questions.length - correct;
             document.getElementById('reviewSection').innerHTML = reviewHTML.join('');
 
-            // Scroll to top
             window.scrollTo(0, 0);
         }
 
