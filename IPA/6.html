@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Materi 6: Dampak Interaksi Keseimbangan Ekosistem</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&family=Fira+Code:wght@400;500&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #059669;
+            --secondary: #0891b2;
+            --accent: #f59e0b;
+            --dark: #0f172a;
+            --light: #f8fafc;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: linear-gradient(135deg, #0f766e 0%, #0e7490 100%);
+            color: var(--dark);
+            line-height: 1.8;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Navigation Bar */
+        .nav-bar {
+            background: white;
+            border-radius: 16px;
+            padding: 20px 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .nav-title {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn-nav {
+            padding: 12px 24px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95em;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-home {
+            background: linear-gradient(135deg, #64748b, #475569);
+            color: white;
+            box-shadow: 0 4px 12px rgba(100, 116, 139, 0.3);
+        }
+
+        .btn-home:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(100, 116, 139, 0.4);
+        }
+
+        .btn-practice {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+        }
+
+        .btn-practice:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4);
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            border-radius: 20px;
+            padding: 50px 60px;
+            margin-bottom: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+        }
+
+        .header h1 {
+            font-size: 2.8em;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        .header .meta {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.95em;
+            color: #64748b;
+        }
+
+        .meta-item .icon {
+            font-size: 1.3em;
+        }
+
+        /* Content Section */
+        .content {
+            background: white;
+            border-radius: 20px;
+            padding: 50px 60px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .content h2 {
+            font-size: 2em;
+            font-weight: 700;
+            color: var(--primary);
+            margin-top: 40px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid var(--primary);
+        }
+
+        .content h2:first-child {
+            margin-top: 0;
+        }
+
+        .content h3 {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+
+        .content p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .content ul, .content ol {
+            margin: 15px 0 15px 30px;
+        }
+
+        .content li {
+            margin-bottom: 10px;
+        }
+
+        /* Info Box */
+        .info-box {
+            background: linear-gradient(135deg, #e0f2fe 0%, #dbeafe 100%);
+            border-left: 5px solid var(--secondary);
+            padding: 25px 30px;
+            border-radius: 12px;
+            margin: 25px 0;
+        }
+
+        .info-box h4 {
+            color: var(--secondary);
+            font-size: 1.2em;
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Warning Box */
+        .warning-box {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-left: 5px solid var(--accent);
+            padding: 25px 30px;
+            border-radius: 12px;
+            margin: 25px 0;
+        }
+
+        .warning-box h4 {
+            color: #d97706;
+            font-size: 1.2em;
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Success Box */
+        .success-box {
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+            border-left: 5px solid #059669;
+            padding: 25px 30px;
+            border-radius: 12px;
+            margin: 25px 0;
+        }
+
+        .success-box h4 {
+            color: #059669;
+            font-size: 1.2em;
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Danger Box */
+        .danger-box {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            border-left: 5px solid #ef4444;
+            padding: 25px 30px;
+            border-radius: 12px;
+            margin: 25px 0;
+        }
+
+        .danger-box h4 {
+            color: #ef4444;
+            font-size: 1.2em;
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        thead {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        th {
+            padding: 18px 20px;
+            text-align: left;
+            font-weight: 700;
+            font-size: 1em;
+        }
+
+        td {
+            padding: 15px 20px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Graph Box */
+        .graph-box {
+            background: #f8fafc;
+            border-radius: 16px;
+            padding: 30px;
+            margin: 30px 0;
+            border: 2px solid #e2e8f0;
+        }
+
+        .graph-placeholder {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            margin: 20px 0;
+            border: 2px solid #e2e8f0;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .graph-title {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .graph-description {
+            color: #64748b;
+            text-align: center;
+            line-height: 1.8;
+        }
+
+        /* Example Box */
+        .example-box {
+            background: #f8fafc;
+            border-radius: 16px;
+            padding: 30px;
+            margin: 30px 0;
+            border: 2px solid #e2e8f0;
+        }
+
+        .example-box h4 {
+            color: var(--primary);
+            font-size: 1.3em;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .question {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin: 20px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .question-text {
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+
+        .options {
+            margin: 20px 0;
+        }
+
+        .option {
+            background: #f8fafc;
+            padding: 15px 20px;
+            margin: 12px 0;
+            border-radius: 10px;
+            border: 2px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+
+        .option.correct {
+            background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+            border-color: #059669;
+        }
+
+        .explanation {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            padding: 25px;
+            border-radius: 12px;
+            margin-top: 25px;
+            border-left: 5px solid var(--accent);
+        }
+
+        .explanation h5 {
+            color: #d97706;
+            font-size: 1.1em;
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Key Points */
+        .key-points {
+            background: linear-gradient(135deg, #fce7f3, #fbcfe8);
+            border-left: 5px solid #ec4899;
+            padding: 25px 30px;
+            border-radius: 12px;
+            margin: 25px 0;
+        }
+
+        .key-points h4 {
+            color: #ec4899;
+            font-size: 1.2em;
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 15px;
+            }
+
+            .header, .content {
+                padding: 30px 25px;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .content h2 {
+                font-size: 1.6em;
+            }
+
+            .content h3 {
+                font-size: 1.3em;
+            }
+
+            table {
+                font-size: 0.9em;
+            }
+
+            th, td {
+                padding: 12px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation Bar -->
+        <div class="nav-bar">
+            <div class="nav-title">📚 Materi 6: Dampak Interaksi & Keseimbangan Ekosistem</div>
+            <div class="nav-buttons">
+                <a href="kisi-kisi-tkad-ipa.html" class="btn-nav btn-home">🏠 Menu Utama</a>
+                <a href="Lat6.html" class="btn-nav btn-practice">✏️ Latihan Soal</a>
+            </div>
+        </div>
+
+        <!-- Header -->
+        <div class="header">
+            <h1>⚖️ Dampak Interaksi dan Keseimbangan Ekosistem</h1>
+            <div class="meta">
+                <div class="meta-item">
+                    <span class="icon">📖</span>
+                    <span>Kelas VII</span>
+                </div>
+                <div class="meta-item">
+                    <span class="icon">🎯</span>
+                    <span>Fase D</span>
+                </div>
+                <div class="meta-item">
+                    <span class="icon">⏱️</span>
+                    <span>Level Kognitif: L2</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <h2>🔗 Interaksi Antar Makhluk Hidup</h2>
+            
+            <p>Dalam ekosistem, makhluk hidup tidak dapat hidup sendiri. Mereka saling berinteraksi satu sama lain untuk memenuhi kebutuhan hidupnya. Interaksi ini dapat terjadi antar individu dari spesies yang sama maupun berbeda.</p>
+
+            <div class="info-box">
+                <h4>💡 Jenis-Jenis Interaksi Makhluk Hidup</h4>
+                <p>Interaksi antar makhluk hidup dapat dibedakan menjadi beberapa bentuk:</p>
+                <ol>
+                    <li><strong>Predasi</strong> - Hubungan memangsa dan dimangsa</li>
+                    <li><strong>Kompetisi</strong> - Persaingan untuk mendapatkan sumber daya</li>
+                    <li><strong>Simbiosis</strong> - Hubungan hidup bersama antara dua organisme</li>
+                    <li><strong>Netral</strong> - Hubungan yang tidak saling mempengaruhi</li>
+                </ol>
+            </div>
+
+            <h2>🦁 Predasi (Pemangsa - Mangsa)</h2>
+
+            <p><strong>Predasi</strong> adalah interaksi antara predator (pemangsa) dan prey (mangsa), di mana predator memburu dan memakan prey untuk mendapatkan energi.</p>
+
+            <h3>Karakteristik Hubungan Predasi:</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Aspek</th>
+                        <th>Predator (Pemangsa)</th>
+                        <th>Prey (Mangsa)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Dampak</strong></td>
+                        <td>Diuntungkan (+)</td>
+                        <td>Dirugikan (-)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Populasi</strong></td>
+                        <td>Meningkat saat mangsa melimpah</td>
+                        <td>Menurun saat predator banyak</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Contoh</strong></td>
+                        <td>Singa, ular, elang, hiu</td>
+                        <td>Rusa, tikus, ayam, ikan kecil</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Dinamika Populasi Predator-Prey:</h3>
+
+            <div class="success-box">
+                <h4>📊 Pola Perubahan Populasi</h4>
+                <ol>
+                    <li><strong>Fase 1:</strong> Populasi mangsa tinggi → Makanan berlimpah → Populasi predator meningkat</li>
+                    <li><strong>Fase 2:</strong> Populasi predator tinggi → Mangsa banyak dimakan → Populasi mangsa menurun</li>
+                    <li><strong>Fase 3:</strong> Populasi mangsa rendah → Makanan predator berkurang → Populasi predator menurun</li>
+                    <li><strong>Fase 4:</strong> Populasi predator rendah → Tekanan pada mangsa berkurang → Populasi mangsa meningkat kembali</li>
+                </ol>
+                <p style="margin-top: 15px;"><strong>Siklus ini berulang terus-menerus!</strong></p>
+            </div>
+
+            <div class="warning-box">
+                <h4>⚠️ Pola Grafik Predator-Prey</h4>
+                <ul>
+                    <li>Grafik populasi predator dan prey membentuk <strong>pola gelombang/sinusoidal</strong></li>
+                    <li><strong>Puncak populasi predator</strong> selalu terjadi <strong>setelah</strong> puncak populasi prey</li>
+                    <li><strong>Lembah populasi predator</strong> selalu terjadi <strong>setelah</strong> lembah populasi prey</li>
+                    <li>Ada <strong>jeda waktu (time lag)</strong> antara perubahan populasi prey dan predator</li>
+                </ul>
+            </div>
+
+            <h2>🏆 Kompetisi (Persaingan)</h2>
+
+            <p><strong>Kompetisi</strong> adalah interaksi antar organisme yang memperebutkan sumber daya yang sama dan terbatas, seperti makanan, air, tempat tinggal, atau cahaya matahari.</p>
+
+            <h3>Jenis-Jenis Kompetisi:</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Jenis</th>
+                        <th>Pengertian</th>
+                        <th>Contoh</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Kompetisi Intraspesifik</strong></td>
+                        <td>Persaingan antar individu dari spesies yang sama</td>
+                        <td>Sesama tikus memperebutkan makanan; Sesama pohon mangga memperebutkan cahaya</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Kompetisi Interspesifik</strong></td>
+                        <td>Persaingan antar individu dari spesies yang berbeda</td>
+                        <td>Kambing vs sapi memperebutkan rumput; Harimau vs serigala memperebutkan rusa</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Dampak Kompetisi:</h3>
+
+            <div class="danger-box">
+                <h4>⚡ Dampak pada Populasi</h4>
+                <ul>
+                    <li><strong>Penurunan populasi:</strong> Individu yang kalah bersaing akan mati atau berpindah</li>
+                    <li><strong>Seleksi alam:</strong> Individu yang lebih kuat dan adaptif akan bertahan</li>
+                    <li><strong>Pembagian relung (niche partitioning):</strong> Spesies mengubah perilaku untuk mengurangi persaingan</li>
+                    <li><strong>Kepunahan lokal:</strong> Spesies yang kalah bersaing dapat punah di suatu area</li>
+                </ul>
+            </div>
+
+            <h3>Pola Grafik Kompetisi:</h3>
+
+            <div class="info-box">
+                <h4>📉 Karakteristik Grafik Kompetisi</h4>
+                <ul>
+                    <li>Kedua populasi cenderung <strong>menurun bersamaan</strong> saat kompetisi ketat</li>
+                    <li>Populasi yang lebih kuat akan <strong>stabil atau meningkat perlahan</strong></li>
+                    <li>Populasi yang lebih lemah akan <strong>terus menurun atau punah</strong></li>
+                    <li>Tidak ada pola gelombang seperti predasi</li>
+                </ul>
+            </div>
+
+            <h2>⚖️ Keseimbangan Ekosistem</h2>
+
+            <p><strong>Keseimbangan ekosistem</strong> adalah kondisi di mana komponen biotik dan abiotik dalam ekosistem berada dalam keadaan stabil dan harmonis. Populasi berbagai organisme terjaga dalam kisaran tertentu.</p>
+
+            <h3>Faktor-Faktor yang Mempengaruhi Keseimbangan:</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Faktor</th>
+                        <th>Dampak</th>
+                        <th>Contoh</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Populasi Predator</strong></td>
+                        <td>Mengontrol populasi mangsa agar tidak berlebihan</td>
+                        <td>Ular mengontrol populasi tikus di sawah</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Ketersediaan Makanan</strong></td>
+                        <td>Menentukan daya dukung lingkungan</td>
+                        <td>Rumput yang melimpah mendukung populasi herbivora</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Penyakit</strong></td>
+                        <td>Mengurangi populasi yang berlebihan</td>
+                        <td>Wabah penyakit pada populasi yang padat</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Kompetisi</strong></td>
+                        <td>Membatasi pertumbuhan populasi</td>
+                        <td>Persaingan memperebutkan wilayah kekuasaan</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Faktor Abiotik</strong></td>
+                        <td>Mempengaruhi kondisi lingkungan</td>
+                        <td>Kekeringan, banjir, suhu ekstrem</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Gangguan Keseimbangan Ekosistem:</h3>
+
+            <div class="danger-box">
+                <h4>🚨 Penyebab Ketidakseimbangan</h4>
+                <ol>
+                    <li><strong>Kepunahan Predator Puncak</strong>
+                        <ul>
+                            <li>Populasi mangsa meledak tak terkendali</li>
+                            <li>Tumbuhan habis dimakan herbivora</li>
+                            <li>Ekosistem rusak</li>
+                        </ul>
+                    </li>
+                    <li><strong>Introduksi Spesies Asing</strong>
+                        <ul>
+                            <li>Spesies asli kalah bersaing</li>
+                            <li>Predator baru tanpa musuh alami</li>
+                            <li>Perubahan struktur ekosistem</li>
+                        </ul>
+                    </li>
+                    <li><strong>Aktivitas Manusia</strong>
+                        <ul>
+                            <li>Perburuan berlebihan</li>
+                            <li>Perusakan habitat</li>
+                            <li>Polusi dan pencemaran</li>
+                        </ul>
+                    </li>
+                    <li><strong>Bencana Alam</strong>
+                        <ul>
+                            <li>Kebakaran hutan</li>
+                            <li>Banjir dan kekeringan</li>
+                            <li>Letusan gunung berapi</li>
+                        </ul>
+                    </li>
+                </ol>
+            </div>
+
+            <h2>📝 Contoh Soal dan Pembahasan</h2>
+
+            <div class="example-box">
+                <h4>📌 Contoh Soal 1</h4>
+                <div class="question">
+                    <div class="graph-box">
+                        <div class="graph-title">Grafik Perubahan Populasi Kelinci dan Rubah</div>
+                        <div class="graph-placeholder">
+                            <p class="graph-description">
+                                <strong>Grafik menunjukkan:</strong><br><br>
+                                📊 Sumbu X: Waktu (bulan 0-24)<br>
+                                📊 Sumbu Y: Jumlah Populasi (individu)<br><br>
+                                
+                                <strong>Garis Biru (Kelinci):</strong><br>
+                                • Bulan 0-6: Naik dari 100 ke 300<br>
+                                • Bulan 6-12: Turun dari 300 ke 80<br>
+                                • Bulan 12-18: Naik dari 80 ke 280<br>
+                                • Bulan 18-24: Turun dari 280 ke 90<br><br>
+                                
+                                <strong>Garis Merah (Rubah):</strong><br>
+                                • Bulan 0-6: Naik dari 20 ke 40<br>
+                                • Bulan 6-12: Naik dari 40 ke 80 (puncak di bulan 10)<br>
+                                • Bulan 12-18: Turun dari 80 ke 25<br>
+                                • Bulan 18-24: Naik dari 25 ke 70<br><br>
+                                
+                                <em>Pola: Puncak rubah terjadi setelah puncak kelinci</em>
+                            </p>
+                        </div>
+                    </div>
+
+                    <p class="question-text">
+                        Berdasarkan grafik di atas, manakah pernyataan yang BENAR? (Pilih lebih dari satu)
+                    </p>
+
+                    <div class="options">
+                        <div class="option correct">A. Terjadi hubungan predasi dengan kelinci sebagai mangsa dan rubah sebagai pemangsa</div>
+                        <div class="option correct">B. Puncak populasi rubah terjadi setelah puncak populasi kelinci</div>
+                        <div class="option correct">C. Penurunan populasi kelinci menyebabkan penurunan populasi rubah</div>
+                        <div class="option">D. Kedua populasi mengalami kepunahan pada akhir periode pengamatan</div>
+                    </div>
+
+                    <div class="explanation">
+                        <h5>💡 Pembahasan:</h5>
+                        <p><strong>Jawaban yang benar: A, B, dan C</strong></p>
+                        
+                        <p><strong>Analisis Grafik:</strong></p>
+                        
+                        <p style="margin-top: 15px;"><strong>A. BENAR - Hubungan Predasi</strong></p>
+                        <ul>
+                            <li>Rubah adalah predator (pemangsa) yang memakan kelinci (mangsa)</li>
+                            <li>Terlihat dari pola: saat kelinci banyak → rubah meningkat</li>
+                            <li>Saat kelinci sedikit → rubah menurun</li>
+                            <li>Ini adalah ciri khas hubungan predator-prey</li>
+                        </ul>
+
+                        <p style="margin-top: 15px;"><strong>B. BENAR - Puncak Rubah Setelah Puncak Kelinci</strong></p>
+                        <ul>
+                            <li>Puncak kelinci: bulan ke-6 (300 individu) dan bulan ke-18 (280 individu)</li>
+                            <li>Puncak rubah: bulan ke-10 (80 individu) dan bulan ke-24 (70 individu)</li>
+                            <li>Ada <strong>jeda waktu (time lag)</strong> sekitar 4-6 bulan</li>
+                            <li>Ini normal karena rubah perlu waktu untuk berkembang biak setelah makanan melimpah</li>
+                        </ul>
+
+                        <p style="margin-top: 15px;"><strong>C. BENAR - Penurunan Kelinci → Penurunan Rubah</strong></p>
+                        <ul>
+                            <li>Bulan 6-12: Kelinci turun drastis (300→80) → Rubah mulai turun di bulan 12</li>
+                            <li>Kelinci sedikit = makanan rubah kurang → populasi rubah menurun</li>
+                            <li>Ini menunjukkan <strong>ketergantungan predator pada ketersediaan mangsa</strong></li>
+                        </ul>
+
+                        <p style="margin-top: 15px;"><strong>D. SALAH - Tidak Ada Kepunahan</strong></p>
+                        <ul>
+                            <li>Di akhir periode (bulan 24): Kelinci = 90, Rubah = 70</li>
+                            <li>Kedua populasi masih ada, hanya mengalami <strong>fluktuasi alami</strong></li>
+                            <li>Kepunahan = populasi = 0 (tidak terjadi)</li>
+                        </ul>
+
+                        <p style="margin-top: 15px;"><strong>Kesimpulan:</strong> Grafik menunjukkan dinamika populasi predator-prey yang seimbang dengan pola gelombang yang saling bergantian. Ini adalah keseimbangan ekosistem yang normal!</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <h4>📌 Contoh Soal 2</h4>
+                <div class="question">
+                    <div class="graph-box">
+                        <div class="graph-title">Grafik Populasi Kambing dan Domba di Padang Rumput</div>
+                        <div class="graph-placeholder">
+                            <p class="graph-description">
+                                <strong>Grafik menunjukkan:</strong><br><br>
+                                📊 Sumbu X: Waktu (tahun 0-10)<br>
+                                📊 Sumbu Y: Jumlah Populasi (ekor)<br><br>
+                                
+                                <strong>Garis Hijau (Kambing):</strong><br>
+                                • Tahun 0: 200 ekor<br>
+                                • Tahun 2: 180 ekor<br>
+                                • Tahun 4: 150 ekor<br>
+                                • Tahun 6: 130 ekor<br>
+                                • Tahun 8: 100 ekor<br>
+                                • Tahun 10: 80 ekor<br>
+                                (Terus menurun perlahan)<br><br>
+                                
+                                <strong>Garis Oranye (Domba):</strong><br>
+                                • Tahun 0: 180 ekor<br>
+                                • Tahun 2: 160 ekor<br>
+                                • Tahun 4: 140 ekor<br>
+                                • Tahun 6: 110 ekor<br>
+                                • Tahun 8: 90 ekor<br>
+                                • Tahun 10: 70 ekor<br>
+                                (Terus menurun perlahan)<br><br>
+                                
+                                <em>Pola: Kedua populasi menurun bersamaan</em>
+                            </p>
+                        </div>
+                    </div>
+
+                    <p class="question-text">
+                        Berdasarkan data grafik di atas, manakah pernyataan yang BENAR? (Pilih lebih dari satu)
+                    </p>
+
+                    <div class="options">
+                        <div class="option correct">A. Terjadi kompetisi antara kambing dan domba untuk memperebutkan rumput</div>
+                        <div class="option correct">B. Kedua populasi mengalami penurunan karena persaingan sumber daya</div>
+                        <div class="option">C. Terjadi hubungan predasi dengan kambing sebagai pemangsa domba</div>
+                        <div class="option correct">D. Jika kondisi ini terus berlanjut, dapat terjadi kepunahan lokal salah satu atau kedua spesies</div>
+                    </div>
+
+                    <div class="explanation">
+                        <h5>💡 Pembahasan:</h5>
+                        <p><strong>Jawaban yang benar: A, B, dan D</strong></p>
+                        
+                        <p><strong>Analisis Pola Grafik:</strong></p>
+                        
+                        <p style="margin-top: 15px;"><strong>A. BENAR - Kompetisi Memperebutkan Rumput</strong></p>
+                        <ul>
+                            <li>Kambing dan domba adalah <strong>herbivora</strong> yang memakan rumput yang sama</li>
+                            <li>Mereka hidup di padang rumput yang sama (habitat sama)</li>
+                            <li>Terjadi <strong>kompetisi interspesifik</strong> (antar spesies berbeda)</li>
+                            <li>Grafik menunjukkan kedua populasi menurun → ciri kompetisi ketat</li>
+                        </ul>
+
+                        <p style="margin-top: 15px;"><strong>B. BENAR - Penurunan Karena Persaingan</strong></p>
+                        <ul>
+                            <li>Pola grafik: kedua populasi menurun <strong>bersamaan dan bertahap</strong></li>
+                            <li>Tidak ada yang naik-turun bergantian (bukan predasi)</li>
+                            <li>Rumput menjadi <strong>sumber daya terbatas</strong> yang diperebutkan</li>
+                            <li>Semakin banyak kompetitor → semakin sedikit makanan per individu → populasi turun</li>
+                        </ul>
+
+                        <p style="margin-top: 15px;"><strong>C. SALAH - Bukan Hubungan Predasi</strong></p>
+                        <ul>
+                            <li>Kambing BUKAN pemangsa domba! Keduanya herbivora (pemakan tumbuhan)</li>
+                            <li>Pola grafik tidak menunjukkan ciri predasi (tidak ada pola naik-turun bergantian)</li>
+                            <li>Tidak ada time lag (jeda waktu) antara perubahan populasi</li>
+                            <li>Ini adalah kompetisi, BUKAN predasi</li>
+                        </ul>
+
+                        <p style="margin-top: 15px;"><strong>D. BENAR - Risiko Kepunahan Lokal</strong></p>
+                        <ul>
+                            <li>Trend penurunan terus-menerus tanpa pemulihan</li>
+                            <li>Kambing: 200 → 80 (turun 60% dalam 10 tahun)</li>
+                            <li>Domba: 180 → 70 (turun 61% dalam 10 tahun)</li>
+                            <li>Jika berlanjut: salah satu atau kedua bisa <strong>punah secara lokal</strong></li>
+                            <li>Biasanya spesies yang lebih lemah akan punah lebih dulu</li>
+                        </ul>
+
+                        <p style="margin-top: 15px;"><strong>Perbedaan dengan Predasi:</strong></p>
+                        <table style="margin-top: 10px;">
+                            <thead>
+                                <tr>
+                                    <th>Aspek</th>
+                                    <th>Kompetisi</th>
+                                    <th>Predasi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Pola Grafik</td>
+                                    <td>Kedua turun bersamaan</td>
+                                    <td>Naik-turun bergantian</td>
+                                </tr>
+                                <tr>
+                                    <td>Time Lag</td>
+                                    <td>Tidak ada</td>
+                                    <td>Ada jeda waktu</td>
+                                </tr>
+                                <tr>
+                                    <td>Hubungan</td>
+                                    <td>Saling merugikan (- / -)</td>
+                                    <td>Untung-rugi (+ / -)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <p style="margin-top: 15px;"><strong>Kesimpulan:</strong> Grafik menunjukkan kompetisi interspesifik yang mengancam kelangsungan kedua populasi. Perlu intervensi seperti penambahan luas padang rumput atau pengurangan salah satu populasi untuk mencegah kepunahan!</p>
+                    </div>
+                </div>
+            </div>
+
+            <h2>🎓 Rangkuman</h2>
+            <div class="info-box">
+                <ol>
+                    <li><strong>Interaksi makhluk hidup</strong> mencakup predasi, kompetisi, simbiosis, dan netral.</li>
+                    
+                    <li><strong>Predasi</strong> adalah hubungan pemangsa-mangsa:
+                        <ul>
+                            <li>Grafik membentuk pola gelombang</li>
+                            <li>Puncak predator terjadi setelah puncak prey (time lag)</li>
+                            <li>Siklus berulang secara alami</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Kompetisi</strong> adalah persaingan sumber daya:
+                        <ul>
+                            <li>Kedua populasi cenderung menurun bersamaan</li>
+                            <li>Tidak ada pola gelombang</li>
+                            <li>Dapat menyebabkan kepunahan lokal</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Keseimbangan ekosistem</strong> dipengaruhi oleh:
+                        <ul>
+                            <li>Populasi predator</li>
+                            <li>Ketersediaan makanan</li>
+                            <li>Penyakit dan kompetisi</li>
+                            <li>Faktor abiotik</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Gangguan keseimbangan</strong> dapat disebabkan oleh kepunahan predator, introduksi spesies asing, aktivitas manusia, atau bencana alam.</li>
+                </ol>
+            </div>
+
+            <div class="key-points">
+                <h4>💪 Tips Membaca Grafik Populasi</h4>
+                <ul>
+                    <li><strong>Perhatikan pola perubahan:</strong> Naik-turun bergantian = predasi; Turun bersamaan = kompetisi</li>
+                    <li><strong>Identifikasi time lag:</strong> Jeda waktu antara puncak prey dan predator menunjukkan hubungan predasi</li>
+                    <li><strong>Analisis trend jangka panjang:</strong> Penurunan terus = risiko kepunahan; Fluktuasi = keseimbangan alami</li>
+                    <li><strong>Hubungkan dengan pengetahuan biologi:</strong> Apakah organisme tersebut predator-prey atau kompetitor?</li>
+                    <li><strong>Baca sumbu dengan teliti:</strong> Perhatikan satuan waktu dan jumlah populasi</li>
+                    <li><strong>Cari pola berulang:</strong> Siklus yang teratur menunjukkan ekosistem stabil</li>
+                </ul>
+            </div>
+
+            <div class="warning-box">
+                <h4>⚠️ Kesalahan Umum yang Harus Dihindari</h4>
+                <ul>
+                    <li><strong>Mengira kompetisi sebagai predasi:</strong> Kompetisi = kedua turun; Predasi = naik-turun bergantian</li>
+                    <li><strong>Lupa melihat time lag:</strong> Puncak predator SELALU setelah puncak prey!</li>
+                    <li><strong>Salah identifikasi predator-prey:</strong> Pastikan yang satu pemakan yang lain (herbivora vs herbivora = kompetisi!)</li>
+                    <li><strong>Mengabaikan trend jangka panjang:</strong> Lihat keseluruhan grafik, bukan hanya satu titik</li>
+                    <li><strong>Tidak membaca skala grafik:</strong> Perhatikan angka pada sumbu X dan Y</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Navigation Bottom -->
+        <div class="nav-bar">
+            <div class="nav-buttons" style="width: 100%; justify-content: space-between;">
+                <a href="kisi-kisi-tkad-ipa.html" class="btn-nav btn-home">
+                    🏠 Kembali ke Menu
+                </a>
+                <a href="Lat6.html" class="btn-nav btn-practice">
+                    Lanjut ke Latihan Soal ✏️
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
