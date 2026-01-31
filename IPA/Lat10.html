@@ -1,0 +1,1145 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latihan Soal 10: Identifikasi Zat Asam Basa Menggunakan Lakmus</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #8b5cf6;
+            --secondary: #ec4899;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --dark: #1e293b;
+            --light: #f8fafc;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Navigation */
+        .nav-bar {
+            background: white;
+            border-radius: 16px;
+            padding: 15px 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .nav-title {
+            font-size: 1.2em;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn-nav {
+            padding: 10px 20px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-home {
+            background: linear-gradient(135deg, #64748b, #475569);
+            color: white;
+            box-shadow: 0 4px 12px rgba(100, 116, 139, 0.3);
+        }
+
+        .btn-home:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(100, 116, 139, 0.4);
+        }
+
+        .btn-materi {
+            background: linear-gradient(135deg, #059669, #047857);
+            color: white;
+            box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);
+        }
+
+        .btn-materi:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(5, 150, 105, 0.4);
+        }
+
+        /* Quiz Container */
+        .quiz-container {
+            background: white;
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quiz-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--warning));
+            background-size: 200% 100%;
+            animation: gradientMove 3s ease infinite;
+        }
+
+        @keyframes gradientMove {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            margin-bottom: 30px;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .question-number {
+            font-size: 1.1em;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .score-display {
+            font-size: 1em;
+            font-weight: 700;
+            color: var(--success);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background: #e2e8f0;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 20px;
+            transition: width 0.5s ease;
+        }
+
+        /* Question Slide */
+        .slide {
+            display: none;
+            animation: slideIn 0.5s ease;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .question-box {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border-left: 6px solid var(--primary);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .question-title {
+            font-size: 1.3em;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .question-text {
+            font-size: 1.05em;
+            line-height: 1.7;
+            color: var(--dark);
+            margin-bottom: 15px;
+        }
+
+        /* Table in Questions */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        thead {
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+        }
+
+        thead th {
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 700;
+            font-size: 0.95em;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        tbody td {
+            padding: 12px 15px;
+            color: var(--dark);
+        }
+
+        tbody tr:last-child {
+            border-bottom: none;
+        }
+
+        /* Options */
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin: 25px 0;
+        }
+
+        .option {
+            background: white;
+            border: 3px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 18px 22px;
+            font-size: 1.05em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .option:hover:not(.disabled) {
+            border-color: var(--primary);
+            background: #faf5ff;
+            transform: translateX(5px);
+        }
+
+        .option.selected {
+            border-color: var(--primary);
+            background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%);
+        }
+
+        .option.correct {
+            border-color: var(--success);
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            color: #065f46;
+        }
+
+        .option.correct::before {
+            content: '✓';
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            background: var(--success);
+            color: white;
+            border-radius: 50%;
+            font-weight: 900;
+            font-size: 1.1em;
+        }
+
+        .option.wrong {
+            border-color: var(--danger);
+            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+            color: #991b1b;
+        }
+
+        .option.wrong::before {
+            content: '✗';
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            background: var(--danger);
+            color: white;
+            border-radius: 50%;
+            font-weight: 900;
+            font-size: 1.1em;
+        }
+
+        .option.disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        .option input[type="radio"],
+        .option input[type="checkbox"] {
+            width: 22px;
+            height: 22px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Buttons */
+        .btn-container {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 14px 32px;
+            border-radius: 12px;
+            border: none;
+            font-weight: 700;
+            font-size: 1.05em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, var(--primary), #7c3aed);
+            color: white;
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(139, 92, 246, 0.5);
+        }
+
+        .btn-next {
+            background: linear-gradient(135deg, var(--success), #059669);
+            color: white;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+            display: none;
+        }
+
+        .btn-next.show {
+            display: inline-flex;
+        }
+
+        .btn-next:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.5);
+        }
+
+        /* Feedback */
+        .feedback {
+            margin-top: 25px;
+            padding: 25px;
+            border-radius: 16px;
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .feedback.show {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .feedback.correct {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            border-left: 6px solid var(--success);
+        }
+
+        .feedback.wrong {
+            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+            border-left: 6px solid var(--danger);
+        }
+
+        .feedback-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .feedback-icon {
+            font-size: 2.5em;
+        }
+
+        .feedback-title {
+            font-size: 1.4em;
+            font-weight: 800;
+        }
+
+        .feedback.correct .feedback-title {
+            color: var(--success);
+        }
+
+        .feedback.wrong .feedback-title {
+            color: var(--danger);
+        }
+
+        .feedback-text {
+            font-size: 1.05em;
+            line-height: 1.7;
+            color: var(--dark);
+        }
+
+        .feedback-text strong {
+            color: var(--primary);
+            font-weight: 800;
+        }
+
+        .feedback-text ul {
+            margin: 12px 0 12px 25px;
+        }
+
+        .feedback-text li {
+            margin-bottom: 8px;
+        }
+
+        /* Result Screen */
+        .result-screen {
+            display: none;
+            text-align: center;
+            padding: 40px 20px;
+            animation: fadeIn 0.8s ease;
+        }
+
+        .result-screen.show {
+            display: block;
+        }
+
+        .result-icon {
+            font-size: 6em;
+            margin-bottom: 20px;
+            animation: bounce 1s ease;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .result-score {
+            font-size: 4em;
+            font-weight: 900;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .result-score.excellent {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .result-score.good {
+            background: linear-gradient(135deg, var(--success), #059669);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .result-score.poor {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .result-title {
+            font-size: 2.2em;
+            font-weight: 800;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+
+        .result-message {
+            font-size: 1.2em;
+            color: #64748b;
+            margin-bottom: 35px;
+            line-height: 1.6;
+        }
+
+        .result-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .quiz-container {
+                padding: 25px 20px;
+            }
+
+            .question-title {
+                font-size: 1.1em;
+            }
+
+            .question-text {
+                font-size: 1em;
+            }
+
+            .option {
+                padding: 15px 18px;
+                font-size: 1em;
+            }
+
+            .btn {
+                padding: 12px 24px;
+                font-size: 1em;
+            }
+
+            .result-icon {
+                font-size: 4em;
+            }
+
+            .result-score {
+                font-size: 3em;
+            }
+
+            .result-title {
+                font-size: 1.8em;
+            }
+
+            table {
+                font-size: 0.85em;
+            }
+
+            thead th, tbody td {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation -->
+        <div class="nav-bar">
+            <div class="nav-title">✏️ Latihan Soal 10: Asam Basa</div>
+            <div class="nav-buttons">
+                <a href="kisi-kisi-tkad-ipa.html" class="btn-nav btn-home">🏠 Menu</a>
+                <a href="10.html" class="btn-nav btn-materi">📖 Materi</a>
+            </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-container">
+            <!-- Progress Bar -->
+            <div class="progress-container">
+                <div class="progress-info">
+                    <div class="question-number">
+                        Soal <span id="currentQuestion">1</span> dari 5
+                    </div>
+                    <div class="score-display">
+                        Skor: <span id="score">0</span>/5
+                    </div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <!-- Quiz Content -->
+            <div id="quizContent">
+                <!-- Question 1 -->
+                <div class="slide active" data-question="1">
+                    <div class="question-box">
+                        <div class="question-title">📝 Soal 1 - Benar/Salah</div>
+                        <div class="question-text">
+                            Perhatikan tabel hasil pengujian beberapa larutan dengan kertas lakmus berikut:
+                        </div>
+
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Larutan</th>
+                                    <th>Lakmus Merah</th>
+                                    <th>Lakmus Biru</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>P</td>
+                                    <td>Tetap merah</td>
+                                    <td>Berubah merah</td>
+                                </tr>
+                                <tr>
+                                    <td>Q</td>
+                                    <td>Berubah biru</td>
+                                    <td>Tetap biru</td>
+                                </tr>
+                                <tr>
+                                    <td>R</td>
+                                    <td>Tetap merah</td>
+                                    <td>Tetap biru</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="question-text">
+                            <strong>Pernyataan:</strong> Larutan P bersifat asam, larutan Q bersifat basa, dan larutan R bersifat netral.
+                        </div>
+                    </div>
+
+                    <div class="options">
+                        <div class="option" onclick="selectOption(1, 'benar')">
+                            <input type="radio" name="q1" value="benar">
+                            <span>Benar</span>
+                        </div>
+                        <div class="option" onclick="selectOption(1, 'salah')">
+                            <input type="radio" name="q1" value="salah">
+                            <span>Salah</span>
+                        </div>
+                    </div>
+
+                    <div class="btn-container">
+                        <button class="btn btn-submit" onclick="submitAnswer(1, 'benar')">
+                            Submit Jawaban ✓
+                        </button>
+                        <button class="btn btn-next" onclick="nextQuestion()">
+                            Soal Berikutnya →
+                        </button>
+                    </div>
+
+                    <div class="feedback" id="feedback1"></div>
+                </div>
+
+                <!-- Question 2 -->
+                <div class="slide" data-question="2">
+                    <div class="question-box">
+                        <div class="question-title">📝 Soal 2 - Pilihan Ganda</div>
+                        <div class="question-text">
+                            Seorang siswa melakukan pengujian terhadap larutan X dengan kertas lakmus. Hasil pengamatan menunjukkan:
+                        </div>
+                        <ul style="margin: 15px 0 15px 30px;">
+                            <li>Kertas lakmus merah berubah menjadi biru</li>
+                            <li>Kertas lakmus biru tetap berwarna biru</li>
+                        </ul>
+                        <div class="question-text">
+                            Berdasarkan hasil pengamatan tersebut, larutan X bersifat...
+                        </div>
+                    </div>
+
+                    <div class="options">
+                        <div class="option" onclick="selectOption(2, 'A')">
+                            <input type="radio" name="q2" value="A">
+                            <span>A. Asam kuat</span>
+                        </div>
+                        <div class="option" onclick="selectOption(2, 'B')">
+                            <input type="radio" name="q2" value="B">
+                            <span>B. Basa</span>
+                        </div>
+                        <div class="option" onclick="selectOption(2, 'C')">
+                            <input type="radio" name="q2" value="C">
+                            <span>C. Netral</span>
+                        </div>
+                        <div class="option" onclick="selectOption(2, 'D')">
+                            <input type="radio" name="q2" value="D">
+                            <span>D. Asam lemah</span>
+                        </div>
+                    </div>
+
+                    <div class="btn-container">
+                        <button class="btn btn-submit" onclick="submitAnswer(2, 'B')">
+                            Submit Jawaban ✓
+                        </button>
+                        <button class="btn btn-next" onclick="nextQuestion()">
+                            Soal Berikutnya →
+                        </button>
+                    </div>
+
+                    <div class="feedback" id="feedback2"></div>
+                </div>
+
+                <!-- Question 3 -->
+                <div class="slide" data-question="3">
+                    <div class="question-box">
+                        <div class="question-title">📝 Soal 3 - Benar/Salah</div>
+                        <div class="question-text">
+                            Perhatikan data hasil pengujian larutan Y berikut:
+                        </div>
+
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Jenis Lakmus</th>
+                                    <th>Warna Awal</th>
+                                    <th>Warna Setelah Diuji</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Lakmus merah</td>
+                                    <td>Merah</td>
+                                    <td>Merah</td>
+                                </tr>
+                                <tr>
+                                    <td>Lakmus biru</td>
+                                    <td>Biru</td>
+                                    <td>Biru</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="question-text">
+                            <strong>Pernyataan:</strong> Larutan Y bersifat asam karena kedua lakmus tidak mengalami perubahan warna.
+                        </div>
+                    </div>
+
+                    <div class="options">
+                        <div class="option" onclick="selectOption(3, 'benar')">
+                            <input type="radio" name="q3" value="benar">
+                            <span>Benar</span>
+                        </div>
+                        <div class="option" onclick="selectOption(3, 'salah')">
+                            <input type="radio" name="q3" value="salah">
+                            <span>Salah</span>
+                        </div>
+                    </div>
+
+                    <div class="btn-container">
+                        <button class="btn btn-submit" onclick="submitAnswer(3, 'salah')">
+                            Submit Jawaban ✓
+                        </button>
+                        <button class="btn btn-next" onclick="nextQuestion()">
+                            Soal Berikutnya →
+                        </button>
+                    </div>
+
+                    <div class="feedback" id="feedback3"></div>
+                </div>
+
+                <!-- Question 4 -->
+                <div class="slide" data-question="4">
+                    <div class="question-box">
+                        <div class="question-title">📝 Soal 4 - Benar/Salah</div>
+                        <div class="question-text">
+                            Dalam percobaan identifikasi sifat larutan, diperoleh data sebagai berikut:
+                        </div>
+
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Larutan</th>
+                                    <th>Lakmus Merah</th>
+                                    <th>Lakmus Biru</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Air jeruk nipis</td>
+                                    <td>Merah</td>
+                                    <td>Merah</td>
+                                </tr>
+                                <tr>
+                                    <td>Air sabun</td>
+                                    <td>Biru</td>
+                                    <td>Biru</td>
+                                </tr>
+                                <tr>
+                                    <td>Air gula</td>
+                                    <td>Merah</td>
+                                    <td>Biru</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="question-text">
+                            <strong>Pernyataan:</strong> Air jeruk nipis bersifat asam, air sabun bersifat basa, dan air gula bersifat netral.
+                        </div>
+                    </div>
+
+                    <div class="options">
+                        <div class="option" onclick="selectOption(4, 'benar')">
+                            <input type="radio" name="q4" value="benar">
+                            <span>Benar</span>
+                        </div>
+                        <div class="option" onclick="selectOption(4, 'salah')">
+                            <input type="radio" name="q4" value="salah">
+                            <span>Salah</span>
+                        </div>
+                    </div>
+
+                    <div class="btn-container">
+                        <button class="btn btn-submit" onclick="submitAnswer(4, 'benar')">
+                            Submit Jawaban ✓
+                        </button>
+                        <button class="btn btn-next" onclick="nextQuestion()">
+                            Soal Berikutnya →
+                        </button>
+                    </div>
+
+                    <div class="feedback" id="feedback4"></div>
+                </div>
+
+                <!-- Question 5 -->
+                <div class="slide" data-question="5">
+                    <div class="question-box">
+                        <div class="question-title">📝 Soal 5 - Pilihan Ganda</div>
+                        <div class="question-text">
+                            Perhatikan tabel hasil pengujian empat larutan berikut:
+                        </div>
+
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Larutan</th>
+                                    <th>Lakmus Merah</th>
+                                    <th>Lakmus Biru</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>I</td>
+                                    <td>Merah</td>
+                                    <td>Merah</td>
+                                </tr>
+                                <tr>
+                                    <td>II</td>
+                                    <td>Biru</td>
+                                    <td>Biru</td>
+                                </tr>
+                                <tr>
+                                    <td>III</td>
+                                    <td>Merah</td>
+                                    <td>Biru</td>
+                                </tr>
+                                <tr>
+                                    <td>IV</td>
+                                    <td>Merah</td>
+                                    <td>Merah</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="question-text">
+                            Larutan yang dapat menetralkan asam lambung adalah...
+                        </div>
+                    </div>
+
+                    <div class="options">
+                        <div class="option" onclick="selectOption(5, 'A')">
+                            <input type="radio" name="q5" value="A">
+                            <span>A. Larutan I</span>
+                        </div>
+                        <div class="option" onclick="selectOption(5, 'B')">
+                            <input type="radio" name="q5" value="B">
+                            <span>B. Larutan II</span>
+                        </div>
+                        <div class="option" onclick="selectOption(5, 'C')">
+                            <input type="radio" name="q5" value="C">
+                            <span>C. Larutan III</span>
+                        </div>
+                        <div class="option" onclick="selectOption(5, 'D')">
+                            <input type="radio" name="q5" value="D">
+                            <span>D. Larutan IV</span>
+                        </div>
+                    </div>
+
+                    <div class="btn-container">
+                        <button class="btn btn-submit" onclick="submitAnswer(5, 'B')">
+                            Submit Jawaban ✓
+                        </button>
+                        <button class="btn btn-next" onclick="showResult()">
+                            Lihat Hasil →
+                        </button>
+                    </div>
+
+                    <div class="feedback" id="feedback5"></div>
+                </div>
+            </div>
+
+            <!-- Result Screen -->
+            <div class="result-screen" id="resultScreen">
+                <div class="result-icon" id="resultIcon">🏆</div>
+                <div class="result-score" id="resultScore">5/5</div>
+                <div class="result-title" id="resultTitle">Sempurna!</div>
+                <div class="result-message" id="resultMessage">
+                    Luar biasa! Kamu menguasai materi Identifikasi Asam Basa dengan sempurna!
+                </div>
+                <div class="result-buttons">
+                    <button class="btn btn-submit" onclick="retryQuiz()">
+                        🔄 Ulangi Latihan
+                    </button>
+                    <a href="10.html" class="btn btn-next" style="text-decoration: none; display: inline-flex;">
+                        📖 Baca Materi Lagi
+                    </a>
+                    <a href="kisi-kisi-tkad-ipa.html" class="btn btn-home" style="text-decoration: none; display: inline-flex; background: linear-gradient(135deg, #64748b, #475569); color: white;">
+                        🏠 Kembali ke Menu
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 1;
+        let score = 0;
+        let answeredQuestions = [];
+
+        const explanations = {
+            1: {
+                correct: "Benar! Analisis yang tepat:<br><br><strong>Larutan P (ASAM) ✓</strong><br>• Lakmus merah: <strong>tetap merah</strong> ⭕<br>• Lakmus biru: <strong>berubah merah</strong> 🔴<br>• Ciri khas ASAM → lakmus biru berubah merah<br><br><strong>Larutan Q (BASA) ✓</strong><br>• Lakmus merah: <strong>berubah biru</strong> 🔵<br>• Lakmus biru: <strong>tetap biru</strong> ⭕<br>• Ciri khas BASA → lakmus merah berubah biru<br><br><strong>Larutan R (NETRAL) ✓</strong><br>• Lakmus merah: <strong>tetap merah</strong> ⭕<br>• Lakmus biru: <strong>tetap biru</strong> ⭕<br>• Ciri khas NETRAL → tidak ada perubahan warna pada kedua lakmus<br><br><strong>Kesimpulan:</strong> Semua analisis benar! pH: P<7, Q>7, R=7",
+                wrong: "Belum tepat. Mari kita analisis:<br><br><strong>Larutan P:</strong><br>• Lakmus biru berubah merah → ASAM ✓<br>• Ciri: lakmus biru → merah = asam<br><br><strong>Larutan Q:</strong><br>• Lakmus merah berubah biru → BASA ✓<br>• Ciri: lakmus merah → biru = basa<br><br><strong>Larutan R:</strong><br>• Kedua lakmus tidak berubah → NETRAL ✓<br>• Ciri: tidak ada perubahan = netral<br><br><strong>Pernyataan semuanya BENAR!</strong> Ingat:<br>🔴 Biru→Merah = ASAM<br>🔵 Merah→Biru = BASA<br>⭕ Tidak berubah = NETRAL"
+            },
+            2: {
+                correct: "Sempurna! Analisis yang tepat:<br><br><strong>Lakmus merah berubah biru</strong> 🔵<br>• Ini adalah ciri khas larutan BASA<br>• Hanya larutan basa yang bisa mengubah lakmus merah menjadi biru<br><br><strong>Lakmus biru tetap biru</strong> ⭕<br>• Konfirmasi bahwa larutan bukan asam<br>• Asam akan mengubah lakmus biru menjadi merah<br><br><strong>Rumus Praktis:</strong><br>\"<strong>MERAH BIRU BASA</strong>\" - Lakmus <strong>MERAH</strong> jadi <strong>BIRU</strong> = <strong>BASA</strong><br><br><strong>Contoh larutan basa:</strong><br>• Sabun (pH 9-10)<br>• Deterjen (pH 10-11)<br>• Air kapur (pH 12)<br>• Obat maag (pH 8-9)<br><br><strong>Sifat basa:</strong> pH > 7, terasa licin, pahit, dapat menetralkan asam",
+                wrong: "Belum tepat. Perhatikan perubahan warna:<br><br><strong>Lakmus merah → biru</strong> 🔵<br>• Ini HANYA terjadi pada larutan BASA<br>• Bukan asam, bukan netral!<br><br><strong>Lakmus biru tetap biru</strong> ⭕<br>• Memastikan bukan asam<br>• Jika asam, lakmus biru akan berubah merah<br><br><strong>Ingat rumus:</strong><br>• Merah→Biru = BASA ✓<br>• Biru→Merah = ASAM ✗<br>• Tidak berubah = NETRAL ✗<br><br>Jawaban yang benar: <strong>B. Basa</strong><br><br>Jangan terkecoh dengan istilah \"asam kuat\" atau \"asam lemah\" - keduanya tetap akan mengubah lakmus biru menjadi merah!"
+            },
+            3: {
+                correct: "Benar! Analisis yang tepat:<br><br><strong>PERNYATAAN SALAH ✓</strong><br><br><strong>Kesalahan dalam pernyataan:</strong><br>• Larutan Y BUKAN bersifat asam<br>• Larutan Y bersifat <strong>NETRAL</strong><br><br><strong>Bukti dari data:</strong><br>• Lakmus merah: tetap merah ⭕<br>• Lakmus biru: tetap biru ⭕<br>• <strong>Tidak ada perubahan warna</strong> = ciri khas NETRAL<br><br><strong>Jika asam seharusnya:</strong><br>• Lakmus merah: tetap merah ⭕<br>• Lakmus biru: <strong>berubah merah</strong> 🔴<br>• Ada perubahan pada lakmus biru!<br><br><strong>Contoh larutan netral:</strong><br>• Air murni (pH = 7)<br>• Larutan garam dapur (NaCl)<br>• Air gula<br><br><strong>Kesimpulan:</strong> Kedua lakmus tidak berubah = NETRAL, bukan asam!",
+                wrong: "Belum tepat. Mari analisis dengan teliti:<br><br><strong>Data pengamatan:</strong><br>• Lakmus merah: merah → merah (tidak berubah)<br>• Lakmus biru: biru → biru (tidak berubah)<br><br><strong>Arti data:</strong><br>• Tidak ada perubahan warna = NETRAL<br>• Bukan asam!<br><br><strong>Jika ASAM seharusnya:</strong><br>• Lakmus biru BERUBAH merah 🔴<br>• Tapi di soal lakmus biru TETAP biru ⭕<br><br><strong>Jadi pernyataan SALAH!</strong><br>• Larutan Y bersifat NETRAL<br>• Bukan asam<br><br><strong>Ingat:</strong><br>• Asam: lakmus biru → merah<br>• Basa: lakmus merah → biru<br>• Netral: tidak ada yang berubah ✓"
+            },
+            4: {
+                correct: "Sempurna! Analisis lengkap yang benar:<br><br><strong>1. Air Jeruk Nipis - ASAM ✓</strong><br>• Lakmus merah: tetap merah ⭕<br>• Lakmus biru: <strong>berubah merah</strong> 🔴<br>• Ciri asam → lakmus biru jadi merah<br>• Mengandung asam sitrat (pH ≈ 2-3)<br><br><strong>2. Air Sabun - BASA ✓</strong><br>• Lakmus merah: <strong>berubah biru</strong> 🔵<br>• Lakmus biru: tetap biru ⭕<br>• Ciri basa → lakmus merah jadi biru<br>• Terasa licin, pH ≈ 9-10<br><br><strong>3. Air Gula - NETRAL ✓</strong><br>• Lakmus merah: tetap merah ⭕<br>• Lakmus biru: tetap biru ⭕<br>• Ciri netral → tidak ada perubahan<br>• Gula tidak mengubah pH air (pH ≈ 7)<br><br><strong>Kesimpulan:</strong> Semua analisis BENAR! Jeruk nipis asam, sabun basa, gula netral.",
+                wrong: "Belum tepat. Mari kita periksa satu per satu:<br><br><strong>Air Jeruk Nipis:</strong><br>• Kedua lakmus jadi merah 🔴<br>• Lakmus biru berubah merah = ASAM ✓<br>• Benar bersifat asam!<br><br><strong>Air Sabun:</strong><br>• Kedua lakmus jadi biru 🔵<br>• Lakmus merah berubah biru = BASA ✓<br>• Benar bersifat basa!<br><br><strong>Air Gula:</strong><br>• Lakmus merah tetap merah ⭕<br>• Lakmus biru tetap biru ⭕<br>• Tidak ada perubahan = NETRAL ✓<br>• Benar bersifat netral!<br><br><strong>SEMUA ANALISIS BENAR!</strong><br>Pernyataan dalam soal 100% tepat.<br><br>Jawaban: <strong>BENAR</strong>"
+            },
+            5: {
+                correct: "Sempurna! Penalaran yang tepat:<br><br><strong>Jawaban: B. Larutan II (BASA)</strong><br><br><strong>Analisis setiap larutan:</strong><br><br><strong>Larutan I - ASAM</strong><br>• Kedua lakmus jadi merah<br>• TIDAK bisa menetralkan asam lambung<br>• Malah menambah asam!<br><br><strong>Larutan II - BASA ✓</strong><br>• Kedua lakmus jadi biru<br>• <strong>BISA menetralkan asam lambung</strong><br>• Seperti obat maag (antasida)<br><br><strong>Larutan III - NETRAL</strong><br>• Tidak berubah warna<br>• Tidak efektif untuk menetralkan asam<br><br><strong>Larutan IV - ASAM</strong><br>• Sama seperti larutan I<br>• Tidak bisa menetralkan asam<br><br><strong>Prinsip Penetralan:</strong><br>• ASAM + BASA → GARAM + AIR<br>• Asam lambung (HCl) + Basa (obat maag) → Netral<br>• pH asam lambung ≈ 1-2, perlu basa untuk menetralkan!",
+                wrong: "Belum tepat. Mari pahami konsep penetralan:<br><br><strong>Asam Lambung = ASAM</strong><br>• pH sangat rendah (1-2)<br>• Untuk menetralkan, butuh larutan BASA<br><br><strong>Analisis Larutan:</strong><br>• Larutan I: Asam (kedua lakmus merah) ✗<br>• <strong>Larutan II: BASA (kedua lakmus biru) ✓</strong><br>• Larutan III: Netral (tidak berubah) ✗<br>• Larutan IV: Asam (kedua lakmus merah) ✗<br><br><strong>Kenapa larutan II?</strong><br>• Lakmus merah berubah biru = BASA<br>• Hanya BASA yang bisa menetralkan ASAM<br>• Contoh: obat maag mengandung basa<br><br><strong>Reaksi:</strong><br>ASAM (lambung) + BASA (obat) → NETRAL<br><br>Jawaban: <strong>B. Larutan II</strong>"
+            }
+        };
+
+        function selectOption(questionNum, value) {
+            const slide = document.querySelector(`.slide[data-question="${questionNum}"]`);
+            const options = slide.querySelectorAll('.option');
+            
+            options.forEach(opt => {
+                opt.classList.remove('selected');
+                const input = opt.querySelector('input');
+                if (input && input.value === value) {
+                    opt.classList.add('selected');
+                    input.checked = true;
+                }
+            });
+        }
+
+        function submitAnswer(questionNum, correctAnswer) {
+            const slide = document.querySelector(`.slide[data-question="${questionNum}"]`);
+            const options = slide.querySelectorAll('.option');
+            const inputs = slide.querySelectorAll('input[type="radio"]');
+            const feedback = document.getElementById(`feedback${questionNum}`);
+            const submitBtn = slide.querySelector('.btn-submit');
+            const nextBtn = slide.querySelector('.btn-next');
+
+            let selectedAnswer = null;
+            inputs.forEach(input => {
+                if (input.checked) {
+                    selectedAnswer = input.value;
+                }
+            });
+
+            if (!selectedAnswer) {
+                alert('Silakan pilih jawaban terlebih dahulu!');
+                return;
+            }
+
+            // Disable options
+            options.forEach(opt => {
+                opt.classList.add('disabled');
+                opt.style.cursor = 'not-allowed';
+            });
+            inputs.forEach(input => input.disabled = true);
+            
+            submitBtn.style.display = 'none';
+            nextBtn.classList.add('show');
+
+            const isCorrect = selectedAnswer === correctAnswer;
+
+            // Mark correct/wrong
+            options.forEach(opt => {
+                const input = opt.querySelector('input');
+                if (input.value === correctAnswer) {
+                    opt.classList.add('correct');
+                }
+                if (input.checked && input.value !== correctAnswer) {
+                    opt.classList.add('wrong');
+                }
+            });
+
+            // Update score
+            if (isCorrect && !answeredQuestions.includes(questionNum)) {
+                score++;
+                answeredQuestions.push(questionNum);
+                document.getElementById('score').textContent = score;
+            }
+
+            // Show feedback
+            feedback.classList.add('show');
+            feedback.classList.add(isCorrect ? 'correct' : 'wrong');
+            
+            const icon = isCorrect ? '✅' : '❌';
+            const title = isCorrect ? 'Jawaban Benar!' : 'Jawaban Salah!';
+            const explanation = isCorrect ? explanations[questionNum].correct : explanations[questionNum].wrong;
+
+            feedback.innerHTML = `
+                <div class="feedback-header">
+                    <div class="feedback-icon">${icon}</div>
+                    <div class="feedback-title">${title}</div>
+                </div>
+                <div class="feedback-text">${explanation}</div>
+            `;
+
+            setTimeout(() => {
+                feedback.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 300);
+        }
+
+        function nextQuestion() {
+            const currentSlideEl = document.querySelector('.slide.active');
+            currentSlideEl.classList.remove('active');
+
+            currentSlide++;
+            const nextSlideEl = document.querySelector(`.slide[data-question="${currentSlide}"]`);
+            if (nextSlideEl) {
+                nextSlideEl.classList.add('active');
+                document.getElementById('currentQuestion').textContent = currentSlide;
+                
+                const progress = (currentSlide / 5) * 100;
+                document.getElementById('progressFill').style.width = progress + '%';
+
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        function showResult() {
+            document.getElementById('quizContent').style.display = 'none';
+            document.getElementById('resultScreen').classList.add('show');
+            document.querySelector('.progress-container').style.display = 'none';
+
+            const resultScore = document.getElementById('resultScore');
+            const resultIcon = document.getElementById('resultIcon');
+            const resultTitle = document.getElementById('resultTitle');
+            const resultMessage = document.getElementById('resultMessage');
+
+            resultScore.textContent = `${score}/5`;
+
+            if (score === 5) {
+                resultScore.classList.add('excellent');
+                resultIcon.textContent = '🏆';
+                resultTitle.textContent = 'Sempurna!';
+                resultMessage.textContent = 'Luar biasa! Kamu menguasai materi Identifikasi Asam Basa dengan sempurna!';
+            } else if (score >= 3) {
+                resultScore.classList.add('good');
+                resultIcon.textContent = '👍';
+                resultTitle.textContent = 'Bagus!';
+                resultMessage.textContent = 'Kerja yang baik! Terus tingkatkan pemahamanmu tentang asam basa.';
+            } else {
+                resultScore.classList.add('poor');
+                resultIcon.textContent = '📚';
+                resultTitle.textContent = 'Tetap Semangat!';
+                resultMessage.textContent = 'Jangan menyerah! Pelajari materi asam basa lagi dan coba ulangi latihannya.';
+            }
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function retryQuiz() {
+            currentSlide = 1;
+            score = 0;
+            answeredQuestions = [];
+
+            document.getElementById('score').textContent = '0';
+            document.getElementById('currentQuestion').textContent = '1';
+            document.getElementById('progressFill').style.width = '0%';
+
+            document.querySelectorAll('.slide').forEach((slide, index) => {
+                slide.classList.remove('active');
+                if (index === 0) slide.classList.add('active');
+
+                slide.querySelectorAll('.option').forEach(opt => {
+                    opt.classList.remove('selected', 'correct', 'wrong', 'disabled');
+                    opt.style.cursor = 'pointer';
+                });
+                
+                slide.querySelectorAll('input[type="radio"]').forEach(input => {
+                    input.checked = false;
+                    input.disabled = false;
+                });
+
+                slide.querySelector('.btn-submit').style.display = 'inline-block';
+                slide.querySelector('.btn-next').classList.remove('show');
+
+                const feedbackEl = slide.querySelector('.feedback');
+                feedbackEl.classList.remove('show', 'correct', 'wrong');
+                feedbackEl.innerHTML = '';
+            });
+
+            document.getElementById('quizContent').style.display = 'block';
+            document.getElementById('resultScreen').classList.remove('show');
+            document.querySelector('.progress-container').style.display = 'block';
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>

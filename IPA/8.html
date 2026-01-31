@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Materi 8: Penerapan Pengukuran dalam Kehidupan Sehari-hari (Neraca)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&family=Fira+Code:wght@400;500&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #059669;
+            --secondary: #0891b2;
+            --accent: #f59e0b;
+            --dark: #0f172a;
+            --light: #f8fafc;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: linear-gradient(135deg, #0f766e 0%, #0e7490 100%);
+            color: var(--dark);
+            line-height: 1.8;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Navigation Bar */
+        .nav-bar {
+            background: white;
+            border-radius: 16px;
+            padding: 20px 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .nav-title {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn-nav {
+            padding: 12px 24px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95em;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-home {
+            background: linear-gradient(135deg, #64748b, #475569);
+            color: white;
+            box-shadow: 0 4px 12px rgba(100, 116, 139, 0.3);
+        }
+
+        .btn-home:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(100, 116, 139, 0.4);
+        }
+
+        .btn-practice {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+        }
+
+        .btn-practice:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4);
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            border-radius: 20px;
+            padding: 50px 60px;
+            margin-bottom: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+        }
+
+        .header h1 {
+            font-size: 2.8em;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        .header .meta {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.95em;
+            color: #64748b;
+        }
+
+        .meta-item .icon {
+            font-size: 1.3em;
+        }
+
+        /* Content Section */
+        .content {
+            background: white;
+            border-radius: 20px;
+            padding: 50px 60px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .content h2 {
+            font-size: 2em;
+            font-weight: 700;
+            color: var(--primary);
+            margin-top: 40px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid var(--primary);
+        }
+
+        .content h2:first-child {
+            margin-top: 0;
+        }
+
+        .content h3 {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+
+        .content p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .content ul, .content ol {
+            margin: 15px 0 15px 30px;
+        }
+
+        .content li {
+            margin-bottom: 10px;
+        }
+
+        /* Info Box */
+        .info-box {
+            background: linear-gradient(135deg, #e0f2fe 0%, #dbeafe 100%);
+            border-left: 5px solid var(--secondary);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 25px 0;
+            box-shadow: 0 4px 15px rgba(8, 145, 178, 0.1);
+        }
+
+        .info-box h4 {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 15px;
+        }
+
+        /* Warning Box */
+        .warning-box {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-left: 5px solid var(--accent);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 25px 0;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.15);
+        }
+
+        .warning-box h4 {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: #d97706;
+            margin-bottom: 15px;
+        }
+
+        /* Key Points */
+        .key-points {
+            background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
+            border-left: 5px solid var(--primary);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 25px 0;
+            box-shadow: 0 4px 15px rgba(5, 150, 105, 0.1);
+        }
+
+        .key-points h4 {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        /* Example Box */
+        .example-box {
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 25px 0;
+        }
+
+        .example-box h4 {
+            font-size: 1.4em;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        /* Table Styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        thead {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 700;
+            font-size: 1.05em;
+        }
+
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Formula Box */
+        .formula-box {
+            background: linear-gradient(135deg, #fce7f3 0%, #fbcfe8 100%);
+            border: 2px dashed #ec4899;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+            font-family: 'Fira Code', monospace;
+            font-size: 1.2em;
+            font-weight: 600;
+            color: #be185d;
+        }
+
+        /* Image Container */
+        .image-container {
+            text-align: center;
+            margin: 30px 0;
+            padding: 20px;
+            background: #f8fafc;
+            border-radius: 12px;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .image-caption {
+            margin-top: 15px;
+            font-style: italic;
+            color: #64748b;
+            font-size: 0.95em;
+        }
+
+        /* Question and Options Styles */
+        .question {
+            background: #f8fafc;
+            border-left: 4px solid var(--primary);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .question-text {
+            font-weight: 600;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+
+        .options {
+            margin: 15px 0;
+        }
+
+        .option {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+            transition: all 0.3s ease;
+        }
+
+        .option.correct {
+            background: #dcfce7;
+            border-color: #10b981;
+            font-weight: 600;
+        }
+
+        .option.correct::before {
+            content: '✓ ';
+            color: #10b981;
+            font-weight: bold;
+        }
+
+        .explanation {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            border-left: 4px solid #10b981;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 8px;
+        }
+
+        .explanation h5 {
+            color: #059669;
+            font-size: 1.2em;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .explanation ul {
+            margin-left: 25px;
+        }
+
+        .explanation li {
+            margin: 8px 0;
+        }
+
+        .explanation strong {
+            color: #047857;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 30px 25px;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .content {
+                padding: 30px 25px;
+            }
+
+            .content h2 {
+                font-size: 1.6em;
+            }
+
+            .nav-bar {
+                padding: 15px 20px;
+            }
+
+            table {
+                font-size: 0.9em;
+            }
+
+            th, td {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation Bar -->
+        <div class="nav-bar">
+            <div class="nav-title">📐 Materi 8: Pengukuran dengan Neraca</div>
+            <div class="nav-buttons">
+                <a href="kisi-kisi-tkad-ipa.html" class="btn-nav btn-home">🏠 Menu Utama</a>
+                <a href="Lat8.html" class="btn-nav btn-practice">✏️ Latihan Soal</a>
+            </div>
+        </div>
+
+        <!-- Header -->
+        <div class="header">
+            <h1>Penerapan Pengukuran dalam Kehidupan Sehari-hari (Neraca)</h1>
+            <div class="meta">
+                <div class="meta-item">
+                    <span class="icon">📚</span>
+                    <span>Kelas 7 - Fase D</span>
+                </div>
+                <div class="meta-item">
+                    <span class="icon">🎯</span>
+                    <span>Level Kognitif: L2 (Aplikasi)</span>
+                </div>
+                <div class="meta-item">
+                    <span class="icon">⏱️</span>
+                    <span>Waktu Belajar: 45 menit</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <h2>🎯 Tujuan Pembelajaran</h2>
+            <p>Setelah mempelajari materi ini, peserta didik diharapkan dapat:</p>
+            <ol>
+                <li>Memahami konsep pengukuran massa dengan neraca</li>
+                <li>Membaca hasil pengukuran neraca dengan berbagai satuan</li>
+                <li>Mengkonversi satuan massa dengan benar</li>
+                <li>Menentukan hasil pengukuran yang tepat dari berbagai alat ukur</li>
+                <li>Menerapkan pengukuran massa dalam kehidupan sehari-hari</li>
+            </ol>
+
+            <h2>📏 Apa itu Pengukuran Massa?</h2>
+            <p>Pengukuran massa adalah proses menentukan banyaknya materi yang terkandung dalam suatu benda. Massa berbeda dengan berat:</p>
+            
+            <div class="info-box">
+                <h4>🔍 Perbedaan Massa dan Berat</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Aspek</th>
+                            <th>Massa</th>
+                            <th>Berat</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Definisi</strong></td>
+                            <td>Jumlah materi dalam benda</td>
+                            <td>Gaya gravitasi pada benda</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Satuan</strong></td>
+                            <td>kilogram (kg), gram (g)</td>
+                            <td>Newton (N)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Sifat</strong></td>
+                            <td>Tetap di mana pun</td>
+                            <td>Berubah sesuai gravitasi</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Alat Ukur</strong></td>
+                            <td>Neraca</td>
+                            <td>Dinamometer</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Contoh</strong></td>
+                            <td>Massa di Bumi = massa di Bulan</td>
+                            <td>Berat di Bumi > berat di Bulan</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h2>⚖️ Jenis-Jenis Neraca</h2>
+            
+            <h3>1. Neraca Dua Lengan (Neraca Ohaus)</h3>
+            <p>Neraca yang menggunakan prinsip keseimbangan dengan anak timbangan bergeser pada lengan skala.</p>
+            <div class="key-points">
+                <h4>Karakteristik Neraca Ohaus:</h4>
+                <ul>
+                    <li><strong>Ketelitian:</strong> 0,1 gram</li>
+                    <li><strong>Kapasitas:</strong> Biasanya sampai 311 gram</li>
+                    <li><strong>Cara Kerja:</strong> Menggeser anak timbangan hingga seimbang</li>
+                    <li><strong>Pembacaan:</strong> Jumlahkan angka pada ketiga lengan</li>
+                    <li><strong>Penggunaan:</strong> Laboratorium, pengukuran teliti</li>
+                </ul>
+            </div>
+
+            <h3>2. Neraca Digital</h3>
+            <p>Neraca modern yang menampilkan hasil pengukuran langsung dalam bentuk angka digital.</p>
+            <div class="key-points">
+                <h4>Karakteristik Neraca Digital:</h4>
+                <ul>
+                    <li><strong>Ketelitian:</strong> Bervariasi (0,01 g - 1 g)</li>
+                    <li><strong>Kapasitas:</strong> Sangat bervariasi (1 g - 200 kg)</li>
+                    <li><strong>Cara Kerja:</strong> Sensor elektronik mengkonversi tekanan menjadi sinyal digital</li>
+                    <li><strong>Pembacaan:</strong> Langsung terlihat di layar</li>
+                    <li><strong>Penggunaan:</strong> Rumah tangga, toko, industri</li>
+                </ul>
+            </div>
+
+            <h3>3. Neraca Pegas (Spring Balance)</h3>
+            <p>Neraca yang menggunakan pegas sebagai sensor untuk mengukur massa.</p>
+            <div class="key-points">
+                <h4>Karakteristik Neraca Pegas:</h4>
+                <ul>
+                    <li><strong>Ketelitian:</strong> Kurang teliti (5-10 gram)</li>
+                    <li><strong>Kapasitas:</strong> Bervariasi (100 g - 50 kg)</li>
+                    <li><strong>Cara Kerja:</strong> Pegas meregang sesuai massa benda</li>
+                    <li><strong>Pembacaan:</strong> Skala analog dengan jarum penunjuk</li>
+                    <li><strong>Penggunaan:</strong> Pasar tradisional, pengukuran cepat</li>
+                </ul>
+            </div>
+
+            <h2>📊 Satuan Massa dan Konversi</h2>
+            
+            <div class="info-box">
+                <h4>Tangga Konversi Satuan Massa</h4>
+                <p style="text-align: center; margin: 20px 0; font-size: 1.1em;">
+                    <strong>kg (kilogram)</strong><br>
+                    ↓ ×1000<br>
+                    <strong>hg (hektogram)</strong><br>
+                    ↓ ×10<br>
+                    <strong>dag (dekagram)</strong><br>
+                    ↓ ×10<br>
+                    <strong>g (gram)</strong><br>
+                    ↓ ×10<br>
+                    <strong>dg (desigram)</strong><br>
+                    ↓ ×10<br>
+                    <strong>cg (sentigram)</strong><br>
+                    ↓ ×10<br>
+                    <strong>mg (miligram)</strong>
+                </p>
+            </div>
+
+            <div class="formula-box">
+                <p>📐 Rumus Konversi:</p>
+                <p style="margin-top: 10px;">1 kg = 1.000 g</p>
+                <p>1 g = 1.000 mg</p>
+                <p>1 hg = 100 g</p>
+                <p>1 dag = 10 g</p>
+            </div>
+
+            <h3>Cara Mengkonversi Satuan:</h3>
+            <ol>
+                <li><strong>Turun tangga:</strong> Kalikan dengan 10 (atau 1000 untuk kg→g)</li>
+                <li><strong>Naik tangga:</strong> Bagi dengan 10 (atau 1000 untuk g→kg)</li>
+                <li><strong>Hitungan anak tangga:</strong> Hitung berapa tingkat yang dilewati</li>
+            </ol>
+
+            <div class="example-box">
+                <h4>💡 Contoh Konversi</h4>
+                <p><strong>Contoh 1:</strong> 2,5 kg = ... g</p>
+                <p><strong>Penyelesaian:</strong></p>
+                <ul>
+                    <li>Dari kg ke g turun 3 tingkat (kg → hg → dag → g)</li>
+                    <li>2,5 kg = 2,5 × 1.000 = 2.500 g</li>
+                </ul>
+
+                <p style="margin-top: 20px;"><strong>Contoh 2:</strong> 750 g = ... kg</p>
+                <p><strong>Penyelesaian:</strong></p>
+                <ul>
+                    <li>Dari g ke kg naik 3 tingkat</li>
+                    <li>750 g = 750 ÷ 1.000 = 0,75 kg</li>
+                </ul>
+
+                <p style="margin-top: 20px;"><strong>Contoh 3:</strong> 3.200 mg = ... g</p>
+                <p><strong>Penyelesaian:</strong></p>
+                <ul>
+                    <li>Dari mg ke g naik 3 tingkat (mg → cg → dg → g)</li>
+                    <li>3.200 mg = 3.200 ÷ 1.000 = 3,2 g</li>
+                </ul>
+            </div>
+
+            <h2>📖 Cara Membaca Neraca dengan Benar</h2>
+
+            <h3>A. Membaca Neraca Ohaus (Tiga Lengan)</h3>
+            <div class="info-box">
+                <h4>Langkah-Langkah:</h4>
+                <ol>
+                    <li><strong>Kalibrasi:</strong> Pastikan neraca menunjukkan 0 saat kosong</li>
+                    <li><strong>Letakkan benda:</strong> Tempatkan benda di piring neraca</li>
+                    <li><strong>Geser anak timbangan:</strong> Mulai dari lengan terberat (ratusan)</li>
+                    <li><strong>Cari keseimbangan:</strong> Geser hingga jarum di tengah</li>
+                    <li><strong>Baca skala:</strong> Jumlahkan angka di ketiga lengan</li>
+                </ol>
+
+                <p style="margin-top: 15px;"><strong>Contoh Pembacaan:</strong></p>
+                <ul>
+                    <li>Lengan ratusan: 200 g</li>
+                    <li>Lengan puluhan: 50 g</li>
+                    <li>Lengan satuan: 3,4 g</li>
+                    <li><strong>Total: 200 + 50 + 3,4 = 253,4 g</strong></li>
+                </ul>
+            </div>
+
+            <h3>B. Membaca Neraca Digital</h3>
+            <div class="key-points">
+                <h4>Tips Membaca Neraca Digital:</h4>
+                <ul>
+                    <li><strong>Zero/Tare:</strong> Tekan tombol zero sebelum menimbang</li>
+                    <li><strong>Stabilisasi:</strong> Tunggu hingga angka tidak berubah</li>
+                    <li><strong>Satuan:</strong> Perhatikan satuan yang tertera (g, kg, oz)</li>
+                    <li><strong>Desimal:</strong> Perhatikan jumlah angka di belakang koma</li>
+                    <li><strong>Kapasitas:</strong> Jangan melebihi batas maksimal</li>
+                </ul>
+            </div>
+
+            <h2>🧪 Contoh Soal dan Pembahasan</h2>
+
+            <div class="example-box">
+                <h4>📌 Contoh Soal 1</h4>
+                <div class="question">
+                    <p class="question-text">
+                        Seorang siswa menimbang bahan-bahan untuk membuat kue. Berikut hasil penimbangannya:
+                    </p>
+                    
+                    <table style="margin: 20px 0;">
+                        <thead>
+                            <tr>
+                                <th>Bahan</th>
+                                <th>Hasil Penimbangan</th>
+                                <th>Alat Ukur</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Tepung</td>
+                                <td>0,5 kg</td>
+                                <td>Neraca digital</td>
+                            </tr>
+                            <tr>
+                                <td>Gula</td>
+                                <td>250 g</td>
+                                <td>Neraca Ohaus</td>
+                            </tr>
+                            <tr>
+                                <td>Mentega</td>
+                                <td>1,5 hg</td>
+                                <td>Neraca pegas</td>
+                            </tr>
+                            <tr>
+                                <td>Telur</td>
+                                <td>300 g</td>
+                                <td>Neraca digital</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p class="question-text">
+                        Berapakah total massa semua bahan dalam satuan gram?
+                    </p>
+
+                    <div class="options">
+                        <div class="option">A. 900 g</div>
+                        <div class="option">B. 1.000 g</div>
+                        <div class="option correct">C. 1.200 g</div>
+                        <div class="option">D. 1.500 g</div>
+                    </div>
+
+                    <div class="explanation">
+                        <h5>💡 Pembahasan:</h5>
+                        <p><strong>Jawaban yang benar: C. 1.200 g</strong></p>
+                        
+                        <p><strong>Langkah Penyelesaian:</strong></p>
+                        
+                        <p style="margin-top: 15px;"><strong>1. Konversi semua satuan ke gram (g):</strong></p>
+                        <ul>
+                            <li><strong>Tepung:</strong> 0,5 kg = 0,5 × 1.000 = 500 g ✓</li>
+                            <li><strong>Gula:</strong> 250 g (sudah dalam gram) ✓</li>
+                            <li><strong>Mentega:</strong> 1,5 hg = 1,5 × 100 = 150 g ✓</li>
+                            <li><strong>Telur:</strong> 300 g (sudah dalam gram) ✓</li>
+                        </ul>
+
+                        <p style="margin-top: 15px;"><strong>2. Jumlahkan semua massa:</strong></p>
+                        <p style="margin-left: 20px;">
+                            Total = 500 g + 250 g + 150 g + 300 g<br>
+                            Total = <strong>1.200 g</strong>
+                        </p>
+
+                        <p style="margin-top: 15px;"><strong>Penjelasan Konversi:</strong></p>
+                        <ul>
+                            <li><strong>kg → g:</strong> Turun 3 tingkat, kalikan 1.000</li>
+                            <li><strong>hg → g:</strong> Turun 2 tingkat, kalikan 100</li>
+                            <li>Satuan yang sama langsung dijumlahkan</li>
+                        </ul>
+
+                        <p style="margin-top: 15px;"><strong>Kesimpulan:</strong> Total massa semua bahan adalah 1.200 g atau 1,2 kg</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <h4>📌 Contoh Soal 2</h4>
+                <div class="question">
+                    <p class="question-text">
+                        Di sebuah toko buah, pedagang menimbang buah-buahan dengan berbagai alat ukur. Perhatikan data berikut:
+                    </p>
+                    
+                    <table style="margin: 20px 0;">
+                        <thead>
+                            <tr>
+                                <th>Buah</th>
+                                <th>Hasil Timbangan 1</th>
+                                <th>Hasil Timbangan 2</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Apel</td>
+                                <td>2,5 kg (neraca digital)</td>
+                                <td>2.500 g (neraca Ohaus)</td>
+                            </tr>
+                            <tr>
+                                <td>Jeruk</td>
+                                <td>3 kg (neraca pegas)</td>
+                                <td>30 hg (neraca digital)</td>
+                            </tr>
+                            <tr>
+                                <td>Mangga</td>
+                                <td>1.800 g (neraca digital)</td>
+                                <td>18 hg (neraca Ohaus)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p class="question-text">
+                        Manakah pernyataan yang BENAR tentang hasil penimbangan tersebut?
+                    </p>
+
+                    <div class="options">
+                        <div class="option correct">A. Hasil penimbangan apel di kedua timbangan sama</div>
+                        <div class="option">B. Hasil penimbangan jeruk berbeda 300 g</div>
+                        <div class="option correct">C. Semua hasil penimbangan menunjukkan konsistensi</div>
+                        <div class="option">D. Neraca pegas memberikan hasil yang tidak akurat</div>
+                    </div>
+
+                    <div class="explanation">
+                        <h5>💡 Pembahasan:</h5>
+                        <p><strong>Jawaban yang benar: A dan C</strong></p>
+                        
+                        <p><strong>Verifikasi Setiap Buah:</strong></p>
+                        
+                        <p style="margin-top: 15px;"><strong>Apel:</strong></p>
+                        <ul>
+                            <li>Timbangan 1: 2,5 kg = 2,5 × 1.000 = 2.500 g</li>
+                            <li>Timbangan 2: 2.500 g</li>
+                            <li><strong>Hasil: SAMA ✓</strong></li>
+                        </ul>
+
+                        <p style="margin-top: 15px;"><strong>Jeruk:</strong></p>
+                        <ul>
+                            <li>Timbangan 1: 3 kg = 3 × 1.000 = 3.000 g</li>
+                            <li>Timbangan 2: 30 hg = 30 × 100 = 3.000 g</li>
+                            <li><strong>Hasil: SAMA ✓</strong></li>
+                        </ul>
+
+                        <p style="margin-top: 15px;"><strong>Mangga:</strong></p>
+                        <ul>
+                            <li>Timbangan 1: 1.800 g</li>
+                            <li>Timbangan 2: 18 hg = 18 × 100 = 1.800 g</li>
+                            <li><strong>Hasil: SAMA ✓</strong></li>
+                        </ul>
+
+                        <p style="margin-top: 15px;"><strong>Analisis Pilihan Jawaban:</strong></p>
+                        <ul>
+                            <li><strong>A. BENAR ✓</strong> - 2,5 kg = 2.500 g (sama persis)</li>
+                            <li><strong>B. SALAH ✗</strong> - Jeruk: 3 kg = 30 hg (sama, beda 0 g)</li>
+                            <li><strong>C. BENAR ✓</strong> - Semua penimbangan konsisten</li>
+                            <li><strong>D. SALAH ✗</strong> - Neraca pegas tetap akurat dalam soal ini</li>
+                        </ul>
+
+                        <p style="margin-top: 15px;"><strong>Kesimpulan:</strong> Penting untuk memahami konversi satuan. Hasil yang tampak berbeda mungkin sebenarnya sama jika dikonversi ke satuan yang sama!</p>
+                    </div>
+                </div>
+            </div>
+
+            <h2>🎓 Rangkuman</h2>
+            <div class="info-box">
+                <ol>
+                    <li><strong>Massa</strong> adalah jumlah materi dalam benda, diukur dengan neraca dalam satuan gram (g) atau kilogram (kg).</li>
+                    
+                    <li><strong>Jenis-jenis neraca:</strong>
+                        <ul>
+                            <li>Neraca Ohaus: ketelitian 0,1 g</li>
+                            <li>Neraca Digital: pembacaan langsung</li>
+                            <li>Neraca Pegas: menggunakan pegas</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Satuan massa:</strong>
+                        <ul>
+                            <li>1 kg = 1.000 g</li>
+                            <li>1 hg = 100 g</li>
+                            <li>1 dag = 10 g</li>
+                            <li>1 g = 1.000 mg</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Konversi satuan:</strong>
+                        <ul>
+                            <li>Turun tangga: kalikan</li>
+                            <li>Naik tangga: bagi</li>
+                            <li>Tiap tingkat = ×10 atau ÷10</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Membaca neraca:</strong> Perhatikan satuan, kalibrasi alat, dan tunggu hingga stabil.</li>
+                </ol>
+            </div>
+
+            <div class="key-points">
+                <h4>💪 Tips Mengerjakan Soal Pengukuran</h4>
+                <ul>
+                    <li><strong>Identifikasi satuan:</strong> Perhatikan satuan yang digunakan (kg, g, hg, dll.)</li>
+                    <li><strong>Konversi ke satuan sama:</strong> Ubah semua ke satuan yang sama sebelum menghitung</li>
+                    <li><strong>Gunakan tangga konversi:</strong> Hitung berapa tingkat naik/turun</li>
+                    <li><strong>Perhatikan desimal:</strong> Jangan salah menempatkan koma</li>
+                    <li><strong>Cek kembali:</strong> Verifikasi hasil konversi Anda</li>
+                    <li><strong>Pahami konteks:</strong> Apakah hasil masuk akal untuk konteks soal?</li>
+                </ul>
+            </div>
+
+            <div class="warning-box">
+                <h4>⚠️ Kesalahan Umum yang Harus Dihindari</h4>
+                <ul>
+                    <li><strong>Lupa mengkonversi satuan:</strong> Langsung menjumlahkan tanpa menyamakan satuan</li>
+                    <li><strong>Salah arah konversi:</strong> Kalikan saat seharusnya bagi, atau sebaliknya</li>
+                    <li><strong>Salah menghitung tingkat:</strong> Tidak tepat menghitung berapa tangga yang dilewati</li>
+                    <li><strong>Kesalahan desimal:</strong> Salah menempatkan koma (2,5 kg ≠ 25 g)</li>
+                    <li><strong>Tidak memperhatikan alat ukur:</strong> Mengabaikan ketelitian alat</li>
+                    <li><strong>Tidak membaca soal lengkap:</strong> Terburu-buru tanpa memahami pertanyaan</li>
+                </ul>
+            </div>
+
+            <div class="key-points">
+                <h4>🌟 Penerapan dalam Kehidupan Sehari-hari</h4>
+                <ul>
+                    <li><strong>Memasak:</strong> Menimbang bahan makanan sesuai resep</li>
+                    <li><strong>Berbelanja:</strong> Membeli buah, sayur, daging di pasar</li>
+                    <li><strong>Kesehatan:</strong> Memantau berat badan, dosis obat</li>
+                    <li><strong>Sains:</strong> Eksperimen laboratorium, penelitian</li>
+                    <li><strong>Industri:</strong> Kontrol kualitas produk, packaging</li>
+                    <li><strong>Pertanian:</strong> Menimbang hasil panen, pupuk</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Navigation Bottom -->
+        <div class="nav-bar">
+            <div class="nav-buttons" style="width: 100%; justify-content: space-between;">
+                <a href="kisi-kisi-tkad-ipa.html" class="btn-nav btn-home">
+                    🏠 Kembali ke Menu
+                </a>
+                <a href="Lat8.html" class="btn-nav btn-practice">
+                    Lanjut ke Latihan Soal ✏️
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

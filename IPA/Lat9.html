@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latihan Soal 9: Pemisahan Campuran - Filtrasi</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #8b5cf6;
+            --secondary: #ec4899;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --dark: #1e293b;
+            --light: #f8fafc;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Navigation */
+        .nav-bar {
+            background: white;
+            border-radius: 16px;
+            padding: 15px 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .nav-title {
+            font-size: 1.2em;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn-nav {
+            padding: 10px 20px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-home {
+            background: linear-gradient(135deg, #64748b, #475569);
+            color: white;
+            box-shadow: 0 4px 12px rgba(100, 116, 139, 0.3);
+        }
+
+        .btn-home:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(100, 116, 139, 0.4);
+        }
+
+        .btn-materi {
+            background: linear-gradient(135deg, #059669, #047857);
+            color: white;
+            box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);
+        }
+
+        .btn-materi:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(5, 150, 105, 0.4);
+        }
+
+        /* Quiz Container */
+        .quiz-container {
+            background: white;
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quiz-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--warning));
+            background-size: 200% 100%;
+            animation: gradientMove 3s ease infinite;
+        }
+
+        @keyframes gradientMove {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            margin-bottom: 30px;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .question-number {
+            font-size: 1.1em;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .score-display {
+            font-size: 1em;
+            font-weight: 700;
+            color: var(--success);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background: #e2e8f0;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 20px;
+            transition: width 0.5s ease;
+        }
+
+        /* Question Slide */
+        .slide {
+            display: none;
+            animation: slideIn 0.5s ease;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .question-text {
+            font-size: 1.15em;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 25px;
+            line-height: 1.7;
+            padding: 20px;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border-radius: 12px;
+            border-left: 5px solid var(--primary);
+        }
+
+        /* Options */
+        .option {
+            padding: 18px 24px;
+            margin: 12px 0;
+            border: 3px solid #e2e8f0;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 1.05em;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            position: relative;
+        }
+
+        .option:hover:not(.disabled) {
+            border-color: var(--primary);
+            background: linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%);
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.2);
+        }
+
+        .option.selected {
+            border-color: var(--primary);
+            background: linear-gradient(135deg, #ede9fe 0%, #ddd6fe 100%);
+        }
+
+        .option.correct {
+            border-color: var(--success);
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+        }
+
+        .option.wrong {
+            border-color: var(--danger);
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+        }
+
+        .option.disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        .option input[type="checkbox"] {
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Feedback */
+        .feedback {
+            margin-top: 25px;
+            padding: 25px 30px;
+            border-radius: 15px;
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .feedback.show {
+            display: block;
+        }
+
+        .feedback.correct {
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+            border-left: 6px solid var(--success);
+        }
+
+        .feedback.wrong {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            border-left: 6px solid var(--danger);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .feedback-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .feedback-icon {
+            font-size: 2.5em;
+        }
+
+        .feedback-title {
+            font-size: 1.4em;
+            font-weight: 800;
+        }
+
+        .feedback.correct .feedback-title {
+            color: var(--success);
+        }
+
+        .feedback.wrong .feedback-title {
+            color: var(--danger);
+        }
+
+        .feedback-text {
+            font-size: 1.05em;
+            line-height: 1.7;
+            color: var(--dark);
+        }
+
+        /* Buttons */
+        .btn-container {
+            margin-top: 30px;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 15px 35px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 1.05em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(139, 92, 246, 0.4);
+        }
+
+        .btn-next {
+            background: linear-gradient(135deg, var(--success), #059669);
+            color: white;
+            display: none;
+        }
+
+        .btn-next.show {
+            display: inline-flex;
+        }
+
+        .btn-next:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+        }
+
+        /* Result Screen */
+        .result-screen {
+            display: none;
+            text-align: center;
+            padding: 40px 20px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .result-screen.show {
+            display: block;
+        }
+
+        .result-icon {
+            font-size: 6em;
+            margin-bottom: 20px;
+            animation: bounce 1s ease;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .result-score {
+            font-size: 4em;
+            font-weight: 900;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .result-score.excellent {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .result-score.good {
+            background: linear-gradient(135deg, var(--success), #059669);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .result-score.poor {
+            background: linear-gradient(135deg, var(--danger), #dc2626);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .result-title {
+            font-size: 2.5em;
+            font-weight: 800;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+
+        .result-message {
+            font-size: 1.3em;
+            color: #64748b;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        .result-actions {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-retry {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        .btn-retry:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(139, 92, 246, 0.4);
+        }
+
+        .btn-home-result {
+            background: linear-gradient(135deg, #64748b, #475569);
+            color: white;
+        }
+
+        .btn-home-result:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(100, 116, 139, 0.4);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .quiz-container {
+                padding: 25px 20px;
+            }
+
+            .question-text {
+                font-size: 1.05em;
+            }
+
+            .option {
+                font-size: 1em;
+                padding: 15px 18px;
+            }
+
+            .result-score {
+                font-size: 3em;
+            }
+
+            .result-title {
+                font-size: 2em;
+            }
+
+            .result-message {
+                font-size: 1.1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation Bar -->
+        <div class="nav-bar">
+            <div class="nav-title">✏️ Latihan Soal - Filtrasi</div>
+            <div class="nav-buttons">
+                <a href="kisi-kisi-tkad-ipa.html" class="btn-nav btn-home">🏠 Menu</a>
+                <a href="9.html" class="btn-nav btn-materi">📖 Materi</a>
+            </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-container">
+            <!-- Progress Bar -->
+            <div class="progress-container">
+                <div class="progress-info">
+                    <div class="question-number">
+                        Soal <span id="currentQuestion">1</span> dari 5
+                    </div>
+                    <div class="score-display">
+                        Skor: <span id="score">0</span>/5
+                    </div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <!-- Quiz Content -->
+            <div id="quizContent">
+                <!-- Question 1 -->
+                <div class="slide active" data-question="1">
+                    <div class="question-text">
+                        <strong>Soal 1:</strong><br><br>
+                        Perhatikan kegiatan berikut:<br><br>
+                        <strong>I.</strong> Memasak air laut untuk mendapatkan garam<br>
+                        <strong>II.</strong> Membuat kopi dengan menyaring air yang telah dicampur bubuk kopi<br>
+                        <strong>III.</strong> Memisahkan biji gandum dari kulitnya menggunakan angin<br>
+                        <strong>IV.</strong> Menyaring air kolam renang menggunakan filter pasir<br>
+                        <strong>V.</strong> Memisahkan alkohol dari campuran alkohol-air dengan pemanasan<br><br>
+                        
+                        Kegiatan yang menggunakan proses <strong>filtrasi</strong> adalah...
+                    </div>
+
+                    <div class="option">
+                        <input type="checkbox" value="A">
+                        <span>A. I dan II</span>
+                    </div>
+                    <div class="option">
+                        <input type="checkbox" value="B">
+                        <span>B. II dan IV</span>
+                    </div>
+                    <div class="option">
+                        <input type="checkbox" value="C">
+                        <span>C. III dan V</span>
+                    </div>
+                    <div class="option">
+                        <input type="checkbox" value="D">
+                        <span>D. I, II, dan IV</span>
+                    </div>
+
+                    <div class="feedback" id="feedback1"></div>
+
+                    <div class="btn-container">
+                        <button class="btn btn-submit" onclick="submitAnswer(1, ['B'])">
+                            Cek Jawaban 🔍
+                        </button>
+                        <button class="btn btn-next" onclick="nextQuestion()">
+                            Lanjut ➡️
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Question 2 -->
+                <div class="slide" data-question="2">
+                    <div class="question-text">
+                        <strong>Soal 2:</strong><br><br>
+                        Seorang siswa melakukan percobaan penyaringan air keruh. Setelah proses filtrasi, diperoleh:<br><br>
+                        • Air jernih di dalam gelas penampung<br>
+                        • Endapan lumpur di atas kertas saring<br><br>
+                        
+                        Manakah pernyataan yang BENAR tentang hasil filtrasi tersebut?<br>
+                        (Pilih lebih dari satu jawaban yang benar)
+                    </div>
+
+                    <div class="option">
+                        <input type="checkbox" value="A">
+                        <span>A. Air jernih disebut filtrat</span>
+                    </div>
+                    <div class="option">
+                        <input type="checkbox" value="B">
+                        <span>B. Endapan lumpur disebut residu</span>
+                    </div>
+                    <div class="option">
+                        <input type="checkbox" value="C">
+                        <span>C. Partikel lumpur lolos melewati kertas saring</span>
+                    </div>
+                    <div class="option">
+                        <input type="checkbox" value="D">
+                        <span>D. Air jernih tertahan oleh pori-pori kertas saring</span>
+                    </div>
+
+                    <div class="feedback" id="feedback2"></div>
+
+                    <div class="btn-container">
+                        <button class="btn btn-submit" onclick="submitAnswer(2, ['A', 'B'])">
+                            Cek Jawaban 🔍
+                        </button>
+                        <button class="btn btn-next" onclick="nextQuestion()">
+                            Lanjut ➡️
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Question 3 -->
+                <div class="slide" data-question="3">
+                    <div class="question-text">
+                        <strong>Soal 3:</strong><br><br>
+                        Dalam suatu praktikum, dibuat sistem filtrasi air dengan susunan lapisan dari atas ke bawah sebagai berikut:<br><br>
+                        
+                        1. Kapas<br>
+                        2. Pasir halus<br>
+                        3. Kerikil halus<br>
+                        4. Kerikil kasar<br>
+                        5. Arang aktif<br><br>
+                        
+                        Pernyataan yang BENAR adalah...<br>
+                        (Pilih lebih dari satu jawaban yang benar)
+                    </div>
+
+                    <div class="option">
+                        <input type="checkbox" value="A">
+                        <span>A. Kerikil kasar berfungsi menyaring partikel besar terlebih dahulu</span>
+                    </div>
+                    <div class="option">
+                        <input type="checkbox" value="B">
+                        <span>B. Arang aktif seharusnya diletakkan di antara pasir halus dan kerikil halus</span>
+                    </div>
+                    <div class="option">
+                        <input type="checkbox" value="C">
+                        <span>C. Kapas berfungsi menyaring partikel paling halus</span>
+                    </div>
+                    <div class="option">
+                        <input type="checkbox" value="D">
+                        <span>D. Susunan dari kapas ke kerikil kasar sudah benar (dari halus ke kasar)</span>
+                    </div>
+
+                    <div class="feedback" id="feedback3"></div>
+
+                    <div class="btn-container">
+                        <button class="btn btn-submit" onclick="submitAnswer(3, ['A', 'B', 'C'])">
+                            Cek Jawaban 🔍
+                        </button>
+                        <button class="btn btn-next" onclick="nextQuestion()">
+                            Lanjut ➡️
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Question 4 -->
+                <div class="slide" data-question="4">
+                    <div class="question-text">
+                        <strong>Soal 4:</strong><br><br>
+                        Perhatikan tabel berikut yang menunjukkan berbagai proses pemisahan campuran:<br><br>
+                        
+                        <table style="width: 100%; border-collapse: collapse; margin: 15px 0;">
+                            <thead style="background: #8b5cf6; color: white;">
+                                <tr>
+                                    <th style="padding: 10px; border: 1px solid #ddd;">Proses</th>
+                                    <th style="padding: 10px; border: 1px solid #ddd;">Contoh</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="padding: 10px; border: 1px solid #ddd;">I. Filtrasi</td>
+                                    <td style="padding: 10px; border: 1px solid #ddd;">Menyaring santan dari parutan kelapa</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 10px; border: 1px solid #ddd;">II. Evaporasi</td>
+                                    <td style="padding: 10px; border: 1px solid #ddd;">Membuat garam dari air laut</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 10px; border: 1px solid #ddd;">III. Destilasi</td>
+                                    <td style="padding: 10px; border: 1px solid #ddd;">Pemurnian minyak bumi</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 10px; border: 1px solid #ddd;">IV. Kristalisasi</td>
+                                    <td style="padding: 10px; border: 1px solid #ddd;">Pembuatan gula kristal</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        
+                        Pasangan yang BENAR antara proses dan contoh adalah...<br>
+                        (Pilih lebih dari satu jawaban yang benar)
+                    </div>
+
+                    <div class="option">
+                        <input type="checkbox" value="A">
+                        <span>A. I dan II</span>
+                    </div>
+                    <div class="option">
+                        <input type="checkbox" value="B">
+                        <span>B. II dan III</span>
+                    </div>
+                    <div class="option">
+                        <input type="checkbox" value="C">
+                        <span>C. III dan IV</span>
+                    </div>
+                    <div class="option">
+                        <input type="checkbox" value="D">
+                        <span>D. I, II, III, dan IV (semua benar)</span>
+                    </div>
+
+                    <div class="feedback" id="feedback4"></div>
+
+                    <div class="btn-container">
+                        <button class="btn btn-submit" onclick="submitAnswer(4, ['D'])">
+                            Cek Jawaban 🔍
+                        </button>
+                        <button class="btn btn-next" onclick="nextQuestion()">
+                            Lanjut ➡️
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Question 5 -->
+                <div class="slide" data-question="5">
+                    <div class="question-text">
+                        <strong>Soal 5:</strong><br><br>
+                        Dalam kehidupan sehari-hari, filtrasi banyak diterapkan. Perhatikan contoh berikut:<br><br>
+                        
+                        <strong>I.</strong> Filter pada ginjal manusia untuk menyaring darah<br>
+                        <strong>II.</strong> Filter pada kolam renang untuk menjaga kebersihan air<br>
+                        <strong>III.</strong> Penyulingan minyak kayu putih dari daun eucalyptus<br>
+                        <strong>IV.</strong> Pembuatan keju dengan memisahkan whey dari curd<br>
+                        <strong>V.</strong> Mesin cuci yang menyaring kotoran dari air cucian<br><br>
+                        
+                        Yang merupakan penerapan filtrasi adalah...<br>
+                        (Pilih lebih dari satu jawaban yang benar)
+                    </div>
+
+                    <div class="option">
+                        <input type="checkbox" value="A">
+                        <span>A. I, II, dan V</span>
+                    </div>
+                    <div class="option">
+                        <input type="checkbox" value="B">
+                        <span>B. I, II, IV, dan V</span>
+                    </div>
+                    <div class="option">
+                        <input type="checkbox" value="C">
+                        <span>C. II, III, dan IV</span>
+                    </div>
+                    <div class="option">
+                        <input type="checkbox" value="D">
+                        <span>D. Semua benar (I, II, III, IV, dan V)</span>
+                    </div>
+
+                    <div class="feedback" id="feedback5"></div>
+
+                    <div class="btn-container">
+                        <button class="btn btn-submit" onclick="submitAnswer(5, ['B'])">
+                            Cek Jawaban 🔍
+                        </button>
+                        <button class="btn btn-next" onclick="showResult()">
+                            Lihat Hasil 🏆
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Result Screen -->
+            <div class="result-screen" id="resultScreen">
+                <div class="result-icon" id="resultIcon">🏆</div>
+                <div class="result-score" id="resultScore">5/5</div>
+                <div class="result-title" id="resultTitle">Sempurna!</div>
+                <div class="result-message" id="resultMessage">
+                    Luar biasa! Kamu menguasai materi Filtrasi dengan sempurna!
+                </div>
+                <div class="result-actions">
+                    <button class="btn btn-retry" onclick="retryQuiz()">
+                        🔄 Ulangi Latihan
+                    </button>
+                    <a href="kisi-kisi-tkad-ipa.html" class="btn btn-home-result">
+                        🏠 Kembali ke Menu
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 1;
+        let score = 0;
+        let answeredQuestions = [];
+
+        const explanations = {
+            1: {
+                correct: "Benar sekali! 🎉<br><br><strong>B. II dan IV adalah proses filtrasi</strong><br><br><strong>Analisis setiap kegiatan:</strong><br><br><strong>I. Memasak air laut → EVAPORASI ✗</strong><br>• Memanaskan air laut untuk menguapkan air<br>• Garam tertinggal sebagai kristal<br>• BUKAN filtrasi, tapi penguapan!<br><br><strong>II. Membuat kopi → FILTRASI ✓</strong><br>• Menggunakan kertas saring/kain flannel<br>• Memisahkan air kopi (filtrat) dari ampas (residu)<br>• Ampas tertahan, air kopi lolos<br><br><strong>III. Memisahkan gandum → WINNOWING ✗</strong><br>• Menggunakan angin untuk memisahkan<br>• Berdasarkan perbedaan massa<br>• BUKAN filtrasi!<br><br><strong>IV. Filter kolam renang → FILTRASI ✓</strong><br>• Menggunakan filter pasir<br>• Memisahkan kotoran dari air<br>• Kotoran tertahan, air jernih lolos<br><br><strong>V. Destilasi alkohol → DESTILASI ✗</strong><br>• Berdasarkan perbedaan titik didih<br>• BUKAN filtrasi!<br><br><strong>Kesimpulan:</strong> Filtrasi = II dan IV (keduanya menggunakan saringan/filter)",
+                wrong: "Belum tepat! 🤔<br><br><strong>Jawaban yang benar: B (II dan IV)</strong><br><br><strong>Cara bedakan filtrasi dengan metode lain:</strong><br><br>✅ <strong>FILTRASI:</strong><br>• Menggunakan saringan/filter<br>• Memisahkan padat dari cair<br>• Berdasarkan ukuran partikel<br>• Contoh: kopi (II), kolam renang (IV)<br><br>❌ <strong>BUKAN FILTRASI:</strong><br>• I = Evaporasi (penguapan)<br>• III = Winnowing (angin)<br>• V = Destilasi (titik didih)<br><br><strong>Kata kunci filtrasi:</strong> 'menyaring', 'filter', 'saringan'"
+            },
+            2: {
+                correct: "Sempurna! 🌟<br><br><strong>A dan B adalah jawaban yang benar</strong><br><br><strong>A. Air jernih = Filtrat ✓</strong><br>• Filtrat adalah zat yang LOLOS melewati saringan<br>• Biasanya berupa cairan jernih<br>• Air jernih lolos dari pori-pori kertas saring<br>• Ditampung di gelas penampung<br><br><strong>B. Endapan lumpur = Residu ✓</strong><br>• Residu adalah zat yang TERTAHAN di saringan<br>• Biasanya berupa zat padat/endapan<br>• Lumpur tertahan karena ukuran partikelnya lebih besar dari pori-pori kertas<br>• Tetap berada di atas kertas saring<br><br><strong>C. SALAH ✗</strong><br>• Partikel lumpur TIDAK lolos<br>• Lumpur tertahan karena ukurannya terlalu besar<br>• Yang lolos adalah air (partikel kecil)<br><br><strong>D. SALAH ✗</strong><br>• Air jernih LOLOS (bukan tertahan)<br>• Yang tertahan adalah lumpur<br>• Air lolos karena ukurannya lebih kecil dari pori-pori<br><br><strong>Ingat:</strong><br>• <strong>Filtrat</strong> = yang LOLOS (cairan jernih)<br>• <strong>Residu</strong> = yang TERTAHAN (endapan)",
+                wrong: "Belum lengkap! 🎯<br><br><strong>Jawaban yang benar: A dan B</strong><br><br><strong>Istilah penting dalam filtrasi:</strong><br><br>✅ <strong>FILTRAT</strong> (A benar)<br>• Zat yang LOLOS melewati filter<br>• Dalam soal ini: air jernih<br>• Ditampung di gelas<br><br>✅ <strong>RESIDU</strong> (B benar)<br>• Zat yang TERTAHAN di filter<br>• Dalam soal ini: lumpur<br>• Berada di atas kertas saring<br><br>❌ <strong>C dan D salah</strong><br>• Lumpur TERTAHAN (bukan lolos)<br>• Air LOLOS (bukan tertahan)<br><br><strong>Prinsip filtrasi:</strong><br>Partikel BESAR → tertahan (residu)<br>Partikel KECIL → lolos (filtrat)"
+            },
+            3: {
+                correct: "Luar biasa! 🎊<br><br><strong>A, B, dan C adalah jawaban yang benar</strong><br><br><strong>A. Kerikil kasar menyaring partikel besar ✓</strong><br>• Air masuk dari atas, ke bawah<br>• Kerikil kasar (paling bawah) bertemu air lebih dulu<br>• Menyaring partikel besar (daun, ranting)<br>• Mencegah penyumbatan lapisan halus di atasnya<br><br><strong>B. Arang aktif seharusnya di antara pasir halus dan kerikil halus ✓</strong><br>• Susunan ideal: Kapas → Arang aktif → Pasir halus → Kerikil halus → Kerikil kasar<br>• Arang aktif berfungsi menyerap bau, warna, zat kimia<br>• Diletakkan setelah penyaringan kasar, sebelum penyaringan halus<br>• Posisi saat ini (paling bawah) SALAH!<br><br><strong>C. Kapas menyaring partikel paling halus ✓</strong><br>• Kapas punya pori-pori sangat halus<br>• Penyaringan terakhir (paling atas)<br>• Menangkap partikel halus yang lolos dari lapisan bawah<br>• Menghasilkan air paling jernih<br><br><strong>D. SALAH ✗</strong><br>• Susunan BELUM benar karena arang aktif salah posisi<br>• Seharusnya: halus (atas) → kasar (bawah)<br>• Tapi arang aktif seharusnya di tengah, bukan di bawah<br><br><strong>Susunan ideal (atas ke bawah):</strong><br>1. Kapas (penyaring paling halus)<br>2. Arang aktif (penyerap bau/warna)<br>3. Pasir halus<br>4. Kerikil halus<br>5. Kerikil kasar (penyaring kasar)",
+                wrong: "Hampir benar! 💡<br><br><strong>Jawaban yang benar: A, B, dan C</strong><br><br>✅ <strong>A. BENAR</strong><br>• Kerikil kasar (bawah) menyaring partikel besar<br>• Air masuk dari atas ke bawah<br><br>✅ <strong>B. BENAR</strong><br>• Arang aktif posisi SALAH (seharusnya di tengah)<br>• Fungsi: menyerap bau/warna, bukan menyaring partikel besar<br>• Posisi ideal: antara pasir halus dan kerikil halus<br><br>✅ <strong>C. BENAR</strong><br>• Kapas (atas) = penyaring paling halus<br>• Penyaringan terakhir untuk hasil jernih<br><br>❌ <strong>D. SALAH</strong><br>• Susunan kapas→kerikil kasar sudah benar (halus ke kasar)<br>• TAPI arang aktif salah posisi!<br><br><strong>Ingat urutan ideal:</strong><br>Kapas → Arang → Pasir halus → Kerikil halus → Kerikil kasar"
+            },
+            4: {
+                correct: "Sempurna! 🏆<br><br><strong>D. Semua pasangan BENAR (I, II, III, IV)</strong><br><br><strong>I. Filtrasi - Menyaring santan ✓</strong><br>• Menggunakan kain sebagai filter<br>• Memisahkan santan cair dari ampas kelapa<br>• Ampas tertahan, santan lolos<br>• Contoh klasik filtrasi di dapur!<br><br><strong>II. Evaporasi - Membuat garam dari air laut ✓</strong><br>• Memanaskan air laut di bawah sinar matahari<br>• Air menguap (evaporasi), garam tertinggal<br>• Berdasarkan perbedaan titik didih<br>• Bukan filtrasi, tapi penguapan!<br><br><strong>III. Destilasi - Pemurnian minyak bumi ✓</strong><br>• Memisahkan komponen minyak bumi berdasarkan titik didih<br>• Bensin, solar, oli, dll dipisahkan<br>• Menggunakan menara destilasi bertingkat<br>• Proses destilasi fraksionasi<br><br><strong>IV. Kristalisasi - Pembuatan gula kristal ✓</strong><br>• Larutan gula dipanaskan hingga jenuh<br>• Saat didinginkan, gula mengkristal<br>• Kristal gula lebih murni<br>• Berbeda dengan filtrasi dan evaporasi!<br><br><strong>Ringkasan metode:</strong><br>• <strong>Filtrasi:</strong> Berdasarkan ukuran partikel<br>• <strong>Evaporasi:</strong> Penguapan pelarut<br>• <strong>Destilasi:</strong> Berdasarkan titik didih<br>• <strong>Kristalisasi:</strong> Pembentukan kristal<br><br>Semua pasangan sudah TEPAT!",
+                wrong: "Belum tepat! 🔍<br><br><strong>Jawaban yang benar: D (Semua benar)</strong><br><br>Coba periksa lagi:<br><br>✅ <strong>I. Filtrasi - Santan</strong><br>• Menyaring = filtrasi ✓<br>• Pakai kain sebagai filter<br><br>✅ <strong>II. Evaporasi - Garam</strong><br>• Memanaskan air laut = evaporasi ✓<br>• Air menguap, garam tertinggal<br><br>✅ <strong>III. Destilasi - Minyak bumi</strong><br>• Pemurnian berdasarkan titik didih = destilasi ✓<br>• Memisahkan bensin, solar, oli<br><br>✅ <strong>IV. Kristalisasi - Gula</strong><br>• Membentuk kristal = kristalisasi ✓<br>• Gula mengkristal saat didinginkan<br><br><strong>SEMUA PASANGAN BENAR!</strong> 🎯"
+            },
+            5: {
+                correct: "Hebat! 🌟<br><br><strong>B. I, II, IV, dan V adalah penerapan filtrasi</strong><br><br><strong>I. Filter pada ginjal - FILTRASI ✓</strong><br>• Ginjal menyaring darah untuk memisahkan zat sisa<br>• Menggunakan nefron sebagai filter alami<br>• Zat sisa dibuang sebagai urine<br>• Contoh filtrasi biologis dalam tubuh!<br><br><strong>II. Filter kolam renang - FILTRASI ✓</strong><br>• Menggunakan filter pasir atau karbon<br>• Memisahkan kotoran dari air kolam<br>• Menjaga kejernihan dan kebersihan air<br>• Filtrasi mekanis yang sangat penting!<br><br><strong>III. Penyulingan minyak kayu putih - DESTILASI ✗</strong><br>• Menggunakan pemanasan dan penguapan<br>• Uap minyak didinginkan dan dikondensasi<br>• BUKAN filtrasi, tapi DESTILASI!<br>• Berdasarkan perbedaan titik didih<br><br><strong>IV. Pembuatan keju - FILTRASI ✓</strong><br>• Memisahkan whey (cairan) dari curd (padat)<br>• Menggunakan kain keju sebagai filter<br>• Whey lolos, curd tertahan<br>• Prinsip filtrasi pada industri makanan<br><br><strong>V. Filter mesin cuci - FILTRASI ✓</strong><br>• Menyaring kotoran dari air cucian<br>• Mencegah kotoran kembali ke pakaian<br>• Menggunakan saringan/jaring<br>• Filtrasi praktis di rumah tangga<br><br><strong>Kesimpulan:</strong><br>Yang FILTRASI: I (ginjal), II (kolam), IV (keju), V (mesin cuci)<br>Yang BUKAN: III (destilasi)",
+                wrong: "Belum lengkap! 🎯<br><br><strong>Jawaban yang benar: B (I, II, IV, dan V)</strong><br><br><strong>Cek satu per satu:</strong><br><br>✅ <strong>I. Ginjal = FILTRASI</strong><br>• Menyaring darah → urine<br>• Filter biologis dalam tubuh<br><br>✅ <strong>II. Kolam renang = FILTRASI</strong><br>• Filter pasir/karbon<br>• Menjaga kejernihan air<br><br>❌ <strong>III. Minyak kayu putih = DESTILASI</strong><br>• Penyulingan = destilasi (bukan filtrasi!)<br>• Berdasarkan titik didih<br><br>✅ <strong>IV. Keju = FILTRASI</strong><br>• Pakai kain keju<br>• Whey lolos, curd tertahan<br><br>✅ <strong>V. Mesin cuci = FILTRASI</strong><br>• Saringan kotoran<br>• Filter praktis rumah tangga<br><br><strong>Yang FILTRASI: I, II, IV, V</strong><br><strong>Yang BUKAN: III (destilasi)</strong>"
+            }
+        };
+
+        // Handle checkbox selection
+        document.querySelectorAll('.option').forEach(option => {
+            option.addEventListener('click', function(e) {
+                if (e.target.tagName !== 'INPUT' && !this.classList.contains('disabled')) {
+                    const checkbox = this.querySelector('input[type="checkbox"]');
+                    checkbox.checked = !checkbox.checked;
+                }
+                
+                if (this.querySelector('input[type="checkbox"]').checked) {
+                    this.classList.add('selected');
+                } else {
+                    this.classList.remove('selected');
+                }
+            });
+        });
+
+        function submitAnswer(questionNum, correctAnswers) {
+            const slide = document.querySelector(`.slide[data-question="${questionNum}"]`);
+            const options = slide.querySelectorAll('.option');
+            const checkboxes = slide.querySelectorAll('input[type="checkbox"]');
+            const feedback = document.getElementById(`feedback${questionNum}`);
+            const submitBtn = slide.querySelector('.btn-submit');
+            const nextBtn = slide.querySelector('.btn-next');
+
+            // Get selected answers
+            const selectedAnswers = Array.from(checkboxes)
+                .filter(cb => cb.checked)
+                .map(cb => cb.value);
+
+            if (selectedAnswers.length === 0) {
+                alert('Pilih minimal satu jawaban!');
+                return;
+            }
+
+            // Disable further selection
+            options.forEach(opt => opt.classList.add('disabled'));
+            checkboxes.forEach(cb => cb.disabled = true);
+            submitBtn.style.display = 'none';
+            nextBtn.classList.add('show');
+
+            // Check if answer is correct
+            const isCorrect = correctAnswers.length === selectedAnswers.length &&
+                correctAnswers.every(ans => selectedAnswers.includes(ans));
+
+            // Mark correct/wrong options
+            options.forEach(opt => {
+                const checkbox = opt.querySelector('input[type="checkbox"]');
+                const value = checkbox.value;
+                
+                if (correctAnswers.includes(value)) {
+                    opt.classList.add('correct');
+                }
+                if (checkbox.checked && !correctAnswers.includes(value)) {
+                    opt.classList.add('wrong');
+                }
+            });
+
+            // Update score
+            if (isCorrect && !answeredQuestions.includes(questionNum)) {
+                score++;
+                answeredQuestions.push(questionNum);
+                document.getElementById('score').textContent = score;
+            }
+
+            // Show feedback
+            feedback.classList.add('show');
+            feedback.classList.add(isCorrect ? 'correct' : 'wrong');
+            
+            const icon = isCorrect ? '✅' : '❌';
+            const title = isCorrect ? 'Jawaban Benar!' : 'Jawaban Salah!';
+            const explanation = isCorrect ? explanations[questionNum].correct : explanations[questionNum].wrong;
+
+            feedback.innerHTML = `
+                <div class="feedback-header">
+                    <div class="feedback-icon">${icon}</div>
+                    <div class="feedback-title">${title}</div>
+                </div>
+                <div class="feedback-text">${explanation}</div>
+            `;
+
+            // Scroll to feedback
+            setTimeout(() => {
+                feedback.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 300);
+        }
+
+        function nextQuestion() {
+            const currentSlideEl = document.querySelector('.slide.active');
+            currentSlideEl.classList.remove('active');
+
+            currentSlide++;
+            const nextSlideEl = document.querySelector(`.slide[data-question="${currentSlide}"]`);
+            if (nextSlideEl) {
+                nextSlideEl.classList.add('active');
+                document.getElementById('currentQuestion').textContent = currentSlide;
+                
+                // Update progress bar
+                const progress = (currentSlide / 5) * 100;
+                document.getElementById('progressFill').style.width = progress + '%';
+
+                // Scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        function showResult() {
+            document.getElementById('quizContent').style.display = 'none';
+            document.getElementById('resultScreen').classList.add('show');
+            document.querySelector('.progress-container').style.display = 'none';
+
+            const resultScore = document.getElementById('resultScore');
+            const resultIcon = document.getElementById('resultIcon');
+            const resultTitle = document.getElementById('resultTitle');
+            const resultMessage = document.getElementById('resultMessage');
+
+            resultScore.textContent = `${score}/5`;
+
+            if (score === 5) {
+                resultScore.classList.add('excellent');
+                resultIcon.textContent = '🏆';
+                resultTitle.textContent = 'Sempurna!';
+                resultMessage.textContent = 'Luar biasa! Kamu menguasai materi Pemisahan Campuran - Filtrasi dengan sempurna!';
+            } else if (score >= 3) {
+                resultScore.classList.add('good');
+                resultIcon.textContent = '👍';
+                resultTitle.textContent = 'Bagus!';
+                resultMessage.textContent = 'Kerja yang baik! Terus tingkatkan pemahamanmu dengan belajar lebih banyak.';
+            } else {
+                resultScore.classList.add('poor');
+                resultIcon.textContent = '📚';
+                resultTitle.textContent = 'Tetap Semangat!';
+                resultMessage.textContent = 'Jangan menyerah! Pelajari materi lagi dan coba ulangi latihannya.';
+            }
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function retryQuiz() {
+            // Reset variables
+            currentSlide = 1;
+            score = 0;
+            answeredQuestions = [];
+
+            // Reset UI
+            document.getElementById('score').textContent = '0';
+            document.getElementById('currentQuestion').textContent = '1';
+            document.getElementById('progressFill').style.width = '0%';
+
+            // Reset all slides
+            document.querySelectorAll('.slide').forEach((slide, index) => {
+                slide.classList.remove('active');
+                if (index === 0) slide.classList.add('active');
+
+                // Reset options and checkboxes
+                slide.querySelectorAll('.option').forEach(opt => {
+                    opt.classList.remove('selected', 'correct', 'wrong', 'disabled');
+                });
+                
+                slide.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+                    cb.checked = false;
+                    cb.disabled = false;
+                });
+
+                // Reset buttons
+                slide.querySelector('.btn-submit').style.display = 'inline-block';
+                slide.querySelector('.btn-next').classList.remove('show');
+
+                // Reset feedback
+                const feedbackEl = slide.querySelector('.feedback');
+                feedbackEl.classList.remove('show', 'correct', 'wrong');
+                feedbackEl.innerHTML = '';
+            });
+
+            // Show quiz content
+            document.getElementById('quizContent').style.display = 'block';
+            document.getElementById('resultScreen').classList.remove('show');
+            document.querySelector('.progress-container').style.display = 'block';
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>

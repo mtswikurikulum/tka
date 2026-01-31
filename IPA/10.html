@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Materi 10: Identifikasi Zat Asam Basa Menggunakan Lakmus</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&family=Fira+Code:wght@400;500&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #059669;
+            --secondary: #0891b2;
+            --accent: #f59e0b;
+            --dark: #0f172a;
+            --light: #f8fafc;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: linear-gradient(135deg, #0f766e 0%, #0e7490 100%);
+            color: var(--dark);
+            line-height: 1.8;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Navigation Bar */
+        .nav-bar {
+            background: white;
+            border-radius: 16px;
+            padding: 20px 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .nav-title {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn-nav {
+            padding: 12px 24px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95em;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-home {
+            background: linear-gradient(135deg, #64748b, #475569);
+            color: white;
+            box-shadow: 0 4px 12px rgba(100, 116, 139, 0.3);
+        }
+
+        .btn-home:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(100, 116, 139, 0.4);
+        }
+
+        .btn-practice {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+        }
+
+        .btn-practice:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4);
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            border-radius: 20px;
+            padding: 50px 60px;
+            margin-bottom: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+        }
+
+        .header h1 {
+            font-size: 2.8em;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        .header .meta {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.95em;
+            color: #64748b;
+        }
+
+        .meta-item .icon {
+            font-size: 1.3em;
+        }
+
+        /* Content Section */
+        .content {
+            background: white;
+            border-radius: 20px;
+            padding: 50px 60px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .content h2 {
+            font-size: 2em;
+            font-weight: 700;
+            color: var(--primary);
+            margin-top: 40px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid var(--primary);
+        }
+
+        .content h2:first-child {
+            margin-top: 0;
+        }
+
+        .content h3 {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+
+        .content p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .content ul, .content ol {
+            margin: 15px 0 15px 30px;
+        }
+
+        .content li {
+            margin-bottom: 10px;
+        }
+
+        /* Info Box */
+        .info-box {
+            background: linear-gradient(135deg, #e0f2fe 0%, #dbeafe 100%);
+            border-left: 6px solid var(--secondary);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 25px 0;
+            box-shadow: 0 4px 15px rgba(8, 145, 178, 0.15);
+        }
+
+        .info-box h4 {
+            color: var(--secondary);
+            font-size: 1.3em;
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Warning Box */
+        .warning-box {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-left: 6px solid var(--accent);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 25px 0;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.15);
+        }
+
+        .warning-box h4 {
+            color: #d97706;
+            font-size: 1.3em;
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Key Points Box */
+        .key-points {
+            background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
+            border-left: 6px solid var(--primary);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 25px 0;
+            box-shadow: 0 4px 15px rgba(5, 150, 105, 0.15);
+        }
+
+        .key-points h4 {
+            color: var(--primary);
+            font-size: 1.3em;
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Table Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        thead {
+            background: linear-gradient(135deg, var(--primary), #047857);
+        }
+
+        thead th {
+            color: white;
+            padding: 18px;
+            text-align: left;
+            font-weight: 700;
+            font-size: 1.05em;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid #e2e8f0;
+            transition: background 0.3s ease;
+        }
+
+        tbody tr:hover {
+            background: #f1f5f9;
+        }
+
+        tbody td {
+            padding: 16px 18px;
+            color: var(--dark);
+        }
+
+        tbody tr:last-child {
+            border-bottom: none;
+        }
+
+        /* Example Box */
+        .example-box {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 30px;
+            margin: 25px 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .example-box h4 {
+            color: var(--primary);
+            font-size: 1.4em;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .question {
+            margin-bottom: 20px;
+        }
+
+        .question-text {
+            font-size: 1.1em;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .options {
+            margin: 20px 0;
+        }
+
+        .option {
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 15px 20px;
+            margin-bottom: 12px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .option.correct {
+            background: #dcfce7;
+            border-color: var(--primary);
+            color: #065f46;
+        }
+
+        .option.correct::before {
+            content: '✓ ';
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .explanation {
+            background: linear-gradient(135deg, #f0fdfa 0%, #ccfbf1 100%);
+            border-radius: 12px;
+            padding: 25px;
+            margin-top: 20px;
+        }
+
+        .explanation h5 {
+            color: var(--primary);
+            font-size: 1.2em;
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .explanation p {
+            margin-bottom: 12px;
+        }
+
+        .explanation ul {
+            margin-left: 20px;
+        }
+
+        .explanation li {
+            margin-bottom: 8px;
+        }
+
+        /* Litmus Test Visual */
+        .litmus-visual {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .litmus-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .litmus-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .litmus-card h4 {
+            font-size: 1.2em;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        .litmus-strip {
+            width: 100%;
+            height: 60px;
+            border-radius: 8px;
+            margin: 15px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.1em;
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .red-strip {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+        }
+
+        .blue-strip {
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+        }
+
+        .orange-strip {
+            background: linear-gradient(135deg, #f97316, #ea580c);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header {
+                padding: 30px 25px;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .content {
+                padding: 30px 25px;
+            }
+
+            .content h2 {
+                font-size: 1.6em;
+            }
+
+            .nav-bar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .nav-buttons {
+                width: 100%;
+                flex-direction: column;
+            }
+
+            .btn-nav {
+                width: 100%;
+                justify-content: center;
+            }
+
+            table {
+                font-size: 0.9em;
+            }
+
+            thead th, tbody td {
+                padding: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation Top -->
+        <div class="nav-bar">
+            <div class="nav-title">📚 Materi 10: Asam Basa</div>
+            <div class="nav-buttons">
+                <a href="kisi-kisi-tkad-ipa.html" class="btn-nav btn-home">
+                    🏠 Kembali ke Menu
+                </a>
+                <a href="Lat10.html" class="btn-nav btn-practice">
+                    Latihan Soal ✏️
+                </a>
+            </div>
+        </div>
+
+        <!-- Header -->
+        <div class="header">
+            <h1>🧪 Identifikasi Zat Asam Basa Menggunakan Lakmus</h1>
+            <div class="meta">
+                <div class="meta-item">
+                    <span class="icon">📖</span>
+                    <span>Kelas 7 - Fase D</span>
+                </div>
+                <div class="meta-item">
+                    <span class="icon">🎯</span>
+                    <span>Level Kognitif: L1</span>
+                </div>
+                <div class="meta-item">
+                    <span class="icon">⏱️</span>
+                    <span>Waktu Belajar: 45 menit</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="content">
+            <h2>🔬 Pengertian Asam dan Basa</h2>
+            
+            <p>Dalam kehidupan sehari-hari, kita sering berinteraksi dengan berbagai zat yang memiliki sifat asam atau basa. Untuk mengenali sifat-sifat ini, kita perlu memahami terlebih dahulu apa itu asam dan basa.</p>
+
+            <h3>Apa Itu Asam?</h3>
+            <p><strong>Asam</strong> adalah zat yang memiliki karakteristik:</p>
+            <ul>
+                <li>Memiliki rasa masam (namun jangan pernah mencicipi zat kimia!)</li>
+                <li>Dapat mengubah warna kertas lakmus</li>
+                <li>Bersifat korosif (dapat merusak bahan tertentu)</li>
+                <li>Nilai pH kurang dari 7</li>
+                <li>Dalam larutan air, melepaskan ion H⁺ (hidrogen)</li>
+            </ul>
+
+            <div class="info-box">
+                <h4>🍋 Contoh Zat Asam dalam Kehidupan Sehari-hari:</h4>
+                <ul>
+                    <li><strong>Jeruk, lemon, dan limau</strong> - mengandung asam sitrat</li>
+                    <li><strong>Cuka</strong> - mengandung asam asetat</li>
+                    <li><strong>Minuman bersoda</strong> - mengandung asam karbonat</li>
+                    <li><strong>Yogurt</strong> - mengandung asam laktat</li>
+                    <li><strong>Asam lambung</strong> - mengandung asam klorida (HCl)</li>
+                    <li><strong>Vitamin C</strong> - adalah asam askorbat</li>
+                </ul>
+            </div>
+
+            <h3>Apa Itu Basa?</h3>
+            <p><strong>Basa</strong> adalah zat yang memiliki karakteristik:</p>
+            <ul>
+                <li>Memiliki rasa pahit dan licin saat dipegang (namun jangan mencoba!)</li>
+                <li>Dapat mengubah warna kertas lakmus</li>
+                <li>Bersifat kaustik (dapat merusak jaringan)</li>
+                <li>Nilai pH lebih dari 7</li>
+                <li>Dalam larutan air, melepaskan ion OH⁻ (hidroksida)</li>
+            </ul>
+
+            <div class="info-box">
+                <h4>🧼 Contoh Zat Basa dalam Kehidupan Sehari-hari:</h4>
+                <ul>
+                    <li><strong>Sabun dan deterjen</strong> - terasa licin di tangan</li>
+                    <li><strong>Pasta gigi</strong> - mengandung basa lemah</li>
+                    <li><strong>Obat maag</strong> - menetralkan asam lambung</li>
+                    <li><strong>Pembersih lantai dan kaca</strong></li>
+                    <li><strong>Soda kue (NaHCO₃)</strong> - natrium bikarbonat</li>
+                    <li><strong>Kapur sirih</strong> - kalsium hidroksida</li>
+                </ul>
+            </div>
+
+            <h2>🧪 Indikator Asam Basa: Kertas Lakmus</h2>
+            
+            <p><strong>Kertas lakmus</strong> adalah indikator sederhana yang digunakan untuk menguji apakah suatu larutan bersifat asam atau basa. Kertas lakmus terbuat dari ekstrak lichenes (lumut kerak) yang telah diolah.</p>
+
+            <h3>Jenis-jenis Kertas Lakmus</h3>
+            <p>Ada dua jenis kertas lakmus yang digunakan:</p>
+
+            <div class="litmus-visual">
+                <div class="litmus-card">
+                    <h4>🔴 Lakmus Merah</h4>
+                    <div class="litmus-strip red-strip">MERAH</div>
+                    <p><strong>Fungsi:</strong> Mendeteksi larutan BASA</p>
+                    <p><strong>Perubahan:</strong><br>Merah → Biru (jika basa)<br>Tetap Merah (jika asam/netral)</p>
+                </div>
+
+                <div class="litmus-card">
+                    <h4>🔵 Lakmus Biru</h4>
+                    <div class="litmus-strip blue-strip">BIRU</div>
+                    <p><strong>Fungsi:</strong> Mendeteksi larutan ASAM</p>
+                    <p><strong>Perubahan:</strong><br>Biru → Merah (jika asam)<br>Tetap Biru (jika basa/netral)</p>
+                </div>
+            </div>
+
+            <h3>Cara Kerja Kertas Lakmus</h3>
+            <div class="key-points">
+                <h4>📋 Prosedur Pengujian dengan Kertas Lakmus:</h4>
+                <ol>
+                    <li><strong>Siapkan sampel larutan</strong> yang akan diuji dalam wadah bersih</li>
+                    <li><strong>Ambil kertas lakmus merah dan biru</strong> secukupnya</li>
+                    <li><strong>Celupkan kertas lakmus</strong> ke dalam larutan selama beberapa detik</li>
+                    <li><strong>Angkat dan amati perubahan warna</strong> yang terjadi</li>
+                    <li><strong>Catat hasilnya</strong> berdasarkan tabel perubahan warna</li>
+                </ol>
+            </div>
+
+            <h2>📊 Tabel Perubahan Warna Lakmus</h2>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Sifat Larutan</th>
+                        <th>Lakmus Merah</th>
+                        <th>Lakmus Biru</th>
+                        <th>pH</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>ASAM</strong></td>
+                        <td>Tetap MERAH ⭕</td>
+                        <td>Berubah jadi MERAH 🔴</td>
+                        <td>&lt; 7</td>
+                    </tr>
+                    <tr>
+                        <td><strong>BASA</strong></td>
+                        <td>Berubah jadi BIRU 🔵</td>
+                        <td>Tetap BIRU ⭕</td>
+                        <td>&gt; 7</td>
+                    </tr>
+                    <tr>
+                        <td><strong>NETRAL</strong></td>
+                        <td>Tetap MERAH ⭕</td>
+                        <td>Tetap BIRU ⭕</td>
+                        <td>= 7</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="warning-box">
+                <h4>⚠️ PENTING - Cara Mengingat dengan Mudah!</h4>
+                <p><strong>Rumus Praktis:</strong></p>
+                <ul>
+                    <li>🔴 <strong>Lakmus Merah berubah jadi Biru</strong> = Larutan BASA</li>
+                    <li>🔵 <strong>Lakmus Biru berubah jadi Merah</strong> = Larutan ASAM</li>
+                    <li>⭕ <strong>Tidak ada yang berubah warna</strong> = Larutan NETRAL</li>
+                </ul>
+                <p style="margin-top: 15px;"><strong>Trik Hafalan:</strong></p>
+                <p>"<strong>BIRU MERAH ASAM</strong>" - Lakmus <strong>BIRU</strong> jadi <strong>MERAH</strong> artinya <strong>ASAM</strong></p>
+                <p>"<strong>MERAH BIRU BASA</strong>" - Lakmus <strong>MERAH</strong> jadi <strong>BIRU</strong> artinya <strong>BASA</strong></p>
+            </div>
+
+            <h2>📝 Contoh Soal dan Pembahasan</h2>
+
+            <div class="example-box">
+                <h4>📌 Contoh Soal 1</h4>
+                <div class="question">
+                    <p class="question-text">
+                        Perhatikan tabel hasil pengujian beberapa larutan dengan kertas lakmus berikut:
+                    </p>
+
+                    <table style="margin: 20px 0;">
+                        <thead>
+                            <tr>
+                                <th>Larutan</th>
+                                <th>Lakmus Merah</th>
+                                <th>Lakmus Biru</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>A</td>
+                                <td>Tetap merah</td>
+                                <td>Berubah merah</td>
+                            </tr>
+                            <tr>
+                                <td>B</td>
+                                <td>Berubah biru</td>
+                                <td>Tetap biru</td>
+                            </tr>
+                            <tr>
+                                <td>C</td>
+                                <td>Tetap merah</td>
+                                <td>Tetap biru</td>
+                            </tr>
+                            <tr>
+                                <td>D</td>
+                                <td>Berubah biru</td>
+                                <td>Tetap biru</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p class="question-text">
+                        Berdasarkan data di atas, larutan yang bersifat ASAM adalah...
+                    </p>
+
+                    <div class="options">
+                        <div class="option correct">A. Larutan A</div>
+                        <div class="option">B. Larutan B</div>
+                        <div class="option">C. Larutan C</div>
+                        <div class="option">D. Larutan D</div>
+                    </div>
+
+                    <div class="explanation">
+                        <h5>💡 Pembahasan:</h5>
+                        <p><strong>Jawaban yang benar: A. Larutan A</strong></p>
+                        
+                        <p><strong>Analisis Setiap Larutan:</strong></p>
+                        
+                        <p style="margin-top: 15px;"><strong>Larutan A - ASAM ✓</strong></p>
+                        <ul>
+                            <li>Lakmus merah: <strong>Tetap merah</strong> ⭕</li>
+                            <li>Lakmus biru: <strong>Berubah merah</strong> 🔴</li>
+                            <li>Ini adalah ciri khas larutan ASAM!</li>
+                            <li>Contoh: cuka, air jeruk, asam klorida</li>
+                        </ul>
+
+                        <p style="margin-top: 15px;"><strong>Larutan B - BASA ✗</strong></p>
+                        <ul>
+                            <li>Lakmus merah: <strong>Berubah biru</strong> 🔵</li>
+                            <li>Lakmus biru: <strong>Tetap biru</strong> ⭕</li>
+                            <li>Ini adalah ciri khas larutan BASA!</li>
+                            <li>Contoh: sabun, deterjen, air kapur</li>
+                        </ul>
+
+                        <p style="margin-top: 15px;"><strong>Larutan C - NETRAL ✗</strong></p>
+                        <ul>
+                            <li>Lakmus merah: <strong>Tetap merah</strong> ⭕</li>
+                            <li>Lakmus biru: <strong>Tetap biru</strong> ⭕</li>
+                            <li>Tidak ada perubahan warna = NETRAL!</li>
+                            <li>Contoh: air murni, garam dapur dalam air</li>
+                        </ul>
+
+                        <p style="margin-top: 15px;"><strong>Larutan D - BASA ✗</strong></p>
+                        <ul>
+                            <li>Lakmus merah: <strong>Berubah biru</strong> 🔵</li>
+                            <li>Lakmus biru: <strong>Tetap biru</strong> ⭕</li>
+                            <li>Sama dengan larutan B = BASA!</li>
+                        </ul>
+
+                        <p style="margin-top: 15px;"><strong>Kesimpulan:</strong></p>
+                        <p>Yang termasuk larutan ASAM hanya <strong>Larutan A</strong>, karena lakmus biru berubah menjadi merah (ciri khas asam).</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <h4>📌 Contoh Soal 2</h4>
+                <div class="question">
+                    <p class="question-text">
+                        Seorang siswa melakukan percobaan dengan menguji beberapa larutan menggunakan kertas lakmus. Hasil pengamatannya adalah sebagai berikut:
+                    </p>
+
+                    <table style="margin: 20px 0;">
+                        <thead>
+                            <tr>
+                                <th>Larutan</th>
+                                <th>Lakmus Merah</th>
+                                <th>Lakmus Biru</th>
+                                <th>Sifat</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Air jeruk</td>
+                                <td>Merah</td>
+                                <td>Merah</td>
+                                <td>?</td>
+                            </tr>
+                            <tr>
+                                <td>Air sabun</td>
+                                <td>Biru</td>
+                                <td>Biru</td>
+                                <td>?</td>
+                            </tr>
+                            <tr>
+                                <td>Air garam</td>
+                                <td>Merah</td>
+                                <td>Biru</td>
+                                <td>?</td>
+                            </tr>
+                            <tr>
+                                <td>Cuka</td>
+                                <td>Merah</td>
+                                <td>Merah</td>
+                                <td>?</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p class="question-text">
+                        Pernyataan yang BENAR berdasarkan data di atas adalah...
+                    </p>
+
+                    <div class="options">
+                        <div class="option">A. Air jeruk bersifat basa karena kedua lakmus berubah merah</div>
+                        <div class="option correct">B. Air sabun bersifat basa karena lakmus merah berubah biru</div>
+                        <div class="option">C. Air garam bersifat asam karena lakmus biru tidak berubah</div>
+                        <div class="option">D. Cuka bersifat netral karena lakmus merah tetap merah</div>
+                    </div>
+
+                    <div class="explanation">
+                        <h5>💡 Pembahasan:</h5>
+                        <p><strong>Jawaban yang benar: B. Air sabun bersifat basa karena lakmus merah berubah biru</strong></p>
+                        
+                        <p><strong>Analisis Lengkap Setiap Larutan:</strong></p>
+                        
+                        <p style="margin-top: 15px;"><strong>Air Jeruk:</strong></p>
+                        <ul>
+                            <li>Lakmus merah: tetap <strong>merah</strong> ⭕</li>
+                            <li>Lakmus biru: berubah <strong>merah</strong> 🔴</li>
+                            <li>Sifat: <strong>ASAM</strong> (mengandung asam sitrat)</li>
+                            <li>Pilihan A SALAH - air jeruk ASAM, bukan basa!</li>
+                        </ul>
+
+                        <p style="margin-top: 15px;"><strong>Air Sabun:</strong></p>
+                        <ul>
+                            <li>Lakmus merah: berubah <strong>biru</strong> 🔵</li>
+                            <li>Lakmus biru: tetap <strong>biru</strong> ⭕</li>
+                            <li>Sifat: <strong>BASA</strong></li>
+                            <li>Pilihan B BENAR ✓ - Ciri khas basa adalah lakmus merah berubah biru!</li>
+                        </ul>
+
+                        <p style="margin-top: 15px;"><strong>Air Garam:</strong></p>
+                        <ul>
+                            <li>Lakmus merah: tetap <strong>merah</strong> ⭕</li>
+                            <li>Lakmus biru: tetap <strong>biru</strong> ⭕</li>
+                            <li>Sifat: <strong>NETRAL</strong> (tidak ada perubahan warna)</li>
+                            <li>Pilihan C SALAH - air garam NETRAL, bukan asam!</li>
+                        </ul>
+
+                        <p style="margin-top: 15px;"><strong>Cuka:</strong></p>
+                        <ul>
+                            <li>Lakmus merah: tetap <strong>merah</strong> ⭕</li>
+                            <li>Lakmus biru: berubah <strong>merah</strong> 🔴</li>
+                            <li>Sifat: <strong>ASAM</strong> (mengandung asam asetat)</li>
+                            <li>Pilihan D SALAH - cuka ASAM, bukan netral!</li>
+                        </ul>
+
+                        <p style="margin-top: 15px;"><strong>Ringkasan:</strong></p>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Larutan</th>
+                                    <th>Sifat</th>
+                                    <th>pH</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Air jeruk</td>
+                                    <td>ASAM</td>
+                                    <td>&lt; 7</td>
+                                </tr>
+                                <tr>
+                                    <td>Air sabun</td>
+                                    <td>BASA</td>
+                                    <td>&gt; 7</td>
+                                </tr>
+                                <tr>
+                                    <td>Air garam</td>
+                                    <td>NETRAL</td>
+                                    <td>= 7</td>
+                                </tr>
+                                <tr>
+                                    <td>Cuka</td>
+                                    <td>ASAM</td>
+                                    <td>&lt; 7</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <h2>🎓 Rangkuman</h2>
+            <div class="info-box">
+                <ol>
+                    <li><strong>Asam</strong> adalah zat dengan pH &lt; 7 yang dapat mengubah lakmus biru menjadi merah. Contoh: jeruk, cuka, minuman bersoda.</li>
+                    
+                    <li><strong>Basa</strong> adalah zat dengan pH &gt; 7 yang dapat mengubah lakmus merah menjadi biru. Contoh: sabun, deterjen, obat maag.</li>
+                    
+                    <li><strong>Netral</strong> adalah zat dengan pH = 7 yang tidak mengubah warna kedua jenis lakmus. Contoh: air murni, garam dapur.</li>
+                    
+                    <li><strong>Kertas lakmus</strong> terdiri dari:
+                        <ul>
+                            <li>Lakmus merah - untuk mendeteksi basa</li>
+                            <li>Lakmus biru - untuk mendeteksi asam</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Aturan perubahan warna:</strong>
+                        <ul>
+                            <li>Asam: Lakmus biru → merah, lakmus merah tetap merah</li>
+                            <li>Basa: Lakmus merah → biru, lakmus biru tetap biru</li>
+                            <li>Netral: Kedua lakmus tidak berubah warna</li>
+                        </ul>
+                    </li>
+                </ol>
+            </div>
+
+            <div class="key-points">
+                <h4>💪 Tips Mengerjakan Soal Lakmus</h4>
+                <ul>
+                    <li><strong>Buat tabel kecil:</strong> Tulis L.Merah dan L.Biru, lalu isi perubahan warnanya</li>
+                    <li><strong>Ingat rumus praktis:</strong> "Biru-Merah = Asam" dan "Merah-Biru = Basa"</li>
+                    <li><strong>Perhatikan kata kunci:</strong> "berubah" vs "tetap" sangat penting!</li>
+                    <li><strong>Cek kedua lakmus:</strong> Jangan hanya lihat satu jenis lakmus saja</li>
+                    <li><strong>Jika bingung:</strong> Fokus pada lakmus yang BERUBAH warna, bukan yang tetap</li>
+                    <li><strong>Pahami pola:</strong> Asam = lakmus biru berubah; Basa = lakmus merah berubah</li>
+                </ul>
+            </div>
+
+            <div class="warning-box">
+                <h4>⚠️ Kesalahan Umum yang Harus Dihindari</h4>
+                <ul>
+                    <li><strong>Terbalik membaca perubahan:</strong> Ingat, yang penting adalah lakmus BERUBAH, bukan yang tetap!</li>
+                    <li><strong>Lupa ciri netral:</strong> Netral = KEDUA lakmus TIDAK berubah, bukan salah satu berubah</li>
+                    <li><strong>Mengira lakmus merah hanya untuk asam:</strong> Salah! Lakmus merah justru untuk mendeteksi BASA</li>
+                    <li><strong>Tidak teliti membaca tabel:</strong> Perhatikan kolom mana yang lakmus merah dan mana yang biru</li>
+                    <li><strong>Mencampur konsep pH dengan perubahan warna:</strong> Fokus dulu pada perubahan warna, baru tentukan pH</li>
+                </ul>
+            </div>
+
+            <div class="key-points">
+                <h4>🔬 Keselamatan Kerja di Laboratorium</h4>
+                <ul>
+                    <li>Jangan pernah <strong>mencicipi</strong> atau <strong>mencium langsung</strong> zat kimia!</li>
+                    <li>Gunakan <strong>sarung tangan</strong> saat menangani larutan asam atau basa kuat</li>
+                    <li>Gunakan <strong>kacamata pelindung</strong> untuk melindungi mata</li>
+                    <li>Jika terkena kulit, segera <strong>bilas dengan air mengalir</strong></li>
+                    <li>Selalu <strong>baca label</strong> wadah sebelum menggunakan larutan</li>
+                    <li>Buang <strong>kertas lakmus bekas</strong> pada tempat yang sesuai</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Navigation Bottom -->
+        <div class="nav-bar">
+            <div class="nav-buttons" style="width: 100%; justify-content: space-between;">
+                <a href="kisi-kisi-tkad-ipa.html" class="btn-nav btn-home">
+                    🏠 Kembali ke Menu
+                </a>
+                <a href="Lat10.html" class="btn-nav btn-practice">
+                    Lanjut ke Latihan Soal ✏️
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

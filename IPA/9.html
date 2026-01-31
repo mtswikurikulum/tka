@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Materi 9: Pemisahan Campuran - Filtrasi</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&family=Fira+Code:wght@400;500&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #059669;
+            --secondary: #0891b2;
+            --accent: #f59e0b;
+            --dark: #0f172a;
+            --light: #f8fafc;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: linear-gradient(135deg, #0f766e 0%, #0e7490 100%);
+            color: var(--dark);
+            line-height: 1.8;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Navigation Bar */
+        .nav-bar {
+            background: white;
+            border-radius: 16px;
+            padding: 20px 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .nav-title {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn-nav {
+            padding: 12px 24px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95em;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-home {
+            background: linear-gradient(135deg, #64748b, #475569);
+            color: white;
+            box-shadow: 0 4px 12px rgba(100, 116, 139, 0.3);
+        }
+
+        .btn-home:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(100, 116, 139, 0.4);
+        }
+
+        .btn-practice {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+        }
+
+        .btn-practice:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4);
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            border-radius: 20px;
+            padding: 50px 60px;
+            margin-bottom: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+        }
+
+        .header h1 {
+            font-size: 2.8em;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        .header .meta {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.95em;
+            color: #64748b;
+        }
+
+        .meta-item .icon {
+            font-size: 1.3em;
+        }
+
+        /* Content Section */
+        .content {
+            background: white;
+            border-radius: 20px;
+            padding: 50px 60px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .content h2 {
+            font-size: 2em;
+            font-weight: 700;
+            color: var(--primary);
+            margin-top: 40px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid var(--primary);
+        }
+
+        .content h2:first-child {
+            margin-top: 0;
+        }
+
+        .content h3 {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+
+        .content p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .content ul, .content ol {
+            margin: 15px 0 15px 30px;
+        }
+
+        .content li {
+            margin-bottom: 10px;
+        }
+
+        /* Info Box */
+        .info-box {
+            background: linear-gradient(135deg, #e0f2fe 0%, #dbeafe 100%);
+            border-left: 5px solid var(--secondary);
+            padding: 25px 30px;
+            margin: 25px 0;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(8, 145, 178, 0.1);
+        }
+
+        .info-box h4 {
+            color: var(--secondary);
+            font-size: 1.3em;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        /* Warning Box */
+        .warning-box {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-left: 5px solid var(--accent);
+            padding: 25px 30px;
+            margin: 25px 0;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.1);
+        }
+
+        .warning-box h4 {
+            color: #d97706;
+            font-size: 1.3em;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        /* Key Points Box */
+        .key-points {
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+            border-left: 5px solid var(--primary);
+            padding: 25px 30px;
+            margin: 25px 0;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(5, 150, 105, 0.1);
+        }
+
+        .key-points h4 {
+            color: var(--primary);
+            font-size: 1.3em;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        /* Example Box */
+        .example-box {
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 25px 30px;
+            margin: 25px 0;
+        }
+
+        .example-box h4 {
+            color: var(--accent);
+            font-size: 1.2em;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        /* Question Box */
+        .question {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .question-text {
+            font-size: 1.05em;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option {
+            padding: 15px 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .option.correct {
+            background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+            border-color: var(--primary);
+            font-weight: 600;
+        }
+
+        /* Explanation Box */
+        .explanation {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-radius: 10px;
+            padding: 20px 25px;
+            margin-top: 20px;
+        }
+
+        .explanation h5 {
+            color: #d97706;
+            font-size: 1.15em;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .explanation p {
+            margin-bottom: 12px;
+        }
+
+        .explanation ul {
+            margin: 10px 0 10px 25px;
+        }
+
+        .explanation li {
+            margin-bottom: 8px;
+        }
+
+        /* Table Styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        thead {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 700;
+            font-size: 1.05em;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Process Diagram */
+        .process-diagram {
+            background: linear-gradient(135deg, #f0fdfa 0%, #ccfbf1 100%);
+            border: 2px solid #14b8a6;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 25px 0;
+            text-align: center;
+        }
+
+        .process-step {
+            display: inline-block;
+            background: white;
+            border: 2px solid var(--primary);
+            border-radius: 12px;
+            padding: 20px 25px;
+            margin: 10px;
+            min-width: 150px;
+            box-shadow: 0 4px 12px rgba(5, 150, 105, 0.15);
+        }
+
+        .process-step strong {
+            display: block;
+            color: var(--primary);
+            font-size: 1.1em;
+            margin-bottom: 8px;
+        }
+
+        .arrow {
+            display: inline-block;
+            font-size: 2em;
+            color: var(--secondary);
+            margin: 0 10px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 15px;
+            }
+
+            .header, .content {
+                padding: 30px 25px;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .content h2 {
+                font-size: 1.6em;
+            }
+
+            .nav-bar {
+                flex-direction: column;
+            }
+
+            .nav-buttons {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .process-step {
+                display: block;
+                margin: 15px auto;
+            }
+
+            .arrow {
+                display: block;
+                transform: rotate(90deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation Bar -->
+        <div class="nav-bar">
+            <div class="nav-title">📚 Materi IPA - Kelas 7</div>
+            <div class="nav-buttons">
+                <a href="kisi-kisi-tkad-ipa.html" class="btn-nav btn-home">🏠 Menu Utama</a>
+                <a href="Lat9.html" class="btn-nav btn-practice">✏️ Latihan Soal</a>
+            </div>
+        </div>
+
+        <!-- Header -->
+        <div class="header">
+            <h1>⚗️ Pemisahan Campuran - Filtrasi</h1>
+            <div class="meta">
+                <div class="meta-item">
+                    <span class="icon">📖</span>
+                    <span>Materi 9</span>
+                </div>
+                <div class="meta-item">
+                    <span class="icon">🎯</span>
+                    <span>Kelas 7</span>
+                </div>
+                <div class="meta-item">
+                    <span class="icon">⏱️</span>
+                    <span>30 menit</span>
+                </div>
+                <div class="meta-item">
+                    <span class="icon">📊</span>
+                    <span>Level: L1 (Pengetahuan)</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <h2>🔬 Apa itu Campuran?</h2>
+            <p>
+                <strong>Campuran</strong> adalah gabungan dua zat atau lebih yang masih mempertahankan sifat aslinya dan dapat dipisahkan kembali dengan cara fisika. Dalam kehidupan sehari-hari, kita sering menemukan berbagai macam campuran, seperti air kopi, air garam, air keruh, dan udara.
+            </p>
+
+            <div class="info-box">
+                <h4>💡 Tahukah Kamu?</h4>
+                <p>Udara yang kita hirup setiap hari adalah campuran dari berbagai gas seperti nitrogen (78%), oksigen (21%), dan gas-gas lain (1%). Campuran ini dapat dipisahkan dengan metode destilasi bertingkat!</p>
+            </div>
+
+            <h3>📋 Jenis-Jenis Campuran</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Jenis Campuran</th>
+                        <th>Ciri-Ciri</th>
+                        <th>Contoh</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Campuran Homogen</strong></td>
+                        <td>
+                            • Komposisi seragam<br>
+                            • Tidak dapat dibedakan komponen penyusunnya<br>
+                            • Tampak seperti zat tunggal
+                        </td>
+                        <td>Air gula, air garam, udara, larutan cuka</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Campuran Heterogen</strong></td>
+                        <td>
+                            • Komposisi tidak seragam<br>
+                            • Dapat dibedakan komponen penyusunnya<br>
+                            • Tampak berbeda di bagian-bagian tertentu
+                        </td>
+                        <td>Air keruh, minyak + air, pasir + kerikil, campuran beras dan gabah</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>🧪 Metode Pemisahan Campuran</h2>
+            <p>
+                Ada beberapa metode yang dapat digunakan untuk memisahkan campuran, tergantung pada jenis dan sifat campurannya. Metode-metode tersebut antara lain:
+            </p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Metode</th>
+                        <th>Prinsip</th>
+                        <th>Digunakan Untuk</th>
+                        <th>Contoh</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Filtrasi (Penyaringan)</strong></td>
+                        <td>Memisahkan berdasarkan perbedaan ukuran partikel</td>
+                        <td>Memisahkan zat padat dari cairan</td>
+                        <td>Menyaring air keruh, membuat kopi</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Destilasi</strong></td>
+                        <td>Memisahkan berdasarkan perbedaan titik didih</td>
+                        <td>Memisahkan zat cair dari campuran</td>
+                        <td>Pembuatan air murni, minyak bumi</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Evaporasi (Penguapan)</strong></td>
+                        <td>Menguapkan pelarut untuk mendapatkan zat terlarut</td>
+                        <td>Memisahkan zat terlarut dari pelarutnya</td>
+                        <td>Pembuatan garam dari air laut</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Kristalisasi</strong></td>
+                        <td>Mengendapkan zat terlarut dalam bentuk kristal</td>
+                        <td>Memurnikan zat padat yang terlarut</td>
+                        <td>Pemurnian gula, pembuatan garam kristal</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Kromatografi</strong></td>
+                        <td>Memisahkan berdasarkan daya serap berbeda</td>
+                        <td>Memisahkan zat warna atau komponen campuran</td>
+                        <td>Memisahkan pigmen tinta, analisis forensik</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Sublimasi</strong></td>
+                        <td>Memanfaatkan zat yang dapat menyublim</td>
+                        <td>Memisahkan zat yang dapat menyublim</td>
+                        <td>Pemurnian kapur barus, iodin</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>💧 Filtrasi (Penyaringan)</h2>
+            
+            <h3>🎯 Pengertian Filtrasi</h3>
+            <p>
+                <strong>Filtrasi</strong> atau <strong>penyaringan</strong> adalah metode pemisahan campuran yang digunakan untuk memisahkan zat padat (partikel kasar) dari zat cair atau gas berdasarkan perbedaan ukuran partikel. Proses ini menggunakan alat penyaring (filter) yang memiliki pori-pori tertentu.
+            </p>
+
+            <div class="key-points">
+                <h4>🔑 Prinsip Dasar Filtrasi</h4>
+                <ul>
+                    <li><strong>Perbedaan ukuran partikel:</strong> Partikel besar tertahan di atas filter, partikel kecil atau cairan lolos melewati pori-pori filter</li>
+                    <li><strong>Filter (saringan):</strong> Bahan berpori yang berfungsi sebagai penghalang selektif</li>
+                    <li><strong>Filtrat:</strong> Zat yang lolos melewati saringan (biasanya cairan jernih)</li>
+                    <li><strong>Residu:</strong> Zat yang tertahan di atas saringan (biasanya zat padat)</li>
+                </ul>
+            </div>
+
+            <h3>🛠️ Alat dan Bahan Filtrasi</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Alat/Bahan</th>
+                        <th>Fungsi</th>
+                        <th>Gambar/Deskripsi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Kertas Saring</strong></td>
+                        <td>Media penyaring utama dengan pori-pori halus</td>
+                        <td>Kertas berpori halus, biasanya berbentuk lingkaran, dilipat menjadi bentuk kerucut</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Corong</strong></td>
+                        <td>Wadah untuk menempatkan kertas saring</td>
+                        <td>Berbentuk kerucut, terbuat dari kaca atau plastik</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Statif dan Klem</strong></td>
+                        <td>Penyangga corong agar tetap stabil</td>
+                        <td>Tiang besi dengan penjepit untuk menahan corong</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Gelas Kimia/Erlenmeyer</strong></td>
+                        <td>Menampung filtrat (hasil saringan)</td>
+                        <td>Wadah kaca untuk menampung cairan yang lolos</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Batang Pengaduk</strong></td>
+                        <td>Membantu menuangkan campuran agar tidak tumpah</td>
+                        <td>Batang kaca atau plastik untuk mengarahkan aliran</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>📐 Langkah-Langkah Filtrasi</h3>
+            <div class="process-diagram">
+                <div class="process-step">
+                    <strong>Langkah 1</strong>
+                    Siapkan alat dan bahan (corong, kertas saring, statif, gelas penampung)
+                </div>
+                <span class="arrow">→</span>
+                <div class="process-step">
+                    <strong>Langkah 2</strong>
+                    Lipat kertas saring menjadi bentuk kerucut dan tempatkan di corong
+                </div>
+                <span class="arrow">→</span>
+                <div class="process-step">
+                    <strong>Langkah 3</strong>
+                    Basahi kertas saring dengan sedikit air agar menempel pada corong
+                </div>
+                <span class="arrow">→</span>
+                <div class="process-step">
+                    <strong>Langkah 4</strong>
+                    Pasang corong pada statif di atas gelas penampung
+                </div>
+                <span class="arrow">→</span>
+                <div class="process-step">
+                    <strong>Langkah 5</strong>
+                    Tuangkan campuran perlahan melalui batang pengaduk
+                </div>
+                <span class="arrow">→</span>
+                <div class="process-step">
+                    <strong>Langkah 6</strong>
+                    Tunggu hingga proses penyaringan selesai, pisahkan filtrat dan residu
+                </div>
+            </div>
+
+            <div class="warning-box">
+                <h4>⚠️ Hal Penting dalam Filtrasi</h4>
+                <ul>
+                    <li><strong>Jangan menuang terlalu cepat:</strong> Dapat menyebabkan campuran tumpah atau kertas saring sobek</li>
+                    <li><strong>Pastikan kertas saring menempel sempurna:</strong> Agar tidak ada celah yang membuat partikel lolos</li>
+                    <li><strong>Gunakan batang pengaduk:</strong> Untuk mengarahkan aliran dan mencegah tumpah</li>
+                    <li><strong>Pilih ukuran pori yang sesuai:</strong> Terlalu besar = partikel lolos, terlalu kecil = lambat</li>
+                    <li><strong>Bersihkan alat setelah digunakan:</strong> Agar tidak terkontaminasi untuk percobaan berikutnya</li>
+                </ul>
+            </div>
+
+            <h3>🌍 Penerapan Filtrasi dalam Kehidupan Sehari-hari</h3>
+            
+            <div class="example-box">
+                <h4>🏠 Contoh Penerapan di Rumah</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Kegiatan</th>
+                            <th>Proses Filtrasi</th>
+                            <th>Filter yang Digunakan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Membuat Kopi</strong></td>
+                            <td>Memisahkan air kopi dari ampas kopi</td>
+                            <td>Kertas saring kopi, kain flannel</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Membuat Teh</strong></td>
+                            <td>Memisahkan air teh dari daun teh</td>
+                            <td>Saringan teh, kantong teh</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Menyaring Santan</strong></td>
+                            <td>Memisahkan santan dari ampas kelapa</td>
+                            <td>Kain bersih, saringan</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Menyaring Air untuk Diminum</strong></td>
+                            <td>Memisahkan kotoran dari air</td>
+                            <td>Filter air, kerikil, pasir, arang</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Menyaring Minyak Goreng Bekas</strong></td>
+                            <td>Memisahkan kotoran dari minyak</td>
+                            <td>Kertas tisu, kain</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Mesin Cuci</strong></td>
+                            <td>Menyaring kotoran dari air cucian</td>
+                            <td>Saringan/filter bawaan mesin</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="example-box">
+                <h4>🏭 Contoh Penerapan di Industri</h4>
+                <ul>
+                    <li><strong>Pengolahan Air Bersih (PDAM):</strong> Menggunakan filter pasir, kerikil, dan arang aktif untuk menghasilkan air bersih dari air sungai atau waduk</li>
+                    <li><strong>Industri Farmasi:</strong> Menyaring larutan obat untuk menghilangkan partikel dan memastikan kemurnian produk</li>
+                    <li><strong>Industri Makanan:</strong> Menyaring susu, jus buah, dan minyak untuk menghilangkan kotoran</li>
+                    <li><strong>Pabrik Gula:</strong> Menyaring larutan gula dari kotoran tebu</li>
+                    <li><strong>Kolam Renang:</strong> Menggunakan sistem filtrasi untuk menjaga kebersihan air kolam</li>
+                    <li><strong>Aquarium:</strong> Filter untuk menjaga kejernihan air dan kesehatan ikan</li>
+                </ul>
+            </div>
+
+            <div class="example-box">
+                <h4>🌱 Contoh Penerapan di Alam</h4>
+                <ul>
+                    <li><strong>Penyaringan Air Tanah:</strong> Air hujan disaring secara alami oleh lapisan tanah, pasir, dan batuan saat meresap ke dalam tanah</li>
+                    <li><strong>Ginjal Manusia:</strong> Menyaring darah untuk memisahkan zat sisa metabolisme yang akan dibuang sebagai urine</li>
+                    <li><strong>Hidung:</strong> Bulu hidung berfungsi sebagai filter untuk menyaring debu dan kotoran dari udara yang kita hirup</li>
+                    <li><strong>Akar Mangrove:</strong> Menyaring air laut dan mencegah erosi pantai</li>
+                </ul>
+            </div>
+
+            <h2>📝 Contoh Soal dan Pembahasan</h2>
+
+            <div class="example-box">
+                <h4>📌 Contoh Soal 1</h4>
+                <div class="question">
+                    <p class="question-text">
+                        Perhatikan kegiatan berikut:<br><br>
+                        <strong>I.</strong> Membuat kopi dengan menyaring air panas yang telah dicampur bubuk kopi<br>
+                        <strong>II.</strong> Menyaring santan dari parutan kelapa menggunakan kain<br>
+                        <strong>III.</strong> Memanaskan air laut untuk mendapatkan garam<br>
+                        <strong>IV.</strong> Membuat air jernih dari air keruh menggunakan filter pasir dan arang<br><br>
+                        
+                        Kegiatan yang menggunakan proses filtrasi adalah...
+                    </p>
+
+                    <div class="options">
+                        <div class="option correct">A. I, II, dan IV</div>
+                        <div class="option">B. I, II, dan III</div>
+                        <div class="option">C. II, III, dan IV</div>
+                        <div class="option">D. I, III, dan IV</div>
+                    </div>
+
+                    <div class="explanation">
+                        <h5>💡 Pembahasan:</h5>
+                        <p><strong>Jawaban yang benar: A (I, II, dan IV)</strong></p>
+                        
+                        <p><strong>Analisis Setiap Kegiatan:</strong></p>
+                        
+                        <p style="margin-top: 15px;"><strong>I. Membuat kopi - FILTRASI ✓</strong></p>
+                        <ul>
+                            <li>Menggunakan kertas saring atau kain flannel</li>
+                            <li>Memisahkan air kopi (filtrat) dari ampas kopi (residu)</li>
+                            <li>Prinsip: perbedaan ukuran partikel</li>
+                            <li>Ampas tertahan, air kopi lolos melewati saringan</li>
+                        </ul>
+
+                        <p style="margin-top: 15px;"><strong>II. Menyaring santan - FILTRASI ✓</strong></p>
+                        <ul>
+                            <li>Menggunakan kain sebagai media penyaring</li>
+                            <li>Memisahkan santan cair (filtrat) dari ampas kelapa (residu)</li>
+                            <li>Santan lolos melewati pori-pori kain, ampas tertahan</li>
+                            <li>Ini adalah contoh klasik filtrasi di dapur!</li>
+                        </ul>
+
+                        <p style="margin-top: 15px;"><strong>III. Memanaskan air laut - BUKAN FILTRASI ✗</strong></p>
+                        <ul>
+                            <li>Ini adalah proses <strong>evaporasi</strong> (penguapan)</li>
+                            <li>Memanfaatkan perbedaan titik didih air dan garam</li>
+                            <li>Air menguap, garam tertinggal sebagai kristal</li>
+                            <li>Tidak ada penyaringan menggunakan filter!</li>
+                        </ul>
+
+                        <p style="margin-top: 15px;"><strong>IV. Filter pasir dan arang - FILTRASI ✓</strong></p>
+                        <ul>
+                            <li>Menggunakan lapisan pasir dan arang sebagai filter</li>
+                            <li>Memisahkan partikel kotoran dari air</li>
+                            <li>Kotoran tertahan di pasir/arang, air jernih lolos</li>
+                            <li>Prinsip sama dengan penyaringan air PDAM</li>
+                        </ul>
+
+                        <p style="margin-top: 15px;"><strong>Kesimpulan:</strong></p>
+                        <ul>
+                            <li><strong>Filtrasi:</strong> I, II, IV (menggunakan saringan/filter)</li>
+                            <li><strong>Bukan Filtrasi:</strong> III (menggunakan pemanasan/evaporasi)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <h4>📌 Contoh Soal 2</h4>
+                <div class="question">
+                    <p class="question-text">
+                        Seorang siswa melakukan percobaan penyaringan air keruh menggunakan rangkaian filtrasi dengan lapisan berikut (dari atas ke bawah):<br><br>
+                        
+                        1. Kapas<br>
+                        2. Arang aktif<br>
+                        3. Pasir halus<br>
+                        4. Kerikil halus<br>
+                        5. Kerikil kasar<br><br>
+                        
+                        Pernyataan yang BENAR tentang proses filtrasi tersebut adalah...
+                    </p>
+
+                    <div class="options">
+                        <div class="option correct">A. Kapas berfungsi menyaring partikel paling halus di lapisan teratas</div>
+                        <div class="option correct">B. Kerikil kasar di bawah berfungsi menyaring partikel besar terlebih dahulu</div>
+                        <div class="option">C. Arang aktif berfungsi menyaring partikel besar</div>
+                        <div class="option correct">D. Susunan dari kasar ke halus memastikan penyaringan bertahap dan efektif</div>
+                    </div>
+
+                    <div class="explanation">
+                        <h5>💡 Pembahasan:</h5>
+                        <p><strong>Jawaban yang benar: A, B, dan D</strong></p>
+                        
+                        <p><strong>Analisis Fungsi Setiap Lapisan:</strong></p>
+                        
+                        <table style="margin-top: 10px;">
+                            <thead>
+                                <tr>
+                                    <th>Lapisan</th>
+                                    <th>Fungsi</th>
+                                    <th>Ukuran Pori</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Kapas (atas)</td>
+                                    <td>Menyaring partikel paling halus, penyaringan akhir</td>
+                                    <td>Sangat halus</td>
+                                </tr>
+                                <tr>
+                                    <td>Arang aktif</td>
+                                    <td>Menyerap bau, warna, dan zat terlarut</td>
+                                    <td>Halus + daya serap tinggi</td>
+                                </tr>
+                                <tr>
+                                    <td>Pasir halus</td>
+                                    <td>Menyaring partikel halus</td>
+                                    <td>Halus</td>
+                                </tr>
+                                <tr>
+                                    <td>Kerikil halus</td>
+                                    <td>Menyaring partikel sedang</td>
+                                    <td>Sedang</td>
+                                </tr>
+                                <tr>
+                                    <td>Kerikil kasar (bawah)</td>
+                                    <td>Menyaring partikel besar terlebih dahulu</td>
+                                    <td>Kasar</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <p style="margin-top: 15px;"><strong>A. BENAR ✓ - Kapas Menyaring Partikel Paling Halus</strong></p>
+                        <ul>
+                            <li>Kapas memiliki pori-pori sangat halus</li>
+                            <li>Ditempatkan paling atas = penyaringan terakhir</li>
+                            <li>Menangkap partikel halus yang lolos dari lapisan bawah</li>
+                            <li>Menghasilkan air paling jernih</li>
+                        </ul>
+
+                        <p style="margin-top: 15px;"><strong>B. BENAR ✓ - Kerikil Kasar Menyaring Partikel Besar Terlebih Dahulu</strong></p>
+                        <ul>
+                            <li>Air masuk dari atas, melewati kerikil kasar terlebih dahulu (urutan terbalik)</li>
+                            <li>Partikel besar (daun, ranting, pasir kasar) tersaring pertama</li>
+                            <li>Mencegah penyumbatan lapisan halus di atasnya</li>
+                            <li>Memperpanjang umur filter</li>
+                        </ul>
+
+                        <p style="margin-top: 15px;"><strong>C. SALAH ✗ - Arang Aktif BUKAN untuk Partikel Besar</strong></p>
+                        <ul>
+                            <li>Arang aktif memiliki fungsi khusus: <strong>menyerap</strong> (bukan menyaring partikel besar)</li>
+                            <li>Fungsi utama: menyerap bau, warna, dan zat kimia terlarut</li>
+                            <li>Memiliki luas permukaan sangat besar untuk adsorpsi</li>
+                            <li>Partikel besar sudah disaring oleh kerikil sebelumnya</li>
+                        </ul>
+
+                        <p style="margin-top: 15px;"><strong>D. BENAR ✓ - Susunan Kasar ke Halus Efektif</strong></p>
+                        <ul>
+                            <li><strong>Prinsip penyaringan bertahap:</strong> dari kasar (bawah) ke halus (atas)</li>
+                            <li>Mencegah penyumbatan cepat pada lapisan halus</li>
+                            <li>Setiap lapisan menangkap partikel sesuai ukurannya</li>
+                            <li>Hasil penyaringan optimal dan filter lebih awet</li>
+                        </ul>
+
+                        <p style="margin-top: 15px;"><strong>Alur Penyaringan Air:</strong></p>
+                        <div class="process-diagram">
+                            <div style="text-align: left; max-width: 600px; margin: 0 auto;">
+                                Air keruh masuk dari atas<br>
+                                ↓<br>
+                                <strong>Kapas:</strong> Saring partikel paling halus<br>
+                                ↓<br>
+                                <strong>Arang aktif:</strong> Serap bau, warna, zat kimia<br>
+                                ↓<br>
+                                <strong>Pasir halus:</strong> Saring partikel halus<br>
+                                ↓<br>
+                                <strong>Kerikil halus:</strong> Saring partikel sedang<br>
+                                ↓<br>
+                                <strong>Kerikil kasar:</strong> Saring partikel besar<br>
+                                ↓<br>
+                                Air jernih keluar
+                            </div>
+                        </div>
+
+                        <p style="margin-top: 15px;"><strong>Kesimpulan:</strong> Sistem filtrasi berlapis dengan urutan kasar ke halus adalah metode paling efektif untuk menghasilkan air bersih. Setiap lapisan memiliki fungsi spesifik yang saling mendukung!</p>
+                    </div>
+                </div>
+            </div>
+
+            <h2>🎓 Rangkuman</h2>
+            <div class="info-box">
+                <ol>
+                    <li><strong>Filtrasi</strong> adalah metode pemisahan campuran untuk memisahkan zat padat dari zat cair berdasarkan perbedaan ukuran partikel.</li>
+                    
+                    <li><strong>Komponen filtrasi:</strong>
+                        <ul>
+                            <li><strong>Filter:</strong> Media penyaring (kertas saring, kain, pasir, dll)</li>
+                            <li><strong>Filtrat:</strong> Zat yang lolos melewati filter (biasanya cairan jernih)</li>
+                            <li><strong>Residu:</strong> Zat yang tertahan di filter (biasanya zat padat)</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Prinsip filtrasi:</strong> Partikel besar tertahan, partikel kecil atau cairan lolos melewati pori-pori filter.</li>
+                    
+                    <li><strong>Penerapan di kehidupan sehari-hari:</strong>
+                        <ul>
+                            <li>Membuat kopi dan teh</li>
+                            <li>Menyaring santan</li>
+                            <li>Pengolahan air bersih (PDAM)</li>
+                            <li>Filter pada ginjal dan hidung</li>
+                            <li>Kolam renang dan aquarium</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Sistem filtrasi berlapis:</strong> Menggunakan beberapa lapisan dari kasar ke halus untuk penyaringan optimal.</li>
+                    
+                    <li><strong>Perbedaan dengan metode lain:</strong>
+                        <ul>
+                            <li><strong>Filtrasi:</strong> Berdasarkan ukuran partikel, menggunakan filter</li>
+                            <li><strong>Evaporasi:</strong> Berdasarkan penguapan pelarut</li>
+                            <li><strong>Destilasi:</strong> Berdasarkan perbedaan titik didih</li>
+                        </ul>
+                    </li>
+                </ol>
+            </div>
+
+            <div class="key-points">
+                <h4>💪 Tips Mengenali Filtrasi</h4>
+                <ul>
+                    <li><strong>Ada alat penyaring:</strong> Kertas saring, kain, saringan, filter, dll</li>
+                    <li><strong>Memisahkan padat-cair:</strong> Bukan cair-cair atau gas-cair</li>
+                    <li><strong>Berdasarkan ukuran:</strong> Bukan titik didih atau daya serap</li>
+                    <li><strong>Menghasilkan filtrat dan residu:</strong> Dua produk berbeda fase</li>
+                    <li><strong>Contoh khas:</strong> Kopi, santan, air PDAM, kolam renang</li>
+                    <li><strong>Kata kunci:</strong> "Menyaring", "penyaringan", "filter", "saringan"</li>
+                </ul>
+            </div>
+
+            <div class="warning-box">
+                <h4>⚠️ Kesalahan Umum yang Harus Dihindari</h4>
+                <ul>
+                    <li><strong>Menganggap evaporasi sebagai filtrasi:</strong> Evaporasi = penguapan (garam dari air laut), bukan penyaringan!</li>
+                    <li><strong>Bingung antara filtrat dan residu:</strong> Filtrat = yang lolos (jernih), Residu = yang tertahan (endapan)</li>
+                    <li><strong>Salah urutkan lapisan filter:</strong> Harus dari kasar (bawah) ke halus (atas) untuk efisiensi</li>
+                    <li><strong>Lupa fungsi arang aktif:</strong> Arang = menyerap (bau, warna), bukan menyaring partikel besar</li>
+                    <li><strong>Tidak membedakan filtrasi dengan kristalisasi:</strong> Kristalisasi = pembentukan kristal dari larutan</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Navigation Bottom -->
+        <div class="nav-bar">
+            <div class="nav-buttons" style="width: 100%; justify-content: space-between;">
+                <a href="kisi-kisi-tkad-ipa.html" class="btn-nav btn-home">
+                    🏠 Kembali ke Menu
+                </a>
+                <a href="Lat9.html" class="btn-nav btn-practice">
+                    Lanjut ke Latihan Soal ✏️
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
