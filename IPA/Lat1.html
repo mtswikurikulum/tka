@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latihan Soal 1: Ciri-Ciri Makhluk Hidup</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #8b5cf6;
+            --secondary: #ec4899;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --dark: #1e293b;
+            --light: #f8fafc;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Navigation */
+        .nav-bar {
+            background: white;
+            border-radius: 16px;
+            padding: 15px 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .nav-title {
+            font-size: 1.2em;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn-nav {
+            padding: 10px 20px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-home {
+            background: linear-gradient(135deg, #64748b, #475569);
+            color: white;
+            box-shadow: 0 4px 12px rgba(100, 116, 139, 0.3);
+        }
+
+        .btn-home:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(100, 116, 139, 0.4);
+        }
+
+        .btn-materi {
+            background: linear-gradient(135deg, #059669, #047857);
+            color: white;
+            box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);
+        }
+
+        .btn-materi:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(5, 150, 105, 0.4);
+        }
+
+        /* Quiz Container */
+        .quiz-container {
+            background: white;
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quiz-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--warning));
+            background-size: 200% 100%;
+            animation: gradientMove 3s ease infinite;
+        }
+
+        @keyframes gradientMove {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            margin-bottom: 30px;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .question-number {
+            font-size: 1.1em;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .score-display {
+            font-size: 1em;
+            font-weight: 700;
+            color: var(--success);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background: #e2e8f0;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 20px;
+            transition: width 0.5s ease;
+        }
+
+        /* Question Slide */
+        .slide {
+            display: none;
+            animation: slideIn 0.5s ease;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .question-text {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        /* Table in Question */
+        .question-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.95em;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .question-table thead {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        .question-table th {
+            padding: 15px 12px;
+            text-align: left;
+            font-weight: 700;
+        }
+
+        .question-table td {
+            padding: 12px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .question-table tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        /* Options */
+        .options {
+            margin: 25px 0;
+        }
+
+        .option {
+            background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+            border: 3px solid #e2e8f0;
+            padding: 18px 22px;
+            margin: 12px 0;
+            border-radius: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.05em;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .option:hover {
+            border-color: var(--primary);
+            background: linear-gradient(135deg, #ede9fe, #ddd6fe);
+            transform: translateX(8px);
+        }
+
+        .option.selected {
+            border-color: var(--primary);
+            background: linear-gradient(135deg, #ddd6fe, #c4b5fd);
+            transform: scale(1.02);
+        }
+
+        .option.correct {
+            border-color: var(--success);
+            background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+            animation: correctPulse 0.6s ease;
+        }
+
+        .option.wrong {
+            border-color: var(--danger);
+            background: linear-gradient(135deg, #fee2e2, #fecaca);
+            animation: wrongShake 0.5s ease;
+        }
+
+        .option.disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        @keyframes correctPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes wrongShake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .option-letter {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.1em;
+            flex-shrink: 0;
+        }
+
+        .option.correct .option-letter {
+            background: linear-gradient(135deg, var(--success), #059669);
+        }
+
+        .option.wrong .option-letter {
+            background: linear-gradient(135deg, var(--danger), #dc2626);
+        }
+
+        /* Feedback Box */
+        .feedback {
+            display: none;
+            margin-top: 25px;
+            padding: 25px;
+            border-radius: 16px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .feedback.show {
+            display: block;
+        }
+
+        .feedback.correct {
+            background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+            border-left: 6px solid var(--success);
+        }
+
+        .feedback.wrong {
+            background: linear-gradient(135deg, #fee2e2, #fecaca);
+            border-left: 6px solid var(--danger);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .feedback-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .feedback-icon {
+            font-size: 2em;
+        }
+
+        .feedback-title {
+            font-size: 1.4em;
+            font-weight: 800;
+        }
+
+        .feedback.correct .feedback-title {
+            color: #065f46;
+        }
+
+        .feedback.wrong .feedback-title {
+            color: #991b1b;
+        }
+
+        .feedback-text {
+            font-size: 1.05em;
+            line-height: 1.7;
+            color: var(--dark);
+        }
+
+        .feedback-text strong {
+            font-weight: 800;
+        }
+
+        /* Buttons */
+        .button-container {
+            margin-top: 30px;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 15px 35px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1em;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Nunito', sans-serif;
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: 0 6px 20px rgba(139, 92, 246, 0.4);
+        }
+
+        .btn-submit:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.5);
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-next {
+            background: linear-gradient(135deg, var(--success), #059669);
+            color: white;
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+            display: none;
+        }
+
+        .btn-next.show {
+            display: inline-block;
+        }
+
+        .btn-next:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.5);
+        }
+
+        /* Result Screen */
+        .result-screen {
+            display: none;
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .result-screen.show {
+            display: block;
+            animation: slideIn 0.6s ease;
+        }
+
+        .result-icon {
+            font-size: 6em;
+            margin-bottom: 20px;
+            animation: bounce 1s ease infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .result-title {
+            font-size: 2.5em;
+            font-weight: 900;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .result-score {
+            font-size: 4em;
+            font-weight: 900;
+            margin: 20px 0;
+        }
+
+        .result-score.excellent {
+            color: var(--success);
+        }
+
+        .result-score.good {
+            color: var(--warning);
+        }
+
+        .result-score.poor {
+            color: var(--danger);
+        }
+
+        .result-message {
+            font-size: 1.3em;
+            color: #64748b;
+            margin-bottom: 30px;
+        }
+
+        .result-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-retry {
+            background: linear-gradient(135deg, var(--warning), #d97706);
+            color: white;
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4);
+        }
+
+        .btn-retry:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(245, 158, 11, 0.5);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px 10px;
+            }
+
+            .nav-bar {
+                padding: 12px 15px;
+                flex-direction: column;
+            }
+
+            .nav-title {
+                font-size: 1em;
+                text-align: center;
+            }
+
+            .nav-buttons {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .btn-nav {
+                padding: 8px 16px;
+                font-size: 0.85em;
+                flex: 1;
+                justify-content: center;
+            }
+
+            .quiz-container {
+                padding: 25px 20px;
+            }
+
+            .question-text {
+                font-size: 1.1em;
+            }
+
+            .option {
+                padding: 15px 18px;
+                font-size: 0.95em;
+            }
+
+            .option-letter {
+                width: 30px;
+                height: 30px;
+                font-size: 1em;
+            }
+
+            .button-container {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                padding: 14px 25px;
+                font-size: 1em;
+            }
+
+            .result-icon {
+                font-size: 4em;
+            }
+
+            .result-title {
+                font-size: 1.8em;
+            }
+
+            .result-score {
+                font-size: 3em;
+            }
+
+            .result-buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .question-table {
+                font-size: 0.85em;
+                display: block;
+                overflow-x: auto;
+            }
+
+            .question-table th,
+            .question-table td {
+                padding: 10px 8px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .quiz-container {
+                padding: 20px 15px;
+            }
+
+            .question-text {
+                font-size: 1em;
+            }
+
+            .option {
+                padding: 12px 15px;
+                font-size: 0.9em;
+            }
+
+            .feedback {
+                padding: 20px;
+            }
+
+            .feedback-title {
+                font-size: 1.2em;
+            }
+
+            .feedback-text {
+                font-size: 0.95em;
+            }
+
+            .question-table {
+                font-size: 0.75em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation -->
+        <div class="nav-bar">
+            <div class="nav-title">✏️ Latihan Soal 1: Ciri-Ciri Makhluk Hidup</div>
+            <div class="nav-buttons">
+                <a href="kisi-kisi-tkad-ipa.html" class="btn-nav btn-home">
+                    🏠 Kisi-Kisi
+                </a>
+                <a href="1.html" class="btn-nav btn-materi">
+                    📖 Materi
+                </a>
+            </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-container">
+            <!-- Progress Bar -->
+            <div class="progress-container">
+                <div class="progress-info">
+                    <span class="question-number">Soal <span id="currentQuestion">1</span> dari 5</span>
+                    <span class="score-display">Skor: <span id="score">0</span>/5</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <!-- Question Slides -->
+            <div id="quizContent">
+                <!-- Slide 1 -->
+                <div class="slide active" data-question="1">
+                    <div class="question-text">
+                        Perhatikan tabel pengamatan terhadap beberapa objek berikut!
+                    </div>
+                    
+                    <table class="question-table">
+                        <thead>
+                            <tr>
+                                <th>Objek</th>
+                                <th>Ciri yang Diamati</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Kucing</td>
+                                <td>Bergerak aktif, makan ikan, melahirkan anak</td>
+                            </tr>
+                            <tr>
+                                <td>Lumut</td>
+                                <td>Menempel di batu, berwarna hijau, tidak berpindah tempat</td>
+                            </tr>
+                            <tr>
+                                <td>Mobil mainan</td>
+                                <td>Bergerak saat didorong, menggunakan baterai</td>
+                            </tr>
+                            <tr>
+                                <td>Virus</td>
+                                <td>Berkembang biak di dalam sel, memiliki materi genetik</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="question-text">
+                        Manakah pernyataan yang BENAR tentang objek-objek tersebut?
+                    </div>
+
+                    <div class="options">
+                        <div class="option" data-answer="A">
+                            <span class="option-letter">A</span>
+                            <span>Kucing dan lumut adalah makhluk hidup karena memiliki semua ciri kehidupan</span>
+                        </div>
+                        <div class="option" data-answer="B">
+                            <span class="option-letter">B</span>
+                            <span>Mobil mainan termasuk makhluk hidup karena dapat bergerak</span>
+                        </div>
+                        <div class="option" data-answer="C">
+                            <span class="option-letter">C</span>
+                            <span>Lumut bukan makhluk hidup karena tidak dapat bergerak berpindah tempat</span>
+                        </div>
+                        <div class="option" data-answer="D">
+                            <span class="option-letter">D</span>
+                            <span>Virus termasuk makhluk hidup karena dapat berkembang biak</span>
+                        </div>
+                    </div>
+
+                    <div class="feedback" id="feedback1"></div>
+
+                    <div class="button-container">
+                        <button class="btn btn-submit" onclick="submitAnswer(1, 'A')">Submit Jawaban</button>
+                        <button class="btn btn-next" onclick="nextQuestion()">Lanjut ke Soal 2 →</button>
+                    </div>
+                </div>
+
+                <!-- Slide 2 -->
+                <div class="slide" data-question="2">
+                    <div class="question-text">
+                        Seorang siswa mengamati beberapa fenomena di lingkungan sekitar:
+                    </div>
+
+                    <table class="question-table">
+                        <thead>
+                            <tr>
+                                <th>Fenomena</th>
+                                <th>Pengamatan</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1. Batu kapur</td>
+                                <td>Bertambah besar di dalam gua karena tetesan air</td>
+                            </tr>
+                            <tr>
+                                <td>2. Jamur pada roti</td>
+                                <td>Muncul bintik-bintik hitam yang makin banyak, tumbuh cepat</td>
+                            </tr>
+                            <tr>
+                                <td>3. Kecambah kacang</td>
+                                <td>Akar tumbuh ke bawah, batang tumbuh ke atas mencari cahaya</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="question-text">
+                        Berdasarkan data tersebut, manakah yang menunjukkan ciri makhluk hidup dengan TEPAT?
+                    </div>
+
+                    <div class="options">
+                        <div class="option" data-answer="A">
+                            <span class="option-letter">A</span>
+                            <span>Batu kapur menunjukkan ciri tumbuh karena bertambah besar</span>
+                        </div>
+                        <div class="option" data-answer="B">
+                            <span class="option-letter">B</span>
+                            <span>Jamur menunjukkan ciri tumbuh dan berkembang biak</span>
+                        </div>
+                        <div class="option" data-answer="C">
+                            <span class="option-letter">C</span>
+                            <span>Hanya kecambah yang merupakan makhluk hidup</span>
+                        </div>
+                        <div class="option" data-answer="D">
+                            <span class="option-letter">D</span>
+                            <span>Semua fenomena tersebut adalah ciri makhluk hidup</span>
+                        </div>
+                    </div>
+
+                    <div class="feedback" id="feedback2"></div>
+
+                    <div class="button-container">
+                        <button class="btn btn-submit" onclick="submitAnswer(2, 'B')">Submit Jawaban</button>
+                        <button class="btn btn-next" onclick="nextQuestion()">Lanjut ke Soal 3 →</button>
+                    </div>
+                </div>
+
+                <!-- Slide 3 -->
+                <div class="slide" data-question="3">
+                    <div class="question-text">
+                        Perhatikan hasil pengamatan terhadap tumbuhan putri malu berikut:
+                    </div>
+
+                    <table class="question-table">
+                        <thead>
+                            <tr>
+                                <th>Perlakuan</th>
+                                <th>Respon Tumbuhan</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Disentuh dengan jari</td>
+                                <td>Daun menutup dalam 2-3 detik</td>
+                            </tr>
+                            <tr>
+                                <td>Diberi cahaya matahari</td>
+                                <td>Daun membuka sempurna</td>
+                            </tr>
+                            <tr>
+                                <td>Diamati selama 1 bulan</td>
+                                <td>Tinggi bertambah 5 cm</td>
+                            </tr>
+                            <tr>
+                                <td>Tidak disiram 3 hari</td>
+                                <td>Daun layu dan menguning</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="question-text">
+                        Ciri makhluk hidup apa yang PALING JELAS ditunjukkan oleh putri malu berdasarkan data tersebut?
+                    </div>
+
+                    <div class="options">
+                        <div class="option" data-answer="A">
+                            <span class="option-letter">A</span>
+                            <span>Bernapas dan ekskresi</span>
+                        </div>
+                        <div class="option" data-answer="B">
+                            <span class="option-letter">B</span>
+                            <span>Iritabilitas (peka terhadap rangsang) dan pertumbuhan</span>
+                        </div>
+                        <div class="option" data-answer="C">
+                            <span class="option-letter">C</span>
+                            <span>Berkembang biak dan bergerak</span>
+                        </div>
+                        <div class="option" data-answer="D">
+                            <span class="option-letter">D</span>
+                            <span>Adaptasi dan reproduksi</span>
+                        </div>
+                    </div>
+
+                    <div class="feedback" id="feedback3"></div>
+
+                    <div class="button-container">
+                        <button class="btn btn-submit" onclick="submitAnswer(3, 'B')">Submit Jawaban</button>
+                        <button class="btn btn-next" onclick="nextQuestion()">Lanjut ke Soal 4 →</button>
+                    </div>
+                </div>
+
+                <!-- Slide 4 -->
+                <div class="slide" data-question="4">
+                    <div class="question-text">
+                        Seorang peneliti mengamati bakteri E. coli dengan mikroskop dan mencatat hal berikut:
+                    </div>
+
+                    <table class="question-table">
+                        <thead>
+                            <tr>
+                                <th>Waktu (menit)</th>
+                                <th>Jumlah Bakteri</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>0</td>
+                                <td>100 sel</td>
+                            </tr>
+                            <tr>
+                                <td>20</td>
+                                <td>200 sel</td>
+                            </tr>
+                            <tr>
+                                <td>40</td>
+                                <td>400 sel</td>
+                            </tr>
+                            <tr>
+                                <td>60</td>
+                                <td>800 sel</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="question-text">
+                        Data tersebut menunjukkan ciri makhluk hidup berupa...
+                    </div>
+
+                    <div class="options">
+                        <div class="option" data-answer="A">
+                            <span class="option-letter">A</span>
+                            <span>Pertumbuhan karena ukuran bakteri bertambah besar</span>
+                        </div>
+                        <div class="option" data-answer="B">
+                            <span class="option-letter">B</span>
+                            <span>Reproduksi karena jumlah bakteri bertambah melalui pembelahan</span>
+                        </div>
+                        <div class="option" data-answer="C">
+                            <span class="option-letter">C</span>
+                            <span>Adaptasi karena bakteri menyesuaikan dengan lingkungan</span>
+                        </div>
+                        <div class="option" data-answer="D">
+                            <span class="option-letter">D</span>
+                            <span>Ekskresi karena bakteri mengeluarkan zat sisa</span>
+                        </div>
+                    </div>
+
+                    <div class="feedback" id="feedback4"></div>
+
+                    <div class="button-container">
+                        <button class="btn btn-submit" onclick="submitAnswer(4, 'B')">Submit Jawaban</button>
+                        <button class="btn btn-next" onclick="nextQuestion()">Lanjut ke Soal 5 →</button>
+                    </div>
+                </div>
+
+                <!-- Slide 5 -->
+                <div class="slide" data-question="5">
+                    <div class="question-text">
+                        Perhatikan data perbandingan antara api dan tumbuhan berikut:
+                    </div>
+
+                    <table class="question-table">
+                        <thead>
+                            <tr>
+                                <th>Aspek</th>
+                                <th>Api</th>
+                                <th>Tumbuhan</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Bergerak</td>
+                                <td>✓ (api bergerak-gerak)</td>
+                                <td>✓ (gerak tropisme)</td>
+                            </tr>
+                            <tr>
+                                <td>Memerlukan O₂</td>
+                                <td>✓ (untuk pembakaran)</td>
+                                <td>✓ (untuk respirasi)</td>
+                            </tr>
+                            <tr>
+                                <td>Mengeluarkan CO₂</td>
+                                <td>✓ (hasil pembakaran)</td>
+                                <td>✓ (saat respirasi)</td>
+                            </tr>
+                            <tr>
+                                <td>Bertambah besar</td>
+                                <td>✓ (jika ada bahan bakar)</td>
+                                <td>✓ (proses pertumbuhan)</td>
+                            </tr>
+                            <tr>
+                                <td>Berkembang biak</td>
+                                <td>✗</td>
+                                <td>✓ (biji, spora, dll)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="question-text">
+                        Mengapa api BUKAN termasuk makhluk hidup meskipun memiliki beberapa ciri yang mirip?
+                    </div>
+
+                    <div class="options">
+                        <div class="option" data-answer="A">
+                            <span class="option-letter">A</span>
+                            <span>Api tidak dapat bergerak secara aktif</span>
+                        </div>
+                        <div class="option" data-answer="B">
+                            <span class="option-letter">B</span>
+                            <span>Api tidak memerlukan oksigen untuk hidup</span>
+                        </div>
+                        <div class="option" data-answer="C">
+                            <span class="option-letter">C</span>
+                            <span>Api tidak memiliki SEMUA ciri makhluk hidup (tidak berkembang biak, tidak peka rangsang, dll)</span>
+                        </div>
+                        <div class="option" data-answer="D">
+                            <span class="option-letter">D</span>
+                            <span>Api tidak dapat mengeluarkan zat sisa</span>
+                        </div>
+                    </div>
+
+                    <div class="feedback" id="feedback5"></div>
+
+                    <div class="button-container">
+                        <button class="btn btn-submit" onclick="submitAnswer(5, 'C')">Submit Jawaban</button>
+                        <button class="btn btn-next" onclick="showResult()">Lihat Hasil →</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Result Screen -->
+            <div class="result-screen" id="resultScreen">
+                <div class="result-icon" id="resultIcon">🎉</div>
+                <div class="result-title" id="resultTitle">Selamat!</div>
+                <div class="result-score" id="resultScore">5/5</div>
+                <div class="result-message" id="resultMessage">Excellent! Kamu menguasai materi dengan sangat baik!</div>
+                
+                <div class="result-buttons">
+                    <button class="btn btn-retry" onclick="retryQuiz()">🔄 Ulangi Latihan</button>
+                    <a href="1.html" class="btn btn-materi" style="text-decoration: none;">📖 Pelajari Lagi</a>
+                    <a href="kisi-kisi-tkad-ipa.html" class="btn btn-home" style="text-decoration: none;">🏠 Ke Menu</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 1;
+        let score = 0;
+        let answeredQuestions = [];
+
+        const correctAnswers = {
+            1: 'A',
+            2: 'B',
+            3: 'B',
+            4: 'B',
+            5: 'C'
+        };
+
+        const explanations = {
+            1: {
+                correct: "Benar! Kucing dan lumut adalah makhluk hidup. Kucing jelas menunjukkan semua ciri (bergerak aktif, makan, berkembang biak, dll). Lumut juga makhluk hidup meski tidak berpindah tempat - ia bernapas, tumbuh, berkembang biak dengan spora, melakukan fotosintesis (nutrisi), dan peka terhadap rangsang cahaya/air. Mobil mainan bukan makhluk hidup karena hanya bergerak jika didorong (bukan gerakan aktif biologis). Virus masih diperdebatkan karena hanya menunjukkan ciri hidup di dalam sel inang.",
+                wrong: "Kurang tepat. Mari analisis:<br><strong>Kucing:</strong> Makhluk hidup ✓ (semua ciri ada)<br><strong>Lumut:</strong> Makhluk hidup ✓ (meski tidak berpindah tempat, lumut bernapas, tumbuh, berkembang biak dengan spora, fotosintesis, dan peka terhadap rangsang)<br><strong>Mobil mainan:</strong> Benda mati ✗ (gerakannya bukan biologis, tidak berkembang biak, dll)<br><strong>Virus:</strong> Masih diperdebatkan (hanya hidup di dalam sel)<br><br>Ingat: Gerak pada tumbuhan berbeda dengan hewan, tapi tetap merupakan ciri makhluk hidup!"
+            },
+            2: {
+                correct: "Sempurna! Jamur menunjukkan ciri <strong>tumbuh</strong> (bertambah besar) dan <strong>berkembang biak</strong> (bintik hitam yang makin banyak = spora jamur yang berkembang biak). Batu kapur bertambah besar karena proses kristalisasi (fisika-kimia), BUKAN pertumbuhan biologis. Kecambah juga makhluk hidup, tetapi pilihan ini yang paling tepat karena jamur jelas menunjukkan 2 ciri sekaligus dalam data yang diberikan.",
+                wrong: "Belum tepat. Mari kita bedah:<br><strong>Batu kapur:</strong> Bukan pertumbuhan biologis, hanya kristalisasi (proses fisika) ✗<br><strong>Jamur:</strong> Makhluk hidup ✓ - tumbuh (bertambah besar) dan berkembang biak (bintik hitam = spora)<br><strong>Kecambah:</strong> Makhluk hidup ✓ - menunjukkan geotropisme (akar ke bawah) dan fototropisme (batang ke cahaya)<br><br>Pertumbuhan biologis berbeda dengan pembesaran fisika! Jamur dan kecambah adalah makhluk hidup, batu kapur bukan."
+            },
+            3: {
+                correct: "Excellent! Data menunjukkan:<br>• <strong>Iritabilitas:</strong> Daun menutup saat disentuh (respon terhadap sentuhan), membuka saat ada cahaya (respon terhadap cahaya)<br>• <strong>Pertumbuhan:</strong> Tinggi bertambah 5 cm dalam 1 bulan<br><br>Data daun layu juga menunjukkan kebutuhan nutrisi (air), tapi iritabilitas dan pertumbuhan yang PALING JELAS terlihat dari tabel pengamatan.",
+                wrong: "Kurang tepat. Dari data yang diberikan:<br>• Sentuhan → daun menutup = <strong>Iritabilitas</strong> (peka rangsang) ✓<br>• Cahaya → daun membuka = <strong>Iritabilitas</strong> ✓<br>• Tinggi +5cm = <strong>Pertumbuhan</strong> ✓<br>• Tidak disiram → layu = butuh <strong>nutrisi (air)</strong><br><br>Bernapas dan ekskresi tidak terlihat jelas dalam data. Berkembang biak juga tidak disebutkan. Adaptasi bukan fokus utama pengamatan ini."
+            },
+            4: {
+                correct: "Benar sekali! Data menunjukkan <strong>reproduksi (perkembangbiakan)</strong> melalui pembelahan biner. Jumlah bakteri bertambah 2x lipat setiap 20 menit (100→200→400→800). Ini bukan pertumbuhan (ukuran sel membesar), melainkan penambahan JUMLAH individu baru melalui pembelahan sel. Bakteri E. coli berkembang biak secara aseksual dengan membelah diri menjadi dua sel anak yang identik.",
+                wrong: "Belum tepat. Perhatikan data dengan cermat:<br>• Jumlah bakteri: 100→200→400→800 sel<br>• Yang bertambah adalah JUMLAH sel, bukan ukuran sel<br>• Ini adalah <strong>reproduksi/perkembangbiakan</strong> melalui pembelahan biner ✓<br><br><strong>Pertumbuhan</strong> = bertambah ukuran/massa (bukan yang terjadi di sini)<br><strong>Adaptasi</strong> = penyesuaian dengan lingkungan (tidak terlihat dari data)<br><strong>Ekskresi</strong> = pengeluaran zat sisa (tidak terlihat dari data)"
+            },
+            5: {
+                correct: "Perfect! Ini konsep penting: untuk menjadi makhluk hidup, suatu organisme harus memiliki SEMUA ciri kehidupan. Api memang mirip makhluk hidup (bergerak, butuh O₂, keluarkan CO₂, 'tumbuh'), tetapi:<br>• Tidak berkembang biak ✗<br>• Tidak peka terhadap rangsang ✗<br>• Tidak memiliki sel/organisasi kehidupan ✗<br>• Tidak memerlukan nutrisi ✗<br>• Proses pembakaran ≠ respirasi seluler<br><br>Sementara tumbuhan memiliki SEMUA 8 ciri makhluk hidup, termasuk reproduksi (biji, spora, vegetatif).",
+                wrong: "Belum tepat. Kunci pemahaman:<br>• Api MEMERLUKAN oksigen (untuk pembakaran) ✓<br>• Api DAPAT bergerak ✓<br>• Api MENGELUARKAN CO₂ dan abu ✓<br><br>Tapi api BUKAN makhluk hidup karena:<br>• Tidak berkembang biak ✗<br>• Tidak peka terhadap rangsang biologis ✗<br>• Tidak memiliki sel ✗<br>• Tidak ada proses metabolisme ✗<br>• Pembakaran ≠ respirasi<br><br><strong>Prinsip penting:</strong> Makhluk hidup harus memiliki SEMUA ciri, bukan hanya beberapa!"
+            }
+        };
+
+        // Handle option click
+        document.querySelectorAll('.option').forEach(option => {
+            option.addEventListener('click', function() {
+                if (!this.classList.contains('disabled')) {
+                    const parent = this.closest('.slide');
+                    parent.querySelectorAll('.option').forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+                    this.classList.add('selected');
+                }
+            });
+        });
+
+        function submitAnswer(questionNum, correctAnswer) {
+            const slide = document.querySelector(`.slide[data-question="${questionNum}"]`);
+            const options = slide.querySelectorAll('.option');
+            const selected = slide.querySelector('.option.selected');
+            const feedback = document.getElementById(`feedback${questionNum}`);
+            const submitBtn = slide.querySelector('.btn-submit');
+            const nextBtn = slide.querySelector('.btn-next');
+
+            if (!selected) {
+                alert('Pilih jawaban terlebih dahulu!');
+                return;
+            }
+
+            // Disable further selection
+            options.forEach(opt => opt.classList.add('disabled'));
+            submitBtn.style.display = 'none';
+            nextBtn.classList.add('show');
+
+            const userAnswer = selected.getAttribute('data-answer');
+            const isCorrect = userAnswer === correctAnswer;
+
+            // Mark correct/wrong
+            options.forEach(opt => {
+                if (opt.getAttribute('data-answer') === correctAnswer) {
+                    opt.classList.add('correct');
+                }
+                if (opt === selected && !isCorrect) {
+                    opt.classList.add('wrong');
+                }
+            });
+
+            // Update score
+            if (isCorrect && !answeredQuestions.includes(questionNum)) {
+                score++;
+                answeredQuestions.push(questionNum);
+                document.getElementById('score').textContent = score;
+            }
+
+            // Show feedback
+            feedback.classList.add('show');
+            feedback.classList.add(isCorrect ? 'correct' : 'wrong');
+            
+            const icon = isCorrect ? '✅' : '❌';
+            const title = isCorrect ? 'Jawaban Benar!' : 'Jawaban Salah!';
+            const explanation = isCorrect ? explanations[questionNum].correct : explanations[questionNum].wrong;
+
+            feedback.innerHTML = `
+                <div class="feedback-header">
+                    <div class="feedback-icon">${icon}</div>
+                    <div class="feedback-title">${title}</div>
+                </div>
+                <div class="feedback-text">${explanation}</div>
+            `;
+
+            // Scroll to feedback
+            setTimeout(() => {
+                feedback.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 300);
+        }
+
+        function nextQuestion() {
+            const currentSlideEl = document.querySelector('.slide.active');
+            currentSlideEl.classList.remove('active');
+
+            currentSlide++;
+            const nextSlideEl = document.querySelector(`.slide[data-question="${currentSlide}"]`);
+            if (nextSlideEl) {
+                nextSlideEl.classList.add('active');
+                document.getElementById('currentQuestion').textContent = currentSlide;
+                
+                // Update progress bar
+                const progress = (currentSlide / 5) * 100;
+                document.getElementById('progressFill').style.width = progress + '%';
+
+                // Scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        function showResult() {
+            document.getElementById('quizContent').style.display = 'none';
+            document.getElementById('resultScreen').classList.add('show');
+            document.querySelector('.progress-container').style.display = 'none';
+
+            const resultScore = document.getElementById('resultScore');
+            const resultIcon = document.getElementById('resultIcon');
+            const resultTitle = document.getElementById('resultTitle');
+            const resultMessage = document.getElementById('resultMessage');
+
+            resultScore.textContent = `${score}/5`;
+
+            if (score === 5) {
+                resultScore.classList.add('excellent');
+                resultIcon.textContent = '🏆';
+                resultTitle.textContent = 'Sempurna!';
+                resultMessage.textContent = 'Luar biasa! Kamu menguasai materi Ciri-Ciri Makhluk Hidup dengan sempurna!';
+            } else if (score >= 3) {
+                resultScore.classList.add('good');
+                resultIcon.textContent = '👍';
+                resultTitle.textContent = 'Bagus!';
+                resultMessage.textContent = 'Kerja yang baik! Terus tingkatkan pemahamanmu dengan belajar lebih banyak.';
+            } else {
+                resultScore.classList.add('poor');
+                resultIcon.textContent = '📚';
+                resultTitle.textContent = 'Tetap Semangat!';
+                resultMessage.textContent = 'Jangan menyerah! Pelajari materi lagi dan coba ulangi latihannya.';
+            }
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function retryQuiz() {
+            // Reset variables
+            currentSlide = 1;
+            score = 0;
+            answeredQuestions = [];
+
+            // Reset UI
+            document.getElementById('score').textContent = '0';
+            document.getElementById('currentQuestion').textContent = '1';
+            document.getElementById('progressFill').style.width = '0%';
+
+            // Reset all slides
+            document.querySelectorAll('.slide').forEach((slide, index) => {
+                slide.classList.remove('active');
+                if (index === 0) slide.classList.add('active');
+
+                // Reset options
+                slide.querySelectorAll('.option').forEach(opt => {
+                    opt.classList.remove('selected', 'correct', 'wrong', 'disabled');
+                });
+
+                // Reset buttons
+                slide.querySelector('.btn-submit').style.display = 'inline-block';
+                slide.querySelector('.btn-next').classList.remove('show');
+
+                // Reset feedback
+                const feedbackEl = slide.querySelector('.feedback');
+                feedbackEl.classList.remove('show', 'correct', 'wrong');
+                feedbackEl.innerHTML = '';
+            });
+
+            // Show quiz content
+            document.getElementById('quizContent').style.display = 'block';
+            document.getElementById('resultScreen').classList.remove('show');
+            document.querySelector('.progress-container').style.display = 'block';
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
