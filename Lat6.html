@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latihan Soal 6: Dampak Interaksi Keseimbangan Ekosistem</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #8b5cf6;
+            --secondary: #ec4899;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --dark: #1e293b;
+            --light: #f8fafc;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Navigation */
+        .nav-bar {
+            background: white;
+            border-radius: 16px;
+            padding: 15px 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .nav-title {
+            font-size: 1.2em;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn-nav {
+            padding: 10px 20px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-home {
+            background: linear-gradient(135deg, #64748b, #475569);
+            color: white;
+            box-shadow: 0 4px 12px rgba(100, 116, 139, 0.3);
+        }
+
+        .btn-home:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(100, 116, 139, 0.4);
+        }
+
+        .btn-materi {
+            background: linear-gradient(135deg, #059669, #047857);
+            color: white;
+            box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);
+        }
+
+        .btn-materi:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(5, 150, 105, 0.4);
+        }
+
+        /* Quiz Container */
+        .quiz-container {
+            background: white;
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quiz-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--warning));
+            background-size: 200% 100%;
+            animation: gradientMove 3s ease infinite;
+        }
+
+        @keyframes gradientMove {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            margin-bottom: 30px;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .question-number {
+            font-size: 1.1em;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .score-display {
+            font-size: 1em;
+            font-weight: 700;
+            color: var(--success);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background: #e2e8f0;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 20px;
+            transition: width 0.5s ease;
+        }
+
+        /* Question Slide */
+        .slide {
+            display: none;
+            animation: slideIn 0.5s ease;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .question-box {
+            background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-left: 6px solid var(--primary);
+        }
+
+        .question-text {
+            font-size: 1.05em;
+            font-weight: 600;
+            color: var(--dark);
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .graph-box {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+            border: 2px solid #e2e8f0;
+        }
+
+        .graph-title {
+            font-size: 1.2em;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .graph-data {
+            background: #f8fafc;
+            border-radius: 8px;
+            padding: 20px;
+            font-size: 0.95em;
+            line-height: 1.7;
+            color: #475569;
+        }
+
+        /* Checkbox Options */
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option {
+            background: white;
+            border: 3px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 18px 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            position: relative;
+        }
+
+        .option input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            margin-top: 2px;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .option-text {
+            flex: 1;
+        }
+
+        .option:hover:not(.disabled) {
+            border-color: var(--primary);
+            background: linear-gradient(135deg, #faf5ff, #f3e8ff);
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.2);
+        }
+
+        .option.selected {
+            border-color: var(--primary);
+            background: linear-gradient(135deg, #ede9fe, #ddd6fe);
+        }
+
+        .option.correct {
+            border-color: var(--success);
+            background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+        }
+
+        .option.wrong {
+            border-color: var(--danger);
+            background: linear-gradient(135deg, #fee2e2, #fecaca);
+        }
+
+        .option.disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        .option.disabled input[type="checkbox"] {
+            cursor: not-allowed;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 14px 32px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(139, 92, 246, 0.4);
+        }
+
+        .btn-next {
+            background: linear-gradient(135deg, var(--success), #059669);
+            color: white;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+            display: none;
+        }
+
+        .btn-next.show {
+            display: inline-flex;
+        }
+
+        .btn-next:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+        }
+
+        /* Feedback */
+        .feedback {
+            margin-top: 25px;
+            padding: 25px;
+            border-radius: 12px;
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .feedback.show {
+            display: block;
+        }
+
+        .feedback.correct {
+            background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+            border-left: 6px solid var(--success);
+        }
+
+        .feedback.wrong {
+            background: linear-gradient(135deg, #fee2e2, #fecaca);
+            border-left: 6px solid var(--danger);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .feedback-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .feedback-icon {
+            font-size: 2em;
+        }
+
+        .feedback-title {
+            font-size: 1.3em;
+            font-weight: 800;
+        }
+
+        .feedback.correct .feedback-title {
+            color: var(--success);
+        }
+
+        .feedback.wrong .feedback-title {
+            color: var(--danger);
+        }
+
+        .feedback-text {
+            font-size: 1em;
+            line-height: 1.8;
+            color: var(--dark);
+        }
+
+        .feedback-text ul {
+            margin: 10px 0 10px 25px;
+        }
+
+        .feedback-text li {
+            margin: 8px 0;
+        }
+
+        /* Result Screen */
+        .result-screen {
+            display: none;
+            text-align: center;
+            padding: 40px 20px;
+            animation: scaleIn 0.5s ease;
+        }
+
+        .result-screen.show {
+            display: block;
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .result-icon {
+            font-size: 5em;
+            margin-bottom: 20px;
+            animation: bounce 1s ease infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .result-title {
+            font-size: 2.5em;
+            font-weight: 900;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .result-score {
+            font-size: 4em;
+            font-weight: 900;
+            margin: 20px 0;
+        }
+
+        .result-score.excellent {
+            color: var(--success);
+        }
+
+        .result-score.good {
+            color: var(--warning);
+        }
+
+        .result-score.poor {
+            color: var(--danger);
+        }
+
+        .result-message {
+            font-size: 1.2em;
+            color: #64748b;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .result-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-retry {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        .btn-retry:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(139, 92, 246, 0.4);
+        }
+
+        .btn-back {
+            background: linear-gradient(135deg, #64748b, #475569);
+            color: white;
+        }
+
+        .btn-back:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(100, 116, 139, 0.4);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            .quiz-container {
+                padding: 25px 20px;
+            }
+
+            .question-box {
+                padding: 20px;
+            }
+
+            .question-text {
+                font-size: 1em;
+            }
+
+            .option {
+                padding: 15px 18px;
+                font-size: 0.95em;
+            }
+
+            .btn {
+                padding: 12px 24px;
+                font-size: 0.95em;
+            }
+
+            .result-score {
+                font-size: 3em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation -->
+        <div class="nav-bar">
+            <div class="nav-title">✏️ Latihan Soal 6: Dampak Interaksi Ekosistem</div>
+            <div class="nav-buttons">
+                <a href="kisi-kisi-tkad-ipa.html" class="btn-nav btn-home">🏠 Menu</a>
+                <a href="6.html" class="btn-nav btn-materi">📖 Materi</a>
+            </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-container">
+            <!-- Progress Bar -->
+            <div class="progress-container">
+                <div class="progress-info">
+                    <div class="question-number">
+                        Soal <span id="currentQuestion">1</span> dari 5
+                    </div>
+                    <div class="score-display">
+                        Nilai: <span id="score">0</span>/5
+                    </div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <!-- Quiz Content -->
+            <div id="quizContent">
+                <!-- Question 1 -->
+                <div class="slide active" data-question="1">
+                    <div class="question-box">
+                        <div class="question-text">
+                            <p><strong>Soal 1</strong></p>
+                            <div class="graph-box">
+                                <div class="graph-title">📊 Grafik Populasi Tikus dan Ular di Sawah</div>
+                                <div class="graph-data">
+                                    <strong>Data Perubahan Populasi:</strong><br><br>
+                                    
+                                    <strong>Tikus (Garis Biru):</strong><br>
+                                    • Bulan 0-4: Naik dari 150 ke 400 ekor<br>
+                                    • Bulan 4-8: Turun dari 400 ke 120 ekor<br>
+                                    • Bulan 8-12: Naik dari 120 ke 380 ekor<br>
+                                    • Bulan 12-16: Turun dari 380 ke 130 ekor<br><br>
+                                    
+                                    <strong>Ular (Garis Merah):</strong><br>
+                                    • Bulan 0-4: Naik dari 30 ke 50 ekor<br>
+                                    • Bulan 4-8: Naik dari 50 ke 90 ekor (puncak bulan 7)<br>
+                                    • Bulan 8-12: Turun dari 90 ke 35 ekor<br>
+                                    • Bulan 12-16: Naik dari 35 ke 85 ekor<br><br>
+                                    
+                                    <em>Pola: Puncak ular terjadi sekitar 3 bulan setelah puncak tikus</em>
+                                </div>
+                            </div>
+                            <p>Berdasarkan data grafik di atas, manakah pernyataan yang BENAR? (Pilih lebih dari satu)</p>
+                        </div>
+                    </div>
+
+                    <div class="options">
+                        <div class="option">
+                            <input type="checkbox" id="q1a" value="A">
+                            <label for="q1a" class="option-text">A. Terjadi hubungan predasi dengan tikus sebagai predator dan ular sebagai mangsa</label>
+                        </div>
+                        <div class="option">
+                            <input type="checkbox" id="q1b" value="B">
+                            <label for="q1b" class="option-text">B. Peningkatan populasi tikus menyebabkan peningkatan populasi ular setelah beberapa bulan</label>
+                        </div>
+                        <div class="option">
+                            <input type="checkbox" id="q1c" value="C">
+                            <label for="q1c" class="option-text">C. Penurunan populasi tikus dipengaruhi oleh peningkatan aktivitas predasi ular</label>
+                        </div>
+                        <div class="option">
+                            <input type="checkbox" id="q1d" value="D">
+                            <label for="q1d" class="option-text">D. Grafik menunjukkan keseimbangan ekosistem yang terjaga melalui siklus predator-prey</label>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="btn btn-submit" onclick="submitAnswer(1, ['B', 'C', 'D'])">Periksa Jawaban ✓</button>
+                        <button class="btn btn-next" onclick="nextQuestion()">Soal Berikutnya →</button>
+                    </div>
+
+                    <div class="feedback" id="feedback1"></div>
+                </div>
+
+                <!-- Question 2 -->
+                <div class="slide" data-question="2">
+                    <div class="question-box">
+                        <div class="question-text">
+                            <p><strong>Soal 2</strong></p>
+                            <div class="graph-box">
+                                <div class="graph-title">📊 Grafik Populasi Singa dan Zebra di Savana</div>
+                                <div class="graph-data">
+                                    <strong>Data Perubahan Populasi:</strong><br><br>
+                                    
+                                    <strong>Zebra (Garis Hijau):</strong><br>
+                                    • Tahun 0: 800 ekor<br>
+                                    • Tahun 2: 1200 ekor<br>
+                                    • Tahun 4: 500 ekor<br>
+                                    • Tahun 6: 1100 ekor<br>
+                                    • Tahun 8: 550 ekor<br><br>
+                                    
+                                    <strong>Singa (Garis Oranye):</strong><br>
+                                    • Tahun 0: 40 ekor<br>
+                                    • Tahun 2: 55 ekor<br>
+                                    • Tahun 4: 85 ekor (puncak di tahun 3.5)<br>
+                                    • Tahun 6: 50 ekor<br>
+                                    • Tahun 8: 80 ekor<br><br>
+                                    
+                                    <em>Pola: Grafik menunjukkan fluktuasi reguler dengan jeda waktu</em>
+                                </div>
+                            </div>
+                            <p>Dari grafik di atas, manakah pernyataan yang BENAR? (Pilih lebih dari satu)</p>
+                        </div>
+                    </div>
+
+                    <div class="options">
+                        <div class="option">
+                            <input type="checkbox" id="q2a" value="A">
+                            <label for="q2a" class="option-text">A. Singa dan zebra mengalami kompetisi untuk memperebutkan wilayah</label>
+                        </div>
+                        <div class="option">
+                            <input type="checkbox" id="q2b" value="B">
+                            <label for="q2b" class="option-text">B. Puncak populasi singa terjadi sekitar 1-2 tahun setelah puncak populasi zebra</label>
+                        </div>
+                        <div class="option">
+                            <input type="checkbox" id="q2c" value="C">
+                            <label for="q2c" class="option-text">C. Ketika populasi singa tinggi, populasi zebra menurun drastis akibat predasi intensif</label>
+                        </div>
+                        <div class="option">
+                            <input type="checkbox" id="q2d" value="D">
+                            <label for="q2d" class="option-text">D. Ekosistem savana mengalami ketidakseimbangan yang mengancam kepunahan kedua spesies</label>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="btn btn-submit" onclick="submitAnswer(2, ['B', 'C'])">Periksa Jawaban ✓</button>
+                        <button class="btn btn-next" onclick="nextQuestion()">Soal Berikutnya →</button>
+                    </div>
+
+                    <div class="feedback" id="feedback2"></div>
+                </div>
+
+                <!-- Question 3 -->
+                <div class="slide" data-question="3">
+                    <div class="question-box">
+                        <div class="question-text">
+                            <p><strong>Soal 3</strong></p>
+                            <div class="graph-box">
+                                <div class="graph-title">📊 Grafik Populasi Sapi dan Kerbau di Padang Penggembalaan</div>
+                                <div class="graph-data">
+                                    <strong>Data Perubahan Populasi:</strong><br><br>
+                                    
+                                    <strong>Sapi (Garis Cokelat):</strong><br>
+                                    • Tahun 0: 300 ekor<br>
+                                    • Tahun 2: 270 ekor<br>
+                                    • Tahun 4: 230 ekor<br>
+                                    • Tahun 6: 190 ekor<br>
+                                    • Tahun 8: 150 ekor<br>
+                                    • Tahun 10: 110 ekor<br><br>
+                                    
+                                    <strong>Kerbau (Garis Abu-abu):</strong><br>
+                                    • Tahun 0: 250 ekor<br>
+                                    • Tahun 2: 220 ekor<br>
+                                    • Tahun 4: 180 ekor<br>
+                                    • Tahun 6: 140 ekor<br>
+                                    • Tahun 8: 100 ekor<br>
+                                    • Tahun 10: 60 ekor<br><br>
+                                    
+                                    <em>Pola: Kedua populasi terus menurun secara konsisten</em>
+                                </div>
+                            </div>
+                            <p>Berdasarkan pola grafik tersebut, manakah pernyataan yang BENAR? (Pilih lebih dari satu)</p>
+                        </div>
+                    </div>
+
+                    <div class="options">
+                        <div class="option">
+                            <input type="checkbox" id="q3a" value="A">
+                            <label for="q3a" class="option-text">A. Terjadi kompetisi interspesifik antara sapi dan kerbau untuk memperebutkan rumput</label>
+                        </div>
+                        <div class="option">
+                            <input type="checkbox" id="q3b" value="B">
+                            <label for="q3b" class="option-text">B. Pola grafik menunjukkan hubungan predasi dengan sapi sebagai predator</label>
+                        </div>
+                        <div class="option">
+                            <input type="checkbox" id="q3c" value="C">
+                            <label for="q3c" class="option-text">C. Kerbau mengalami penurunan lebih cepat, menunjukkan kalah dalam kompetisi</label>
+                        </div>
+                        <div class="option">
+                            <input type="checkbox" id="q3d" value="D">
+                            <label for="q3d" class="option-text">D. Jika trend berlanjut, dapat terjadi kepunahan lokal kerbau lebih dulu daripada sapi</label>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="btn btn-submit" onclick="submitAnswer(3, ['A', 'C', 'D'])">Periksa Jawaban ✓</button>
+                        <button class="btn btn-next" onclick="nextQuestion()">Soal Berikutnya →</button>
+                    </div>
+
+                    <div class="feedback" id="feedback3"></div>
+                </div>
+
+                <!-- Question 4 -->
+                <div class="slide" data-question="4">
+                    <div class="question-box">
+                        <div class="question-text">
+                            <p><strong>Soal 4</strong></p>
+                            <div class="graph-box">
+                                <div class="graph-title">📊 Grafik Populasi Ikan Kecil dan Ikan Predator di Danau</div>
+                                <div class="graph-data">
+                                    <strong>Data Perubahan Populasi:</strong><br><br>
+                                    
+                                    <strong>Ikan Kecil (Garis Biru Muda):</strong><br>
+                                    • Bulan 0: 2000 ekor<br>
+                                    • Bulan 3: 3500 ekor<br>
+                                    • Bulan 6: 1200 ekor<br>
+                                    • Bulan 9: 3200 ekor<br>
+                                    • Bulan 12: 1400 ekor<br><br>
+                                    
+                                    <strong>Ikan Predator (Garis Merah Tua):</strong><br>
+                                    • Bulan 0: 100 ekor<br>
+                                    • Bulan 3: 150 ekor<br>
+                                    • Bulan 6: 250 ekor (puncak bulan 5)<br>
+                                    • Bulan 9: 120 ekor<br>
+                                    • Bulan 12: 230 ekor<br><br>
+                                    
+                                    <em>Observasi: Pada bulan 6, ikan kecil turun drastis saat ikan predator mencapai puncak</em>
+                                </div>
+                            </div>
+                            <p>Dari data grafik tersebut, manakah kesimpulan yang BENAR? (Pilih lebih dari satu)</p>
+                        </div>
+                    </div>
+
+                    <div class="options">
+                        <div class="option">
+                            <input type="checkbox" id="q4a" value="A">
+                            <label for="q4a" class="option-text">A. Ikan predator bergantung pada ketersediaan ikan kecil sebagai sumber makanan</label>
+                        </div>
+                        <div class="option">
+                            <input type="checkbox" id="q4b" value="B">
+                            <label for="q4b" class="option-text">B. Penurunan drastis ikan kecil di bulan 6 disebabkan oleh predasi intensif</label>
+                        </div>
+                        <div class="option">
+                            <input type="checkbox" id="q4c" value="C">
+                            <label for="q4c" class="option-text">C. Setelah ikan kecil berkurang, populasi ikan predator juga akan menurun karena kekurangan makanan</label>
+                        </div>
+                        <div class="option">
+                            <input type="checkbox" id="q4d" value="D">
+                            <label for="q4d" class="option-text">D. Grafik menunjukkan kompetisi antara ikan kecil dan ikan predator</label>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="btn btn-submit" onclick="submitAnswer(4, ['A', 'B', 'C'])">Periksa Jawaban ✓</button>
+                        <button class="btn btn-next" onclick="nextQuestion()">Soal Berikutnya →</button>
+                    </div>
+
+                    <div class="feedback" id="feedback4"></div>
+                </div>
+
+                <!-- Question 5 -->
+                <div class="slide" data-question="5">
+                    <div class="question-box">
+                        <div class="question-text">
+                            <p><strong>Soal 5</strong></p>
+                            <div class="graph-box">
+                                <div class="graph-title">📊 Grafik Populasi Rusa dan Serigala di Hutan</div>
+                                <div class="graph-data">
+                                    <strong>Data Perubahan Populasi:</strong><br><br>
+                                    
+                                    <strong>Rusa (Garis Cokelat Muda):</strong><br>
+                                    • Tahun 0: 600 ekor<br>
+                                    • Tahun 1: 900 ekor<br>
+                                    • Tahun 2: 400 ekor<br>
+                                    • Tahun 3: 850 ekor<br>
+                                    • Tahun 4: 450 ekor<br>
+                                    • Tahun 5: 800 ekor<br><br>
+                                    
+                                    <strong>Serigala (Garis Hitam):</strong><br>
+                                    • Tahun 0: 25 ekor<br>
+                                    • Tahun 1: 35 ekor<br>
+                                    • Tahun 2: 55 ekor (puncak tahun 1.5)<br>
+                                    • Tahun 3: 30 ekor<br>
+                                    • Tahun 4: 50 ekor<br>
+                                    • Tahun 5: 32 ekor<br><br>
+                                    
+                                    <em>Catatan: Siklus berulang dengan amplitudo yang relatif stabil</em>
+                                </div>
+                            </div>
+                            <p>Berdasarkan pola perubahan populasi di atas, manakah pernyataan yang BENAR tentang dampak terhadap keseimbangan ekosistem? (Pilih lebih dari satu)</p>
+                        </div>
+                    </div>
+
+                    <div class="options">
+                        <div class="option">
+                            <input type="checkbox" id="q5a" value="A">
+                            <label for="q5a" class="option-text">A. Ekosistem hutan dalam keadaan seimbang dengan siklus predator-prey yang alami</label>
+                        </div>
+                        <div class="option">
+                            <input type="checkbox" id="q5b" value="B">
+                            <label for="q5b" class="option-text">B. Serigala berperan penting dalam mengontrol populasi rusa agar tidak meledak berlebihan</label>
+                        </div>
+                        <div class="option">
+                            <input type="checkbox" id="q5c" value="C">
+                            <label for="q5c" class="option-text">C. Jika serigala punah, populasi rusa akan meningkat tak terkendali dan merusak vegetasi hutan</label>
+                        </div>
+                        <div class="option">
+                            <input type="checkbox" id="q5d" value="D">
+                            <label for="q5d" class="option-text">D. Pola grafik menunjukkan kompetisi yang menyebabkan penurunan populasi kedua spesies</label>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="btn btn-submit" onclick="submitAnswer(5, ['A', 'B', 'C'])">Periksa Jawaban ✓</button>
+                        <button class="btn btn-next" onclick="showResult()">Lihat Hasil →</button>
+                    </div>
+
+                    <div class="feedback" id="feedback5"></div>
+                </div>
+            </div>
+
+            <!-- Result Screen -->
+            <div class="result-screen" id="resultScreen">
+                <div class="result-icon" id="resultIcon">🎉</div>
+                <div class="result-title" id="resultTitle">Selamat!</div>
+                <div class="result-score" id="resultScore">5/5</div>
+                <div class="result-message" id="resultMessage">
+                    Luar biasa! Kamu menguasai materi Dampak Interaksi dan Keseimbangan Ekosistem dengan sempurna!
+                </div>
+                <div class="result-buttons">
+                    <button class="btn btn-retry" onclick="retryQuiz()">🔄 Ulangi Latihan</button>
+                    <a href="6.html" class="btn btn-back">📖 Kembali ke Materi</a>
+                    <a href="kisi-kisi-tkad-ipa.html" class="btn btn-home">🏠 Menu Utama</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 1;
+        let score = 0;
+        let answeredQuestions = [];
+
+        const explanations = {
+            1: {
+                correct: "Sempurna! Anda memahami hubungan predator-prey dengan baik:<br><br><strong>B. BENAR ✓</strong> - Peningkatan tikus (bulan 0-4) → makanan ular melimpah → populasi ular naik (bulan 4-8). Ini menunjukkan ketergantungan predator pada ketersediaan mangsa.<br><br><strong>C. BENAR ✓</strong> - Saat ular mencapai puncak (bulan 7: 90 ekor), predasi intensif menyebabkan tikus turun drastis (400→120 ekor). Ini adalah bukti langsung dampak predasi.<br><br><strong>D. BENAR ✓</strong> - Siklus naik-turun yang berulang (2 siklus dalam 16 bulan) menunjukkan keseimbangan alami ekosistem sawah yang terjaga melalui mekanisme predator-prey.<br><br><strong>A. SALAH ✗</strong> - Terbalik! Ular adalah predator (pemangsa) dan tikus adalah mangsa, BUKAN sebaliknya. Ular memakan tikus, bukan tikus memakan ular!",
+                wrong: "Belum tepat. Mari kita analisis:<br><br><strong>Yang BENAR harus dipilih:</strong><br>• <strong>B:</strong> Tikus naik → ular naik (time lag 3 bulan) ✓<br>• <strong>C:</strong> Ular tinggi → tikus turun (predasi) ✓<br>• <strong>D:</strong> Siklus berulang = keseimbangan ✓<br><br><strong>Yang SALAH:</strong><br>• <strong>A:</strong> TERBALIK! Ular = predator, Tikus = prey ✗<br><br><strong>Ciri Predasi:</strong> Grafik naik-turun bergantian + time lag + siklus berulang. Grafik ini menunjukkan SEMUA ciri tersebut dengan ular sebagai predator!"
+            },
+            2: {
+                correct: "Excellent! Analisis grafik predator-prey yang tepat:<br><br><strong>B. BENAR ✓</strong> - Puncak zebra di tahun 2 (1200 ekor), puncak singa di tahun 3.5 (85 ekor). Time lag ≈ 1.5 tahun. Ini normal karena singa perlu waktu untuk berkembang biak setelah makanan melimpah.<br><br><strong>C. BENAR ✓</strong> - Data menunjukkan: Tahun 3.5 singa tinggi (85 ekor) → Tahun 4 zebra turun drastis (1200→500 ekor dalam 2 tahun). Penurunan 58% ini akibat predasi intensif oleh singa yang populasinya tinggi.<br><br><strong>A. SALAH ✗</strong> - Singa adalah karnivora (pemangsa zebra), zebra adalah herbivora (pemakan rumput). Mereka TIDAK bersaing untuk wilayah, tapi memiliki hubungan predator-prey!<br><br><strong>D. SALAH ✗</strong> - Fluktuasi reguler justru menunjukkan keseimbangan ALAMI, bukan ancaman kepunahan. Siklus ini normal dan sehat!",
+                wrong: "Belum tepat. Perhatikan:<br><br><strong>Harus dipilih:</strong><br>• <strong>B:</strong> Puncak zebra (thn 2) → puncak singa (thn 3.5) = time lag ✓<br>• <strong>C:</strong> Singa tinggi (85) → zebra turun (1200→500) = predasi ✓<br><br><strong>JANGAN pilih:</strong><br>• <strong>A:</strong> Singa vs zebra BUKAN kompetisi! Singa makan zebra (predasi) ✗<br>• <strong>D:</strong> Fluktuasi = keseimbangan normal, BUKAN ancaman ✗<br><br><strong>Kunci:</strong> Herbivora vs Karnivora = Predasi (bukan kompetisi)!"
+            },
+            3: {
+                correct: "Perfect! Anda memahami pola kompetisi dengan sangat baik:<br><br><strong>A. BENAR ✓</strong> - Sapi dan kerbau adalah herbivora yang memakan rumput yang sama di padang yang sama → kompetisi interspesifik (antar spesies berbeda) untuk sumber daya terbatas.<br><br><strong>C. BENAR ✓</strong> - Data: Sapi turun 63% (300→110), Kerbau turun 76% (250→60). Kerbau mengalami penurunan lebih cepat dan lebih besar → kalah dalam persaingan, mungkin karena kurang adaptif atau kurang efisien.<br><br><strong>D. BENAR ✓</strong> - Trend penurunan kerbau sangat drastis (76% dalam 10 tahun). Jika laju ini berlanjut, kerbau akan mencapai populasi 0 sekitar tahun 12-14, sementara sapi masih bertahan lebih lama.<br><br><strong>B. SALAH ✗</strong> - Sapi adalah herbivora, BUKAN predator! Grafik menunjukkan kompetisi (kedua turun bersamaan), bukan predasi (naik-turun bergantian).",
+                wrong: "Belum tepat. Mari kita perbaiki:<br><br><strong>Harus dipilih:</strong><br>• <strong>A:</strong> Herbivora vs herbivora = kompetisi ✓<br>• <strong>C:</strong> Kerbau turun 76% > Sapi 63% = kalah kompetisi ✓<br>• <strong>D:</strong> Trend turun drastis → risiko kepunahan kerbau ✓<br><br><strong>JANGAN pilih:</strong><br>• <strong>B:</strong> Sapi BUKAN predator! Ini kompetisi, bukan predasi ✗<br><br><strong>Perbedaan Kunci:</strong><br>Kompetisi: kedua turun bersamaan, tidak ada time lag<br>Predasi: naik-turun bergantian, ada time lag"
+            },
+            4: {
+                correct: "Luar biasa! Pemahaman hubungan predator-prey yang sempurna:<br><br><strong>A. BENAR ✓</strong> - Ikan predator adalah karnivora yang memakan ikan kecil. Ketika ikan kecil melimpah (3500 di bulan 3), populasi ikan predator meningkat (100→250). Ketergantungan ini jelas terlihat dari pola grafik.<br><br><strong>B. BENAR ✓</strong> - Data menunjukkan: Bulan 3 ikan kecil = 3500, Bulan 6 turun ke 1200 (penurunan 66%!). Ini terjadi tepat saat ikan predator mencapai puncak 250 ekor di bulan 5-6 → predasi sangat intensif.<br><br><strong>C. BENAR ✓</strong> - Setelah ikan kecil berkurang (1200 di bulan 6), ikan predator kekurangan makanan → populasi turun dari 250 ke 120 di bulan 9. Ini adalah siklus predator-prey klasik: mangsa turun → predator turun.<br><br><strong>D. SALAH ✗</strong> - Ini PREDASI, bukan kompetisi! Ikan predator MEMAKAN ikan kecil, bukan bersaing dengan mereka. Pola naik-turun bergantian dengan time lag = ciri predasi!",
+                wrong: "Belum tepat. Analisis yang benar:<br><br><strong>Harus dipilih (A, B, C):</strong><br>• <strong>A:</strong> Ikan predator butuh ikan kecil sebagai makanan ✓<br>• <strong>B:</strong> Penurunan 66% (3500→1200) karena predasi ✓<br>• <strong>C:</strong> Ikan kecil turun → ikan predator turun juga ✓<br><br><strong>JANGAN pilih:</strong><br>• <strong>D:</strong> Ini PREDASI (makan-dimakan), bukan kompetisi ✗<br><br><strong>Cara Bedakan:</strong><br>• Karnivora vs Herbivora = PREDASI<br>• Herbivora vs Herbivora = KOMPETISI<br>• Pola naik-turun bergantian = PREDASI"
+            },
+            5: {
+                correct: "Sempurna! Anda memahami dampak terhadap keseimbangan ekosistem:<br><br><strong>A. BENAR ✓</strong> - Siklus berulang 5 kali dalam 5 tahun dengan amplitudo stabil menunjukkan ekosistem seimbang. Tidak ada trend penurunan atau peningkatan ekstrem → keseimbangan alami yang sehat.<br><br><strong>B. BENAR ✓</strong> - Serigala mengontrol populasi rusa. Tanpa serigala, rusa akan terus naik tanpa terkendali. Data menunjukkan serigala efektif menurunkan rusa dari puncak 900 ke 400 ekor → kontrol populasi yang penting!<br><br><strong>C. BENAR ✓</strong> - Ini adalah konsep ekologi penting! Jika serigala (predator puncak) punah: rusa meledak → vegetasi habis dimakan → erosi tanah → kerusakan ekosistem. Predator puncak sangat vital untuk keseimbangan!<br><br><strong>D. SALAH ✗</strong> - Grafik menunjukkan PREDASI (naik-turun bergantian + time lag), BUKAN kompetisi. Kedua populasi tidak turun bersamaan, melainkan berfluktuasi dengan pola yang saling terkait.",
+                wrong: "Belum tepat. Perhatikan:<br><br><strong>Harus dipilih (A, B, C):</strong><br>• <strong>A:</strong> Siklus stabil = ekosistem seimbang ✓<br>• <strong>B:</strong> Serigala kontrol rusa (900→400) ✓<br>• <strong>C:</strong> Tanpa serigala → rusa meledak → vegetasi rusak ✓<br><br><strong>JANGAN pilih:</strong><br>• <strong>D:</strong> Ini predasi (pola bergantian), bukan kompetisi ✗<br><br><strong>Pentingnya Predator Puncak:</strong><br>Predator puncak (serigala, singa, hiu) = kunci keseimbangan ekosistem. Kepunahan mereka = bencana ekologi!"
+            }
+        };
+
+        // Handle checkbox selection
+        document.querySelectorAll('.option').forEach(option => {
+            option.addEventListener('click', function(e) {
+                if (e.target.tagName !== 'INPUT' && !this.classList.contains('disabled')) {
+                    const checkbox = this.querySelector('input[type="checkbox"]');
+                    checkbox.checked = !checkbox.checked;
+                }
+                
+                if (this.querySelector('input[type="checkbox"]').checked) {
+                    this.classList.add('selected');
+                } else {
+                    this.classList.remove('selected');
+                }
+            });
+        });
+
+        function submitAnswer(questionNum, correctAnswers) {
+            const slide = document.querySelector(`.slide[data-question="${questionNum}"]`);
+            const options = slide.querySelectorAll('.option');
+            const checkboxes = slide.querySelectorAll('input[type="checkbox"]');
+            const feedback = document.getElementById(`feedback${questionNum}`);
+            const submitBtn = slide.querySelector('.btn-submit');
+            const nextBtn = slide.querySelector('.btn-next');
+
+            // Get selected answers
+            const selectedAnswers = Array.from(checkboxes)
+                .filter(cb => cb.checked)
+                .map(cb => cb.value);
+
+            if (selectedAnswers.length === 0) {
+                alert('Pilih minimal satu jawaban!');
+                return;
+            }
+
+            // Disable further selection
+            options.forEach(opt => opt.classList.add('disabled'));
+            checkboxes.forEach(cb => cb.disabled = true);
+            submitBtn.style.display = 'none';
+            nextBtn.classList.add('show');
+
+            // Check if answer is correct
+            const isCorrect = correctAnswers.length === selectedAnswers.length &&
+                correctAnswers.every(ans => selectedAnswers.includes(ans));
+
+            // Mark correct/wrong options
+            options.forEach(opt => {
+                const checkbox = opt.querySelector('input[type="checkbox"]');
+                const value = checkbox.value;
+                
+                if (correctAnswers.includes(value)) {
+                    opt.classList.add('correct');
+                }
+                if (checkbox.checked && !correctAnswers.includes(value)) {
+                    opt.classList.add('wrong');
+                }
+            });
+
+            // Update score
+            if (isCorrect && !answeredQuestions.includes(questionNum)) {
+                score++;
+                answeredQuestions.push(questionNum);
+                document.getElementById('score').textContent = score;
+            }
+
+            // Show feedback
+            feedback.classList.add('show');
+            feedback.classList.add(isCorrect ? 'correct' : 'wrong');
+            
+            const icon = isCorrect ? '✅' : '❌';
+            const title = isCorrect ? 'Jawaban Benar!' : 'Jawaban Salah!';
+            const explanation = isCorrect ? explanations[questionNum].correct : explanations[questionNum].wrong;
+
+            feedback.innerHTML = `
+                <div class="feedback-header">
+                    <div class="feedback-icon">${icon}</div>
+                    <div class="feedback-title">${title}</div>
+                </div>
+                <div class="feedback-text">${explanation}</div>
+            `;
+
+            // Scroll to feedback
+            setTimeout(() => {
+                feedback.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 300);
+        }
+
+        function nextQuestion() {
+            const currentSlideEl = document.querySelector('.slide.active');
+            currentSlideEl.classList.remove('active');
+
+            currentSlide++;
+            const nextSlideEl = document.querySelector(`.slide[data-question="${currentSlide}"]`);
+            if (nextSlideEl) {
+                nextSlideEl.classList.add('active');
+                document.getElementById('currentQuestion').textContent = currentSlide;
+                
+                // Update progress bar
+                const progress = (currentSlide / 5) * 100;
+                document.getElementById('progressFill').style.width = progress + '%';
+
+                // Scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        function showResult() {
+            document.getElementById('quizContent').style.display = 'none';
+            document.getElementById('resultScreen').classList.add('show');
+            document.querySelector('.progress-container').style.display = 'none';
+
+            const resultScore = document.getElementById('resultScore');
+            const resultIcon = document.getElementById('resultIcon');
+            const resultTitle = document.getElementById('resultTitle');
+            const resultMessage = document.getElementById('resultMessage');
+
+            resultScore.textContent = `${score}/5`;
+
+            if (score === 5) {
+                resultScore.classList.add('excellent');
+                resultIcon.textContent = '🏆';
+                resultTitle.textContent = 'Sempurna!';
+                resultMessage.textContent = 'Luar biasa! Kamu menguasai materi Dampak Interaksi dan Keseimbangan Ekosistem dengan sempurna!';
+            } else if (score >= 3) {
+                resultScore.classList.add('good');
+                resultIcon.textContent = '👍';
+                resultTitle.textContent = 'Bagus!';
+                resultMessage.textContent = 'Kerja yang baik! Terus tingkatkan pemahamanmu dengan belajar lebih banyak.';
+            } else {
+                resultScore.classList.add('poor');
+                resultIcon.textContent = '📚';
+                resultTitle.textContent = 'Tetap Semangat!';
+                resultMessage.textContent = 'Jangan menyerah! Pelajari materi lagi dan coba ulangi latihannya.';
+            }
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function retryQuiz() {
+            // Reset variables
+            currentSlide = 1;
+            score = 0;
+            answeredQuestions = [];
+
+            // Reset UI
+            document.getElementById('score').textContent = '0';
+            document.getElementById('currentQuestion').textContent = '1';
+            document.getElementById('progressFill').style.width = '0%';
+
+            // Reset all slides
+            document.querySelectorAll('.slide').forEach((slide, index) => {
+                slide.classList.remove('active');
+                if (index === 0) slide.classList.add('active');
+
+                // Reset options and checkboxes
+                slide.querySelectorAll('.option').forEach(opt => {
+                    opt.classList.remove('selected', 'correct', 'wrong', 'disabled');
+                });
+                
+                slide.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+                    cb.checked = false;
+                    cb.disabled = false;
+                });
+
+                // Reset buttons
+                slide.querySelector('.btn-submit').style.display = 'inline-block';
+                slide.querySelector('.btn-next').classList.remove('show');
+
+                // Reset feedback
+                const feedbackEl = slide.querySelector('.feedback');
+                feedbackEl.classList.remove('show', 'correct', 'wrong');
+                feedbackEl.innerHTML = '';
+            });
+
+            // Show quiz content
+            document.getElementById('quizContent').style.display = 'block';
+            document.getElementById('resultScreen').classList.remove('show');
+            document.querySelector('.progress-container').style.display = 'block';
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
