@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latihan Soal 2: Klasifikasi Makhluk Hidup</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #8b5cf6;
+            --secondary: #ec4899;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --dark: #1e293b;
+            --light: #f8fafc;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Navigation */
+        .nav-bar {
+            background: white;
+            border-radius: 16px;
+            padding: 15px 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .nav-title {
+            font-size: 1.2em;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn-nav {
+            padding: 10px 20px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-home {
+            background: linear-gradient(135deg, #64748b, #475569);
+            color: white;
+            box-shadow: 0 4px 12px rgba(100, 116, 139, 0.3);
+        }
+
+        .btn-home:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(100, 116, 139, 0.4);
+        }
+
+        .btn-materi {
+            background: linear-gradient(135deg, #059669, #047857);
+            color: white;
+            box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);
+        }
+
+        .btn-materi:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(5, 150, 105, 0.4);
+        }
+
+        /* Quiz Container */
+        .quiz-container {
+            background: white;
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quiz-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--warning));
+            background-size: 200% 100%;
+            animation: gradientMove 3s ease infinite;
+        }
+
+        @keyframes gradientMove {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            margin-bottom: 30px;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .question-number {
+            font-size: 1.1em;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .score-display {
+            font-size: 1em;
+            font-weight: 700;
+            color: var(--success);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background: #e2e8f0;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 20px;
+            transition: width 0.5s ease;
+        }
+
+        /* Question Slide */
+        .slide {
+            display: none;
+            animation: slideIn 0.5s ease;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .question-box {
+            background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-left: 6px solid var(--primary);
+        }
+
+        .question-text {
+            font-size: 1.1em;
+            font-weight: 600;
+            color: var(--dark);
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .question-text ul, .question-text ol {
+            margin: 15px 0 15px 25px;
+        }
+
+        .question-text li {
+            margin: 8px 0;
+        }
+
+        /* Table in question */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        thead {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        th {
+            padding: 12px 15px;
+            text-align: left;
+            font-weight: 700;
+            font-size: 0.95em;
+        }
+
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Options */
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option {
+            background: white;
+            border: 3px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 18px 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .option:hover:not(.disabled) {
+            border-color: var(--primary);
+            background: linear-gradient(135deg, #faf5ff, #f3e8ff);
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.2);
+        }
+
+        .option.selected {
+            border-color: var(--primary);
+            background: linear-gradient(135deg, #ede9fe, #ddd6fe);
+        }
+
+        .option.correct {
+            border-color: var(--success);
+            background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+        }
+
+        .option.wrong {
+            border-color: var(--danger);
+            background: linear-gradient(135deg, #fee2e2, #fecaca);
+        }
+
+        .option.disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 14px 32px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(139, 92, 246, 0.4);
+        }
+
+        .btn-next {
+            background: linear-gradient(135deg, var(--success), #059669);
+            color: white;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+            display: none;
+        }
+
+        .btn-next.show {
+            display: inline-flex;
+        }
+
+        .btn-next:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+        }
+
+        /* Feedback */
+        .feedback {
+            margin-top: 25px;
+            padding: 25px;
+            border-radius: 12px;
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .feedback.show {
+            display: block;
+        }
+
+        .feedback.correct {
+            background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+            border-left: 6px solid var(--success);
+        }
+
+        .feedback.wrong {
+            background: linear-gradient(135deg, #fee2e2, #fecaca);
+            border-left: 6px solid var(--danger);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .feedback-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .feedback-icon {
+            font-size: 2em;
+        }
+
+        .feedback-title {
+            font-size: 1.3em;
+            font-weight: 800;
+        }
+
+        .feedback.correct .feedback-title {
+            color: var(--success);
+        }
+
+        .feedback.wrong .feedback-title {
+            color: var(--danger);
+        }
+
+        .feedback-text {
+            font-size: 1em;
+            line-height: 1.8;
+            color: var(--dark);
+        }
+
+        .feedback-text ul {
+            margin: 10px 0 10px 25px;
+        }
+
+        .feedback-text li {
+            margin: 8px 0;
+        }
+
+        /* Result Screen */
+        .result-screen {
+            display: none;
+            text-align: center;
+            padding: 40px 20px;
+            animation: scaleIn 0.5s ease;
+        }
+
+        .result-screen.show {
+            display: block;
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .result-icon {
+            font-size: 5em;
+            margin-bottom: 20px;
+            animation: bounce 1s ease infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .result-title {
+            font-size: 2.5em;
+            font-weight: 900;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .result-score {
+            font-size: 4em;
+            font-weight: 900;
+            margin: 20px 0;
+        }
+
+        .result-score.excellent {
+            color: var(--success);
+        }
+
+        .result-score.good {
+            color: var(--warning);
+        }
+
+        .result-score.poor {
+            color: var(--danger);
+        }
+
+        .result-message {
+            font-size: 1.2em;
+            color: #64748b;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .result-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-retry {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        .btn-retry:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(139, 92, 246, 0.4);
+        }
+
+        .btn-back {
+            background: linear-gradient(135deg, #64748b, #475569);
+            color: white;
+        }
+
+        .btn-back:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(100, 116, 139, 0.4);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            .quiz-container {
+                padding: 25px 20px;
+            }
+
+            .question-box {
+                padding: 20px;
+            }
+
+            .question-text {
+                font-size: 1em;
+            }
+
+            .option {
+                padding: 15px 18px;
+                font-size: 0.95em;
+            }
+
+            .btn {
+                padding: 12px 24px;
+                font-size: 0.95em;
+            }
+
+            .result-score {
+                font-size: 3em;
+            }
+
+            table {
+                font-size: 0.85em;
+            }
+
+            th, td {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation -->
+        <div class="nav-bar">
+            <div class="nav-title">✏️ Latihan Soal 2: Klasifikasi Makhluk Hidup</div>
+            <div class="nav-buttons">
+                <a href="kisi-kisi-tkad-ipa.html" class="btn-nav btn-home">🏠 Menu</a>
+                <a href="2.html" class="btn-nav btn-materi">📖 Materi</a>
+            </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-container">
+            <!-- Progress Bar -->
+            <div class="progress-container">
+                <div class="progress-info">
+                    <div class="question-number">
+                        Soal <span id="currentQuestion">1</span> dari 5
+                    </div>
+                    <div class="score-display">
+                        Nilai: <span id="score">0</span>/5
+                    </div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <!-- Quiz Content -->
+            <div id="quizContent">
+                <!-- Question 1 -->
+                <div class="slide active" data-question="1">
+                    <div class="question-box">
+                        <div class="question-text">
+                            <p><strong>Soal 1</strong></p>
+                            <p>Perhatikan ciri-ciri hewan berikut!</p>
+                            <ol>
+                                <li>Memiliki kaki berbuku-buku</li>
+                                <li>Tubuh terlindungi oleh eksoskeleton dari kitin</li>
+                                <li>Tubuh terbagi menjadi kepala, dada, dan perut</li>
+                                <li>Mengalami metamorfosis</li>
+                            </ol>
+                            <p>Berdasarkan ciri-ciri tersebut, hewan tersebut termasuk kelompok...</p>
+                        </div>
+                    </div>
+
+                    <div class="options">
+                        <div class="option" data-answer="A">A. Mollusca</div>
+                        <div class="option" data-answer="B">B. Annelida</div>
+                        <div class="option" data-answer="C">C. Arthropoda</div>
+                        <div class="option" data-answer="D">D. Echinodermata</div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="btn btn-submit" onclick="submitAnswer(1, 'C')">Periksa Jawaban ✓</button>
+                        <button class="btn btn-next" onclick="nextQuestion()">Soal Berikutnya →</button>
+                    </div>
+
+                    <div class="feedback" id="feedback1"></div>
+                </div>
+
+                <!-- Question 2 -->
+                <div class="slide" data-question="2">
+                    <div class="question-box">
+                        <div class="question-text">
+                            <p><strong>Soal 2</strong></p>
+                            <p>Seorang siswa menemukan hewan dengan karakteristik berikut:</p>
+                            <ul>
+                                <li>Tubuh ditutupi rambut</li>
+                                <li>Melahirkan dan menyusui anaknya</li>
+                                <li>Suhu tubuh tetap/konstan</li>
+                                <li>Bernapas dengan paru-paru</li>
+                            </ul>
+                            <p>Hewan tersebut termasuk dalam kelas...</p>
+                        </div>
+                    </div>
+
+                    <div class="options">
+                        <div class="option" data-answer="A">A. Reptilia</div>
+                        <div class="option" data-answer="B">B. Aves</div>
+                        <div class="option" data-answer="C">C. Amphibia</div>
+                        <div class="option" data-answer="D">D. Mammalia</div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="btn btn-submit" onclick="submitAnswer(2, 'D')">Periksa Jawaban ✓</button>
+                        <button class="btn btn-next" onclick="nextQuestion()">Soal Berikutnya →</button>
+                    </div>
+
+                    <div class="feedback" id="feedback2"></div>
+                </div>
+
+                <!-- Question 3 -->
+                <div class="slide" data-question="3">
+                    <div class="question-box">
+                        <div class="question-text">
+                            <p><strong>Soal 3</strong></p>
+                            <p>Perhatikan data beberapa hewan berikut!</p>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Hewan</th>
+                                        <th>Ciri-Ciri</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>P. Katak</td>
+                                        <td>Kulit lembab, mengalami metamorfosis</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Q. Ular</td>
+                                        <td>Tubuh bersisik kering, bertelur di darat</td>
+                                    </tr>
+                                    <tr>
+                                        <td>R. Salamander</td>
+                                        <td>Hidup di dua alam, kulit tipis dan lembab</td>
+                                    </tr>
+                                    <tr>
+                                        <td>S. Kadal</td>
+                                        <td>Bernapas dengan paru-paru, sisik kering</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <p>Hewan yang termasuk dalam kelas yang sama adalah...</p>
+                        </div>
+                    </div>
+
+                    <div class="options">
+                        <div class="option" data-answer="A">A. P dan R (Amphibia)</div>
+                        <div class="option" data-answer="B">B. P dan S (Reptilia)</div>
+                        <div class="option" data-answer="C">C. Q dan R (Amphibia)</div>
+                        <div class="option" data-answer="D">D. R dan S (Reptilia)</div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="btn btn-submit" onclick="submitAnswer(3, 'A')">Periksa Jawaban ✓</button>
+                        <button class="btn btn-next" onclick="nextQuestion()">Soal Berikutnya →</button>
+                    </div>
+
+                    <div class="feedback" id="feedback3"></div>
+                </div>
+
+                <!-- Question 4 -->
+                <div class="slide" data-question="4">
+                    <div class="question-box">
+                        <div class="question-text">
+                            <p><strong>Soal 4</strong></p>
+                            <p>Perhatikan ciri-ciri makhluk hidup berikut!</p>
+                            <ol>
+                                <li>Tubuh lunak tidak bersegmen</li>
+                                <li>Memiliki cangkang dari zat kapur</li>
+                                <li>Bergerak menggunakan kaki berotot</li>
+                                <li>Beberapa memiliki mata dan tentakel</li>
+                            </ol>
+                            <p>Makhluk hidup dengan ciri-ciri tersebut adalah...</p>
+                        </div>
+                    </div>
+
+                    <div class="options">
+                        <div class="option" data-answer="A">A. Arthropoda (udang, kepiting)</div>
+                        <div class="option" data-answer="B">B. Mollusca (siput, kerang)</div>
+                        <div class="option" data-answer="C">C. Annelida (cacing tanah)</div>
+                        <div class="option" data-answer="D">D. Echinodermata (bintang laut)</div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="btn btn-submit" onclick="submitAnswer(4, 'B')">Periksa Jawaban ✓</button>
+                        <button class="btn btn-next" onclick="nextQuestion()">Soal Berikutnya →</button>
+                    </div>
+
+                    <div class="feedback" id="feedback4"></div>
+                </div>
+
+                <!-- Question 5 -->
+                <div class="slide" data-question="5">
+                    <div class="question-box">
+                        <div class="question-text">
+                            <p><strong>Soal 5</strong></p>
+                            <p>Perhatikan tabel data hewan berikut!</p>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Hewan</th>
+                                        <th>Penutup Tubuh</th>
+                                        <th>Alat Napas</th>
+                                        <th>Suhu Tubuh</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>X</td>
+                                        <td>Bulu</td>
+                                        <td>Paru-paru + pundi udara</td>
+                                        <td>Tetap/konstan</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <p>Berdasarkan data tersebut, hewan X termasuk dalam kelas...</p>
+                        </div>
+                    </div>
+
+                    <div class="options">
+                        <div class="option" data-answer="A">A. Mammalia</div>
+                        <div class="option" data-answer="B">B. Aves</div>
+                        <div class="option" data-answer="C">C. Reptilia</div>
+                        <div class="option" data-answer="D">D. Amphibia</div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="btn btn-submit" onclick="submitAnswer(5, 'B')">Periksa Jawaban ✓</button>
+                        <button class="btn btn-next" onclick="showResult()">Lihat Hasil →</button>
+                    </div>
+
+                    <div class="feedback" id="feedback5"></div>
+                </div>
+            </div>
+
+            <!-- Result Screen -->
+            <div class="result-screen" id="resultScreen">
+                <div class="result-icon" id="resultIcon">🎉</div>
+                <div class="result-title" id="resultTitle">Selamat!</div>
+                <div class="result-score" id="resultScore">5/5</div>
+                <div class="result-message" id="resultMessage">
+                    Luar biasa! Kamu menguasai materi Klasifikasi Makhluk Hidup dengan sempurna!
+                </div>
+                <div class="result-buttons">
+                    <button class="btn btn-retry" onclick="retryQuiz()">🔄 Ulangi Latihan</button>
+                    <a href="2.html" class="btn btn-back">📖 Kembali ke Materi</a>
+                    <a href="kisi-kisi-tkad-ipa.html" class="btn btn-home">🏠 Menu Utama</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 1;
+        let score = 0;
+        let answeredQuestions = [];
+
+        const explanations = {
+            1: {
+                correct: "Sangat tepat! Ciri-ciri yang disebutkan adalah ciri khas <strong>Arthropoda</strong>:<br>• <strong>Kaki berbuku-buku</strong> → Arthros (berbuku) + podos (kaki)<br>• <strong>Eksoskeleton dari kitin</strong> → Rangka luar keras yang melindungi tubuh<br>• <strong>Tubuh bersegmen</strong> → Terbagi menjadi kepala (caput), dada (thorax), perut (abdomen)<br>• <strong>Metamorfosis</strong> → Contoh: ulat → kepompong → kupu-kupu<br><br>Arthropoda adalah filum terbesar di dunia hewan, mencakup 80% dari semua spesies hewan! Contoh: serangga (kupu-kupu, lebah), laba-laba, udang, kepiting, kelabang.",
+                wrong: "Belum tepat. Mari kita analisis ciri-cirinya:<br>• <strong>Kaki berbuku-buku</strong> → Ciri khas Arthropoda ✓<br>• <strong>Eksoskeleton kitin</strong> → Hanya dimiliki Arthropoda ✓<br><br><strong>Mengapa bukan yang lain?</strong><br>• <strong>Mollusca:</strong> Tubuh lunak, tidak berkaki berbuku<br>• <strong>Annelida:</strong> Tubuh bersegmen tapi tidak berkaki berbuku<br>• <strong>Echinodermata:</strong> Tidak berkaki berbuku, kulit berduri<br><br>Arthropoda berasal dari kata 'arthros' (berbuku) dan 'podos' (kaki)!"
+            },
+            2: {
+                correct: "Benar sekali! Semua ciri yang disebutkan adalah ciri khas <strong>Mammalia</strong>:<br>• <strong>Tubuh ditutupi rambut/bulu</strong> → Ciri khas mamalia<br>• <strong>Melahirkan (vivipar) dan menyusui</strong> → Memiliki kelenjar susu (mammae)<br>• <strong>Suhu tubuh tetap (homoioterm)</strong> → Berdarah panas<br>• <strong>Bernapas dengan paru-paru</strong> → Sepanjang hidup<br><br>Contoh mamalia: sapi, kucing, anjing, kuda, lumba-lumba, paus, kelelawar, dan manusia!",
+                wrong: "Belum tepat. Perhatikan ciri-ciri pentingnya:<br>• <strong>Menyusui anaknya</strong> → Hanya ada di Mammalia! ✓<br>• <strong>Tubuh ditutupi rambut</strong> → Hanya Mammalia ✓<br><br><strong>Perbandingan dengan kelas lain:</strong><br>• <strong>Reptilia:</strong> Sisik kering, bertelur, berdarah dingin ✗<br>• <strong>Aves:</strong> Bulu, bertelur, tidak menyusui ✗<br>• <strong>Amphibia:</strong> Kulit lembab, bertelur, berdarah dingin ✗<br><br>Kunci: Kelenjar susu adalah ciri UNIK Mammalia!"
+            },
+            3: {
+                correct: "Sempurna! <strong>P (Katak) dan R (Salamander)</strong> keduanya adalah <strong>Amphibia</strong>:<br><br><strong>Ciri Amphibia yang terlihat:</strong><br>• <strong>Kulit lembab/tipis</strong> → Membantu pernapasan<br>• <strong>Metamorfosis</strong> → Kecebong → katak dewasa<br>• <strong>Hidup di dua alam</strong> → Air (fase larva) dan darat (fase dewasa)<br><br><strong>Sementara Q (Ular) dan S (Kadal) adalah Reptilia</strong> dengan ciri sisik kering dan tidak mengalami metamorfosis.",
+                wrong: "Belum tepat. Mari kita klasifikasikan satu per satu:<br><br><strong>P. Katak → AMPHIBIA</strong><br>• Kulit lembab ✓<br>• Metamorfosis (kecebong → katak) ✓<br><br><strong>Q. Ular → REPTILIA</strong><br>• Sisik kering ✓<br>• Bertelur di darat ✓<br><br><strong>R. Salamander → AMPHIBIA</strong><br>• Hidup di dua alam ✓<br>• Kulit lembab ✓<br><br><strong>S. Kadal → REPTILIA</strong><br>• Paru-paru ✓<br>• Sisik kering ✓<br><br><strong>Kunci pembeda:</strong> Amphibia kulit lembab + metamorfosis, Reptilia sisik kering + tidak metamorfosis"
+            },
+            4: {
+                correct: "Excellent! Semua ciri mengarah ke <strong>Mollusca</strong>:<br>• <strong>Tubuh lunak tidak bersegmen</strong> → Molluscus = lunak<br>• <strong>Cangkang dari zat kapur (CaCO₃)</strong> → Melindungi tubuh lunak<br>• <strong>Kaki berotot</strong> → Untuk bergerak/menempel<br>• <strong>Mata dan tentakel</strong> → Organ sensorik<br><br><strong>Contoh Mollusca:</strong><br>• <em>Berkaki</em>: Siput, bekicot<br>• <em>Bercangkang 2 keping</em>: Kerang, tiram<br>• <em>Tidak bercangkang</em>: Gurita, cumi-cumi (cangkang internal/tidak ada)",
+                wrong: "Belum tepat. Mari kita bedakan:<br><br><strong>A. Arthropoda:</strong><br>• Eksoskeleton dari kitin (BUKAN cangkang kapur) ✗<br>• Kaki berbuku-buku ✗<br><br><strong>B. Mollusca:</strong><br>• Tubuh lunak ✓<br>• Cangkang dari kapur ✓<br>• Kaki berotot ✓<br><br><strong>C. Annelida:</strong><br>• Tubuh BERSEGMEN ✗<br>• Tidak bercangkang ✗<br><br><strong>D. Echinodermata:</strong><br>• Kulit berduri (bukan cangkang) ✗<br>• Sistem ambulakral ✗<br><br>Kunci: Tubuh lunak + cangkang kapur = Mollusca!"
+            },
+            5: {
+                correct: "Perfect! Kombinasi ciri-ciri ini khas <strong>Aves (Burung)</strong>:<br>• <strong>Tubuh ditutupi bulu</strong> → Ciri UNIK burung<br>• <strong>Paru-paru + pundi-pundi udara</strong> → Sistem pernapasan khas burung untuk terbang<br>• <strong>Suhu tubuh tetap (homoioterm)</strong> → Berdarah panas<br><br><strong>Pundi-pundi udara</strong> membuat burung lebih ringan dan efisien saat terbang. Contoh: elang, merpati, pinguin, ayam, burung unta.<br><br><strong>Catatan:</strong> Tidak semua burung bisa terbang (pinguin, burung unta), tapi tetap memiliki sayap dan bulu!",
+                wrong: "Belum tepat. Perhatikan ciri pentingnya:<br><br><strong>Tubuh ditutupi BULU</strong> → Hanya ada di AVES! ✓<br><strong>Pundi-pundi udara</strong> → Hanya ada di AVES! ✓<br><br><strong>Perbandingan:</strong><br>• <strong>Mammalia:</strong> Tubuh ditutupi rambut (BUKAN bulu) ✗<br>• <strong>Reptilia:</strong> Sisik kering, berdarah dingin ✗<br>• <strong>Amphibia:</strong> Kulit lembab, berdarah dingin ✗<br><br>Kunci: Bulu + pundi udara adalah ciri EKSKLUSIF burung (Aves)!"
+            }
+        };
+
+        // Handle option click
+        document.querySelectorAll('.option').forEach(option => {
+            option.addEventListener('click', function() {
+                if (!this.classList.contains('disabled')) {
+                    const parent = this.closest('.slide');
+                    parent.querySelectorAll('.option').forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+                    this.classList.add('selected');
+                }
+            });
+        });
+
+        function submitAnswer(questionNum, correctAnswer) {
+            const slide = document.querySelector(`.slide[data-question="${questionNum}"]`);
+            const options = slide.querySelectorAll('.option');
+            const selected = slide.querySelector('.option.selected');
+            const feedback = document.getElementById(`feedback${questionNum}`);
+            const submitBtn = slide.querySelector('.btn-submit');
+            const nextBtn = slide.querySelector('.btn-next');
+
+            if (!selected) {
+                alert('Pilih jawaban terlebih dahulu!');
+                return;
+            }
+
+            // Disable further selection
+            options.forEach(opt => opt.classList.add('disabled'));
+            submitBtn.style.display = 'none';
+            nextBtn.classList.add('show');
+
+            const userAnswer = selected.getAttribute('data-answer');
+            const isCorrect = userAnswer === correctAnswer;
+
+            // Mark correct/wrong
+            options.forEach(opt => {
+                if (opt.getAttribute('data-answer') === correctAnswer) {
+                    opt.classList.add('correct');
+                }
+                if (opt === selected && !isCorrect) {
+                    opt.classList.add('wrong');
+                }
+            });
+
+            // Update score
+            if (isCorrect && !answeredQuestions.includes(questionNum)) {
+                score++;
+                answeredQuestions.push(questionNum);
+                document.getElementById('score').textContent = score;
+            }
+
+            // Show feedback
+            feedback.classList.add('show');
+            feedback.classList.add(isCorrect ? 'correct' : 'wrong');
+            
+            const icon = isCorrect ? '✅' : '❌';
+            const title = isCorrect ? 'Jawaban Benar!' : 'Jawaban Salah!';
+            const explanation = isCorrect ? explanations[questionNum].correct : explanations[questionNum].wrong;
+
+            feedback.innerHTML = `
+                <div class="feedback-header">
+                    <div class="feedback-icon">${icon}</div>
+                    <div class="feedback-title">${title}</div>
+                </div>
+                <div class="feedback-text">${explanation}</div>
+            `;
+
+            // Scroll to feedback
+            setTimeout(() => {
+                feedback.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 300);
+        }
+
+        function nextQuestion() {
+            const currentSlideEl = document.querySelector('.slide.active');
+            currentSlideEl.classList.remove('active');
+
+            currentSlide++;
+            const nextSlideEl = document.querySelector(`.slide[data-question="${currentSlide}"]`);
+            if (nextSlideEl) {
+                nextSlideEl.classList.add('active');
+                document.getElementById('currentQuestion').textContent = currentSlide;
+                
+                // Update progress bar
+                const progress = (currentSlide / 5) * 100;
+                document.getElementById('progressFill').style.width = progress + '%';
+
+                // Scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        function showResult() {
+            document.getElementById('quizContent').style.display = 'none';
+            document.getElementById('resultScreen').classList.add('show');
+            document.querySelector('.progress-container').style.display = 'none';
+
+            const resultScore = document.getElementById('resultScore');
+            const resultIcon = document.getElementById('resultIcon');
+            const resultTitle = document.getElementById('resultTitle');
+            const resultMessage = document.getElementById('resultMessage');
+
+            resultScore.textContent = `${score}/5`;
+
+            if (score === 5) {
+                resultScore.classList.add('excellent');
+                resultIcon.textContent = '🏆';
+                resultTitle.textContent = 'Sempurna!';
+                resultMessage.textContent = 'Luar biasa! Kamu menguasai materi Klasifikasi Makhluk Hidup dengan sempurna!';
+            } else if (score >= 3) {
+                resultScore.classList.add('good');
+                resultIcon.textContent = '👍';
+                resultTitle.textContent = 'Bagus!';
+                resultMessage.textContent = 'Kerja yang baik! Terus tingkatkan pemahamanmu dengan belajar lebih banyak.';
+            } else {
+                resultScore.classList.add('poor');
+                resultIcon.textContent = '📚';
+                resultTitle.textContent = 'Tetap Semangat!';
+                resultMessage.textContent = 'Jangan menyerah! Pelajari materi lagi dan coba ulangi latihannya.';
+            }
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function retryQuiz() {
+            // Reset variables
+            currentSlide = 1;
+            score = 0;
+            answeredQuestions = [];
+
+            // Reset UI
+            document.getElementById('score').textContent = '0';
+            document.getElementById('currentQuestion').textContent = '1';
+            document.getElementById('progressFill').style.width = '0%';
+
+            // Reset all slides
+            document.querySelectorAll('.slide').forEach((slide, index) => {
+                slide.classList.remove('active');
+                if (index === 0) slide.classList.add('active');
+
+                // Reset options
+                slide.querySelectorAll('.option').forEach(opt => {
+                    opt.classList.remove('selected', 'correct', 'wrong', 'disabled');
+                });
+
+                // Reset buttons
+                slide.querySelector('.btn-submit').style.display = 'inline-block';
+                slide.querySelector('.btn-next').classList.remove('show');
+
+                // Reset feedback
+                const feedbackEl = slide.querySelector('.feedback');
+                feedbackEl.classList.remove('show', 'correct', 'wrong');
+                feedbackEl.innerHTML = '';
+            });
+
+            // Show quiz content
+            document.getElementById('quizContent').style.display = 'block';
+            document.getElementById('resultScreen').classList.remove('show');
+            document.querySelector('.progress-container').style.display = 'block';
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Materi 5: Simbiosis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&family=Fira+Code:wght@400;500&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #059669;
+            --secondary: #0891b2;
+            --accent: #f59e0b;
+            --dark: #0f172a;
+            --light: #f8fafc;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: linear-gradient(135deg, #0f766e 0%, #0e7490 100%);
+            color: var(--dark);
+            line-height: 1.8;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Navigation Bar */
+        .nav-bar {
+            background: white;
+            border-radius: 16px;
+            padding: 20px 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .nav-title {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn-nav {
+            padding: 12px 24px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95em;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-home {
+            background: linear-gradient(135deg, #64748b, #475569);
+            color: white;
+            box-shadow: 0 4px 12px rgba(100, 116, 139, 0.3);
+        }
+
+        .btn-home:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(100, 116, 139, 0.4);
+        }
+
+        .btn-practice {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+        }
+
+        .btn-practice:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4);
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            border-radius: 20px;
+            padding: 50px 60px;
+            margin-bottom: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+        }
+
+        .header h1 {
+            font-size: 2.8em;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        .header .meta {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.95em;
+            color: #64748b;
+        }
+
+        .meta-item .icon {
+            font-size: 1.3em;
+        }
+
+        /* Content Section */
+        .content {
+            background: white;
+            border-radius: 20px;
+            padding: 50px 60px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .content h2 {
+            font-size: 2em;
+            font-weight: 700;
+            color: var(--primary);
+            margin-top: 40px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid var(--primary);
+        }
+
+        .content h2:first-child {
+            margin-top: 0;
+        }
+
+        .content h3 {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+
+        .content h4 {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: var(--dark);
+            margin-top: 25px;
+            margin-bottom: 12px;
+        }
+
+        .content p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .content ul, .content ol {
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+
+        .content li {
+            margin-bottom: 10px;
+        }
+
+        .content strong {
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        /* Info Box */
+        .info-box {
+            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+            border-left: 5px solid var(--secondary);
+            padding: 25px 30px;
+            margin: 25px 0;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(8, 145, 178, 0.1);
+        }
+
+        .info-box h4 {
+            color: var(--secondary);
+            font-weight: 700;
+            margin-bottom: 12px;
+            font-size: 1.1em;
+        }
+
+        /* Warning Box */
+        .warning-box {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-left: 5px solid var(--accent);
+            padding: 25px 30px;
+            margin: 25px 0;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.1);
+        }
+
+        .warning-box h4 {
+            color: var(--accent);
+            font-weight: 700;
+            margin-bottom: 12px;
+            font-size: 1.1em;
+        }
+
+        /* Example Box */
+        .example-box {
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .example-box h4 {
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 1.3em;
+            margin-bottom: 20px;
+        }
+
+        /* Symbiosis Type Box */
+        .symbiosis-box {
+            background: white;
+            border: 3px solid #e2e8f0;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            transition: all 0.3s ease;
+        }
+
+        .symbiosis-box:hover {
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            transform: translateY(-3px);
+        }
+
+        .symbiosis-box.mutualisme {
+            border-color: #10b981;
+            background: linear-gradient(135deg, #d1fae5 0%, #ecfdf5 100%);
+        }
+
+        .symbiosis-box.komensalisme {
+            border-color: #3b82f6;
+            background: linear-gradient(135deg, #dbeafe 0%, #eff6ff 100%);
+        }
+
+        .symbiosis-box.parasitisme {
+            border-color: #ef4444;
+            background: linear-gradient(135deg, #fee2e2 0%, #fef2f2 100%);
+        }
+
+        .symbiosis-title {
+            font-size: 1.4em;
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .symbiosis-box.mutualisme .symbiosis-title {
+            color: #059669;
+        }
+
+        .symbiosis-box.komensalisme .symbiosis-title {
+            color: #2563eb;
+        }
+
+        .symbiosis-box.parasitisme .symbiosis-title {
+            color: #dc2626;
+        }
+
+        .symbiosis-content {
+            margin-top: 15px;
+        }
+
+        .impact-tag {
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+
+        .impact-tag.positive {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .impact-tag.neutral {
+            background: #e0e7ff;
+            color: #3730a3;
+        }
+
+        .impact-tag.negative {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        /* Key Points */
+        .key-points {
+            background: linear-gradient(135deg, #fae8ff 0%, #f3e8ff 100%);
+            border-left: 5px solid #a855f7;
+            padding: 25px 30px;
+            margin: 25px 0;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(168, 85, 247, 0.1);
+        }
+
+        .key-points h4 {
+            color: #7c3aed;
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .key-points ul {
+            margin-left: 20px;
+        }
+
+        .key-points li {
+            margin-bottom: 10px;
+            color: #581c87;
+        }
+
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        thead {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        th {
+            padding: 18px 15px;
+            text-align: left;
+            font-weight: 700;
+            font-size: 1em;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        /* Question */
+        .question {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            border: 2px solid #e2e8f0;
+            margin-bottom: 20px;
+        }
+
+        .question-text {
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 20px;
+            font-size: 1.05em;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option {
+            padding: 15px 20px;
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.95em;
+        }
+
+        .option.correct {
+            background: #dcfce7;
+            border-color: #22c55e;
+            font-weight: 600;
+        }
+
+        .option.correct::before {
+            content: '✓ ';
+            color: #16a34a;
+            font-weight: 700;
+        }
+
+        .explanation {
+            background: #f0f9ff;
+            border-left: 4px solid #0284c7;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 8px;
+        }
+
+        .explanation h5 {
+            color: #0369a1;
+            font-weight: 700;
+            margin-bottom: 12px;
+            font-size: 1.1em;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 15px;
+            }
+
+            .header, .content {
+                padding: 30px 25px;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .content h2 {
+                font-size: 1.6em;
+            }
+
+            table {
+                font-size: 0.9em;
+            }
+
+            th, td {
+                padding: 12px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation Top -->
+        <div class="nav-bar">
+            <div class="nav-title">📚 Materi Pembelajaran IPA</div>
+            <div class="nav-buttons">
+                <a href="kisi-kisi-tkad-ipa.html" class="btn-nav btn-home">🏠 Menu Utama</a>
+                <a href="Lat5.html" class="btn-nav btn-practice">✏️ Latihan Soal</a>
+            </div>
+        </div>
+
+        <!-- Header -->
+        <div class="header">
+            <h1>🤝 Simbiosis - Interaksi Antar Makhluk Hidup</h1>
+            <div class="meta">
+                <div class="meta-item">
+                    <span class="icon">📖</span>
+                    <span>Materi 5</span>
+                </div>
+                <div class="meta-item">
+                    <span class="icon">🎯</span>
+                    <span>Kelas 7</span>
+                </div>
+                <div class="meta-item">
+                    <span class="icon">⏱️</span>
+                    <span>45 menit</span>
+                </div>
+                <div class="meta-item">
+                    <span class="icon">📊</span>
+                    <span>Level Kognitif: L2</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <h2>🎯 Tujuan Pembelajaran</h2>
+            <p>Setelah mempelajari materi ini, peserta didik diharapkan dapat:</p>
+            <ol>
+                <li>Memahami konsep simbiosis sebagai bentuk interaksi erat antar makhluk hidup</li>
+                <li>Mengidentifikasi jenis-jenis simbiosis berdasarkan dampaknya terhadap organisme yang terlibat</li>
+                <li>Menganalisis deskripsi interaksi dua makhluk hidup untuk menentukan jenis simbiosis yang terjadi</li>
+                <li>Menentukan dampak simbiosis bagi masing-masing organisme yang berinteraksi</li>
+                <li>Memberikan contoh nyata berbagai jenis simbiosis dalam kehidupan sehari-hari</li>
+            </ol>
+
+            <h2>📚 Pengertian Simbiosis</h2>
+            <p><strong>Simbiosis</strong> adalah hubungan interaksi yang erat dan khusus antara dua makhluk hidup yang berbeda jenis dalam jangka waktu yang lama.</p>
+            
+            <div class="info-box">
+                <h4>💡 Asal Kata</h4>
+                <p><strong>"Simbiosis"</strong> berasal dari bahasa Yunani:</p>
+                <ul>
+                    <li><strong>Sym</strong> = bersama</li>
+                    <li><strong>Biosis</strong> = kehidupan</li>
+                </ul>
+                <p>Jadi, simbiosis berarti "hidup bersama" antara dua organisme yang berbeda spesies.</p>
+            </div>
+
+            <h3>🔍 Karakteristik Simbiosis</h3>
+            <ul>
+                <li><strong>Melibatkan dua spesies berbeda</strong> - Organisme yang berinteraksi harus dari spesies yang berbeda</li>
+                <li><strong>Hubungan erat dan khusus</strong> - Interaksi terjadi secara langsung dan konsisten</li>
+                <li><strong>Jangka waktu lama</strong> - Berlangsung dalam periode yang cukup panjang, bahkan sepanjang hidup</li>
+                <li><strong>Saling mempengaruhi</strong> - Ada dampak/pengaruh terhadap kehidupan organisme yang terlibat</li>
+            </ul>
+
+            <h2>🔬 Jenis-Jenis Simbiosis</h2>
+            <p>Berdasarkan dampak atau keuntungan yang diperoleh masing-masing organisme, simbiosis dibedakan menjadi <strong>3 jenis utama</strong>:</p>
+
+            <div class="symbiosis-box mutualisme">
+                <div class="symbiosis-title">
+                    <span>🤝</span>
+                    <span>1. Simbiosis Mutualisme</span>
+                </div>
+                <div class="symbiosis-content">
+                    <p><strong>Definisi:</strong> Hubungan simbiosis yang saling menguntungkan kedua belah pihak.</p>
+                    
+                    <p><strong>Dampak:</strong></p>
+                    <div style="margin: 10px 0;">
+                        <span class="impact-tag positive">Organisme A: Untung (+)</span>
+                        <span class="impact-tag positive">Organisme B: Untung (+)</span>
+                    </div>
+
+                    <p><strong>Contoh-contoh:</strong></p>
+                    <ul>
+                        <li><strong>Lebah dan Bunga</strong>
+                            <ul>
+                                <li>Lebah: Mendapat nektar sebagai makanan</li>
+                                <li>Bunga: Terbantu dalam penyerbukan</li>
+                            </ul>
+                        </li>
+                        <li><strong>Kupu-kupu dan Bunga</strong>
+                            <ul>
+                                <li>Kupu-kupu: Mendapat nektar untuk makanan</li>
+                                <li>Bunga: Terbantu dalam penyerbukan</li>
+                            </ul>
+                        </li>
+                        <li><strong>Kerbau dan Burung Jalak</strong>
+                            <ul>
+                                <li>Burung jalak: Mendapat makanan berupa kutu di tubuh kerbau</li>
+                                <li>Kerbau: Tubuhnya dibersihkan dari kutu yang mengganggu</li>
+                            </ul>
+                        </li>
+                        <li><strong>Ikan Badut dan Anemon Laut</strong>
+                            <ul>
+                                <li>Ikan badut: Mendapat perlindungan dari predator</li>
+                                <li>Anemon: Mendapat sisa makanan dari ikan badut dan terlindungi dari ikan pemakan anemon</li>
+                            </ul>
+                        </li>
+                        <li><strong>Bakteri Rhizobium dan Tanaman Kacang-kacangan</strong>
+                            <ul>
+                                <li>Bakteri: Mendapat tempat tinggal dan nutrisi dari akar tanaman</li>
+                                <li>Tanaman: Mendapat nitrogen yang difiksasi oleh bakteri untuk pertumbuhan</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="symbiosis-box komensalisme">
+                <div class="symbiosis-title">
+                    <span>😊</span>
+                    <span>2. Simbiosis Komensalisme</span>
+                </div>
+                <div class="symbiosis-content">
+                    <p><strong>Definisi:</strong> Hubungan simbiosis yang menguntungkan satu pihak, sedangkan pihak lain tidak dirugikan dan tidak diuntungkan (netral).</p>
+                    
+                    <p><strong>Dampak:</strong></p>
+                    <div style="margin: 10px 0;">
+                        <span class="impact-tag positive">Organisme A: Untung (+)</span>
+                        <span class="impact-tag neutral">Organisme B: Netral (0)</span>
+                    </div>
+
+                    <p><strong>Contoh-contoh:</strong></p>
+                    <ul>
+                        <li><strong>Ikan Remora dan Hiu</strong>
+                            <ul>
+                                <li>Ikan remora: Mendapat transportasi gratis dan sisa makanan hiu</li>
+                                <li>Hiu: Tidak diuntungkan dan tidak dirugikan</li>
+                            </ul>
+                        </li>
+                        <li><strong>Anggrek dan Pohon Inangnya</strong>
+                            <ul>
+                                <li>Anggrek: Mendapat tempat hidup yang lebih tinggi untuk mendapat cahaya</li>
+                                <li>Pohon: Tidak diuntungkan dan tidak dirugikan (anggrek hanya menempel, tidak mengambil nutrisi)</li>
+                            </ul>
+                        </li>
+                        <li><strong>Tumbuhan Paku dan Pohon</strong>
+                            <ul>
+                                <li>Tumbuhan paku: Mendapat tempat hidup dan cahaya</li>
+                                <li>Pohon: Tidak diuntungkan dan tidak dirugikan</li>
+                            </ul>
+                        </li>
+                        <li><strong>Ikan Goby dan Bulu Babi</strong>
+                            <ul>
+                                <li>Ikan goby: Mendapat perlindungan dari predator dengan bersembunyi di antara duri bulu babi</li>
+                                <li>Bulu babi: Tidak mendapat keuntungan atau kerugian</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="symbiosis-box parasitisme">
+                <div class="symbiosis-title">
+                    <span>⚠️</span>
+                    <span>3. Simbiosis Parasitisme</span>
+                </div>
+                <div class="symbiosis-content">
+                    <p><strong>Definisi:</strong> Hubungan simbiosis yang menguntungkan satu pihak (parasit), sedangkan pihak lain (inang) dirugikan.</p>
+                    
+                    <p><strong>Dampak:</strong></p>
+                    <div style="margin: 10px 0;">
+                        <span class="impact-tag positive">Parasit: Untung (+)</span>
+                        <span class="impact-tag negative">Inang: Rugi (-)</span>
+                    </div>
+
+                    <p><strong>Contoh-contoh:</strong></p>
+                    <ul>
+                        <li><strong>Benalu dan Pohon Inangnya</strong>
+                            <ul>
+                                <li>Benalu (parasit): Mendapat nutrisi dan air dari pohon inang</li>
+                                <li>Pohon (inang): Kehilangan nutrisi dan air, pertumbuhan terhambat</li>
+                            </ul>
+                        </li>
+                        <li><strong>Kutu dan Manusia/Hewan</strong>
+                            <ul>
+                                <li>Kutu (parasit): Mendapat darah sebagai makanan</li>
+                                <li>Manusia/Hewan (inang): Gatal, iritasi kulit, bisa tertular penyakit</li>
+                            </ul>
+                        </li>
+                        <li><strong>Cacing Pita dan Manusia</strong>
+                            <ul>
+                                <li>Cacing pita (parasit): Mendapat nutrisi dari makanan di usus manusia</li>
+                                <li>Manusia (inang): Kekurangan nutrisi, sakit perut, berat badan turun</li>
+                            </ul>
+                        </li>
+                        <li><strong>Plasmodium dan Manusia</strong>
+                            <ul>
+                                <li>Plasmodium (parasit): Mendapat tempat hidup dan nutrisi</li>
+                                <li>Manusia (inang): Terserang penyakit malaria</li>
+                            </ul>
+                        </li>
+                        <li><strong>Tali Putri dan Tanaman Inangnya</strong>
+                            <ul>
+                                <li>Tali putri (parasit): Mendapat nutrisi dari tanaman inang</li>
+                                <li>Tanaman inang (inang): Pertumbuhan terhambat, bisa mati</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <h2>📊 Tabel Perbandingan Jenis Simbiosis</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Jenis Simbiosis</th>
+                        <th>Organisme A</th>
+                        <th>Organisme B</th>
+                        <th>Contoh</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Mutualisme</strong></td>
+                        <td style="color: #059669; font-weight: 600;">Untung (+)</td>
+                        <td style="color: #059669; font-weight: 600;">Untung (+)</td>
+                        <td>Lebah & Bunga</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Komensalisme</strong></td>
+                        <td style="color: #059669; font-weight: 600;">Untung (+)</td>
+                        <td style="color: #64748b; font-weight: 600;">Netral (0)</td>
+                        <td>Ikan Remora & Hiu</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Parasitisme</strong></td>
+                        <td style="color: #059669; font-weight: 600;">Untung (+)</td>
+                        <td style="color: #dc2626; font-weight: 600;">Rugi (-)</td>
+                        <td>Benalu & Pohon</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>📝 Contoh Soal dan Pembahasan</h2>
+            
+            <div class="example-box">
+                <h4>📌 Contoh Soal 1</h4>
+                <div class="question">
+                    <p class="question-text">
+                        <strong>Deskripsi:</strong> Burung jalak sering terlihat hinggap di punggung kerbau. Burung tersebut memakan kutu dan parasit yang menempel di tubuh kerbau. Sementara itu, kerbau merasa lebih nyaman karena tubuhnya menjadi lebih bersih.
+                    </p>
+                    
+                    <p class="question-text">
+                        <strong>Pernyataan:</strong> "Interaksi antara burung jalak dan kerbau merupakan simbiosis mutualisme karena burung jalak mendapat makanan dan kerbau mendapat keuntungan dengan tubuhnya yang dibersihkan dari parasit"
+                    </p>
+
+                    <div class="options">
+                        <div class="option correct">A. BENAR</div>
+                        <div class="option">B. SALAH</div>
+                    </div>
+
+                    <div class="explanation">
+                        <h5>💡 Pembahasan:</h5>
+                        <p><strong>Jawaban: BENAR</strong></p>
+                        <p><strong>Analisis dampak:</strong></p>
+                        <ul>
+                            <li><strong>Burung jalak:</strong> Mendapat makanan (kutu dan parasit) → <span style="color: #059669; font-weight: 600;">UNTUNG (+)</span></li>
+                            <li><strong>Kerbau:</strong> Tubuhnya dibersihkan dari parasit, merasa lebih nyaman → <span style="color: #059669; font-weight: 600;">UNTUNG (+)</span></li>
+                        </ul>
+                        <p><strong>Kesimpulan:</strong> Karena kedua organisme sama-sama mendapat keuntungan, maka ini adalah <strong>simbiosis mutualisme</strong>. Pernyataan BENAR.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <h4>📌 Contoh Soal 2</h4>
+                <div class="question">
+                    <p class="question-text">
+                        <strong>Deskripsi:</strong> Tumbuhan anggrek menempel pada batang pohon besar untuk mendapatkan cahaya matahari yang lebih banyak. Anggrek tidak mengambil nutrisi dari pohon tersebut, hanya menggunakan batangnya sebagai tempat menempel.
+                    </p>
+                    
+                    <p class="question-text">
+                        <strong>Pernyataan:</strong> "Interaksi ini merupakan simbiosis parasitisme karena anggrek hidup menempel pada pohon dan merugikan pohon tersebut"
+                    </p>
+
+                    <div class="options">
+                        <div class="option">A. BENAR</div>
+                        <div class="option correct">B. SALAH</div>
+                    </div>
+
+                    <div class="explanation">
+                        <h5>💡 Pembahasan:</h5>
+                        <p><strong>Jawaban: SALAH</strong></p>
+                        <p><strong>Analisis dampak:</strong></p>
+                        <ul>
+                            <li><strong>Anggrek:</strong> Mendapat tempat hidup yang lebih tinggi dan cahaya → <span style="color: #059669; font-weight: 600;">UNTUNG (+)</span></li>
+                            <li><strong>Pohon:</strong> Tidak dirugikan karena anggrek hanya menempel, tidak mengambil nutrisi → <span style="color: #64748b; font-weight: 600;">NETRAL (0)</span></li>
+                        </ul>
+                        <p><strong>Kesimpulan:</strong> Karena satu pihak untung dan pihak lain netral (tidak untung, tidak rugi), maka ini adalah <strong>simbiosis komensalisme</strong>, BUKAN parasitisme. Pernyataan SALAH.</p>
+                        <p><strong>Catatan:</strong> Parasitisme terjadi jika inang dirugikan (seperti benalu yang mengambil nutrisi pohon).</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <h4>📌 Contoh Soal 3</h4>
+                <div class="question">
+                    <p class="question-text">
+                        <strong>Deskripsi:</strong> Cacing pita hidup di dalam usus manusia dengan cara menempel pada dinding usus. Cacing ini menyerap nutrisi dari makanan yang telah dicerna oleh manusia. Akibatnya, manusia yang terinfeksi cacing pita mengalami penurunan berat badan dan kekurangan nutrisi.
+                    </p>
+                    
+                    <p class="question-text">
+                        <strong>Pernyataan:</strong> "Cacing pita adalah parasit yang merugikan manusia sebagai inangnya karena mengambil nutrisi yang seharusnya diserap oleh tubuh manusia"
+                    </p>
+
+                    <div class="options">
+                        <div class="option correct">A. BENAR</div>
+                        <div class="option">B. SALAH</div>
+                    </div>
+
+                    <div class="explanation">
+                        <h5>💡 Pembahasan:</h5>
+                        <p><strong>Jawaban: BENAR</strong></p>
+                        <p><strong>Analisis dampak:</strong></p>
+                        <ul>
+                            <li><strong>Cacing pita (parasit):</strong> Mendapat nutrisi dari makanan di usus manusia → <span style="color: #059669; font-weight: 600;">UNTUNG (+)</span></li>
+                            <li><strong>Manusia (inang):</strong> Kehilangan nutrisi, berat badan turun, kesehatan terganggu → <span style="color: #dc2626; font-weight: 600;">RUGI (-)</span></li>
+                        </ul>
+                        <p><strong>Kesimpulan:</strong> Karena satu pihak (cacing pita) mendapat keuntungan sedangkan pihak lain (manusia) dirugikan, maka ini adalah <strong>simbiosis parasitisme</strong>. Cacing pita disebut parasit dan manusia disebut inang. Pernyataan BENAR.</p>
+                    </div>
+                </div>
+            </div>
+
+            <h2>🎓 Rangkuman</h2>
+            <div class="info-box">
+                <ol>
+                    <li><strong>Simbiosis</strong> adalah hubungan interaksi erat antara dua makhluk hidup berbeda jenis dalam jangka waktu lama.</li>
+                    
+                    <li><strong>Simbiosis Mutualisme:</strong> Kedua organisme sama-sama diuntungkan (+/+)</li>
+                    
+                    <li><strong>Simbiosis Komensalisme:</strong> Satu organisme diuntungkan, yang lain netral (+/0)</li>
+                    
+                    <li><strong>Simbiosis Parasitisme:</strong> Satu organisme diuntungkan (parasit), yang lain dirugikan (inang) (+/-)</li>
+                    
+                    <li><strong>Cara menentukan jenis simbiosis:</strong>
+                        <ul>
+                            <li>Identifikasi dampak pada organisme A (untung/rugi/netral)</li>
+                            <li>Identifikasi dampak pada organisme B (untung/rugi/netral)</li>
+                            <li>Cocokkan dengan pola dampak setiap jenis simbiosis</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Istilah penting:</strong>
+                        <ul>
+                            <li>Parasit = organisme yang diuntungkan dalam parasitisme</li>
+                            <li>Inang = organisme yang dirugikan dalam parasitisme</li>
+                        </ul>
+                    </li>
+                </ol>
+            </div>
+
+            <div class="key-points">
+                <h4>💪 Tips Mengerjakan Soal</h4>
+                <ul>
+                    <li>Baca deskripsi interaksi dengan teliti</li>
+                    <li>Identifikasi dampak bagi MASING-MASING organisme secara terpisah</li>
+                    <li>Tanyakan pada diri sendiri:
+                        <ul>
+                            <li>Organisme A mendapat apa? → Untung/Rugi/Netral?</li>
+                            <li>Organisme B mendapat apa? → Untung/Rugi/Netral?</li>
+                        </ul>
+                    </li>
+                    <li>Jangan hanya melihat satu organisme, selalu analisis dampak pada KEDUA organisme</li>
+                    <li>Perhatikan kata kunci:
+                        <ul>
+                            <li>"mendapat makanan/nutrisi/tempat tinggal" → UNTUNG</li>
+                            <li>"kehilangan/sakit/terganggu/terhambat" → RUGI</li>
+                            <li>"tidak terpengaruh/hanya menempel" → NETRAL</li>
+                        </ul>
+                    </li>
+                    <li>Hati-hati dengan jebakan: anggrek vs benalu
+                        <ul>
+                            <li>Anggrek hanya menempel → Komensalisme</li>
+                            <li>Benalu mengambil nutrisi → Parasitisme</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="warning-box">
+                <h4>⚠️ Kesalahan Umum yang Harus Dihindari</h4>
+                <ul>
+                    <li><strong>Hanya melihat satu organisme:</strong> Ingat, simbiosis melibatkan DUA organisme, jadi analisis dampak pada keduanya</li>
+                    <li><strong>Mengira semua tumbuhan yang menempel adalah parasit:</strong> Anggrek dan tumbuhan paku hanya menempel (komensalisme), berbeda dengan benalu yang mengambil nutrisi (parasitisme)</li>
+                    <li><strong>Tidak membaca kata kunci dengan teliti:</strong> Kata "dibersihkan", "terlindungi", "kehilangan" menunjukkan dampak yang berbeda</li>
+                    <li><strong>Mengabaikan penjelasan tentang dampak:</strong> Kadang soal sudah menjelaskan dampaknya, tinggal dianalisis saja</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Navigation Bottom -->
+        <div class="nav-bar">
+            <div class="nav-buttons" style="width: 100%; justify-content: space-between;">
+                <a href="kisi-kisi-tkad-ipa.html" class="btn-nav btn-home">
+                    🏠 Kembali ke Menu
+                </a>
+                <a href="Lat5.html" class="btn-nav btn-practice">
+                    Lanjut ke Latihan Soal ✏️
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

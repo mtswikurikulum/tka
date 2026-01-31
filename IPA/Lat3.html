@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latihan Soal 3: Kunci Determinasi</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #8b5cf6;
+            --secondary: #ec4899;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --dark: #1e293b;
+            --light: #f8fafc;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Navigation */
+        .nav-bar {
+            background: white;
+            border-radius: 16px;
+            padding: 15px 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .nav-title {
+            font-size: 1.2em;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn-nav {
+            padding: 10px 20px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-home {
+            background: linear-gradient(135deg, #64748b, #475569);
+            color: white;
+            box-shadow: 0 4px 12px rgba(100, 116, 139, 0.3);
+        }
+
+        .btn-home:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(100, 116, 139, 0.4);
+        }
+
+        .btn-materi {
+            background: linear-gradient(135deg, #059669, #047857);
+            color: white;
+            box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);
+        }
+
+        .btn-materi:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(5, 150, 105, 0.4);
+        }
+
+        /* Quiz Container */
+        .quiz-container {
+            background: white;
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quiz-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--warning));
+            background-size: 200% 100%;
+            animation: gradientMove 3s ease infinite;
+        }
+
+        @keyframes gradientMove {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            margin-bottom: 30px;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .question-number {
+            font-size: 1.1em;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .score-display {
+            font-size: 1em;
+            font-weight: 700;
+            color: var(--success);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background: #e2e8f0;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 20px;
+            transition: width 0.5s ease;
+        }
+
+        /* Question Slide */
+        .slide {
+            display: none;
+            animation: slideIn 0.5s ease;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .question-content {
+            margin-bottom: 30px;
+        }
+
+        .question-title {
+            font-size: 1.3em;
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .question-badge {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.7em;
+            font-weight: 700;
+        }
+
+        .question-text {
+            font-size: 1.05em;
+            line-height: 1.8;
+            color: var(--dark);
+            margin-bottom: 20px;
+        }
+
+        /* Tree Box untuk Kunci Dikotomi */
+        .tree-box {
+            background: #f0fdf4;
+            border: 2px solid #86efac;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            line-height: 1.8;
+        }
+
+        .tree-line {
+            padding: 3px 0;
+            color: #065f46;
+        }
+
+        .tree-indent {
+            margin-left: 20px;
+        }
+
+        .tree-number {
+            color: #059669;
+            font-weight: 700;
+        }
+
+        .tree-choice {
+            color: #0891b2;
+            font-weight: 600;
+        }
+
+        .tree-result {
+            color: #dc2626;
+            font-weight: 700;
+        }
+
+        /* Options */
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .option {
+            background: #f8fafc;
+            border: 3px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 18px 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.05em;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .option:hover:not(.disabled) {
+            background: #f1f5f9;
+            border-color: var(--primary);
+            transform: translateX(5px);
+        }
+
+        .option.selected {
+            background: linear-gradient(135deg, #ede9fe, #e9d5ff);
+            border-color: var(--primary);
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.2);
+        }
+
+        .option.correct {
+            background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+            border-color: var(--success);
+            color: #065f46;
+        }
+
+        .option.wrong {
+            background: linear-gradient(135deg, #fee2e2, #fecaca);
+            border-color: var(--danger);
+            color: #991b1b;
+        }
+
+        .option.disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        .option-icon {
+            font-size: 1.3em;
+            min-width: 30px;
+        }
+
+        /* Feedback */
+        .feedback {
+            display: none;
+            margin-top: 25px;
+            padding: 25px;
+            border-radius: 15px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .feedback.show {
+            display: block;
+        }
+
+        .feedback.correct {
+            background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+            border: 2px solid var(--success);
+        }
+
+        .feedback.wrong {
+            background: linear-gradient(135deg, #fee2e2, #fecaca);
+            border: 2px solid var(--danger);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .feedback-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .feedback-icon {
+            font-size: 2.5em;
+        }
+
+        .feedback-title {
+            font-size: 1.4em;
+            font-weight: 800;
+        }
+
+        .feedback.correct .feedback-title {
+            color: #065f46;
+        }
+
+        .feedback.wrong .feedback-title {
+            color: #991b1b;
+        }
+
+        .feedback-text {
+            font-size: 1em;
+            line-height: 1.8;
+            margin-top: 10px;
+        }
+
+        .feedback.correct .feedback-text {
+            color: #064e3b;
+        }
+
+        .feedback.wrong .feedback-text {
+            color: #7f1d1d;
+        }
+
+        /* Buttons */
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.05em;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(139, 92, 246, 0.4);
+        }
+
+        .btn-next {
+            background: linear-gradient(135deg, var(--success), #059669);
+            color: white;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+            display: none;
+        }
+
+        .btn-next.show {
+            display: flex;
+        }
+
+        .btn-next:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(16, 185, 129, 0.4);
+        }
+
+        /* Result Screen */
+        .result-screen {
+            display: none;
+            text-align: center;
+            animation: scaleIn 0.6s ease;
+        }
+
+        .result-screen.show {
+            display: block;
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .result-icon {
+            font-size: 6em;
+            margin-bottom: 20px;
+            animation: bounce 1s ease infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .result-title {
+            font-size: 2.5em;
+            font-weight: 800;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .result-score {
+            font-size: 4em;
+            font-weight: 900;
+            margin: 30px 0;
+        }
+
+        .result-score.excellent {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .result-score.good {
+            background: linear-gradient(135deg, var(--success), #059669);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .result-score.poor {
+            background: linear-gradient(135deg, #f87171, #ef4444);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .result-message {
+            font-size: 1.2em;
+            color: #64748b;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        .result-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-retry, .btn-home-result {
+            padding: 15px 35px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.05em;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-retry {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+        }
+
+        .btn-retry:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(139, 92, 246, 0.4);
+        }
+
+        .btn-home-result {
+            background: linear-gradient(135deg, #64748b, #475569);
+            color: white;
+            box-shadow: 0 4px 15px rgba(100, 116, 139, 0.3);
+        }
+
+        .btn-home-result:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(100, 116, 139, 0.4);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .quiz-container {
+                padding: 25px 20px;
+            }
+
+            .question-title {
+                font-size: 1.1em;
+            }
+
+            .option {
+                padding: 15px 18px;
+                font-size: 0.95em;
+            }
+
+            .tree-box {
+                font-size: 0.85em;
+                padding: 15px;
+            }
+
+            .result-title {
+                font-size: 2em;
+            }
+
+            .result-score {
+                font-size: 3em;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation Top -->
+        <div class="nav-bar">
+            <div class="nav-title">✏️ Latihan Soal - Kunci Determinasi</div>
+            <div class="nav-buttons">
+                <a href="kisi-kisi-tkad-ipa.html" class="btn-nav btn-home">🏠 Menu</a>
+                <a href="3.html" class="btn-nav btn-materi">📖 Materi</a>
+            </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-container">
+            <!-- Progress Bar -->
+            <div class="progress-container">
+                <div class="progress-info">
+                    <div class="question-number">
+                        Soal <span id="currentQuestion">1</span> dari 5
+                    </div>
+                    <div class="score-display">
+                        Skor: <span id="score">0</span>
+                    </div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <!-- Quiz Content -->
+            <div id="quizContent">
+                <!-- Question 1 -->
+                <div class="slide active" data-question="1">
+                    <div class="question-content">
+                        <div class="question-title">
+                            <span class="question-badge">Soal 1</span>
+                            Kunci Dikotomi Hewan
+                        </div>
+                        <div class="question-text">
+                            Perhatikan kunci dikotomi berikut!
+                        </div>
+                        <div class="tree-box">
+                            <div class="tree-line"><span class="tree-number">1. a.</span> Bertulang belakang ........................ lanjut ke 2</div>
+                            <div class="tree-line tree-indent"><span class="tree-number">b.</span> Tidak bertulang belakang .............. Invertebrata</div>
+                            <div class="tree-line"><span class="tree-number">2. a.</span> Berambut dan menyusui ................. Mamalia</div>
+                            <div class="tree-line tree-indent"><span class="tree-number">b.</span> Tidak berambut ............................ lanjut ke 3</div>
+                            <div class="tree-line"><span class="tree-number">3. a.</span> Bersayap dan berbulu .................... Aves</div>
+                            <div class="tree-line tree-indent"><span class="tree-number">b.</span> Bersisik .................................... lanjut ke 4</div>
+                            <div class="tree-line"><span class="tree-number">4. a.</span> Hidup di air dan darat .................... Amphibia</div>
+                            <div class="tree-line tree-indent"><span class="tree-number">b.</span> Hanya hidup di air ........................ Pisces</div>
+                        </div>
+                        <div class="question-text">
+                            <strong>Pernyataan:</strong> "Burung termasuk hewan bertulang belakang yang bersayap dan berbulu"
+                        </div>
+                    </div>
+
+                    <div class="options">
+                        <div class="option" data-answer="B">
+                            <span class="option-icon">✅</span>
+                            <span>BENAR</span>
+                        </div>
+                        <div class="option" data-answer="S">
+                            <span class="option-icon">❌</span>
+                            <span>SALAH</span>
+                        </div>
+                    </div>
+
+                    <div class="button-group">
+                        <button class="btn btn-submit" onclick="submitAnswer(1, 'B')">
+                            Kirim Jawaban 📤
+                        </button>
+                        <button class="btn btn-next" onclick="nextQuestion()">
+                            Soal Berikutnya ➡️
+                        </button>
+                    </div>
+
+                    <div class="feedback" id="feedback1"></div>
+                </div>
+
+                <!-- Question 2 -->
+                <div class="slide" data-question="2">
+                    <div class="question-content">
+                        <div class="question-title">
+                            <span class="question-badge">Soal 2</span>
+                            Kunci Dikotomi Tumbuhan
+                        </div>
+                        <div class="question-text">
+                            Perhatikan kunci dikotomi berikut!
+                        </div>
+                        <div class="tree-box">
+                            <div class="tree-line"><span class="tree-number">1. a.</span> Memiliki bunga sejati .................... lanjut ke 2</div>
+                            <div class="tree-line tree-indent"><span class="tree-number">b.</span> Tidak memiliki bunga sejati ........... lanjut ke 3</div>
+                            <div class="tree-line"><span class="tree-number">2. a.</span> Biji terlindung dalam buah ............. Angiospermae</div>
+                            <div class="tree-line tree-indent"><span class="tree-number">b.</span> Biji terbuka/tidak terlindung .......... Gymnospermae</div>
+                            <div class="tree-line"><span class="tree-number">3. a.</span> Memiliki akar, batang, daun sejati .. Pteridophyta</div>
+                            <div class="tree-line tree-indent"><span class="tree-number">b.</span> Tidak memiliki akar, batang, daun sejati ... Bryophyta</div>
+                        </div>
+                        <div class="question-text">
+                            <strong>Pernyataan:</strong> "Lumut termasuk tumbuhan yang tidak memiliki akar, batang, dan daun sejati"
+                        </div>
+                    </div>
+
+                    <div class="options">
+                        <div class="option" data-answer="B">
+                            <span class="option-icon">✅</span>
+                            <span>BENAR</span>
+                        </div>
+                        <div class="option" data-answer="S">
+                            <span class="option-icon">❌</span>
+                            <span>SALAH</span>
+                        </div>
+                    </div>
+
+                    <div class="button-group">
+                        <button class="btn btn-submit" onclick="submitAnswer(2, 'B')">
+                            Kirim Jawaban 📤
+                        </button>
+                        <button class="btn btn-next" onclick="nextQuestion()">
+                            Soal Berikutnya ➡️
+                        </button>
+                    </div>
+
+                    <div class="feedback" id="feedback2"></div>
+                </div>
+
+                <!-- Question 3 -->
+                <div class="slide" data-question="3">
+                    <div class="question-content">
+                        <div class="question-title">
+                            <span class="question-badge">Soal 3</span>
+                            Kunci Dikotomi Serangga
+                        </div>
+                        <div class="question-text">
+                            Perhatikan kunci dikotomi berikut!
+                        </div>
+                        <div class="tree-box">
+                            <div class="tree-line"><span class="tree-number">1. a.</span> Memiliki sayap ............................ lanjut ke 2</div>
+                            <div class="tree-line tree-indent"><span class="tree-number">b.</span> Tidak memiliki sayap ................... Semut</div>
+                            <div class="tree-line"><span class="tree-number">2. a.</span> Jumlah sayap 4 ............................ lanjut ke 3</div>
+                            <div class="tree-line tree-indent"><span class="tree-number">b.</span> Jumlah sayap 2 ............................ lanjut ke 4</div>
+                            <div class="tree-line"><span class="tree-number">3. a.</span> Sayap transparan ......................... Capung</div>
+                            <div class="tree-line tree-indent"><span class="tree-number">b.</span> Sayap berwarna .......................... Kupu-kupu</div>
+                            <div class="tree-line"><span class="tree-number">4. a.</span> Dapat menyengat ......................... Lebah</div>
+                            <div class="tree-line tree-indent"><span class="tree-number">b.</span> Tidak dapat menyengat ................ Lalat</span></div>
+                        </div>
+                        <div class="question-text">
+                            <strong>Pernyataan:</strong> "Kupu-kupu memiliki 4 sayap yang transparan"
+                        </div>
+                    </div>
+
+                    <div class="options">
+                        <div class="option" data-answer="B">
+                            <span class="option-icon">✅</span>
+                            <span>BENAR</span>
+                        </div>
+                        <div class="option" data-answer="S">
+                            <span class="option-icon">❌</span>
+                            <span>SALAH</span>
+                        </div>
+                    </div>
+
+                    <div class="button-group">
+                        <button class="btn btn-submit" onclick="submitAnswer(3, 'S')">
+                            Kirim Jawaban 📤
+                        </button>
+                        <button class="btn btn-next" onclick="nextQuestion()">
+                            Soal Berikutnya ➡️
+                        </button>
+                    </div>
+
+                    <div class="feedback" id="feedback3"></div>
+                </div>
+
+                <!-- Question 4 -->
+                <div class="slide" data-question="4">
+                    <div class="question-content">
+                        <div class="question-title">
+                            <span class="question-badge">Soal 4</span>
+                            Kunci Dikotomi Hewan Peliharaan
+                        </div>
+                        <div class="question-text">
+                            Perhatikan kunci dikotomi berikut!
+                        </div>
+                        <div class="tree-box">
+                            <div class="tree-line"><span class="tree-number">1. a.</span> Berkaki empat .............................. lanjut ke 2</div>
+                            <div class="tree-line tree-indent"><span class="tree-number">b.</span> Berkaki dua .................................. Ayam</div>
+                            <div class="tree-line"><span class="tree-number">2. a.</span> Pemakan tumbuhan (herbivora) ....... lanjut ke 3</div>
+                            <div class="tree-line tree-indent"><span class="tree-number">b.</span> Pemakan daging (karnivora) ........... Kucing</div>
+                            <div class="tree-line"><span class="tree-number">3. a.</span> Bertanduk ...................................... Kambing</div>
+                            <div class="tree-line tree-indent"><span class="tree-number">b.</span> Tidak bertanduk ........................... Kelinci</div>
+                        </div>
+                        <div class="question-text">
+                            <strong>Pernyataan:</strong> "Kelinci adalah hewan berkaki empat yang herbivora dan tidak bertanduk"
+                        </div>
+                    </div>
+
+                    <div class="options">
+                        <div class="option" data-answer="B">
+                            <span class="option-icon">✅</span>
+                            <span>BENAR</span>
+                        </div>
+                        <div class="option" data-answer="S">
+                            <span class="option-icon">❌</span>
+                            <span>SALAH</span>
+                        </div>
+                    </div>
+
+                    <div class="button-group">
+                        <button class="btn btn-submit" onclick="submitAnswer(4, 'B')">
+                            Kirim Jawaban 📤
+                        </button>
+                        <button class="btn btn-next" onclick="nextQuestion()">
+                            Soal Berikutnya ➡️
+                        </button>
+                    </div>
+
+                    <div class="feedback" id="feedback4"></div>
+                </div>
+
+                <!-- Question 5 -->
+                <div class="slide" data-question="5">
+                    <div class="question-content">
+                        <div class="question-title">
+                            <span class="question-badge">Soal 5</span>
+                            Kunci Dikotomi Buah
+                        </div>
+                        <div class="question-text">
+                            Perhatikan kunci dikotomi berikut!
+                        </div>
+                        <div class="tree-box">
+                            <div class="tree-line"><span class="tree-number">1. a.</span> Berkulit keras ............................... lanjut ke 2</div>
+                            <div class="tree-line tree-indent"><span class="tree-number">b.</span> Berkulit lunak ............................... lanjut ke 3</div>
+                            <div class="tree-line"><span class="tree-number">2. a.</span> Berbentuk bulat ............................. Kelapa</div>
+                            <div class="tree-line tree-indent"><span class="tree-number">b.</span> Berbentuk lonjong ......................... Durian</div>
+                            <div class="tree-line"><span class="tree-number">3. a.</span> Berwarna hijau saat matang ........... Apel Malang</div>
+                            <div class="tree-line tree-indent"><span class="tree-number">b.</span> Berwarna merah/kuning saat matang ... lanjut ke 4</div>
+                            <div class="tree-line"><span class="tree-number">4. a.</span> Memiliki biji banyak ....................... Jambu Biji</div>
+                            <div class="tree-line tree-indent"><span class="tree-number">b.</span> Memiliki biji tunggal ....................... Mangga</div>
+                        </div>
+                        <div class="question-text">
+                            <strong>Pernyataan:</strong> "Mangga adalah buah berkulit lunak, berwarna merah/kuning saat matang, dan memiliki biji banyak"
+                        </div>
+                    </div>
+
+                    <div class="options">
+                        <div class="option" data-answer="B">
+                            <span class="option-icon">✅</span>
+                            <span>BENAR</span>
+                        </div>
+                        <div class="option" data-answer="S">
+                            <span class="option-icon">❌</span>
+                            <span>SALAH</span>
+                        </div>
+                    </div>
+
+                    <div class="button-group">
+                        <button class="btn btn-submit" onclick="submitAnswer(5, 'S')">
+                            Kirim Jawaban 📤
+                        </button>
+                        <button class="btn btn-next" onclick="showResult()">
+                            Lihat Hasil 🎯
+                        </button>
+                    </div>
+
+                    <div class="feedback" id="feedback5"></div>
+                </div>
+            </div>
+
+            <!-- Result Screen -->
+            <div class="result-screen" id="resultScreen">
+                <div class="result-icon" id="resultIcon">🏆</div>
+                <div class="result-title" id="resultTitle">Sempurna!</div>
+                <div class="result-score" id="resultScore">5/5</div>
+                <div class="result-message" id="resultMessage">
+                    Luar biasa! Kamu menguasai materi Kunci Determinasi dengan sempurna!
+                </div>
+                <div class="result-buttons">
+                    <button class="btn-retry" onclick="retryQuiz()">
+                        🔄 Ulangi Latihan
+                    </button>
+                    <a href="kisi-kisi-tkad-ipa.html" class="btn-home-result">
+                        🏠 Kembali ke Menu
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 1;
+        let score = 0;
+        let answeredQuestions = [];
+
+        // Explanations for each question
+        const explanations = {
+            1: {
+                correct: "Benar! Berdasarkan kunci dikotomi, untuk mencapai <strong>Aves (Burung)</strong>, jalur yang dilalui adalah:<br>• 1a: Bertulang belakang ✓<br>• 2b: Tidak berambut (lanjut ke 3)<br>• 3a: Bersayap dan berbulu ✓ → <strong>Aves</strong><br><br>Jadi pernyataan \"Burung termasuk hewan bertulang belakang yang bersayap dan berbulu\" adalah BENAR karena sesuai dengan jalur 1a → 2b → 3a.",
+                wrong: "Kurang tepat. Mari kita telusuri jalur burung dalam kunci dikotomi:<br><br><strong>Langkah 1:</strong> Burung bertulang belakang → pilih 1a (lanjut ke 2)<br><strong>Langkah 2:</strong> Burung tidak berambut dan tidak menyusui → pilih 2b (lanjut ke 3)<br><strong>Langkah 3:</strong> Burung bersayap dan berbulu → pilih 3a → hasil: <strong>Aves</strong><br><br>Semua ciri dalam pernyataan (bertulang belakang, bersayap, berbulu) sesuai dengan jalur yang dilalui, jadi pernyataannya BENAR."
+            },
+            2: {
+                correct: "Sempurna! Berdasarkan kunci dikotomi, untuk mencapai <strong>Bryophyta (Lumut)</strong>, jalur yang dilalui adalah:<br>• 1b: Tidak memiliki bunga sejati (lanjut ke 3)<br>• 3b: Tidak memiliki akar, batang, daun sejati ✓ → <strong>Bryophyta</strong><br><br>Lumut memang tergolong tumbuhan yang belum memiliki struktur akar, batang, dan daun yang sebenarnya (sejati). Yang terlihat adalah struktur mirip daun (filoid), mirip batang (kauloid), dan mirip akar (rizoid).",
+                wrong: "Belum tepat. Mari kita telusuri jalur lumut dalam kunci dikotomi:<br><br><strong>Langkah 1:</strong> Lumut tidak memiliki bunga sejati → pilih 1b (lanjut ke 3)<br><strong>Langkah 2:</strong> Lumut tidak memiliki akar, batang, daun sejati → pilih 3b → hasil: <strong>Bryophyta (Lumut)</strong><br><br>Lumut hanya memiliki struktur mirip akar (rizoid), mirip batang (kauloid), dan mirip daun (filoid), tetapi bukan struktur sejati seperti tumbuhan tingkat tinggi. Jadi pernyataannya BENAR."
+            },
+            3: {
+                correct: "Benar! Pernyataan tersebut SALAH. Mari kita telusuri jalur kupu-kupu:<br>• 1a: Memiliki sayap (lanjut ke 2)<br>• 2a: Jumlah sayap 4 (lanjut ke 3)<br>• 3b: Sayap berwarna ✓ → <strong>Kupu-kupu</strong><br><br>Jadi kupu-kupu memang memiliki 4 sayap, tetapi sayapnya <strong>BERWARNA</strong>, bukan transparan. Pernyataan \"sayap transparan\" tidak sesuai dengan jalur 3b.",
+                wrong: "Kurang tepat. Mari kita telusuri jalur kupu-kupu dalam kunci dikotomi:<br><br><strong>Langkah 1:</strong> Kupu-kupu memiliki sayap → pilih 1a (lanjut ke 2)<br><strong>Langkah 2:</strong> Kupu-kupu memiliki 4 sayap → pilih 2a (lanjut ke 3)<br><strong>Langkah 3:</strong> Sayap kupu-kupu berwarna (bukan transparan) → pilih 3b → <strong>Kupu-kupu</strong><br><br>Pernyataan menyebutkan \"sayap transparan\", padahal jalur yang benar adalah 3b yaitu \"sayap berwarna\". Sayap transparan (3a) adalah ciri capung. Jadi pernyataannya SALAH."
+            },
+            4: {
+                correct: "Sempurna! Berdasarkan kunci dikotomi, untuk mencapai <strong>Kelinci</strong>, jalur yang dilalui adalah:<br>• 1a: Berkaki empat ✓ (lanjut ke 2)<br>• 2a: Pemakan tumbuhan/herbivora ✓ (lanjut ke 3)<br>• 3b: Tidak bertanduk ✓ → <strong>Kelinci</strong><br><br>Semua ciri yang disebutkan dalam pernyataan (berkaki empat, herbivora, tidak bertanduk) sesuai dengan jalur 1a → 2a → 3b. Jadi pernyataannya BENAR.",
+                wrong: "Belum tepat. Mari kita telusuri jalur kelinci dalam kunci dikotomi:<br><br><strong>Langkah 1:</strong> Kelinci berkaki empat → pilih 1a (lanjut ke 2)<br><strong>Langkah 2:</strong> Kelinci herbivora (pemakan tumbuhan) → pilih 2a (lanjut ke 3)<br><strong>Langkah 3:</strong> Kelinci tidak bertanduk → pilih 3b → <strong>Kelinci</strong><br><br>Pernyataan menyebutkan \"berkaki empat\" (1a ✓), \"herbivora\" (2a ✓), dan \"tidak bertanduk\" (3b ✓). Semuanya sesuai dengan jalur yang dilalui. Jadi pernyataannya BENAR."
+            },
+            5: {
+                correct: "Benar! Pernyataan tersebut SALAH. Mari kita telusuri jalur mangga:<br>• 1b: Berkulit lunak ✓ (lanjut ke 3)<br>• 3b: Berwarna merah/kuning saat matang ✓ (lanjut ke 4)<br>• 4b: Memiliki biji tunggal ✓ → <strong>Mangga</strong><br><br>Pernyataan menyebutkan \"memiliki biji banyak\", padahal jalur yang benar adalah 4b yaitu \"memiliki biji tunggal\". Mangga hanya memiliki 1 biji besar di tengah buahnya. Yang memiliki biji banyak (4a) adalah jambu biji. Jadi pernyataannya SALAH.",
+                wrong: "Kurang tepat. Mari kita telusuri jalur mangga dalam kunci dikotomi:<br><br><strong>Langkah 1:</strong> Mangga berkulit lunak → pilih 1b (lanjut ke 3)<br><strong>Langkah 2:</strong> Mangga berwarna merah/kuning saat matang → pilih 3b (lanjut ke 4)<br><strong>Langkah 3:</strong> Mangga memiliki biji tunggal (1 biji besar) → pilih 4b → <strong>Mangga</strong><br><br>Pernyataan menyebutkan \"biji banyak\", padahal jalur yang benar adalah 4b \"biji tunggal\". Mangga hanya punya 1 biji besar, bukan banyak biji. Yang memiliki biji banyak adalah jambu biji (4a). Jadi pernyataannya SALAH."
+            }
+        };
+
+        // Handle option click
+        document.querySelectorAll('.option').forEach(option => {
+            option.addEventListener('click', function() {
+                if (!this.classList.contains('disabled')) {
+                    const parent = this.closest('.slide');
+                    parent.querySelectorAll('.option').forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+                    this.classList.add('selected');
+                }
+            });
+        });
+
+        function submitAnswer(questionNum, correctAnswer) {
+            const slide = document.querySelector(`.slide[data-question="${questionNum}"]`);
+            const options = slide.querySelectorAll('.option');
+            const selected = slide.querySelector('.option.selected');
+            const feedback = document.getElementById(`feedback${questionNum}`);
+            const submitBtn = slide.querySelector('.btn-submit');
+            const nextBtn = slide.querySelector('.btn-next');
+
+            if (!selected) {
+                alert('Pilih jawaban terlebih dahulu!');
+                return;
+            }
+
+            // Disable further selection
+            options.forEach(opt => opt.classList.add('disabled'));
+            submitBtn.style.display = 'none';
+            nextBtn.classList.add('show');
+
+            const userAnswer = selected.getAttribute('data-answer');
+            const isCorrect = userAnswer === correctAnswer;
+
+            // Mark correct/wrong
+            options.forEach(opt => {
+                if (opt.getAttribute('data-answer') === correctAnswer) {
+                    opt.classList.add('correct');
+                }
+                if (opt === selected && !isCorrect) {
+                    opt.classList.add('wrong');
+                }
+            });
+
+            // Update score
+            if (isCorrect && !answeredQuestions.includes(questionNum)) {
+                score++;
+                answeredQuestions.push(questionNum);
+                document.getElementById('score').textContent = score;
+            }
+
+            // Show feedback
+            feedback.classList.add('show');
+            feedback.classList.add(isCorrect ? 'correct' : 'wrong');
+            
+            const icon = isCorrect ? '✅' : '❌';
+            const title = isCorrect ? 'Jawaban Benar!' : 'Jawaban Salah!';
+            const explanation = isCorrect ? explanations[questionNum].correct : explanations[questionNum].wrong;
+
+            feedback.innerHTML = `
+                <div class="feedback-header">
+                    <div class="feedback-icon">${icon}</div>
+                    <div class="feedback-title">${title}</div>
+                </div>
+                <div class="feedback-text">${explanation}</div>
+            `;
+
+            // Scroll to feedback
+            setTimeout(() => {
+                feedback.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 300);
+        }
+
+        function nextQuestion() {
+            const currentSlideEl = document.querySelector('.slide.active');
+            currentSlideEl.classList.remove('active');
+
+            currentSlide++;
+            const nextSlideEl = document.querySelector(`.slide[data-question="${currentSlide}"]`);
+            if (nextSlideEl) {
+                nextSlideEl.classList.add('active');
+                document.getElementById('currentQuestion').textContent = currentSlide;
+                
+                // Update progress bar
+                const progress = (currentSlide / 5) * 100;
+                document.getElementById('progressFill').style.width = progress + '%';
+
+                // Scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        function showResult() {
+            document.getElementById('quizContent').style.display = 'none';
+            document.getElementById('resultScreen').classList.add('show');
+            document.querySelector('.progress-container').style.display = 'none';
+
+            const resultScore = document.getElementById('resultScore');
+            const resultIcon = document.getElementById('resultIcon');
+            const resultTitle = document.getElementById('resultTitle');
+            const resultMessage = document.getElementById('resultMessage');
+
+            resultScore.textContent = `${score}/5`;
+
+            if (score === 5) {
+                resultScore.classList.add('excellent');
+                resultIcon.textContent = '🏆';
+                resultTitle.textContent = 'Sempurna!';
+                resultMessage.textContent = 'Luar biasa! Kamu menguasai materi Kunci Determinasi dengan sempurna!';
+            } else if (score >= 3) {
+                resultScore.classList.add('good');
+                resultIcon.textContent = '👍';
+                resultTitle.textContent = 'Bagus!';
+                resultMessage.textContent = 'Kerja yang baik! Terus tingkatkan pemahamanmu dengan belajar lebih banyak.';
+            } else {
+                resultScore.classList.add('poor');
+                resultIcon.textContent = '📚';
+                resultTitle.textContent = 'Tetap Semangat!';
+                resultMessage.textContent = 'Jangan menyerah! Pelajari materi lagi dan coba ulangi latihannya.';
+            }
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function retryQuiz() {
+            // Reset variables
+            currentSlide = 1;
+            score = 0;
+            answeredQuestions = [];
+
+            // Reset UI
+            document.getElementById('score').textContent = '0';
+            document.getElementById('currentQuestion').textContent = '1';
+            document.getElementById('progressFill').style.width = '0%';
+
+            // Reset all slides
+            document.querySelectorAll('.slide').forEach((slide, index) => {
+                slide.classList.remove('active');
+                if (index === 0) slide.classList.add('active');
+
+                // Reset options
+                slide.querySelectorAll('.option').forEach(opt => {
+                    opt.classList.remove('selected', 'correct', 'wrong', 'disabled');
+                });
+
+                // Reset buttons
+                slide.querySelector('.btn-submit').style.display = 'inline-block';
+                slide.querySelector('.btn-next').classList.remove('show');
+
+                // Reset feedback
+                const feedbackEl = slide.querySelector('.feedback');
+                feedbackEl.classList.remove('show', 'correct', 'wrong');
+                feedbackEl.innerHTML = '';
+            });
+
+            // Show quiz content
+            document.getElementById('quizContent').style.display = 'block';
+            document.getElementById('resultScreen').classList.remove('show');
+            document.querySelector('.progress-container').style.display = 'block';
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>

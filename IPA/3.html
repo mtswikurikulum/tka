@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Materi 3: Kunci Determinasi</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&family=Fira+Code:wght@400;500&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #059669;
+            --secondary: #0891b2;
+            --accent: #f59e0b;
+            --dark: #0f172a;
+            --light: #f8fafc;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: linear-gradient(135deg, #0f766e 0%, #0e7490 100%);
+            color: var(--dark);
+            line-height: 1.8;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Navigation Bar */
+        .nav-bar {
+            background: white;
+            border-radius: 16px;
+            padding: 20px 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .nav-title {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn-nav {
+            padding: 12px 24px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95em;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-home {
+            background: linear-gradient(135deg, #64748b, #475569);
+            color: white;
+            box-shadow: 0 4px 12px rgba(100, 116, 139, 0.3);
+        }
+
+        .btn-home:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(100, 116, 139, 0.4);
+        }
+
+        .btn-practice {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+        }
+
+        .btn-practice:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4);
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            border-radius: 20px;
+            padding: 50px 60px;
+            margin-bottom: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+        }
+
+        .header h1 {
+            font-size: 2.8em;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        .header .meta {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.95em;
+            color: #64748b;
+        }
+
+        .meta-item .icon {
+            font-size: 1.3em;
+        }
+
+        /* Content Section */
+        .content {
+            background: white;
+            border-radius: 20px;
+            padding: 50px 60px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .content h2 {
+            font-size: 2em;
+            font-weight: 700;
+            color: var(--primary);
+            margin-top: 40px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid var(--primary);
+        }
+
+        .content h2:first-child {
+            margin-top: 0;
+        }
+
+        .content h3 {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+
+        .content h4 {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: var(--dark);
+            margin-top: 25px;
+            margin-bottom: 12px;
+        }
+
+        .content p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .content ul, .content ol {
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+
+        .content li {
+            margin-bottom: 10px;
+        }
+
+        .content strong {
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        /* Info Box */
+        .info-box {
+            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+            border-left: 5px solid var(--secondary);
+            padding: 25px 30px;
+            margin: 25px 0;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(8, 145, 178, 0.1);
+        }
+
+        .info-box h4 {
+            color: var(--secondary);
+            font-weight: 700;
+            margin-bottom: 12px;
+            font-size: 1.1em;
+        }
+
+        /* Warning Box */
+        .warning-box {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-left: 5px solid var(--accent);
+            padding: 25px 30px;
+            margin: 25px 0;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.1);
+        }
+
+        .warning-box h4 {
+            color: var(--accent);
+            font-weight: 700;
+            margin-bottom: 12px;
+            font-size: 1.1em;
+        }
+
+        /* Example Box */
+        .example-box {
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .example-box h4 {
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 1.3em;
+            margin-bottom: 20px;
+        }
+
+        /* Determinasi Tree Box */
+        .tree-box {
+            background: #f0fdf4;
+            border: 2px solid #86efac;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.95em;
+            line-height: 1.8;
+        }
+
+        .tree-line {
+            padding: 5px 0;
+            color: #065f46;
+        }
+
+        .tree-indent {
+            margin-left: 20px;
+        }
+
+        .tree-number {
+            color: #059669;
+            font-weight: 700;
+        }
+
+        .tree-choice {
+            color: #0891b2;
+            font-weight: 600;
+        }
+
+        .tree-result {
+            color: #dc2626;
+            font-weight: 700;
+        }
+
+        /* Key Points */
+        .key-points {
+            background: linear-gradient(135deg, #fae8ff 0%, #f3e8ff 100%);
+            border-left: 5px solid #a855f7;
+            padding: 25px 30px;
+            margin: 25px 0;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(168, 85, 247, 0.1);
+        }
+
+        .key-points h4 {
+            color: #7c3aed;
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .key-points ul {
+            margin-left: 20px;
+        }
+
+        .key-points li {
+            margin-bottom: 10px;
+            color: #581c87;
+        }
+
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        thead {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        th {
+            padding: 18px 15px;
+            text-align: left;
+            font-weight: 700;
+            font-size: 1em;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        /* Question */
+        .question {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            border: 2px solid #e2e8f0;
+            margin-bottom: 20px;
+        }
+
+        .question-text {
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 20px;
+            font-size: 1.05em;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option {
+            padding: 15px 20px;
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.95em;
+        }
+
+        .option.correct {
+            background: #dcfce7;
+            border-color: #22c55e;
+            font-weight: 600;
+        }
+
+        .option.correct::before {
+            content: '✓ ';
+            color: #16a34a;
+            font-weight: 700;
+        }
+
+        .explanation {
+            background: #f0f9ff;
+            border-left: 4px solid #0284c7;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 8px;
+        }
+
+        .explanation h5 {
+            color: #0369a1;
+            font-weight: 700;
+            margin-bottom: 12px;
+            font-size: 1.1em;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 15px;
+            }
+
+            .header, .content {
+                padding: 30px 25px;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .content h2 {
+                font-size: 1.6em;
+            }
+
+            .tree-box {
+                font-size: 0.85em;
+                padding: 15px;
+            }
+
+            table {
+                font-size: 0.9em;
+            }
+
+            th, td {
+                padding: 12px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation Top -->
+        <div class="nav-bar">
+            <div class="nav-title">📚 Materi Pembelajaran IPA</div>
+            <div class="nav-buttons">
+                <a href="kisi-kisi-tkad-ipa.html" class="btn-nav btn-home">🏠 Menu Utama</a>
+                <a href="Lat3.html" class="btn-nav btn-practice">✏️ Latihan Soal</a>
+            </div>
+        </div>
+
+        <!-- Header -->
+        <div class="header">
+            <h1>🔑 Kunci Determinasi (Kunci Dikotomi)</h1>
+            <div class="meta">
+                <div class="meta-item">
+                    <span class="icon">📖</span>
+                    <span>Materi 3</span>
+                </div>
+                <div class="meta-item">
+                    <span class="icon">🎯</span>
+                    <span>Kelas 7</span>
+                </div>
+                <div class="meta-item">
+                    <span class="icon">⏱️</span>
+                    <span>45 menit</span>
+                </div>
+                <div class="meta-item">
+                    <span class="icon">📊</span>
+                    <span>Level Kognitif: L1</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <h2>🎯 Tujuan Pembelajaran</h2>
+            <p>Setelah mempelajari materi ini, peserta didik diharapkan dapat:</p>
+            <ol>
+                <li>Memahami konsep kunci determinasi (kunci dikotomi) sebagai alat untuk mengidentifikasi makhluk hidup</li>
+                <li>Membaca dan menggunakan kunci dikotomi untuk menentukan kelompok atau spesies makhluk hidup</li>
+                <li>Menganalisis pernyataan dalam kunci dikotomi dan menentukan kebenaran pernyataan berdasarkan data yang diberikan</li>
+                <li>Menerapkan prinsip kunci dikotomi dalam mengelompokkan makhluk hidup berdasarkan ciri-ciri yang dimilikinya</li>
+            </ol>
+
+            <h2>📚 Pengertian Kunci Determinasi</h2>
+            <p><strong>Kunci determinasi (kunci dikotomi)</strong> adalah alat bantu yang digunakan untuk mengidentifikasi dan mengklasifikasikan makhluk hidup berdasarkan ciri-ciri morfologi (bentuk tubuh) yang dimilikinya.</p>
+            
+            <div class="info-box">
+                <h4>💡 Asal Kata</h4>
+                <p><strong>"Dikotomi"</strong> berasal dari bahasa Yunani:</p>
+                <ul>
+                    <li><strong>Di</strong> = dua</li>
+                    <li><strong>Tome</strong> = potongan/bagian</li>
+                </ul>
+                <p>Jadi, dikotomi berarti "terbagi menjadi dua bagian".</p>
+            </div>
+
+            <h3>🔍 Prinsip Kunci Dikotomi</h3>
+            <p>Kunci dikotomi bekerja dengan prinsip pemilihan antara <strong>DUA pilihan yang berlawanan</strong> pada setiap langkah identifikasi. Setiap langkah memberikan dua pilihan ciri yang saling bertentangan, misalnya:</p>
+            <ul>
+                <li>Bersayap ↔ Tidak bersayap</li>
+                <li>Berambut ↔ Tidak berambut</li>
+                <li>Hidup di air ↔ Hidup di darat</li>
+                <li>Bertulang belakang ↔ Tidak bertulang belakang</li>
+            </ul>
+
+            <h3>✨ Karakteristik Kunci Dikotomi</h3>
+            <div class="key-points">
+                <h4>Ciri-Ciri Kunci Dikotomi yang Baik:</h4>
+                <ul>
+                    <li><strong>Selalu berpasangan berlawanan</strong> - Setiap langkah memiliki 2 pilihan yang kontras</li>
+                    <li><strong>Menggunakan ciri yang mudah diamati</strong> - Seperti bentuk, warna, ukuran, habitat</li>
+                    <li><strong>Bersifat objektif</strong> - Berdasarkan fakta morfologi, bukan subjektif</li>
+                    <li><strong>Sistematis dan berurutan</strong> - Dimulai dari ciri umum ke ciri khusus</li>
+                    <li><strong>Menghasilkan satu kesimpulan</strong> - Pada akhir proses, mengarah ke satu nama kelompok/spesies</li>
+                </ul>
+            </div>
+
+            <h2>📋 Cara Membaca Kunci Dikotomi</h2>
+            <p>Kunci dikotomi biasanya disusun dalam format bernomor. Berikut langkah-langkah membacanya:</p>
+
+            <div class="example-box">
+                <h4>📝 Format Umum Kunci Dikotomi</h4>
+                <div class="tree-box">
+                    <div class="tree-line"><span class="tree-number">1. a.</span> Ciri A ................................................. lanjut ke nomor ...</div>
+                    <div class="tree-line tree-indent"><span class="tree-number">b.</span> Ciri yang berlawanan dengan A ............. lanjut ke nomor ...</div>
+                    <div class="tree-line"><span class="tree-number">2. a.</span> Ciri B ................................................. <span class="tree-result">Kelompok/Nama X</span></div>
+                    <div class="tree-line tree-indent"><span class="tree-number">b.</span> Ciri yang berlawanan dengan B ............. <span class="tree-result">Kelompok/Nama Y</span></div>
+                </div>
+                
+                <p><strong>Cara Menggunakannya:</strong></p>
+                <ol>
+                    <li>Mulai dari nomor <strong>1</strong></li>
+                    <li>Baca pilihan <strong>a</strong> dan <strong>b</strong></li>
+                    <li>Pilih salah satu yang sesuai dengan ciri makhluk hidup yang diamati</li>
+                    <li>Jika pilihan mengarahkan ke nomor lain, lanjutkan ke nomor tersebut</li>
+                    <li>Jika pilihan langsung menyebutkan nama kelompok/spesies, maka proses identifikasi selesai</li>
+                    <li>Ulangi langkah 2-5 hingga mendapat hasil akhir</li>
+                </ol>
+            </div>
+
+            <h2>🦋 Contoh Kunci Dikotomi - Klasifikasi Hewan</h2>
+            
+            <div class="example-box">
+                <h4>Contoh 1: Kunci Dikotomi untuk 5 Jenis Hewan</h4>
+                <p><strong>Hewan yang akan diidentifikasi:</strong> Kucing, Burung Merpati, Ikan Mas, Katak, Ular</p>
+                
+                <div class="tree-box">
+                    <div class="tree-line"><span class="tree-number">1. a.</span> Memiliki tulang belakang (vertebrata) ................ lanjut ke <span class="tree-choice">2</span></div>
+                    <div class="tree-line tree-indent"><span class="tree-number">b.</span> Tidak memiliki tulang belakang (invertebrata) ... <span class="tree-result">Invertebrata</span></div>
+                    <div class="tree-line"><span class="tree-number">2. a.</span> Hidup di air, bernapas dengan insang .................. <span class="tree-result">Pisces (Ikan Mas)</span></div>
+                    <div class="tree-line tree-indent"><span class="tree-number">b.</span> Hidup di darat atau darat-air, tidak bernapas dengan insang ... lanjut ke <span class="tree-choice">3</span></div>
+                    <div class="tree-line"><span class="tree-number">3. a.</span> Tubuh ditutupi bulu, memiliki sayap ..................... <span class="tree-result">Aves (Burung Merpati)</span></div>
+                    <div class="tree-line tree-indent"><span class="tree-number">b.</span> Tubuh tidak ditutupi bulu, tidak bersayap ......... lanjut ke <span class="tree-choice">4</span></div>
+                    <div class="tree-line"><span class="tree-number">4. a.</span> Tubuh ditutupi rambut, menyusui anaknya .......... <span class="tree-result">Mammalia (Kucing)</span></div>
+                    <div class="tree-line tree-indent"><span class="tree-number">b.</span> Tubuh tidak ditutupi rambut, tidak menyusui ..... lanjut ke <span class="tree-choice">5</span></div>
+                    <div class="tree-line"><span class="tree-number">5. a.</span> Kulit lembap, hidup di dua alam ........................... <span class="tree-result">Amphibia (Katak)</span></div>
+                    <div class="tree-line tree-indent"><span class="tree-number">b.</span> Kulit bersisik kering, hanya hidup di darat ......... <span class="tree-result">Reptilia (Ular)</span></div>
+                </div>
+            </div>
+
+            <h3>🔬 Cara Menggunakan Kunci Dikotomi di Atas</h3>
+            
+            <div class="warning-box">
+                <h4>📌 Contoh Penggunaan: Mengidentifikasi KUCING</h4>
+                <p><strong>Langkah-langkah:</strong></p>
+                <ol>
+                    <li><strong>Langkah 1:</strong> Mulai dari nomor 1
+                        <ul>
+                            <li>Cek: Apakah kucing memiliki tulang belakang? → <strong>YA</strong></li>
+                            <li>Pilih: <strong>1a</strong> → lanjut ke nomor <strong>2</strong></li>
+                        </ul>
+                    </li>
+                    <li><strong>Langkah 2:</strong> Baca nomor 2
+                        <ul>
+                            <li>Cek: Apakah kucing hidup di air dan bernapas dengan insang? → <strong>TIDAK</strong></li>
+                            <li>Pilih: <strong>2b</strong> → lanjut ke nomor <strong>3</strong></li>
+                        </ul>
+                    </li>
+                    <li><strong>Langkah 3:</strong> Baca nomor 3
+                        <ul>
+                            <li>Cek: Apakah kucing tubuhnya ditutupi bulu dan memiliki sayap? → <strong>TIDAK</strong> (kucing berbulu tapi tidak bersayap)</li>
+                            <li>Pilih: <strong>3b</strong> → lanjut ke nomor <strong>4</strong></li>
+                        </ul>
+                    </li>
+                    <li><strong>Langkah 4:</strong> Baca nomor 4
+                        <ul>
+                            <li>Cek: Apakah kucing tubuhnya ditutupi rambut dan menyusui anaknya? → <strong>YA</strong></li>
+                            <li>Pilih: <strong>4a</strong> → Hasil: <strong>Mammalia (Kucing)</strong> ✓</li>
+                        </ul>
+                    </li>
+                </ol>
+                <p><strong>Kesimpulan:</strong> Kucing termasuk dalam kelompok <strong>Mammalia</strong></p>
+            </div>
+
+            <h2>🌿 Contoh Kunci Dikotomi - Klasifikasi Tumbuhan</h2>
+            
+            <div class="example-box">
+                <h4>Contoh 2: Kunci Dikotomi untuk Tumbuhan</h4>
+                <p><strong>Tumbuhan yang akan diidentifikasi:</strong> Paku, Lumut, Jagung, Mangga, Pinus</p>
+                
+                <div class="tree-box">
+                    <div class="tree-line"><span class="tree-number">1. a.</span> Memiliki bunga sejati (Spermatophyta) ............... lanjut ke <span class="tree-choice">2</span></div>
+                    <div class="tree-line tree-indent"><span class="tree-number">b.</span> Tidak memiliki bunga sejati ............................ lanjut ke <span class="tree-choice">3</span></div>
+                    <div class="tree-line"><span class="tree-number">2. a.</span> Biji terlindung dalam buah (Angiospermae) ........ lanjut ke <span class="tree-choice">4</span></div>
+                    <div class="tree-line tree-indent"><span class="tree-number">b.</span> Biji tidak terlindung/terbuka (Gymnospermae) .. <span class="tree-result">Pinus</span></div>
+                    <div class="tree-line"><span class="tree-number">3. a.</span> Memiliki akar, batang, daun sejati (Pteridophyta) ... <span class="tree-result">Paku</span></div>
+                    <div class="tree-line tree-indent"><span class="tree-number">b.</span> Tidak memiliki akar, batang, daun sejati (Bryophyta) ... <span class="tree-result">Lumut</span></div>
+                    <div class="tree-line"><span class="tree-number">4. a.</span> Biji berkeping dua (Dikotil) ............................... <span class="tree-result">Mangga</span></div>
+                    <div class="tree-line tree-indent"><span class="tree-number">b.</span> Biji berkeping satu (Monokotil) ........................ <span class="tree-result">Jagung</span></div>
+                </div>
+            </div>
+
+            <h2>📝 Contoh Soal dan Pembahasan</h2>
+            
+            <div class="example-box">
+                <h4>📌 Contoh Soal 1</h4>
+                <div class="question">
+                    <p class="question-text">
+                        Perhatikan kunci dikotomi berikut!
+                    </p>
+                    
+                    <div class="tree-box">
+                        <div class="tree-line"><span class="tree-number">1. a.</span> Berkaki empat ........................ lanjut ke 2</div>
+                        <div class="tree-line tree-indent"><span class="tree-number">b.</span> Berkaki dua ........................... Ayam</div>
+                        <div class="tree-line"><span class="tree-number">2. a.</span> Herbivora ............................... Kambing</div>
+                        <div class="tree-line tree-indent"><span class="tree-number">b.</span> Karnivora .............................. lanjut ke 3</div>
+                        <div class="tree-line"><span class="tree-number">3. a.</span> Hidup di darat ......................... Kucing</div>
+                        <div class="tree-line tree-indent"><span class="tree-number">b.</span> Hidup di air ............................. Buaya</div>
+                    </div>
+
+                    <p class="question-text">
+                        Pernyataan yang <strong>BENAR</strong> berdasarkan kunci dikotomi di atas adalah...
+                    </p>
+
+                    <div class="options">
+                        <div class="option correct">A. Ayam berkaki dua</div>
+                        <div class="option correct">B. Kambing adalah hewan herbivora berkaki empat</div>
+                        <div class="option">C. Kucing hidup di air</div>
+                        <div class="option correct">D. Buaya adalah karnivora yang hidup di air</div>
+                    </div>
+
+                    <div class="explanation">
+                        <h5>💡 Pembahasan:</h5>
+                        <p><strong>Jawaban yang benar: A, B, dan D</strong></p>
+                        <p><strong>Analisis setiap pernyataan:</strong></p>
+                        <ul>
+                            <li><strong>A. BENAR</strong> - Berdasarkan kunci nomor 1b, ayam memilih pilihan "berkaki dua", jadi pernyataan ini benar.</li>
+                            
+                            <li><strong>B. BENAR</strong> - Untuk sampai ke "Kambing", mengikuti jalur: 1a (berkaki empat) → 2a (herbivora). Jadi kambing adalah hewan berkaki empat yang herbivora.</li>
+                            
+                            <li><strong>C. SALAH</strong> - Berdasarkan kunci nomor 3a, kucing memilih pilihan "hidup di darat", bukan di air. Yang hidup di air adalah buaya (3b).</li>
+                            
+                            <li><strong>D. BENAR</strong> - Untuk sampai ke "Buaya", mengikuti jalur: 1a (berkaki empat) → 2b (karnivora) → 3b (hidup di air). Jadi buaya adalah karnivora yang hidup di air.</li>
+                        </ul>
+                        <p><strong>Cara membaca:</strong> Telusuri jalur yang diambil untuk mencapai setiap hewan, dan ciri-ciri yang dipilih di sepanjang jalur tersebut akan menggambarkan karakteristik hewan tersebut.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <h4>📌 Contoh Soal 2</h4>
+                <div class="question">
+                    <p class="question-text">
+                        Seorang siswa mengamati 4 jenis serangga. Berikut kunci dikotomi yang dibuat:
+                    </p>
+                    
+                    <div class="tree-box">
+                        <div class="tree-line"><span class="tree-number">1. a.</span> Memiliki sayap ........................ lanjut ke 2</div>
+                        <div class="tree-line tree-indent"><span class="tree-number">b.</span> Tidak memiliki sayap .............. Semut</div>
+                        <div class="tree-line"><span class="tree-number">2. a.</span> Sayap transparan ..................... lanjut ke 3</div>
+                        <div class="tree-line tree-indent"><span class="tree-number">b.</span> Sayap berwarna ...................... Kupu-kupu</div>
+                        <div class="tree-line"><span class="tree-number">3. a.</span> Tubuh ramping, sayap 4 ......... Capung</div>
+                        <div class="tree-line tree-indent"><span class="tree-number">b.</span> Tubuh berbulu, sayap 2 .......... Lalat</div>
+                    </div>
+
+                    <p class="question-text">
+                        Manakah pernyataan yang <strong>BENAR</strong>?
+                    </p>
+
+                    <div class="options">
+                        <div class="option correct">A. Semut tidak memiliki sayap</div>
+                        <div class="option">B. Kupu-kupu memiliki sayap transparan</div>
+                        <div class="option correct">C. Capung memiliki 4 sayap transparan dan tubuh ramping</div>
+                        <div class="option correct">D. Lalat memiliki 2 sayap transparan dan tubuh berbulu</div>
+                    </div>
+
+                    <div class="explanation">
+                        <h5>💡 Pembahasan:</h5>
+                        <p><strong>Jawaban yang benar: A, C, dan D</strong></p>
+                        <p><strong>Analisis jalur untuk setiap serangga:</strong></p>
+                        <ul>
+                            <li><strong>Semut:</strong> 1b → Tidak memiliki sayap ✓</li>
+                            <li><strong>Kupu-kupu:</strong> 1a → 2b → Memiliki sayap, tetapi sayap berwarna (BUKAN transparan)</li>
+                            <li><strong>Capung:</strong> 1a → 2a → 3a → Memiliki sayap transparan, tubuh ramping, sayap 4 ✓</li>
+                            <li><strong>Lalat:</strong> 1a → 2a → 3b → Memiliki sayap transparan, tubuh berbulu, sayap 2 ✓</li>
+                        </ul>
+                        <p><strong>Kesimpulan per pernyataan:</strong></p>
+                        <ul>
+                            <li><strong>A. BENAR</strong> - Sesuai jalur 1b</li>
+                            <li><strong>B. SALAH</strong> - Kupu-kupu memilih 2b yang artinya "sayap berwarna", bukan transparan</li>
+                            <li><strong>C. BENAR</strong> - Sesuai jalur 1a → 2a → 3a</li>
+                            <li><strong>D. BENAR</strong> - Sesuai jalur 1a → 2a → 3b</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <h2>⚠️ Kesalahan Umum dalam Membaca Kunci Dikotomi</h2>
+            
+            <div class="warning-box">
+                <h4>🚫 Hindari Kesalahan Berikut:</h4>
+                <ul>
+                    <li><strong>Tidak membaca dengan teliti</strong> - Terburu-buru sehingga salah memilih ciri yang berlawanan</li>
+                    <li><strong>Melewati langkah</strong> - Langsung melompat ke nomor akhir tanpa mengikuti jalur yang benar</li>
+                    <li><strong>Salah menafsirkan ciri</strong> - Misalnya mengira "berkaki empat" sama dengan "berkaki banyak"</li>
+                    <li><strong>Tidak mengikuti nomor yang ditunjuk</strong> - Setelah memilih satu pilihan, harus lanjut ke nomor yang tertera</li>
+                    <li><strong>Mencampur jalur</strong> - Mengambil ciri dari jalur a dan b secara bersamaan</li>
+                </ul>
+            </div>
+
+            <h2>🎓 Rangkuman</h2>
+            <div class="info-box">
+                <ol>
+                    <li><strong>Kunci dikotomi</strong> adalah alat untuk mengidentifikasi makhluk hidup berdasarkan ciri morfologi dengan sistem pilihan berpasangan yang berlawanan.</li>
+                    
+                    <li><strong>Prinsip dasar:</strong> Setiap langkah memiliki 2 pilihan (a dan b) yang saling bertentangan.</li>
+                    
+                    <li><strong>Cara menggunakan:</strong> Mulai dari nomor 1, pilih salah satu (a atau b), ikuti petunjuk ke nomor berikutnya, ulangi hingga mendapat hasil akhir.</li>
+                    
+                    <li><strong>Jalur identifikasi:</strong> Rangkaian pilihan yang diambil dari awal hingga akhir menggambarkan karakteristik lengkap dari makhluk hidup tersebut.</li>
+                    
+                    <li><strong>Membaca pernyataan:</strong> Untuk menentukan kebenaran pernyataan tentang suatu makhluk hidup, telusuri jalur yang dilalui makhluk tersebut dalam kunci dikotomi.</li>
+                    
+                    <li><strong>Ciri yang digunakan:</strong> Biasanya ciri morfologi yang mudah diamati seperti bentuk tubuh, jumlah kaki, jenis sayap, habitat, cara makan, dll.</li>
+                </ol>
+            </div>
+
+            <div class="key-points">
+                <h4>💪 Tips Mengerjakan Soal</h4>
+                <ul>
+                    <li>Baca kunci dikotomi dengan teliti dari nomor 1</li>
+                    <li>Telusuri jalur yang benar untuk setiap makhluk hidup yang ditanyakan</li>
+                    <li>Catat atau tandai setiap pilihan (a/b) yang diambil dalam jalur tersebut</li>
+                    <li>Kumpulkan semua ciri yang terpilih sepanjang jalur - inilah karakteristik lengkap makhluk hidup tersebut</li>
+                    <li>Cocokkan karakteristik yang didapat dengan pernyataan yang diberikan dalam soal</li>
+                    <li>Perhatikan kata kunci yang berlawanan (ada/tidak ada, hidup di darat/air, dll)</li>
+                    <li>Pada soal Benar-Salah, periksa SETIAP bagian pernyataan dengan jalur yang sesuai</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Navigation Bottom -->
+        <div class="nav-bar">
+            <div class="nav-buttons" style="width: 100%; justify-content: space-between;">
+                <a href="kisi-kisi-tkad-ipa.html" class="btn-nav btn-home">
+                    🏠 Kembali ke Menu
+                </a>
+                <a href="Lat3.html" class="btn-nav btn-practice">
+                    Lanjut ke Latihan Soal ✏️
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

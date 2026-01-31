@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latihan Soal 5: Simbiosis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #8b5cf6;
+            --secondary: #ec4899;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --dark: #1e293b;
+            --light: #f8fafc;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Navigation */
+        .nav-bar {
+            background: white;
+            border-radius: 16px;
+            padding: 15px 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .nav-title {
+            font-size: 1.2em;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn-nav {
+            padding: 10px 20px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-home {
+            background: linear-gradient(135deg, #64748b, #475569);
+            color: white;
+            box-shadow: 0 4px 12px rgba(100, 116, 139, 0.3);
+        }
+
+        .btn-home:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(100, 116, 139, 0.4);
+        }
+
+        .btn-materi {
+            background: linear-gradient(135deg, #059669, #047857);
+            color: white;
+            box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);
+        }
+
+        .btn-materi:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(5, 150, 105, 0.4);
+        }
+
+        /* Quiz Container */
+        .quiz-container {
+            background: white;
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quiz-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--warning));
+            background-size: 200% 100%;
+            animation: gradientMove 3s ease infinite;
+        }
+
+        @keyframes gradientMove {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            margin-bottom: 30px;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .question-number {
+            font-size: 1.1em;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .score-display {
+            font-size: 1em;
+            font-weight: 700;
+            color: var(--success);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background: #e2e8f0;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 20px;
+            transition: width 0.5s ease;
+        }
+
+        /* Question Slide */
+        .slide {
+            display: none;
+            animation: slideIn 0.5s ease;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .question-content {
+            margin-bottom: 30px;
+        }
+
+        .question-title {
+            font-size: 1.3em;
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .question-badge {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.7em;
+            font-weight: 700;
+        }
+
+        .question-text {
+            font-size: 1.05em;
+            line-height: 1.8;
+            color: var(--dark);
+            margin-bottom: 20px;
+        }
+
+        .description-box {
+            background: #f0f9ff;
+            border-left: 4px solid #0891b2;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            font-size: 1em;
+            line-height: 1.8;
+        }
+
+        .description-box strong {
+            color: #0369a1;
+        }
+
+        /* Options */
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .option {
+            background: #f8fafc;
+            border: 3px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 18px 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.05em;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .option:hover:not(.disabled) {
+            background: #f1f5f9;
+            border-color: var(--primary);
+            transform: translateX(5px);
+        }
+
+        .option.selected {
+            background: linear-gradient(135deg, #ede9fe, #e9d5ff);
+            border-color: var(--primary);
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.2);
+        }
+
+        .option.correct {
+            background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+            border-color: var(--success);
+            color: #065f46;
+        }
+
+        .option.wrong {
+            background: linear-gradient(135deg, #fee2e2, #fecaca);
+            border-color: var(--danger);
+            color: #991b1b;
+        }
+
+        .option.disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        .option-icon {
+            font-size: 1.3em;
+            min-width: 30px;
+        }
+
+        /* Feedback */
+        .feedback {
+            display: none;
+            margin-top: 25px;
+            padding: 25px;
+            border-radius: 15px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .feedback.show {
+            display: block;
+        }
+
+        .feedback.correct {
+            background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+            border: 2px solid var(--success);
+        }
+
+        .feedback.wrong {
+            background: linear-gradient(135deg, #fee2e2, #fecaca);
+            border: 2px solid var(--danger);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .feedback-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .feedback-icon {
+            font-size: 2.5em;
+        }
+
+        .feedback-title {
+            font-size: 1.4em;
+            font-weight: 800;
+        }
+
+        .feedback.correct .feedback-title {
+            color: #065f46;
+        }
+
+        .feedback.wrong .feedback-title {
+            color: #991b1b;
+        }
+
+        .feedback-text {
+            font-size: 1em;
+            line-height: 1.8;
+            margin-top: 10px;
+        }
+
+        .feedback.correct .feedback-text {
+            color: #064e3b;
+        }
+
+        .feedback.wrong .feedback-text {
+            color: #7f1d1d;
+        }
+
+        /* Buttons */
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.05em;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(139, 92, 246, 0.4);
+        }
+
+        .btn-next {
+            background: linear-gradient(135deg, var(--success), #059669);
+            color: white;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+            display: none;
+        }
+
+        .btn-next.show {
+            display: flex;
+        }
+
+        .btn-next:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(16, 185, 129, 0.4);
+        }
+
+        /* Result Screen */
+        .result-screen {
+            display: none;
+            text-align: center;
+            animation: scaleIn 0.6s ease;
+        }
+
+        .result-screen.show {
+            display: block;
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .result-icon {
+            font-size: 6em;
+            margin-bottom: 20px;
+            animation: bounce 1s ease infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .result-title {
+            font-size: 2.5em;
+            font-weight: 800;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .result-score {
+            font-size: 4em;
+            font-weight: 900;
+            margin: 30px 0;
+        }
+
+        .result-score.excellent {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .result-score.good {
+            background: linear-gradient(135deg, var(--success), #059669);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .result-score.poor {
+            background: linear-gradient(135deg, #f87171, #ef4444);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .result-message {
+            font-size: 1.2em;
+            color: #64748b;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        .result-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-retry, .btn-home-result {
+            padding: 15px 35px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.05em;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-retry {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+        }
+
+        .btn-retry:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(139, 92, 246, 0.4);
+        }
+
+        .btn-home-result {
+            background: linear-gradient(135deg, #64748b, #475569);
+            color: white;
+            box-shadow: 0 4px 15px rgba(100, 116, 139, 0.3);
+        }
+
+        .btn-home-result:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(100, 116, 139, 0.4);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .quiz-container {
+                padding: 25px 20px;
+            }
+
+            .question-title {
+                font-size: 1.1em;
+            }
+
+            .option {
+                padding: 15px 18px;
+                font-size: 0.95em;
+            }
+
+            .result-title {
+                font-size: 2em;
+            }
+
+            .result-score {
+                font-size: 3em;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation Top -->
+        <div class="nav-bar">
+            <div class="nav-title">✏️ Latihan Soal - Simbiosis</div>
+            <div class="nav-buttons">
+                <a href="kisi-kisi-tkad-ipa.html" class="btn-nav btn-home">🏠 Menu</a>
+                <a href="5.html" class="btn-nav btn-materi">📖 Materi</a>
+            </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-container">
+            <!-- Progress Bar -->
+            <div class="progress-container">
+                <div class="progress-info">
+                    <div class="question-number">
+                        Soal <span id="currentQuestion">1</span> dari 5
+                    </div>
+                    <div class="score-display">
+                        Skor: <span id="score">0</span>
+                    </div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <!-- Quiz Content -->
+            <div id="quizContent">
+                <!-- Question 1 -->
+                <div class="slide active" data-question="1">
+                    <div class="question-content">
+                        <div class="question-title">
+                            <span class="question-badge">Soal 1</span>
+                            Lebah dan Bunga
+                        </div>
+                        <div class="description-box">
+                            <strong>Deskripsi Interaksi:</strong><br>
+                            Lebah madu mengunjungi bunga untuk mengisap nektar sebagai makanannya. Saat lebah hinggap pada bunga, serbuk sari menempel pada tubuh lebah. Ketika lebah berpindah ke bunga lain, serbuk sari tersebut jatuh dan membantu proses penyerbukan bunga.
+                        </div>
+                        <div class="question-text">
+                            <strong>Pernyataan:</strong><br>
+                            "Interaksi antara lebah dan bunga adalah simbiosis mutualisme karena lebah mendapat nektar sebagai makanan dan bunga terbantu dalam proses penyerbukannya"
+                        </div>
+                    </div>
+
+                    <div class="options">
+                        <div class="option" data-answer="B">
+                            <span class="option-icon">✅</span>
+                            <span>BENAR</span>
+                        </div>
+                        <div class="option" data-answer="S">
+                            <span class="option-icon">❌</span>
+                            <span>SALAH</span>
+                        </div>
+                    </div>
+
+                    <div class="button-group">
+                        <button class="btn btn-submit" onclick="submitAnswer(1, 'B')">
+                            Kirim Jawaban 📤
+                        </button>
+                        <button class="btn btn-next" onclick="nextQuestion()">
+                            Soal Berikutnya ➡️
+                        </button>
+                    </div>
+
+                    <div class="feedback" id="feedback1"></div>
+                </div>
+
+                <!-- Question 2 -->
+                <div class="slide" data-question="2">
+                    <div class="question-content">
+                        <div class="question-title">
+                            <span class="question-badge">Soal 2</span>
+                            Ikan Remora dan Hiu
+                        </div>
+                        <div class="description-box">
+                            <strong>Deskripsi Interaksi:</strong><br>
+                            Ikan remora memiliki alat penghisap di bagian atas kepalanya yang digunakan untuk menempel pada tubuh hiu. Ikan remora mendapat transportasi gratis dan memakan sisa-sisa makanan hiu. Sementara itu, hiu tidak mendapat keuntungan apa pun dari keberadaan ikan remora, tetapi juga tidak dirugikan.
+                        </div>
+                        <div class="question-text">
+                            <strong>Pernyataan:</strong><br>
+                            "Hubungan ini merupakan simbiosis parasitisme karena ikan remora menumpang pada tubuh hiu dan mengambil sisa makanan hiu"
+                        </div>
+                    </div>
+
+                    <div class="options">
+                        <div class="option" data-answer="B">
+                            <span class="option-icon">✅</span>
+                            <span>BENAR</span>
+                        </div>
+                        <div class="option" data-answer="S">
+                            <span class="option-icon">❌</span>
+                            <span>SALAH</span>
+                        </div>
+                    </div>
+
+                    <div class="button-group">
+                        <button class="btn btn-submit" onclick="submitAnswer(2, 'S')">
+                            Kirim Jawaban 📤
+                        </button>
+                        <button class="btn btn-next" onclick="nextQuestion()">
+                            Soal Berikutnya ➡️
+                        </button>
+                    </div>
+
+                    <div class="feedback" id="feedback2"></div>
+                </div>
+
+                <!-- Question 3 -->
+                <div class="slide" data-question="3">
+                    <div class="question-content">
+                        <div class="question-title">
+                            <span class="question-badge">Soal 3</span>
+                            Benalu dan Pohon Mangga
+                        </div>
+                        <div class="description-box">
+                            <strong>Deskripsi Interaksi:</strong><br>
+                            Benalu tumbuh menempel pada dahan pohon mangga. Akar benalu menembus jaringan pohon mangga dan mengambil air serta nutrisi dari pohon tersebut. Akibatnya, pertumbuhan pohon mangga menjadi lambat, daun menguning, dan produksi buahnya menurun drastis.
+                        </div>
+                        <div class="question-text">
+                            <strong>Pernyataan:</strong><br>
+                            "Benalu bertindak sebagai parasit yang merugikan pohon mangga sebagai inangnya karena mengambil nutrisi dan air, sehingga pertumbuhan pohon mangga terganggu"
+                        </div>
+                    </div>
+
+                    <div class="options">
+                        <div class="option" data-answer="B">
+                            <span class="option-icon">✅</span>
+                            <span>BENAR</span>
+                        </div>
+                        <div class="option" data-answer="S">
+                            <span class="option-icon">❌</span>
+                            <span>SALAH</span>
+                        </div>
+                    </div>
+
+                    <div class="button-group">
+                        <button class="btn btn-submit" onclick="submitAnswer(3, 'B')">
+                            Kirim Jawaban 📤
+                        </button>
+                        <button class="btn btn-next" onclick="nextQuestion()">
+                            Soal Berikutnya ➡️
+                        </button>
+                    </div>
+
+                    <div class="feedback" id="feedback3"></div>
+                </div>
+
+                <!-- Question 4 -->
+                <div class="slide" data-question="4">
+                    <div class="question-content">
+                        <div class="question-title">
+                            <span class="question-badge">Soal 4</span>
+                            Ikan Badut dan Anemon Laut
+                        </div>
+                        <div class="description-box">
+                            <strong>Deskripsi Interaksi:</strong><br>
+                            Ikan badut hidup di antara tentakel anemon laut yang beracun. Ikan badut kebal terhadap racun anemon dan berlindung dari predator di sana. Ikan badut juga membersihkan anemon dari parasit dan memberi sisa makanan kepada anemon. Anemon juga terlindungi dari ikan pemakan anemon karena kehadiran ikan badut.
+                        </div>
+                        <div class="question-text">
+                            <strong>Pernyataan:</strong><br>
+                            "Interaksi ini adalah simbiosis komensalisme karena hanya ikan badut yang mendapat keuntungan berupa perlindungan dari predator"
+                        </div>
+                    </div>
+
+                    <div class="options">
+                        <div class="option" data-answer="B">
+                            <span class="option-icon">✅</span>
+                            <span>BENAR</span>
+                        </div>
+                        <div class="option" data-answer="S">
+                            <span class="option-icon">❌</span>
+                            <span>SALAH</span>
+                        </div>
+                    </div>
+
+                    <div class="button-group">
+                        <button class="btn btn-submit" onclick="submitAnswer(4, 'S')">
+                            Kirim Jawaban 📤
+                        </button>
+                        <button class="btn btn-next" onclick="nextQuestion()">
+                            Soal Berikutnya ➡️
+                        </button>
+                    </div>
+
+                    <div class="feedback" id="feedback4"></div>
+                </div>
+
+                <!-- Question 5 -->
+                <div class="slide" data-question="5">
+                    <div class="question-content">
+                        <div class="question-title">
+                            <span class="question-badge">Soal 5</span>
+                            Kutu Rambut dan Manusia
+                        </div>
+                        <div class="description-box">
+                            <strong>Deskripsi Interaksi:</strong><br>
+                            Kutu rambut hidup di kulit kepala manusia dengan cara mengisap darah dari kulit kepala. Kutu memerlukan darah untuk bertahan hidup dan berkembang biak. Akibat gigitan kutu, manusia mengalami gatal-gatal yang sangat mengganggu, iritasi kulit kepala, dan dapat terinfeksi jika sering digaruk.
+                        </div>
+                        <div class="question-text">
+                            <strong>Pernyataan:</strong><br>
+                            "Kutu rambut adalah parasit yang menguntungkan dirinya sendiri dengan mengisap darah manusia, sedangkan manusia sebagai inang mengalami kerugian berupa gatal, iritasi, dan risiko infeksi"
+                        </div>
+                    </div>
+
+                    <div class="options">
+                        <div class="option" data-answer="B">
+                            <span class="option-icon">✅</span>
+                            <span>BENAR</span>
+                        </div>
+                        <div class="option" data-answer="S">
+                            <span class="option-icon">❌</span>
+                            <span>SALAH</span>
+                        </div>
+                    </div>
+
+                    <div class="button-group">
+                        <button class="btn btn-submit" onclick="submitAnswer(5, 'B')">
+                            Kirim Jawaban 📤
+                        </button>
+                        <button class="btn btn-next" onclick="showResult()">
+                            Lihat Hasil 🎯
+                        </button>
+                    </div>
+
+                    <div class="feedback" id="feedback5"></div>
+                </div>
+            </div>
+
+            <!-- Result Screen -->
+            <div class="result-screen" id="resultScreen">
+                <div class="result-icon" id="resultIcon">🏆</div>
+                <div class="result-title" id="resultTitle">Sempurna!</div>
+                <div class="result-score" id="resultScore">5/5</div>
+                <div class="result-message" id="resultMessage">
+                    Luar biasa! Kamu menguasai materi Simbiosis dengan sempurna!
+                </div>
+                <div class="result-buttons">
+                    <button class="btn-retry" onclick="retryQuiz()">
+                        🔄 Ulangi Latihan
+                    </button>
+                    <a href="kisi-kisi-tkad-ipa.html" class="btn-home-result">
+                        🏠 Kembali ke Menu
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 1;
+        let score = 0;
+        let answeredQuestions = [];
+
+        // Explanations for each question
+        const explanations = {
+            1: {
+                correct: "Sempurna! Ini adalah contoh klasik simbiosis mutualisme.<br><br><strong>Analisis dampak:</strong><br>• <strong>Lebah:</strong> Mendapat nektar sebagai sumber makanan → <span style='color: #059669; font-weight: 600;'>UNTUNG (+)</span><br>• <strong>Bunga:</strong> Terbantu dalam penyerbukan yang penting untuk reproduksi → <span style='color: #059669; font-weight: 600;'>UNTUNG (+)</span><br><br><strong>Kesimpulan:</strong> Kedua organisme sama-sama mendapat keuntungan (+ / +) → <strong>Simbiosis Mutualisme</strong> ✓<br><br>Kedua pihak saling membutuhkan dan sama-sama diuntungkan dari interaksi ini.",
+                wrong: "Kurang tepat. Mari kita analisis dampak pada masing-masing organisme:<br><br><strong>Dampak pada Lebah:</strong><br>✓ Mendapat nektar (makanan berenergi tinggi)<br>✓ Dapat bertahan hidup dan berkembang biak<br>→ <strong>UNTUNG (+)</strong><br><br><strong>Dampak pada Bunga:</strong><br>✓ Serbuk sari tersebar ke bunga lain<br>✓ Terjadi penyerbukan silang<br>✓ Dapat menghasilkan biji dan buah<br>→ <strong>UNTUNG (+)</strong><br><br>Karena KEDUA pihak sama-sama diuntungkan (+ / +), ini adalah <strong>simbiosis mutualisme</strong>, bukan parasitisme atau komensalisme. Pernyataannya BENAR."
+            },
+            2: {
+                correct: "Benar! Pernyataan tersebut SALAH. Ini adalah simbiosis komensalisme, bukan parasitisme.<br><br><strong>Analisis dampak:</strong><br>• <strong>Ikan Remora:</strong> Mendapat transportasi gratis + sisa makanan → <span style='color: #059669; font-weight: 600;'>UNTUNG (+)</span><br>• <strong>Hiu:</strong> Tidak mendapat keuntungan, tetapi juga tidak dirugikan → <span style='color: #64748b; font-weight: 600;'>NETRAL (0)</span><br><br><strong>Kesimpulan:</strong> Satu pihak untung, pihak lain netral (+ / 0) → <strong>Simbiosis Komensalisme</strong> ✓<br><br><strong>Mengapa bukan parasitisme?</strong> Karena hiu tidak dirugikan. Dalam parasitisme, inang harus mengalami kerugian (sakit, kehilangan nutrisi, dll).",
+                wrong: "Belum tepat. Mari kita analisis dengan cermat:<br><br><strong>Dampak pada Ikan Remora:</strong><br>✓ Dapat berpindah tempat tanpa usaha sendiri<br>✓ Mendapat sisa makanan hiu<br>→ <strong>UNTUNG (+)</strong><br><br><strong>Dampak pada Hiu:</strong><br>✗ Tidak mendapat makanan tambahan<br>✗ Tidak mendapat perlindungan<br>✓ Tetapi juga tidak kehilangan nutrisi<br>✓ Tidak sakit atau terganggu<br>→ <strong>NETRAL (0)</strong><br><br>Pola (+ / 0) = <strong>Komensalisme</strong>, bukan parasitisme.<br>Parasitisme harus ada kerugian pada inang (pola + / -). Jadi pernyataannya SALAH."
+            },
+            3: {
+                correct: "Sempurna! Ini adalah contoh jelas simbiosis parasitisme.<br><br><strong>Analisis dampak:</strong><br>• <strong>Benalu (parasit):</strong> Mendapat air dan nutrisi dari pohon mangga → <span style='color: #059669; font-weight: 600;'>UNTUNG (+)</span><br>• <strong>Pohon Mangga (inang):</strong> Kehilangan nutrisi dan air, pertumbuhan terhambat, produksi buah menurun → <span style='color: #dc2626; font-weight: 600;'>RUGI (-)</span><br><br><strong>Kesimpulan:</strong> Satu pihak untung, pihak lain rugi (+ / -) → <strong>Simbiosis Parasitisme</strong> ✓<br><br><strong>Catatan:</strong> Benalu berbeda dengan anggrek. Benalu MENGAMBIL nutrisi (parasit), sedangkan anggrek hanya menempel tanpa mengambil nutrisi (komensalisme).",
+                wrong: "Kurang tepat. Mari kita analisis dengan seksama:<br><br><strong>Dampak pada Benalu:</strong><br>✓ Mendapat air dari pohon<br>✓ Mendapat nutrisi dari pohon<br>✓ Dapat bertahan hidup dan berkembang biak<br>→ <strong>UNTUNG (+)</strong><br><br><strong>Dampak pada Pohon Mangga:</strong><br>✗ Kehilangan air dan nutrisi<br>✗ Pertumbuhan melambat<br>✗ Daun menguning<br>✗ Produksi buah menurun<br>→ <strong>RUGI (-)</strong><br><br>Pola (+ / -) dengan jelas menunjukkan <strong>simbiosis parasitisme</strong>. Benalu = parasit, Pohon = inang. Pernyataannya BENAR."
+            },
+            4: {
+                correct: "Benar! Pernyataan tersebut SALAH. Ini adalah simbiosis mutualisme, bukan komensalisme.<br><br><strong>Analisis dampak:</strong><br>• <strong>Ikan Badut:</strong> Mendapat perlindungan dari predator → <span style='color: #059669; font-weight: 600;'>UNTUNG (+)</span><br>• <strong>Anemon Laut:</strong> Dibersihkan dari parasit, mendapat sisa makanan, terlindungi dari pemangsa → <span style='color: #059669; font-weight: 600;'>UNTUNG (+)</span><br><br><strong>Kesimpulan:</strong> Kedua pihak sama-sama diuntungkan (+ / +) → <strong>Simbiosis Mutualisme</strong> ✓<br><br>Pernyataan salah karena menyebutkan 'komensalisme' dan hanya melihat keuntungan ikan badut saja, padahal anemon juga diuntungkan.",
+                wrong: "Belum tepat. Perhatikan dengan cermat SEMUA informasi dalam deskripsi:<br><br><strong>Dampak pada Ikan Badut:</strong><br>✓ Terlindung dari predator oleh tentakel beracun anemon<br>→ <strong>UNTUNG (+)</strong><br><br><strong>Dampak pada Anemon Laut:</strong><br>✓ Dibersihkan dari parasit oleh ikan badut<br>✓ Mendapat sisa makanan dari ikan badut<br>✓ Terlindungi dari ikan pemakan anemon<br>→ <strong>UNTUNG (+)</strong><br><br>KEDUA organisme mendapat keuntungan (+ / +) = <strong>Mutualisme</strong>, bukan komensalisme.<br>Komensalisme hanya satu pihak yang untung (+ / 0). Jadi pernyataannya SALAH."
+            },
+            5: {
+                correct: "Sempurna! Ini adalah contoh klasik simbiosis parasitisme pada manusia.<br><br><strong>Analisis dampak:</strong><br>• <strong>Kutu Rambut (parasit):</strong> Mendapat darah sebagai makanan untuk bertahan hidup dan berkembang biak → <span style='color: #059669; font-weight: 600;'>UNTUNG (+)</span><br>• <strong>Manusia (inang):</strong> Mengalami gatal, iritasi kulit, risiko infeksi → <span style='color: #dc2626; font-weight: 600;'>RUGI (-)</span><br><br><strong>Kesimpulan:</strong> Satu pihak untung, pihak lain rugi (+ / -) → <strong>Simbiosis Parasitisme</strong> ✓<br><br>Kutu adalah parasit ektoparasit (parasit luar tubuh) yang merugikan inangnya.",
+                wrong: "Kurang tepat. Mari kita analisis interaksi ini:<br><br><strong>Dampak pada Kutu Rambut:</strong><br>✓ Mendapat darah sebagai sumber makanan<br>✓ Mendapat tempat tinggal di kulit kepala<br>✓ Dapat berkembang biak<br>→ <strong>UNTUNG (+)</strong><br><br><strong>Dampak pada Manusia:</strong><br>✗ Mengalami gatal-gatal hebat<br>✗ Iritasi kulit kepala<br>✗ Risiko infeksi jika digaruk<br>✗ Gangguan kenyamanan<br>→ <strong>RUGI (-)</strong><br><br>Pola (+ / -) menunjukkan <strong>simbiosis parasitisme</strong>. Kutu = parasit, Manusia = inang yang dirugikan. Pernyataannya BENAR."
+            }
+        };
+
+        // Handle option click
+        document.querySelectorAll('.option').forEach(option => {
+            option.addEventListener('click', function() {
+                if (!this.classList.contains('disabled')) {
+                    const parent = this.closest('.slide');
+                    parent.querySelectorAll('.option').forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+                    this.classList.add('selected');
+                }
+            });
+        });
+
+        function submitAnswer(questionNum, correctAnswer) {
+            const slide = document.querySelector(`.slide[data-question="${questionNum}"]`);
+            const options = slide.querySelectorAll('.option');
+            const selected = slide.querySelector('.option.selected');
+            const feedback = document.getElementById(`feedback${questionNum}`);
+            const submitBtn = slide.querySelector('.btn-submit');
+            const nextBtn = slide.querySelector('.btn-next');
+
+            if (!selected) {
+                alert('Pilih jawaban terlebih dahulu!');
+                return;
+            }
+
+            // Disable further selection
+            options.forEach(opt => opt.classList.add('disabled'));
+            submitBtn.style.display = 'none';
+            nextBtn.classList.add('show');
+
+            const userAnswer = selected.getAttribute('data-answer');
+            const isCorrect = userAnswer === correctAnswer;
+
+            // Mark correct/wrong
+            options.forEach(opt => {
+                if (opt.getAttribute('data-answer') === correctAnswer) {
+                    opt.classList.add('correct');
+                }
+                if (opt === selected && !isCorrect) {
+                    opt.classList.add('wrong');
+                }
+            });
+
+            // Update score
+            if (isCorrect && !answeredQuestions.includes(questionNum)) {
+                score++;
+                answeredQuestions.push(questionNum);
+                document.getElementById('score').textContent = score;
+            }
+
+            // Show feedback
+            feedback.classList.add('show');
+            feedback.classList.add(isCorrect ? 'correct' : 'wrong');
+            
+            const icon = isCorrect ? '✅' : '❌';
+            const title = isCorrect ? 'Jawaban Benar!' : 'Jawaban Salah!';
+            const explanation = isCorrect ? explanations[questionNum].correct : explanations[questionNum].wrong;
+
+            feedback.innerHTML = `
+                <div class="feedback-header">
+                    <div class="feedback-icon">${icon}</div>
+                    <div class="feedback-title">${title}</div>
+                </div>
+                <div class="feedback-text">${explanation}</div>
+            `;
+
+            // Scroll to feedback
+            setTimeout(() => {
+                feedback.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 300);
+        }
+
+        function nextQuestion() {
+            const currentSlideEl = document.querySelector('.slide.active');
+            currentSlideEl.classList.remove('active');
+
+            currentSlide++;
+            const nextSlideEl = document.querySelector(`.slide[data-question="${currentSlide}"]`);
+            if (nextSlideEl) {
+                nextSlideEl.classList.add('active');
+                document.getElementById('currentQuestion').textContent = currentSlide;
+                
+                // Update progress bar
+                const progress = (currentSlide / 5) * 100;
+                document.getElementById('progressFill').style.width = progress + '%';
+
+                // Scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        function showResult() {
+            document.getElementById('quizContent').style.display = 'none';
+            document.getElementById('resultScreen').classList.add('show');
+            document.querySelector('.progress-container').style.display = 'none';
+
+            const resultScore = document.getElementById('resultScore');
+            const resultIcon = document.getElementById('resultIcon');
+            const resultTitle = document.getElementById('resultTitle');
+            const resultMessage = document.getElementById('resultMessage');
+
+            resultScore.textContent = `${score}/5`;
+
+            if (score === 5) {
+                resultScore.classList.add('excellent');
+                resultIcon.textContent = '🏆';
+                resultTitle.textContent = 'Sempurna!';
+                resultMessage.textContent = 'Luar biasa! Kamu menguasai materi Simbiosis dengan sempurna!';
+            } else if (score >= 3) {
+                resultScore.classList.add('good');
+                resultIcon.textContent = '👍';
+                resultTitle.textContent = 'Bagus!';
+                resultMessage.textContent = 'Kerja yang baik! Terus tingkatkan pemahamanmu dengan belajar lebih banyak.';
+            } else {
+                resultScore.classList.add('poor');
+                resultIcon.textContent = '📚';
+                resultTitle.textContent = 'Tetap Semangat!';
+                resultMessage.textContent = 'Jangan menyerah! Pelajari materi lagi dan coba ulangi latihannya.';
+            }
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function retryQuiz() {
+            // Reset variables
+            currentSlide = 1;
+            score = 0;
+            answeredQuestions = [];
+
+            // Reset UI
+            document.getElementById('score').textContent = '0';
+            document.getElementById('currentQuestion').textContent = '1';
+            document.getElementById('progressFill').style.width = '0%';
+
+            // Reset all slides
+            document.querySelectorAll('.slide').forEach((slide, index) => {
+                slide.classList.remove('active');
+                if (index === 0) slide.classList.add('active');
+
+                // Reset options
+                slide.querySelectorAll('.option').forEach(opt => {
+                    opt.classList.remove('selected', 'correct', 'wrong', 'disabled');
+                });
+
+                // Reset buttons
+                slide.querySelector('.btn-submit').style.display = 'inline-block';
+                slide.querySelector('.btn-next').classList.remove('show');
+
+                // Reset feedback
+                const feedbackEl = slide.querySelector('.feedback');
+                feedbackEl.classList.remove('show', 'correct', 'wrong');
+                feedbackEl.innerHTML = '';
+            });
+
+            // Show quiz content
+            document.getElementById('quizContent').style.display = 'block';
+            document.getElementById('resultScreen').classList.remove('show');
+            document.querySelector('.progress-container').style.display = 'block';
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>

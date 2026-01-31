@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Materi 2: Klasifikasi Makhluk Hidup</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&family=Fira+Code:wght@400;500&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #059669;
+            --secondary: #0891b2;
+            --accent: #f59e0b;
+            --dark: #0f172a;
+            --light: #f8fafc;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: linear-gradient(135deg, #0f766e 0%, #0e7490 100%);
+            color: var(--dark);
+            line-height: 1.8;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Navigation Bar */
+        .nav-bar {
+            background: white;
+            border-radius: 16px;
+            padding: 20px 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .nav-title {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn-nav {
+            padding: 12px 24px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95em;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-home {
+            background: linear-gradient(135deg, #64748b, #475569);
+            color: white;
+            box-shadow: 0 4px 12px rgba(100, 116, 139, 0.3);
+        }
+
+        .btn-home:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(100, 116, 139, 0.4);
+        }
+
+        .btn-practice {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+        }
+
+        .btn-practice:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4);
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            border-radius: 20px;
+            padding: 50px 60px;
+            margin-bottom: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+        }
+
+        .header h1 {
+            font-size: 2.8em;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        .header .meta {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.95em;
+            color: #64748b;
+        }
+
+        .meta-item .icon {
+            font-size: 1.3em;
+        }
+
+        /* Content Section */
+        .content {
+            background: white;
+            border-radius: 20px;
+            padding: 50px 60px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .content h2 {
+            font-size: 2em;
+            font-weight: 700;
+            color: var(--primary);
+            margin-top: 40px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid var(--primary);
+        }
+
+        .content h2:first-child {
+            margin-top: 0;
+        }
+
+        .content h3 {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+
+        .content p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .content ul, .content ol {
+            margin: 15px 0 15px 30px;
+        }
+
+        .content li {
+            margin-bottom: 10px;
+        }
+
+        /* Info Box */
+        .info-box {
+            background: linear-gradient(135deg, #e0f2fe 0%, #dbeafe 100%);
+            border-left: 5px solid var(--secondary);
+            padding: 25px 30px;
+            border-radius: 12px;
+            margin: 25px 0;
+        }
+
+        .info-box h4 {
+            color: var(--secondary);
+            font-size: 1.2em;
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Warning Box */
+        .warning-box {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-left: 5px solid var(--accent);
+            padding: 25px 30px;
+            border-radius: 12px;
+            margin: 25px 0;
+        }
+
+        .warning-box h4 {
+            color: #d97706;
+            font-size: 1.2em;
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Success Box */
+        .success-box {
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+            border-left: 5px solid #059669;
+            padding: 25px 30px;
+            border-radius: 12px;
+            margin: 25px 0;
+        }
+
+        .success-box h4 {
+            color: #059669;
+            font-size: 1.2em;
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        thead {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        th {
+            padding: 18px 20px;
+            text-align: left;
+            font-weight: 700;
+            font-size: 1em;
+        }
+
+        td {
+            padding: 15px 20px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Example Box */
+        .example-box {
+            background: #f8fafc;
+            border-radius: 16px;
+            padding: 30px;
+            margin: 30px 0;
+            border: 2px solid #e2e8f0;
+        }
+
+        .example-box h4 {
+            color: var(--primary);
+            font-size: 1.3em;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .question {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin: 20px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .question-text {
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+
+        .options {
+            margin: 20px 0;
+        }
+
+        .option {
+            background: #f8fafc;
+            padding: 15px 20px;
+            margin: 12px 0;
+            border-radius: 10px;
+            border: 2px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+
+        .option.correct {
+            background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+            border-color: #059669;
+        }
+
+        .explanation {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            padding: 25px;
+            border-radius: 12px;
+            margin-top: 25px;
+            border-left: 5px solid var(--accent);
+        }
+
+        .explanation h5 {
+            color: #d97706;
+            font-size: 1.1em;
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Key Points */
+        .key-points {
+            background: linear-gradient(135deg, #fce7f3, #fbcfe8);
+            border-left: 5px solid #ec4899;
+            padding: 25px 30px;
+            border-radius: 12px;
+            margin: 25px 0;
+        }
+
+        .key-points h4 {
+            color: #ec4899;
+            font-size: 1.2em;
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 15px;
+            }
+
+            .header, .content {
+                padding: 30px 25px;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .content h2 {
+                font-size: 1.6em;
+            }
+
+            .content h3 {
+                font-size: 1.3em;
+            }
+
+            table {
+                font-size: 0.9em;
+            }
+
+            th, td {
+                padding: 12px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation Bar -->
+        <div class="nav-bar">
+            <div class="nav-title">📚 Materi 2: Klasifikasi Makhluk Hidup</div>
+            <div class="nav-buttons">
+                <a href="kisi-kisi-tkad-ipa.html" class="btn-nav btn-home">🏠 Menu Utama</a>
+                <a href="Lat2.html" class="btn-nav btn-practice">✏️ Latihan Soal</a>
+            </div>
+        </div>
+
+        <!-- Header -->
+        <div class="header">
+            <h1>🔬 Klasifikasi Makhluk Hidup</h1>
+            <div class="meta">
+                <div class="meta-item">
+                    <span class="icon">📖</span>
+                    <span>Kelas VII</span>
+                </div>
+                <div class="meta-item">
+                    <span class="icon">🎯</span>
+                    <span>Fase D</span>
+                </div>
+                <div class="meta-item">
+                    <span class="icon">⏱️</span>
+                    <span>Level Kognitif: L2</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <h2>🌍 Pengenalan Klasifikasi Makhluk Hidup</h2>
+            
+            <p>Tahukah kamu bahwa di Bumi ini terdapat jutaan jenis makhluk hidup? Bayangkan jika semua makhluk hidup tidak dikelompokkan, betapa sulitnya mempelajari dan mengidentifikasi mereka! Oleh karena itu, para ahli biologi mengembangkan sistem <strong>klasifikasi</strong> untuk mengelompokkan makhluk hidup berdasarkan persamaan dan perbedaan ciri-cirinya.</p>
+
+            <div class="info-box">
+                <h4>💡 Apa itu Klasifikasi?</h4>
+                <p><strong>Klasifikasi</strong> adalah proses pengelompokan makhluk hidup berdasarkan persamaan dan perbedaan ciri yang dimiliki. Tujuan klasifikasi adalah:</p>
+                <ul>
+                    <li>Memudahkan mempelajari makhluk hidup yang sangat beragam</li>
+                    <li>Mengetahui hubungan kekerabatan antar makhluk hidup</li>
+                    <li>Memberi nama ilmiah yang universal</li>
+                    <li>Menyederhanakan objek studi</li>
+                </ul>
+            </div>
+
+            <h2>🏛️ Sistem Klasifikasi 5 Kingdom</h2>
+
+            <p>Saat ini, sistem klasifikasi yang paling banyak digunakan adalah sistem <strong>5 Kingdom</strong> yang dikemukakan oleh Robert H. Whittaker pada tahun 1969. Kelima kingdom tersebut adalah:</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Kingdom</th>
+                        <th>Ciri-Ciri Utama</th>
+                        <th>Contoh</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Monera</strong></td>
+                        <td>Prokariotik (tidak memiliki membran inti sel), uniseluler</td>
+                        <td>Bakteri, Cyanobacteria</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Protista</strong></td>
+                        <td>Eukariotik, umumnya uniseluler, beberapa multiseluler sederhana</td>
+                        <td>Amoeba, Paramecium, Euglena, Ganggang</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Fungi</strong></td>
+                        <td>Eukariotik, heterotrof, dinding sel dari kitin, tidak berklorofil</td>
+                        <td>Jamur, Ragi, Kapang</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Plantae</strong></td>
+                        <td>Eukariotik, multiseluler, autotrof (fotosintesis), memiliki klorofil</td>
+                        <td>Lumut, Paku, Tumbuhan Berbiji</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Animalia</strong></td>
+                        <td>Eukariotik, multiseluler, heterotrof, dapat bergerak aktif</td>
+                        <td>Cacing, Serangga, Ikan, Burung, Mamalia</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>🐾 Klasifikasi Kingdom Animalia</h2>
+
+            <p>Kingdom Animalia (hewan) dibagi menjadi dua kelompok besar berdasarkan ada tidaknya tulang belakang:</p>
+
+            <h3>1️⃣ Invertebrata (Hewan Tidak Bertulang Belakang)</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Filum</th>
+                        <th>Ciri-Ciri Khas</th>
+                        <th>Contoh</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Porifera</strong></td>
+                        <td>Tubuh berpori, belum memiliki jaringan sejati</td>
+                        <td>Spons, Bunga karang</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Coelenterata</strong></td>
+                        <td>Memiliki rongga tubuh, sel penyengat</td>
+                        <td>Ubur-ubur, Hydra, Anemon laut</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Platyhelminthes</strong></td>
+                        <td>Cacing pipih, tidak memiliki rongga tubuh</td>
+                        <td>Planaria, Cacing pita</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Nemathelminthes</strong></td>
+                        <td>Cacing gilig/bulat, memiliki rongga tubuh semu</td>
+                        <td>Cacing tambang, Cacing kremi</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Annelida</strong></td>
+                        <td>Cacing bersegmen, memiliki rongga tubuh sejati</td>
+                        <td>Cacing tanah, Lintah, Cacing wawo</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Mollusca</strong></td>
+                        <td>Tubuh lunak, umumnya memiliki cangkang</td>
+                        <td>Siput, Kerang, Cumi-cumi, Gurita</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Arthropoda</strong></td>
+                        <td>Memiliki kaki berbuku-buku, eksoskeleton dari kitin</td>
+                        <td>Serangga, Laba-laba, Udang, Kepiting</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Echinodermata</strong></td>
+                        <td>Kulit berduri, sistem ambulakral (kaki tabung)</td>
+                        <td>Bintang laut, Bulu babi, Teripang</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>2️⃣ Vertebrata (Hewan Bertulang Belakang)</h3>
+
+            <p>Vertebrata dibagi menjadi 5 kelas utama:</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Kelas</th>
+                        <th>Ciri-Ciri Khas</th>
+                        <th>Contoh</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Pisces (Ikan)</strong></td>
+                        <td>Hidup di air, bernapas dengan insang, berdarah dingin, tubuh bersisik</td>
+                        <td>Ikan mas, Hiu, Pari</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Amphibia (Amfibi)</strong></td>
+                        <td>Hidup di dua alam, bernapas dengan insang (larva) dan paru-paru (dewasa), kulit lembab, berdarah dingin</td>
+                        <td>Katak, Salamander, Sesilia</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Reptilia (Reptil)</strong></td>
+                        <td>Bernapas dengan paru-paru, kulit bersisik/berperisai kering, berdarah dingin, bertelur di darat</td>
+                        <td>Kadal, Ular, Kura-kura, Buaya</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Aves (Burung)</strong></td>
+                        <td>Tubuh ditutupi bulu, memiliki sayap, bernapas dengan paru-paru dan pundi-pundi udara, berdarah panas, bertelur</td>
+                        <td>Merpati, Ayam, Elang, Pinguin</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Mammalia (Mamalia)</strong></td>
+                        <td>Memiliki kelenjar susu, tubuh ditutupi rambut, bernapas dengan paru-paru, berdarah panas, melahirkan (vivipar)</td>
+                        <td>Sapi, Kuda, Paus, Kelelawar, Manusia</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="success-box">
+                <h4>✨ Catatan Penting tentang Vertebrata</h4>
+                <ul>
+                    <li><strong>Berdarah dingin (poikiloterm):</strong> Suhu tubuh dipengaruhi lingkungan → Pisces, Amphibia, Reptilia</li>
+                    <li><strong>Berdarah panas (homoioterm):</strong> Suhu tubuh tetap/konstan → Aves, Mammalia</li>
+                    <li><strong>Alat pernapasan:</strong>
+                        <ul>
+                            <li>Insang: Pisces, Amphibia (larva)</li>
+                            <li>Paru-paru: Amphibia (dewasa), Reptilia, Aves, Mammalia</li>
+                            <li>Kulit: Amphibia (membantu pernapasan)</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+            <h2>📝 Contoh Soal dan Pembahasan</h2>
+
+            <div class="example-box">
+                <h4>📌 Contoh Soal 1</h4>
+                <div class="question">
+                    <p class="question-text">
+                        Perhatikan ciri-ciri makhluk hidup berikut!
+                    </p>
+                    <ol>
+                        <li>Tubuh lunak tidak bersegmen</li>
+                        <li>Umumnya memiliki cangkang dari zat kapur</li>
+                        <li>Memiliki kaki berotot untuk bergerak</li>
+                        <li>Hidup di air dan darat</li>
+                    </ol>
+                    <p class="question-text">
+                        Berdasarkan ciri-ciri di atas, makhluk hidup tersebut termasuk kelompok...
+                    </p>
+
+                    <div class="options">
+                        <div class="option">A. Porifera</div>
+                        <div class="option">B. Coelenterata</div>
+                        <div class="option correct">C. Mollusca</div>
+                        <div class="option">D. Arthropoda</div>
+                    </div>
+
+                    <div class="explanation">
+                        <h5>💡 Pembahasan:</h5>
+                        <p><strong>Jawaban yang benar: C. Mollusca</strong></p>
+                        <p><strong>Analisis setiap ciri:</strong></p>
+                        <ul>
+                            <li><strong>Tubuh lunak tidak bersegmen</strong> → Ciri khas Mollusca (dari kata "molluscus" = lunak)</li>
+                            <li><strong>Memiliki cangkang dari zat kapur</strong> → Sebagian besar Mollusca memiliki cangkang untuk melindungi tubuh lunaknya (contoh: kerang, siput). Beberapa tidak bercangkang seperti gurita dan cumi-cumi.</li>
+                            <li><strong>Memiliki kaki berotot</strong> → Mollusca memiliki struktur kaki yang berotot untuk bergerak atau menempel</li>
+                            <li><strong>Hidup di air dan darat</strong> → Mollusca ada yang hidup di air (kerang, cumi-cumi) dan di darat (bekicot)</li>
+                        </ul>
+                        <p><strong>Mengapa pilihan lain salah?</strong></p>
+                        <ul>
+                            <li><strong>A. Porifera:</strong> Tubuh berpori, tidak bergerak aktif, tidak memiliki cangkang</li>
+                            <li><strong>B. Coelenterata:</strong> Tubuh berongga, memiliki sel penyengat, tidak memiliki cangkang</li>
+                            <li><strong>D. Arthropoda:</strong> Memiliki kaki berbuku-buku, eksoskeleton dari kitin (bukan cangkang kapur)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <h4>📌 Contoh Soal 2</h4>
+                <div class="question">
+                    <p class="question-text">
+                        Seorang siswa menemukan hewan dengan ciri-ciri sebagai berikut:
+                    </p>
+                    <ul>
+                        <li>Tubuh ditutupi sisik kering</li>
+                        <li>Bernapas dengan paru-paru</li>
+                        <li>Suhu tubuh dipengaruhi lingkungan</li>
+                        <li>Berkembang biak dengan bertelur di darat</li>
+                    </ul>
+                    <p class="question-text">
+                        Hewan tersebut termasuk dalam kelas...
+                    </p>
+
+                    <div class="options">
+                        <div class="option">A. Pisces</div>
+                        <div class="option">B. Amphibia</div>
+                        <div class="option correct">C. Reptilia</div>
+                        <div class="option">D. Aves</div>
+                    </div>
+
+                    <div class="explanation">
+                        <h5>💡 Pembahasan:</h5>
+                        <p><strong>Jawaban yang benar: C. Reptilia</strong></p>
+                        <p><strong>Analisis ciri-ciri:</strong></p>
+                        <ul>
+                            <li><strong>Tubuh ditutupi sisik kering:</strong> Ciri khas Reptilia. Sisik melindungi tubuh dan mencegah kehilangan air.</li>
+                            <li><strong>Bernapas dengan paru-paru:</strong> Reptilia bernapas dengan paru-paru sepanjang hidupnya (berbeda dengan Amphibia yang mengalami metamorfosis)</li>
+                            <li><strong>Suhu tubuh dipengaruhi lingkungan (berdarah dingin/poikiloterm):</strong> Reptilia tidak dapat mengatur suhu tubuhnya sendiri</li>
+                            <li><strong>Bertelur di darat:</strong> Telur Reptilia memiliki cangkang yang melindungi dari kekeringan</li>
+                        </ul>
+                        <p><strong>Perbandingan dengan kelas lain:</strong></p>
+                        <table style="margin-top: 15px;">
+                            <thead>
+                                <tr>
+                                    <th>Kelas</th>
+                                    <th>Penutup Tubuh</th>
+                                    <th>Alat Napas</th>
+                                    <th>Suhu Tubuh</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Pisces</td>
+                                    <td>Sisik basah</td>
+                                    <td>Insang</td>
+                                    <td>Dingin</td>
+                                </tr>
+                                <tr>
+                                    <td>Amphibia</td>
+                                    <td>Kulit lembab</td>
+                                    <td>Insang & Paru-paru</td>
+                                    <td>Dingin</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Reptilia</strong></td>
+                                    <td><strong>Sisik kering</strong></td>
+                                    <td><strong>Paru-paru</strong></td>
+                                    <td><strong>Dingin</strong></td>
+                                </tr>
+                                <tr>
+                                    <td>Aves</td>
+                                    <td>Bulu</td>
+                                    <td>Paru-paru & Pundi udara</td>
+                                    <td>Panas</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p style="margin-top: 15px;"><strong>Contoh hewan Reptilia:</strong> Kadal, Ular, Buaya, Kura-kura, Komodo</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <h4>📌 Contoh Soal 3</h4>
+                <div class="question">
+                    <p class="question-text">
+                        Perhatikan data beberapa hewan berikut!
+                    </p>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Hewan</th>
+                                <th>Ciri-Ciri</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>P. Paus</td>
+                                <td>Hidup di laut, bernapas dengan paru-paru, menyusui anaknya</td>
+                            </tr>
+                            <tr>
+                                <td>Q. Pinguin</td>
+                                <td>Hidup di kutub, tubuh ditutupi bulu, tidak dapat terbang</td>
+                            </tr>
+                            <tr>
+                                <td>R. Lumba-lumba</td>
+                                <td>Hidup di laut, melahirkan, suhu tubuh tetap</td>
+                            </tr>
+                            <tr>
+                                <td>S. Hiu</td>
+                                <td>Hidup di laut, bernapas dengan insang, berdarah dingin</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p class="question-text">
+                        Hewan yang termasuk dalam kelas yang sama adalah...
+                    </p>
+
+                    <div class="options">
+                        <div class="option correct">A. P dan R (Mammalia)</div>
+                        <div class="option">B. P dan S (Pisces)</div>
+                        <div class="option">C. Q dan S (Aves)</div>
+                        <div class="option">D. R dan S (Pisces)</div>
+                    </div>
+
+                    <div class="explanation">
+                        <h5>💡 Pembahasan:</h5>
+                        <p><strong>Jawaban yang benar: A. P dan R (Mammalia)</strong></p>
+                        <p><strong>Analisis setiap hewan:</strong></p>
+                        <ul>
+                            <li><strong>P. Paus → MAMMALIA</strong>
+                                <ul>
+                                    <li>Meskipun hidup di laut, Paus bernapas dengan paru-paru (harus naik ke permukaan)</li>
+                                    <li>Menyusui anaknya (memiliki kelenjar susu)</li>
+                                    <li>Melahirkan (vivipar)</li>
+                                    <li>Berdarah panas</li>
+                                </ul>
+                            </li>
+                            <li><strong>Q. Pinguin → AVES</strong>
+                                <ul>
+                                    <li>Tubuh ditutupi bulu</li>
+                                    <li>Meskipun tidak dapat terbang, tetap memiliki sayap</li>
+                                    <li>Bertelur</li>
+                                    <li>Berdarah panas</li>
+                                </ul>
+                            </li>
+                            <li><strong>R. Lumba-lumba → MAMMALIA</strong>
+                                <ul>
+                                    <li>Melahirkan (vivipar)</li>
+                                    <li>Suhu tubuh tetap (berdarah panas/homoioterm)</li>
+                                    <li>Bernapas dengan paru-paru</li>
+                                    <li>Menyusui anaknya</li>
+                                </ul>
+                            </li>
+                            <li><strong>S. Hiu → PISCES</strong>
+                                <ul>
+                                    <li>Bernapas dengan insang</li>
+                                    <li>Berdarah dingin (poikiloterm)</li>
+                                    <li>Tubuh bersisik</li>
+                                    <li>Hidup di air</li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <p><strong>Kesimpulan:</strong> Paus (P) dan Lumba-lumba (R) keduanya adalah Mammalia laut. Jangan tertipu dengan habitat! Yang menentukan klasifikasi adalah ciri-ciri anatomi dan fisiologi, bukan tempat hidupnya.</p>
+                    </div>
+                </div>
+            </div>
+
+            <h2>🎓 Rangkuman</h2>
+            <div class="info-box">
+                <ol>
+                    <li><strong>Klasifikasi</strong> adalah pengelompokan makhluk hidup berdasarkan persamaan dan perbedaan ciri-ciri.</li>
+                    
+                    <li><strong>Sistem 5 Kingdom:</strong> Monera, Protista, Fungi, Plantae, dan Animalia.</li>
+                    
+                    <li><strong>Invertebrata</strong> (tidak bertulang belakang): Porifera, Coelenterata, Platyhelminthes, Nemathelminthes, Annelida, Mollusca, Arthropoda, Echinodermata.</li>
+                    
+                    <li><strong>Vertebrata</strong> (bertulang belakang): Pisces, Amphibia, Reptilia, Aves, Mammalia.</li>
+                    
+                    <li><strong>Ciri khas setiap kelas Vertebrata:</strong>
+                        <ul>
+                            <li>Pisces: insang, sisik basah, berdarah dingin</li>
+                            <li>Amphibia: kulit lembab, metamorfosis, berdarah dingin</li>
+                            <li>Reptilia: sisik kering, paru-paru, berdarah dingin</li>
+                            <li>Aves: bulu, sayap, berdarah panas</li>
+                            <li>Mammalia: rambut, kelenjar susu, berdarah panas</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Jangan tertipu dengan habitat!</strong> Klasifikasi ditentukan oleh ciri anatomi dan fisiologi, bukan tempat hidup (contoh: Paus hidup di laut tetapi termasuk Mammalia).</li>
+                </ol>
+            </div>
+
+            <div class="key-points">
+                <h4>💪 Tips Mengerjakan Soal</h4>
+                <ul>
+                    <li>Baca ciri-ciri yang diberikan dengan teliti dan lengkap</li>
+                    <li>Fokus pada ciri-ciri khas yang membedakan antar kelompok</li>
+                    <li>Jangan hanya melihat satu ciri, perhatikan kombinasi ciri-ciri</li>
+                    <li>Hati-hati dengan hewan yang habitat tidak biasa (seperti Paus, Pinguin)</li>
+                    <li>Ingat perbedaan utama: berdarah panas/dingin, alat napas, penutup tubuh</li>
+                    <li>Buat tabel perbandingan untuk memudahkan mengingat ciri-ciri</li>
+                </ul>
+            </div>
+
+            <div class="warning-box">
+                <h4>⚠️ Kesalahan Umum yang Harus Dihindari</h4>
+                <ul>
+                    <li><strong>Mengklasifikasi berdasarkan habitat saja</strong> → Paus bukan ikan meskipun hidup di laut!</li>
+                    <li><strong>Mengabaikan ciri berdarah panas/dingin</strong> → Ini ciri pembeda penting antara Reptilia dengan Aves/Mammalia</li>
+                    <li><strong>Tertukar antara Amphibia dan Reptilia</strong> → Ingat: Amphibia kulit lembab + metamorfosis, Reptilia sisik kering</li>
+                    <li><strong>Lupa bahwa Aves tidak semua bisa terbang</strong> → Pinguin, burung unta tetap termasuk Aves</li>
+                    <li><strong>Salah membedakan invertebrata</strong> → Perhatikan ciri khas: berpori, bersegmen, kaki berbuku, dll</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Navigation Bottom -->
+        <div class="nav-bar">
+            <div class="nav-buttons" style="width: 100%; justify-content: space-between;">
+                <a href="kisi-kisi-tkad-ipa.html" class="btn-nav btn-home">
+                    🏠 Kembali ke Menu
+                </a>
+                <a href="Lat2.html" class="btn-nav btn-practice">
+                    Lanjut ke Latihan Soal ✏️
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
