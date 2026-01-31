@@ -1,0 +1,1138 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latihan Soal 7: Pengukuran Volume Benda Tidak Beraturan</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #8b5cf6;
+            --secondary: #ec4899;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --dark: #1e293b;
+            --light: #f8fafc;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Navigation */
+        .nav-bar {
+            background: white;
+            border-radius: 16px;
+            padding: 15px 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .nav-title {
+            font-size: 1.2em;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn-nav {
+            padding: 10px 20px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-home {
+            background: linear-gradient(135deg, #64748b, #475569);
+            color: white;
+            box-shadow: 0 4px 12px rgba(100, 116, 139, 0.3);
+        }
+
+        .btn-home:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(100, 116, 139, 0.4);
+        }
+
+        .btn-materi {
+            background: linear-gradient(135deg, #059669, #047857);
+            color: white;
+            box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);
+        }
+
+        .btn-materi:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(5, 150, 105, 0.4);
+        }
+
+        /* Quiz Container */
+        .quiz-container {
+            background: white;
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quiz-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--warning));
+            background-size: 200% 100%;
+            animation: gradientMove 3s ease infinite;
+        }
+
+        @keyframes gradientMove {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            margin-bottom: 30px;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .question-number {
+            font-size: 1.1em;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .score-display {
+            font-size: 1em;
+            font-weight: 700;
+            color: var(--success);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background: #e2e8f0;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 20px;
+            transition: width 0.5s ease;
+        }
+
+        /* Question Slide */
+        .slide {
+            display: none;
+            animation: slideIn 0.5s ease;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .question-content {
+            margin-bottom: 30px;
+        }
+
+        .question-title {
+            font-size: 1.3em;
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .question-badge {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.7em;
+            font-weight: 700;
+        }
+
+        .question-text {
+            font-size: 1.05em;
+            line-height: 1.8;
+            color: var(--dark);
+            margin-bottom: 20px;
+        }
+
+        .data-box {
+            background: #f0f9ff;
+            border-left: 4px solid #0891b2;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            font-size: 1em;
+            line-height: 1.8;
+        }
+
+        .data-box strong {
+            color: #0369a1;
+        }
+
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        thead {
+            background: linear-gradient(135deg, #059669, #0891b2);
+            color: white;
+        }
+
+        th {
+            padding: 15px 12px;
+            text-align: left;
+            font-weight: 700;
+            font-size: 0.95em;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        /* Options */
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .option {
+            background: #f8fafc;
+            border: 3px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 18px 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.05em;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .option:hover:not(.disabled) {
+            background: #f1f5f9;
+            border-color: var(--primary);
+            transform: translateX(5px);
+        }
+
+        .option.selected {
+            background: linear-gradient(135deg, #ede9fe, #e9d5ff);
+            border-color: var(--primary);
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.2);
+        }
+
+        .option.correct {
+            background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+            border-color: var(--success);
+            color: #065f46;
+        }
+
+        .option.wrong {
+            background: linear-gradient(135deg, #fee2e2, #fecaca);
+            border-color: var(--danger);
+            color: #991b1b;
+        }
+
+        .option.disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        .option-icon {
+            font-size: 1.3em;
+            min-width: 30px;
+        }
+
+        /* Feedback */
+        .feedback {
+            display: none;
+            margin-top: 25px;
+            padding: 25px;
+            border-radius: 15px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .feedback.show {
+            display: block;
+        }
+
+        .feedback.correct {
+            background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+            border: 2px solid var(--success);
+        }
+
+        .feedback.wrong {
+            background: linear-gradient(135deg, #fee2e2, #fecaca);
+            border: 2px solid var(--danger);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .feedback-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .feedback-icon {
+            font-size: 2.5em;
+        }
+
+        .feedback-title {
+            font-size: 1.4em;
+            font-weight: 800;
+        }
+
+        .feedback.correct .feedback-title {
+            color: #065f46;
+        }
+
+        .feedback.wrong .feedback-title {
+            color: #991b1b;
+        }
+
+        .feedback-text {
+            font-size: 1em;
+            line-height: 1.8;
+            margin-top: 10px;
+        }
+
+        .feedback.correct .feedback-text {
+            color: #064e3b;
+        }
+
+        .feedback.wrong .feedback-text {
+            color: #7f1d1d;
+        }
+
+        .calculation-box {
+            background: #fef3c7;
+            border: 2px solid #fbbf24;
+            border-radius: 12px;
+            padding: 15px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+        }
+
+        .calculation-step {
+            margin: 8px 0;
+            padding: 6px;
+            background: white;
+            border-radius: 6px;
+        }
+
+        /* Buttons */
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.05em;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(139, 92, 246, 0.4);
+        }
+
+        .btn-next {
+            background: linear-gradient(135deg, var(--success), #059669);
+            color: white;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+            display: none;
+        }
+
+        .btn-next.show {
+            display: flex;
+        }
+
+        .btn-next:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(16, 185, 129, 0.4);
+        }
+
+        /* Result Screen */
+        .result-screen {
+            display: none;
+            text-align: center;
+            animation: scaleIn 0.6s ease;
+        }
+
+        .result-screen.show {
+            display: block;
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .result-icon {
+            font-size: 6em;
+            margin-bottom: 20px;
+            animation: bounce 1s ease infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .result-title {
+            font-size: 2.5em;
+            font-weight: 800;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .result-score {
+            font-size: 4em;
+            font-weight: 900;
+            margin: 30px 0;
+        }
+
+        .result-score.excellent {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .result-score.good {
+            background: linear-gradient(135deg, var(--success), #059669);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .result-score.poor {
+            background: linear-gradient(135deg, #f87171, #ef4444);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .result-message {
+            font-size: 1.2em;
+            color: #64748b;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        .result-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-retry, .btn-home-result {
+            padding: 15px 35px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.05em;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-retry {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+        }
+
+        .btn-retry:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(139, 92, 246, 0.4);
+        }
+
+        .btn-home-result {
+            background: linear-gradient(135deg, #64748b, #475569);
+            color: white;
+            box-shadow: 0 4px 15px rgba(100, 116, 139, 0.3);
+        }
+
+        .btn-home-result:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(100, 116, 139, 0.4);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .quiz-container {
+                padding: 25px 20px;
+            }
+
+            .question-title {
+                font-size: 1.1em;
+            }
+
+            .option {
+                padding: 15px 18px;
+                font-size: 0.95em;
+            }
+
+            .result-title {
+                font-size: 2em;
+            }
+
+            .result-score {
+                font-size: 3em;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            table {
+                font-size: 0.9em;
+            }
+
+            th, td {
+                padding: 10px 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation Top -->
+        <div class="nav-bar">
+            <div class="nav-title">✏️ Latihan Soal - Pengukuran Volume</div>
+            <div class="nav-buttons">
+                <a href="kisi-kisi-tkad-ipa.html" class="btn-nav btn-home">🏠 Menu</a>
+                <a href="7.html" class="btn-nav btn-materi">📖 Materi</a>
+            </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-container">
+            <!-- Progress Bar -->
+            <div class="progress-container">
+                <div class="progress-info">
+                    <div class="question-number">
+                        Soal <span id="currentQuestion">1</span> dari 5
+                    </div>
+                    <div class="score-display">
+                        Skor: <span id="score">0</span>
+                    </div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <!-- Quiz Content -->
+            <div id="quizContent">
+                <!-- Question 1 -->
+                <div class="slide active" data-question="1">
+                    <div class="question-content">
+                        <div class="question-title">
+                            <span class="question-badge">Soal 1</span>
+                            Mengukur Volume Batu
+                        </div>
+                        <div class="data-box">
+                            <strong>Data Pengukuran:</strong><br>
+                            Seorang siswa mengukur volume sebuah batu menggunakan gelas ukur. Berikut data yang diperoleh:
+                            <ul style="margin-top: 10px; margin-left: 20px;">
+                                <li>Volume air sebelum batu dimasukkan: 60 mL</li>
+                                <li>Volume air setelah batu dimasukkan: 78 mL</li>
+                            </ul>
+                        </div>
+                        <div class="question-text">
+                            <strong>Pernyataan:</strong><br>
+                            "Volume batu yang diukur adalah 18 mL"
+                        </div>
+                    </div>
+
+                    <div class="options">
+                        <div class="option" data-answer="B">
+                            <span class="option-icon">✅</span>
+                            <span>BENAR</span>
+                        </div>
+                        <div class="option" data-answer="S">
+                            <span class="option-icon">❌</span>
+                            <span>SALAH</span>
+                        </div>
+                    </div>
+
+                    <div class="button-group">
+                        <button class="btn btn-submit" onclick="submitAnswer(1, 'B')">
+                            Kirim Jawaban 📤
+                        </button>
+                        <button class="btn btn-next" onclick="nextQuestion()">
+                            Soal Berikutnya ➡️
+                        </button>
+                    </div>
+
+                    <div class="feedback" id="feedback1"></div>
+                </div>
+
+                <!-- Question 2 -->
+                <div class="slide" data-question="2">
+                    <div class="question-content">
+                        <div class="question-title">
+                            <span class="question-badge">Soal 2</span>
+                            Mengukur Volume Kelereng
+                        </div>
+                        <div class="data-box">
+                            <strong>Data Pengukuran:</strong><br>
+                            Perhatikan tabel hasil pengukuran volume sebuah kelereng berikut:
+                            <table style="margin-top: 15px;">
+                                <thead>
+                                    <tr>
+                                        <th>Kondisi</th>
+                                        <th>Volume (mL)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Air mula-mula</td>
+                                        <td>45 mL</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Air + kelereng</td>
+                                        <td>50 mL</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="question-text">
+                            <strong>Pernyataan:</strong><br>
+                            "Kelereng memiliki volume 5 cm³"
+                        </div>
+                    </div>
+
+                    <div class="options">
+                        <div class="option" data-answer="B">
+                            <span class="option-icon">✅</span>
+                            <span>BENAR</span>
+                        </div>
+                        <div class="option" data-answer="S">
+                            <span class="option-icon">❌</span>
+                            <span>SALAH</span>
+                        </div>
+                    </div>
+
+                    <div class="button-group">
+                        <button class="btn btn-submit" onclick="submitAnswer(2, 'B')">
+                            Kirim Jawaban 📤
+                        </button>
+                        <button class="btn btn-next" onclick="nextQuestion()">
+                            Soal Berikutnya ➡️
+                        </button>
+                    </div>
+
+                    <div class="feedback" id="feedback2"></div>
+                </div>
+
+                <!-- Question 3 -->
+                <div class="slide" data-question="3">
+                    <div class="question-content">
+                        <div class="question-title">
+                            <span class="question-badge">Soal 3</span>
+                            Mengukur Volume Kunci
+                        </div>
+                        <div class="data-box">
+                            <strong>Data Pengukuran:</strong><br>
+                            Seorang praktikan mengukur volume sebuah kunci dengan data sebagai berikut:
+                            <table style="margin-top: 15px;">
+                                <thead>
+                                    <tr>
+                                        <th>Pengukuran</th>
+                                        <th>Hasil (mL)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Volume air awal</td>
+                                        <td>100 mL</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Volume air akhir</td>
+                                        <td>108 mL</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="question-text">
+                            <strong>Pernyataan:</strong><br>
+                            "Berdasarkan data tersebut, volume kunci adalah 208 mL karena 100 mL + 108 mL = 208 mL"
+                        </div>
+                    </div>
+
+                    <div class="options">
+                        <div class="option" data-answer="B">
+                            <span class="option-icon">✅</span>
+                            <span>BENAR</span>
+                        </div>
+                        <div class="option" data-answer="S">
+                            <span class="option-icon">❌</span>
+                            <span>SALAH</span>
+                        </div>
+                    </div>
+
+                    <div class="button-group">
+                        <button class="btn btn-submit" onclick="submitAnswer(3, 'S')">
+                            Kirim Jawaban 📤
+                        </button>
+                        <button class="btn btn-next" onclick="nextQuestion()">
+                            Soal Berikutnya ➡️
+                        </button>
+                    </div>
+
+                    <div class="feedback" id="feedback3"></div>
+                </div>
+
+                <!-- Question 4 -->
+                <div class="slide" data-question="4">
+                    <div class="question-content">
+                        <div class="question-title">
+                            <span class="question-badge">Soal 4</span>
+                            Mengukur Volume Penghapus
+                        </div>
+                        <div class="data-box">
+                            <strong>Data Pengukuran:</strong><br>
+                            Hasil pengukuran volume sebuah penghapus karet:
+                            <ul style="margin-top: 10px; margin-left: 20px;">
+                                <li>Volume air sebelum penghapus dimasukkan: 85 mL</li>
+                                <li>Volume air setelah penghapus dimasukkan: 97 mL</li>
+                            </ul>
+                        </div>
+                        <div class="question-text">
+                            <strong>Pernyataan:</strong><br>
+                            "Volume penghapus adalah 12 mL dan ini sama dengan 12 cm³"
+                        </div>
+                    </div>
+
+                    <div class="options">
+                        <div class="option" data-answer="B">
+                            <span class="option-icon">✅</span>
+                            <span>BENAR</span>
+                        </div>
+                        <div class="option" data-answer="S">
+                            <span class="option-icon">❌</span>
+                            <span>SALAH</span>
+                        </div>
+                    </div>
+
+                    <div class="button-group">
+                        <button class="btn btn-submit" onclick="submitAnswer(4, 'B')">
+                            Kirim Jawaban 📤
+                        </button>
+                        <button class="btn btn-next" onclick="nextQuestion()">
+                            Soal Berikutnya ➡️
+                        </button>
+                    </div>
+
+                    <div class="feedback" id="feedback4"></div>
+                </div>
+
+                <!-- Question 5 -->
+                <div class="slide" data-question="5">
+                    <div class="question-content">
+                        <div class="question-title">
+                            <span class="question-badge">Soal 5</span>
+                            Mengukur Volume Kerikil
+                        </div>
+                        <div class="data-box">
+                            <strong>Data Pengukuran:</strong><br>
+                            Tabel hasil pengukuran volume 3 butir kerikil:
+                            <table style="margin-top: 15px;">
+                                <thead>
+                                    <tr>
+                                        <th>Kerikil</th>
+                                        <th>V<sub>awal</sub> (mL)</th>
+                                        <th>V<sub>akhir</sub> (mL)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>A</td>
+                                        <td>50</td>
+                                        <td>65</td>
+                                    </tr>
+                                    <tr>
+                                        <td>B</td>
+                                        <td>50</td>
+                                        <td>58</td>
+                                    </tr>
+                                    <tr>
+                                        <td>C</td>
+                                        <td>50</td>
+                                        <td>72</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="question-text">
+                            <strong>Pernyataan:</strong><br>
+                            "Kerikil C memiliki volume paling besar yaitu 22 mL"
+                        </div>
+                    </div>
+
+                    <div class="options">
+                        <div class="option" data-answer="B">
+                            <span class="option-icon">✅</span>
+                            <span>BENAR</span>
+                        </div>
+                        <div class="option" data-answer="S">
+                            <span class="option-icon">❌</span>
+                            <span>SALAH</span>
+                        </div>
+                    </div>
+
+                    <div class="button-group">
+                        <button class="btn btn-submit" onclick="submitAnswer(5, 'B')">
+                            Kirim Jawaban 📤
+                        </button>
+                        <button class="btn btn-next" onclick="showResult()">
+                            Lihat Hasil 🎯
+                        </button>
+                    </div>
+
+                    <div class="feedback" id="feedback5"></div>
+                </div>
+            </div>
+
+            <!-- Result Screen -->
+            <div class="result-screen" id="resultScreen">
+                <div class="result-icon" id="resultIcon">🏆</div>
+                <div class="result-title" id="resultTitle">Sempurna!</div>
+                <div class="result-score" id="resultScore">5/5</div>
+                <div class="result-message" id="resultMessage">
+                    Luar biasa! Kamu menguasai materi Pengukuran Volume dengan sempurna!
+                </div>
+                <div class="result-buttons">
+                    <button class="btn-retry" onclick="retryQuiz()">
+                        🔄 Ulangi Latihan
+                    </button>
+                    <a href="kisi-kisi-tkad-ipa.html" class="btn-home-result">
+                        🏠 Kembali ke Menu
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 1;
+        let score = 0;
+        let answeredQuestions = [];
+
+        // Explanations for each question
+        const explanations = {
+            1: {
+                correct: "Sempurna! Perhitungan volume batu sudah benar.<br><br><div class='calculation-box'><strong>Diketahui:</strong><div class='calculation-step'>V<sub>awal</sub> = 60 mL</div><div class='calculation-step'>V<sub>akhir</sub> = 78 mL</div><br><strong>Penghitungan:</strong><div class='calculation-step'>V<sub>batu</sub> = V<sub>akhir</sub> - V<sub>awal</sub></div><div class='calculation-step'>V<sub>batu</sub> = 78 mL - 60 mL</div><div class='calculation-step' style='background: #dcfce7; font-weight: 700;'>V<sub>batu</sub> = 18 mL ✓</div></div><strong>Kesimpulan:</strong> Pernyataan bahwa volume batu adalah 18 mL adalah BENAR.",
+                wrong: "Belum tepat. Mari kita hitung dengan benar:<br><br><div class='calculation-box'><strong>Diketahui:</strong><div class='calculation-step'>V<sub>awal</sub> = 60 mL (volume air sebelum batu dimasukkan)</div><div class='calculation-step'>V<sub>akhir</sub> = 78 mL (volume air setelah batu dimasukkan)</div><br><strong>Rumus:</strong><div class='calculation-step'>V<sub>benda</sub> = V<sub>akhir</sub> - V<sub>awal</sub></div><br><strong>Penghitungan:</strong><div class='calculation-step'>V<sub>batu</sub> = 78 mL - 60 mL</div><div class='calculation-step' style='background: #dcfce7; font-weight: 700;'>V<sub>batu</sub> = 18 mL</div></div><strong>Prinsip:</strong> Volume benda = kenaikan volume air. Air naik dari 60 mL menjadi 78 mL, berarti naik 18 mL. Jadi volume batu = 18 mL. Pernyataannya BENAR."
+            },
+            2: {
+                correct: "Excellent! Perhitungan sudah tepat dan konversi satuan juga benar.<br><br><div class='calculation-box'><strong>Langkah 1: Hitung volume kelereng</strong><div class='calculation-step'>V<sub>kelereng</sub> = V<sub>akhir</sub> - V<sub>awal</sub></div><div class='calculation-step'>V<sub>kelereng</sub> = 50 mL - 45 mL</div><div class='calculation-step'>V<sub>kelereng</sub> = 5 mL</div><br><strong>Langkah 2: Konversi satuan</strong><div class='calculation-step'>1 mL = 1 cm³</div><div class='calculation-step' style='background: #dcfce7; font-weight: 700;'>5 mL = 5 cm³ ✓</div></div><strong>Kesimpulan:</strong> Volume kelereng = 5 mL = 5 cm³. Pernyataan BENAR.",
+                wrong: "Kurang tepat. Mari kita hitung step by step:<br><br><div class='calculation-box'><strong>Data dari tabel:</strong><div class='calculation-step'>Air mula-mula = 45 mL</div><div class='calculation-step'>Air + kelereng = 50 mL</div><br><strong>Hitung volume kelereng:</strong><div class='calculation-step'>V<sub>kelereng</sub> = 50 mL - 45 mL = 5 mL</div><br><strong>Konversi ke cm³:</strong><div class='calculation-step'>Ingat: 1 mL = 1 cm³</div><div class='calculation-step' style='background: #dcfce7; font-weight: 700;'>5 mL = 5 cm³</div></div><strong>Catatan penting:</strong> Satuan mL dan cm³ memiliki nilai yang sama, jadi 5 mL = 5 cm³. Pernyataannya BENAR."
+            },
+            3: {
+                correct: "Benar! Pernyataan tersebut SALAH karena cara menghitung volume yang tidak tepat.<br><br><div class='calculation-box'><strong>Kesalahan dalam pernyataan:</strong><div class='calculation-step' style='background: #fee2e2;'>❌ Volume kunci = 100 + 108 = 208 mL (SALAH!)</div><br><strong>Cara yang BENAR:</strong><div class='calculation-step'>V<sub>kunci</sub> = V<sub>akhir</sub> - V<sub>awal</sub></div><div class='calculation-step'>V<sub>kunci</sub> = 108 mL - 100 mL</div><div class='calculation-step' style='background: #dcfce7; font-weight: 700;'>V<sub>kunci</sub> = 8 mL ✓</div></div><strong>Mengapa DIKURANGI, bukan DIJUMLAHKAN?</strong><br>Karena kita mencari SELISIH (kenaikan) volume air. Volume benda = kenaikan volume air = V<sub>akhir</sub> - V<sub>awal</sub>",
+                wrong: "Belum tepat. Mari kita analisis pernyataan ini:<br><br><strong>Pernyataan mengatakan:</strong> Volume = 100 + 108 = 208 mL<br><br><div class='calculation-box'><strong>Ini SALAH karena:</strong><div class='calculation-step' style='background: #fee2e2;'>Volume benda BUKAN penjumlahan V<sub>awal</sub> + V<sub>akhir</sub></div><br><strong>Rumus yang BENAR:</strong><div class='calculation-step'>V<sub>benda</sub> = V<sub>akhir</sub> - V<sub>awal</sub> (PENGURANGAN!)</div><div class='calculation-step'>V<sub>kunci</sub> = 108 mL - 100 mL</div><div class='calculation-step' style='background: #dcfce7; font-weight: 700;'>V<sub>kunci</sub> = 8 mL (bukan 208 mL)</div></div><strong>Ingat:</strong> Volume benda = SELISIH volume air (V<sub>akhir</sub> - V<sub>awal</sub>), BUKAN jumlah! Jadi pernyataannya SALAH."
+            },
+            4: {
+                correct: "Sempurna! Baik perhitungan volume maupun konversi satuan sudah tepat.<br><br><div class='calculation-box'><strong>Langkah 1: Hitung volume penghapus</strong><div class='calculation-step'>V<sub>penghapus</sub> = V<sub>akhir</sub> - V<sub>awal</sub></div><div class='calculation-step'>V<sub>penghapus</sub> = 97 mL - 85 mL</div><div class='calculation-step'>V<sub>penghapus</sub> = 12 mL ✓</div><br><strong>Langkah 2: Verifikasi konversi</strong><div class='calculation-step'>1 mL = 1 cm³ (konversi baku)</div><div class='calculation-step' style='background: #dcfce7; font-weight: 700;'>12 mL = 12 cm³ ✓</div></div><strong>Kesimpulan:</strong> Kedua pernyataan benar: volume = 12 mL DAN sama dengan 12 cm³. Pernyataan BENAR.",
+                wrong: "Belum tepat. Mari kita periksa perhitungan dan konversinya:<br><br><div class='calculation-box'><strong>Menghitung volume penghapus:</strong><div class='calculation-step'>V<sub>awal</sub> = 85 mL</div><div class='calculation-step'>V<sub>akhir</sub> = 97 mL</div><div class='calculation-step'>V<sub>penghapus</sub> = 97 - 85 = 12 mL ✓</div><br><strong>Mengecek konversi satuan:</strong><div class='calculation-step'>Faktanya: 1 mL = 1 cm³</div><div class='calculation-step'>Jadi: 12 mL = 12 cm³ ✓</div></div><strong>Verifikasi pernyataan:</strong><br>✓ Volume penghapus = 12 mL → BENAR<br>✓ 12 mL = 12 cm³ → BENAR<br><br>Kedua bagian pernyataan benar, jadi pernyataannya BENAR."
+            },
+            5: {
+                correct: "Excellent! Analisis perbandingan volume ketiga kerikil sudah tepat.<br><br><div class='calculation-box'><strong>Hitung volume masing-masing:</strong><div class='calculation-step'>V<sub>A</sub> = 65 - 50 = 15 mL</div><div class='calculation-step'>V<sub>B</sub> = 58 - 50 = 8 mL</div><div class='calculation-step' style='background: #dcfce7;'>V<sub>C</sub> = 72 - 50 = 22 mL ✓</div><br><strong>Perbandingan:</strong><div class='calculation-step'>V<sub>B</sub> (8 mL) < V<sub>A</sub> (15 mL) < V<sub>C</sub> (22 mL)</div></div><strong>Kesimpulan:</strong><br>✓ Kerikil C memiliki volume terbesar (22 mL) → BENAR<br>✓ Perhitungan 72 - 50 = 22 mL → BENAR<br><br>Pernyataan BENAR.",
+                wrong: "Belum tepat. Mari kita hitung volume ketiga kerikil:<br><br><div class='calculation-box'><strong>Kerikil A:</strong><div class='calculation-step'>V<sub>A</sub> = V<sub>akhir</sub> - V<sub>awal</sub> = 65 - 50 = 15 mL</div><br><strong>Kerikil B:</strong><div class='calculation-step'>V<sub>B</sub> = 58 - 50 = 8 mL</div><br><strong>Kerikil C:</strong><div class='calculation-step'>V<sub>C</sub> = 72 - 50 = 22 mL</div><br><strong>Urutan dari terkecil:</strong><div class='calculation-step' style='background: #dcfce7; font-weight: 700;'>8 mL (B) < 15 mL (A) < 22 mL (C)</div></div><strong>Verifikasi pernyataan:</strong><br>✓ Kerikil C paling besar? → BENAR (22 > 15 > 8)<br>✓ Volume C = 22 mL? → BENAR (72 - 50 = 22)<br><br>Jadi pernyataannya BENAR."
+            }
+        };
+
+        // Handle option click
+        document.querySelectorAll('.option').forEach(option => {
+            option.addEventListener('click', function() {
+                if (!this.classList.contains('disabled')) {
+                    const parent = this.closest('.slide');
+                    parent.querySelectorAll('.option').forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+                    this.classList.add('selected');
+                }
+            });
+        });
+
+        function submitAnswer(questionNum, correctAnswer) {
+            const slide = document.querySelector(`.slide[data-question="${questionNum}"]`);
+            const options = slide.querySelectorAll('.option');
+            const selected = slide.querySelector('.option.selected');
+            const feedback = document.getElementById(`feedback${questionNum}`);
+            const submitBtn = slide.querySelector('.btn-submit');
+            const nextBtn = slide.querySelector('.btn-next');
+
+            if (!selected) {
+                alert('Pilih jawaban terlebih dahulu!');
+                return;
+            }
+
+            // Disable further selection
+            options.forEach(opt => opt.classList.add('disabled'));
+            submitBtn.style.display = 'none';
+            nextBtn.classList.add('show');
+
+            const userAnswer = selected.getAttribute('data-answer');
+            const isCorrect = userAnswer === correctAnswer;
+
+            // Mark correct/wrong
+            options.forEach(opt => {
+                if (opt.getAttribute('data-answer') === correctAnswer) {
+                    opt.classList.add('correct');
+                }
+                if (opt === selected && !isCorrect) {
+                    opt.classList.add('wrong');
+                }
+            });
+
+            // Update score
+            if (isCorrect && !answeredQuestions.includes(questionNum)) {
+                score++;
+                answeredQuestions.push(questionNum);
+                document.getElementById('score').textContent = score;
+            }
+
+            // Show feedback
+            feedback.classList.add('show');
+            feedback.classList.add(isCorrect ? 'correct' : 'wrong');
+            
+            const icon = isCorrect ? '✅' : '❌';
+            const title = isCorrect ? 'Jawaban Benar!' : 'Jawaban Salah!';
+            const explanation = isCorrect ? explanations[questionNum].correct : explanations[questionNum].wrong;
+
+            feedback.innerHTML = `
+                <div class="feedback-header">
+                    <div class="feedback-icon">${icon}</div>
+                    <div class="feedback-title">${title}</div>
+                </div>
+                <div class="feedback-text">${explanation}</div>
+            `;
+
+            // Scroll to feedback
+            setTimeout(() => {
+                feedback.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 300);
+        }
+
+        function nextQuestion() {
+            const currentSlideEl = document.querySelector('.slide.active');
+            currentSlideEl.classList.remove('active');
+
+            currentSlide++;
+            const nextSlideEl = document.querySelector(`.slide[data-question="${currentSlide}"]`);
+            if (nextSlideEl) {
+                nextSlideEl.classList.add('active');
+                document.getElementById('currentQuestion').textContent = currentSlide;
+                
+                // Update progress bar
+                const progress = (currentSlide / 5) * 100;
+                document.getElementById('progressFill').style.width = progress + '%';
+
+                // Scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        function showResult() {
+            document.getElementById('quizContent').style.display = 'none';
+            document.getElementById('resultScreen').classList.add('show');
+            document.querySelector('.progress-container').style.display = 'none';
+
+            const resultScore = document.getElementById('resultScore');
+            const resultIcon = document.getElementById('resultIcon');
+            const resultTitle = document.getElementById('resultTitle');
+            const resultMessage = document.getElementById('resultMessage');
+
+            resultScore.textContent = `${score}/5`;
+
+            if (score === 5) {
+                resultScore.classList.add('excellent');
+                resultIcon.textContent = '🏆';
+                resultTitle.textContent = 'Sempurna!';
+                resultMessage.textContent = 'Luar biasa! Kamu menguasai materi Pengukuran Volume dengan sempurna!';
+            } else if (score >= 3) {
+                resultScore.classList.add('good');
+                resultIcon.textContent = '👍';
+                resultTitle.textContent = 'Bagus!';
+                resultMessage.textContent = 'Kerja yang baik! Terus tingkatkan pemahamanmu dengan belajar lebih banyak.';
+            } else {
+                resultScore.classList.add('poor');
+                resultIcon.textContent = '📚';
+                resultTitle.textContent = 'Tetap Semangat!';
+                resultMessage.textContent = 'Jangan menyerah! Pelajari materi lagi dan coba ulangi latihannya.';
+            }
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function retryQuiz() {
+            // Reset variables
+            currentSlide = 1;
+            score = 0;
+            answeredQuestions = [];
+
+            // Reset UI
+            document.getElementById('score').textContent = '0';
+            document.getElementById('currentQuestion').textContent = '1';
+            document.getElementById('progressFill').style.width = '0%';
+
+            // Reset all slides
+            document.querySelectorAll('.slide').forEach((slide, index) => {
+                slide.classList.remove('active');
+                if (index === 0) slide.classList.add('active');
+
+                // Reset options
+                slide.querySelectorAll('.option').forEach(opt => {
+                    opt.classList.remove('selected', 'correct', 'wrong', 'disabled');
+                });
+
+                // Reset buttons
+                slide.querySelector('.btn-submit').style.display = 'inline-block';
+                slide.querySelector('.btn-next').classList.remove('show');
+
+                // Reset feedback
+                const feedbackEl = slide.querySelector('.feedback');
+                feedbackEl.classList.remove('show', 'correct', 'wrong');
+                feedbackEl.innerHTML = '';
+            });
+
+            // Show quiz content
+            document.getElementById('quizContent').style.display = 'block';
+            document.getElementById('resultScreen').classList.remove('show');
+            document.querySelector('.progress-container').style.display = 'block';
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>

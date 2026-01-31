@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Materi 7: Pengukuran Volume Benda Tidak Beraturan</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&family=Fira+Code:wght@400;500&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #059669;
+            --secondary: #0891b2;
+            --accent: #f59e0b;
+            --dark: #0f172a;
+            --light: #f8fafc;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: linear-gradient(135deg, #0f766e 0%, #0e7490 100%);
+            color: var(--dark);
+            line-height: 1.8;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Navigation Bar */
+        .nav-bar {
+            background: white;
+            border-radius: 16px;
+            padding: 20px 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .nav-title {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn-nav {
+            padding: 12px 24px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95em;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-home {
+            background: linear-gradient(135deg, #64748b, #475569);
+            color: white;
+            box-shadow: 0 4px 12px rgba(100, 116, 139, 0.3);
+        }
+
+        .btn-home:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(100, 116, 139, 0.4);
+        }
+
+        .btn-practice {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+        }
+
+        .btn-practice:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4);
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            border-radius: 20px;
+            padding: 50px 60px;
+            margin-bottom: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+        }
+
+        .header h1 {
+            font-size: 2.8em;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        .header .meta {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.95em;
+            color: #64748b;
+        }
+
+        .meta-item .icon {
+            font-size: 1.3em;
+        }
+
+        /* Content Section */
+        .content {
+            background: white;
+            border-radius: 20px;
+            padding: 50px 60px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .content h2 {
+            font-size: 2em;
+            font-weight: 700;
+            color: var(--primary);
+            margin-top: 40px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid var(--primary);
+        }
+
+        .content h2:first-child {
+            margin-top: 0;
+        }
+
+        .content h3 {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+
+        .content h4 {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: var(--dark);
+            margin-top: 25px;
+            margin-bottom: 12px;
+        }
+
+        .content p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .content ul, .content ol {
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+
+        .content li {
+            margin-bottom: 10px;
+        }
+
+        .content strong {
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        /* Info Box */
+        .info-box {
+            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+            border-left: 5px solid var(--secondary);
+            padding: 25px 30px;
+            margin: 25px 0;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(8, 145, 178, 0.1);
+        }
+
+        .info-box h4 {
+            color: var(--secondary);
+            font-weight: 700;
+            margin-bottom: 12px;
+            font-size: 1.1em;
+        }
+
+        /* Warning Box */
+        .warning-box {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-left: 5px solid var(--accent);
+            padding: 25px 30px;
+            margin: 25px 0;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.1);
+        }
+
+        .warning-box h4 {
+            color: var(--accent);
+            font-weight: 700;
+            margin-bottom: 12px;
+            font-size: 1.1em;
+        }
+
+        /* Example Box */
+        .example-box {
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .example-box h4 {
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 1.3em;
+            margin-bottom: 20px;
+        }
+
+        /* Formula Box */
+        .formula-box {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            border: 3px solid #22c55e;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+            text-align: center;
+        }
+
+        .formula-box h4 {
+            color: #15803d;
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .formula {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: #15803d;
+            font-family: 'Fira Code', monospace;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            display: inline-block;
+            margin: 10px 0;
+        }
+
+        /* Step Box */
+        .step-box {
+            background: white;
+            border: 3px solid #e2e8f0;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            transition: all 0.3s ease;
+        }
+
+        .step-box:hover {
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            transform: translateY(-3px);
+        }
+
+        .step-number {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2em;
+            margin-bottom: 12px;
+        }
+
+        .step-title {
+            font-size: 1.2em;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 10px;
+        }
+
+        .step-content {
+            color: #64748b;
+            line-height: 1.8;
+        }
+
+        /* Measurement Visual */
+        .measurement-visual {
+            background: #f8fafc;
+            border: 2px solid #cbd5e1;
+            border-radius: 12px;
+            padding: 30px;
+            margin: 25px 0;
+            text-align: center;
+        }
+
+        .beaker {
+            width: 200px;
+            height: 300px;
+            border: 4px solid #334155;
+            border-top: none;
+            border-radius: 0 0 20px 20px;
+            margin: 0 auto;
+            position: relative;
+            background: linear-gradient(to bottom, transparent 0%, transparent 50%, #93c5fd 50%, #60a5fa 100%);
+        }
+
+        .beaker-lip {
+            width: 220px;
+            height: 15px;
+            background: #334155;
+            border-radius: 5px 5px 0 0;
+            margin: 0 auto;
+        }
+
+        .scale-line {
+            position: absolute;
+            left: -30px;
+            right: -30px;
+            height: 2px;
+            background: #64748b;
+            font-size: 0.9em;
+            color: #64748b;
+        }
+
+        /* Key Points */
+        .key-points {
+            background: linear-gradient(135deg, #fae8ff 0%, #f3e8ff 100%);
+            border-left: 5px solid #a855f7;
+            padding: 25px 30px;
+            margin: 25px 0;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(168, 85, 247, 0.1);
+        }
+
+        .key-points h4 {
+            color: #7c3aed;
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .key-points ul {
+            margin-left: 20px;
+        }
+
+        .key-points li {
+            margin-bottom: 10px;
+            color: #581c87;
+        }
+
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        thead {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        th {
+            padding: 18px 15px;
+            text-align: left;
+            font-weight: 700;
+            font-size: 1em;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        /* Question */
+        .question {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            border: 2px solid #e2e8f0;
+            margin-bottom: 20px;
+        }
+
+        .question-text {
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 20px;
+            font-size: 1.05em;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option {
+            padding: 15px 20px;
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.95em;
+        }
+
+        .option.correct {
+            background: #dcfce7;
+            border-color: #22c55e;
+            font-weight: 600;
+        }
+
+        .option.correct::before {
+            content: '✓ ';
+            color: #16a34a;
+            font-weight: 700;
+        }
+
+        .explanation {
+            background: #f0f9ff;
+            border-left: 4px solid #0284c7;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 8px;
+        }
+
+        .explanation h5 {
+            color: #0369a1;
+            font-weight: 700;
+            margin-bottom: 12px;
+            font-size: 1.1em;
+        }
+
+        /* Calculation Box */
+        .calculation-box {
+            background: #fef3c7;
+            border: 2px solid #fbbf24;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            font-family: 'Fira Code', monospace;
+        }
+
+        .calculation-step {
+            margin: 10px 0;
+            padding: 8px;
+            background: white;
+            border-radius: 6px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 15px;
+            }
+
+            .header, .content {
+                padding: 30px 25px;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .content h2 {
+                font-size: 1.6em;
+            }
+
+            table {
+                font-size: 0.9em;
+            }
+
+            th, td {
+                padding: 12px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation Top -->
+        <div class="nav-bar">
+            <div class="nav-title">📚 Materi Pembelajaran IPA</div>
+            <div class="nav-buttons">
+                <a href="kisi-kisi-tkad-ipa.html" class="btn-nav btn-home">🏠 Menu Utama</a>
+                <a href="Lat7.html" class="btn-nav btn-practice">✏️ Latihan Soal</a>
+            </div>
+        </div>
+
+        <!-- Header -->
+        <div class="header">
+            <h1>📏 Pengukuran Volume Benda Tidak Beraturan</h1>
+            <div class="meta">
+                <div class="meta-item">
+                    <span class="icon">📖</span>
+                    <span>Materi 7</span>
+                </div>
+                <div class="meta-item">
+                    <span class="icon">🎯</span>
+                    <span>Kelas 7</span>
+                </div>
+                <div class="meta-item">
+                    <span class="icon">⏱️</span>
+                    <span>45 menit</span>
+                </div>
+                <div class="meta-item">
+                    <span class="icon">📊</span>
+                    <span>Level Kognitif: L3</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <h2>🎯 Tujuan Pembelajaran</h2>
+            <p>Setelah mempelajari materi ini, peserta didik diharapkan dapat:</p>
+            <ol>
+                <li>Memahami konsep volume sebagai besaran turunan</li>
+                <li>Membedakan benda beraturan dan benda tidak beraturan</li>
+                <li>Menggunakan gelas ukur untuk mengukur volume benda tidak beraturan</li>
+                <li>Membaca skala pada gelas ukur dengan benar</li>
+                <li>Menganalisis data volume air sebelum dan sesudah benda dimasukkan</li>
+                <li>Menghitung volume benda tidak beraturan dengan tepat</li>
+            </ol>
+
+            <h2>📚 Pengertian Volume</h2>
+            <p><strong>Volume</strong> adalah besaran yang menyatakan besar ruang yang ditempati oleh suatu benda. Volume termasuk <strong>besaran turunan</strong> yang diturunkan dari besaran pokok panjang.</p>
+            
+            <div class="info-box">
+                <h4>💡 Fakta Penting</h4>
+                <ul>
+                    <li><strong>Besaran Turunan:</strong> Volume diturunkan dari panjang × lebar × tinggi (semua dimensi panjang)</li>
+                    <li><strong>Satuan SI:</strong> meter kubik (m³)</li>
+                    <li><strong>Satuan Umum:</strong> liter (L), mililiter (mL), centimeter kubik (cm³)</li>
+                    <li><strong>Konversi:</strong> 1 L = 1000 mL = 1000 cm³</li>
+                </ul>
+            </div>
+
+            <h2>🔍 Benda Beraturan vs Benda Tidak Beraturan</h2>
+            
+            <h3>1. Benda Beraturan</h3>
+            <p>Benda yang memiliki bentuk geometris teratur sehingga volumenya dapat dihitung menggunakan rumus matematika.</p>
+            <p><strong>Contoh:</strong> Kubus, balok, bola, tabung, kerucut, limas</p>
+            <p><strong>Cara mengukur:</strong> Menggunakan rumus volume sesuai bentuk geometris</p>
+            
+            <div class="example-box">
+                <h4>Rumus Volume Benda Beraturan</h4>
+                <ul>
+                    <li><strong>Kubus:</strong> V = s³ (s = panjang sisi)</li>
+                    <li><strong>Balok:</strong> V = p × l × t</li>
+                    <li><strong>Bola:</strong> V = 4/3 × π × r³</li>
+                    <li><strong>Tabung:</strong> V = π × r² × t</li>
+                </ul>
+            </div>
+
+            <h3>2. Benda Tidak Beraturan</h3>
+            <p>Benda yang tidak memiliki bentuk geometris teratur sehingga volumenya <strong>tidak dapat dihitung</strong> menggunakan rumus matematika.</p>
+            <p><strong>Contoh:</strong> Batu, kentang, wortel, kunci, kelereng tidak sempurna, mainan, dll</p>
+            <p><strong>Cara mengukur:</strong> Menggunakan metode <strong>perpindahan air (displacement method)</strong> dengan gelas ukur</p>
+
+            <h2>🧪 Alat untuk Mengukur Volume Benda Tidak Beraturan</h2>
+            
+            <div class="info-box">
+                <h4>🔬 Gelas Ukur (Graduated Cylinder)</h4>
+                <p><strong>Fungsi:</strong> Mengukur volume zat cair atau volume benda tidak beraturan</p>
+                <p><strong>Cara kerja:</strong> Memanfaatkan prinsip perpindahan air (Archimedes)</p>
+                <p><strong>Skala:</strong> Biasanya dalam satuan mL atau cm³</p>
+                <p><strong>Ketelitian:</strong> Bergantung pada ukuran gelas ukur (semakin kecil skala terkecil, semakin teliti)</p>
+            </div>
+
+            <h2>📐 Prinsip Pengukuran Volume Benda Tidak Beraturan</h2>
+            
+            <div class="formula-box">
+                <h4>Rumus Dasar</h4>
+                <div class="formula">
+                    V<sub>benda</sub> = V<sub>akhir</sub> - V<sub>awal</sub>
+                </div>
+                <p style="margin-top: 15px; color: #15803d;">
+                    <strong>Keterangan:</strong><br>
+                    V<sub>benda</sub> = Volume benda yang diukur<br>
+                    V<sub>akhir</sub> = Volume air setelah benda dimasukkan<br>
+                    V<sub>awal</sub> = Volume air sebelum benda dimasukkan
+                </p>
+            </div>
+
+            <div class="warning-box">
+                <h4>⚠️ Prinsip Perpindahan Air (Archimedes)</h4>
+                <p>Ketika benda dimasukkan ke dalam air, benda tersebut akan mendesak air dan menyebabkan permukaan air naik. <strong>Kenaikan volume air sama dengan volume benda</strong> yang dimasukkan.</p>
+            </div>
+
+            <h2>📋 Langkah-Langkah Mengukur Volume Benda Tidak Beraturan</h2>
+
+            <div class="step-box">
+                <div class="step-number">1</div>
+                <div class="step-title">Siapkan Alat dan Bahan</div>
+                <div class="step-content">
+                    Siapkan gelas ukur, air bersih, dan benda yang akan diukur volumenya. Pastikan benda dapat tenggelam sepenuhnya dalam air.
+                </div>
+            </div>
+
+            <div class="step-box">
+                <div class="step-number">2</div>
+                <div class="step-title">Tuangkan Air ke Gelas Ukur</div>
+                <div class="step-content">
+                    Tuangkan air ke dalam gelas ukur sampai mencapai tinggi tertentu. Usahakan air tidak terlalu sedikit agar benda bisa tenggelam sempurna, dan tidak terlalu banyak agar tidak meluap saat benda dimasukkan.
+                </div>
+            </div>
+
+            <div class="step-box">
+                <div class="step-number">3</div>
+                <div class="step-title">Baca dan Catat Volume Air Awal (V<sub>awal</sub>)</div>
+                <div class="step-content">
+                    Baca skala pada gelas ukur dengan posisi mata sejajar dengan permukaan air (meniskus). Catat volume air sebelum benda dimasukkan sebagai V<sub>awal</sub>.
+                </div>
+            </div>
+
+            <div class="step-box">
+                <div class="step-number">4</div>
+                <div class="step-title">Masukkan Benda ke Dalam Air</div>
+                <div class="step-content">
+                    Masukkan benda secara perlahan ke dalam gelas ukur. Pastikan benda tenggelam sepenuhnya di dalam air dan tidak ada gelembung udara yang terperangkap.
+                </div>
+            </div>
+
+            <div class="step-box">
+                <div class="step-number">5</div>
+                <div class="step-title">Baca dan Catat Volume Air Akhir (V<sub>akhir</sub>)</div>
+                <div class="step-content">
+                    Setelah benda dimasukkan, permukaan air akan naik. Baca dan catat volume air yang baru (setelah benda dimasukkan) sebagai V<sub>akhir</sub>.
+                </div>
+            </div>
+
+            <div class="step-box">
+                <div class="step-number">6</div>
+                <div class="step-title">Hitung Volume Benda</div>
+                <div class="step-content">
+                    Gunakan rumus: V<sub>benda</sub> = V<sub>akhir</sub> - V<sub>awal</sub><br>
+                    Selisih antara volume akhir dan volume awal adalah volume benda yang diukur.
+                </div>
+            </div>
+
+            <h2>👁️ Cara Membaca Skala pada Gelas Ukur</h2>
+            
+            <div class="warning-box">
+                <h4>⚠️ Penting! Meniskus Air</h4>
+                <p><strong>Meniskus</strong> adalah lengkungan permukaan air pada gelas ukur. Karena air memiliki kohesi dengan dinding gelas, permukaan air akan melengkung.</p>
+                <p><strong>Cara membaca yang benar:</strong></p>
+                <ul>
+                    <li>Posisikan mata sejajar dengan permukaan air (tidak dari atas atau bawah)</li>
+                    <li>Baca skala pada <strong>bagian BAWAH lengkungan</strong> meniskus (bagian cekung)</li>
+                    <li>Jangan membaca dari bagian atas lengkungan (akan menghasilkan pembacaan yang salah)</li>
+                </ul>
+            </div>
+
+            <h2>📝 Contoh Soal dan Pembahasan</h2>
+            
+            <div class="example-box">
+                <h4>📌 Contoh Soal 1</h4>
+                <div class="question">
+                    <p class="question-text">
+                        Seorang siswa ingin mengukur volume sebuah batu kerikil. Ia menuangkan air ke dalam gelas ukur hingga volume air menunjukkan 50 mL. Setelah batu kerikil dimasukkan ke dalam gelas ukur, permukaan air naik hingga menunjukkan 68 mL.
+                    </p>
+                    
+                    <p class="question-text">
+                        <strong>Pertanyaan:</strong> Berapakah volume batu kerikil tersebut?
+                    </p>
+
+                    <div class="calculation-box">
+                        <p><strong>Diketahui:</strong></p>
+                        <div class="calculation-step">V<sub>awal</sub> = 50 mL</div>
+                        <div class="calculation-step">V<sub>akhir</sub> = 68 mL</div>
+                        
+                        <p style="margin-top: 15px;"><strong>Ditanya:</strong></p>
+                        <div class="calculation-step">V<sub>batu</sub> = ?</div>
+                        
+                        <p style="margin-top: 15px;"><strong>Jawab:</strong></p>
+                        <div class="calculation-step">V<sub>batu</sub> = V<sub>akhir</sub> - V<sub>awal</sub></div>
+                        <div class="calculation-step">V<sub>batu</sub> = 68 mL - 50 mL</div>
+                        <div class="calculation-step" style="background: #dcfce7; font-weight: 700;">V<sub>batu</sub> = 18 mL</div>
+                    </div>
+
+                    <div class="explanation">
+                        <h5>💡 Pembahasan:</h5>
+                        <p><strong>Jawaban: 18 mL atau 18 cm³</strong></p>
+                        <p><strong>Penjelasan:</strong></p>
+                        <ul>
+                            <li>Volume air awal sebelum batu dimasukkan = 50 mL</li>
+                            <li>Volume air akhir setelah batu dimasukkan = 68 mL</li>
+                            <li>Kenaikan volume air = 68 mL - 50 mL = 18 mL</li>
+                            <li>Kenaikan volume air ini sama dengan volume batu yang dimasukkan</li>
+                            <li>Jadi, volume batu kerikil = 18 mL = 18 cm³</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <h4>📌 Contoh Soal 2</h4>
+                <div class="question">
+                    <p class="question-text">
+                        Perhatikan data pengukuran volume sebuah kelereng berikut:
+                    </p>
+                    
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Kondisi</th>
+                                <th>Volume Air (mL)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Sebelum kelereng dimasukkan</td>
+                                <td>75 mL</td>
+                            </tr>
+                            <tr>
+                                <td>Setelah kelereng dimasukkan</td>
+                                <td>82 mL</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p class="question-text">
+                        <strong>Pernyataan:</strong> "Volume kelereng adalah 7 mL"
+                    </p>
+
+                    <div class="options">
+                        <div class="option correct">A. BENAR</div>
+                        <div class="option">B. SALAH</div>
+                    </div>
+
+                    <div class="explanation">
+                        <h5>💡 Pembahasan:</h5>
+                        <p><strong>Jawaban: BENAR</strong></p>
+                        
+                        <div class="calculation-box">
+                            <p><strong>Diketahui:</strong></p>
+                            <div class="calculation-step">V<sub>awal</sub> = 75 mL</div>
+                            <div class="calculation-step">V<sub>akhir</sub> = 82 mL</div>
+                            
+                            <p style="margin-top: 15px;"><strong>Penghitungan:</strong></p>
+                            <div class="calculation-step">V<sub>kelereng</sub> = V<sub>akhir</sub> - V<sub>awal</sub></div>
+                            <div class="calculation-step">V<sub>kelereng</sub> = 82 mL - 75 mL</div>
+                            <div class="calculation-step" style="background: #dcfce7; font-weight: 700;">V<sub>kelereng</sub> = 7 mL ✓</div>
+                        </div>
+                        
+                        <p><strong>Kesimpulan:</strong> Pernyataan bahwa volume kelereng adalah 7 mL adalah BENAR karena sesuai dengan hasil perhitungan menggunakan rumus V<sub>benda</sub> = V<sub>akhir</sub> - V<sub>awal</sub></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <h4>📌 Contoh Soal 3</h4>
+                <div class="question">
+                    <p class="question-text">
+                        Seorang siswa mengukur volume sebuah kunci menggunakan gelas ukur. Data yang diperoleh:
+                    </p>
+                    
+                    <ul style="margin: 20px 0; padding-left: 30px;">
+                        <li>Volume air mula-mula: 100 mL</li>
+                        <li>Volume air setelah kunci dimasukkan: 112 mL</li>
+                    </ul>
+
+                    <p class="question-text">
+                        <strong>Pernyataan:</strong> "Volume kunci yang diukur adalah 12 cm³"
+                    </p>
+
+                    <div class="options">
+                        <div class="option correct">A. BENAR</div>
+                        <div class="option">B. SALAH</div>
+                    </div>
+
+                    <div class="explanation">
+                        <h5>💡 Pembahasan:</h5>
+                        <p><strong>Jawaban: BENAR</strong></p>
+                        
+                        <div class="calculation-box">
+                            <p><strong>Langkah 1: Hitung volume kunci</strong></p>
+                            <div class="calculation-step">V<sub>kunci</sub> = V<sub>akhir</sub> - V<sub>awal</sub></div>
+                            <div class="calculation-step">V<sub>kunci</sub> = 112 mL - 100 mL</div>
+                            <div class="calculation-step">V<sub>kunci</sub> = 12 mL</div>
+                            
+                            <p style="margin-top: 15px;"><strong>Langkah 2: Konversi satuan</strong></p>
+                            <div class="calculation-step">1 mL = 1 cm³</div>
+                            <div class="calculation-step">12 mL = 12 cm³</div>
+                        </div>
+                        
+                        <p><strong>Kesimpulan:</strong> Volume kunci adalah 12 mL = 12 cm³. Pernyataan BENAR.</p>
+                        <p><strong>Catatan penting:</strong> 1 mL = 1 cm³, jadi meskipun satuan berbeda, nilainya sama.</p>
+                    </div>
+                </div>
+            </div>
+
+            <h2>⚠️ Kesalahan Umum dan Cara Menghindarinya</h2>
+            
+            <div class="warning-box">
+                <h4>🚫 Kesalahan yang Sering Terjadi:</h4>
+                <ul>
+                    <li><strong>Membaca skala dari atas atau bawah</strong> → Selalu baca dengan mata sejajar permukaan air</li>
+                    <li><strong>Membaca bagian atas meniskus</strong> → Baca bagian BAWAH lengkungan (bagian cekung)</li>
+                    <li><strong>Terbalik dalam mengurangi</strong> → Ingat: V<sub>benda</sub> = V<sub>akhir</sub> - V<sub>awal</sub> (bukan sebaliknya!)</li>
+                    <li><strong>Benda tidak tenggelam sempurna</strong> → Pastikan benda benar-benar terendam seluruhnya</li>
+                    <li><strong>Ada gelembung udara</strong> → Hilangkan gelembung yang menempel pada benda</li>
+                    <li><strong>Salah satuan</strong> → Perhatikan satuan yang digunakan (mL = cm³)</li>
+                </ul>
+            </div>
+
+            <h2>🎓 Rangkuman</h2>
+            <div class="info-box">
+                <ol>
+                    <li><strong>Volume</strong> adalah besaran turunan yang menyatakan besar ruang yang ditempati benda.</li>
+                    
+                    <li><strong>Benda tidak beraturan</strong> adalah benda yang bentuknya tidak dapat dihitung dengan rumus geometris.</li>
+                    
+                    <li><strong>Metode perpindahan air</strong> digunakan untuk mengukur volume benda tidak beraturan dengan gelas ukur.</li>
+                    
+                    <li><strong>Rumus dasar:</strong> V<sub>benda</sub> = V<sub>akhir</sub> - V<sub>awal</sub></li>
+                    
+                    <li><strong>Cara membaca gelas ukur:</strong>
+                        <ul>
+                            <li>Posisi mata sejajar permukaan air</li>
+                            <li>Baca bagian BAWAH meniskus (lengkungan)</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Satuan:</strong> 1 mL = 1 cm³ (sama besar)</li>
+                    
+                    <li><strong>Prinsip Archimedes:</strong> Volume benda = Volume air yang dipindahkan (kenaikan volume air)</li>
+                </ol>
+            </div>
+
+            <div class="key-points">
+                <h4>💪 Tips Mengerjakan Soal</h4>
+                <ul>
+                    <li>Identifikasi data yang diketahui: V<sub>awal</sub> dan V<sub>akhir</sub></li>
+                    <li>Pastikan satuan yang digunakan (biasanya mL atau cm³)</li>
+                    <li>Gunakan rumus: V<sub>benda</sub> = V<sub>akhir</sub> - V<sub>awal</sub></li>
+                    <li>Hati-hati urutan pengurangan: AKHIR dikurangi AWAL (bukan sebaliknya)</li>
+                    <li>Periksa kembali hasil perhitungan (volume harus positif)</li>
+                    <li>Jika ada konversi satuan, ingat: 1 mL = 1 cm³</li>
+                    <li>Perhatikan pernyataan dalam soal: apakah sesuai dengan hasil perhitungan?</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Navigation Bottom -->
+        <div class="nav-bar">
+            <div class="nav-buttons" style="width: 100%; justify-content: space-between;">
+                <a href="kisi-kisi-tkad-ipa.html" class="btn-nav btn-home">
+                    🏠 Kembali ke Menu
+                </a>
+                <a href="Lat7.html" class="btn-nav btn-practice">
+                    Lanjut ke Latihan Soal ✏️
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
