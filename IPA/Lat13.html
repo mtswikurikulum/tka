@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latihan Soal 13: Penyakit Sistem Pencernaan</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #8b5cf6;
+            --secondary: #ec4899;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --dark: #1e293b;
+            --light: #f8fafc;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Navigation */
+        .nav-bar {
+            background: white;
+            border-radius: 16px;
+            padding: 15px 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .nav-title {
+            font-size: 1.2em;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn-nav {
+            padding: 10px 20px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-home {
+            background: linear-gradient(135deg, #64748b, #475569);
+            color: white;
+            box-shadow: 0 4px 12px rgba(100, 116, 139, 0.3);
+        }
+
+        .btn-home:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(100, 116, 139, 0.4);
+        }
+
+        .btn-materi {
+            background: linear-gradient(135deg, #059669, #047857);
+            color: white;
+            box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);
+        }
+
+        .btn-materi:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(5, 150, 105, 0.4);
+        }
+
+        /* Quiz Container */
+        .quiz-container {
+            background: white;
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quiz-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--warning));
+            background-size: 200% 100%;
+            animation: gradientMove 3s ease infinite;
+        }
+
+        @keyframes gradientMove {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            margin-bottom: 30px;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .question-number {
+            font-size: 1.1em;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .score-display {
+            font-size: 1em;
+            font-weight: 700;
+            color: var(--success);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background: #e2e8f0;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 20px;
+            transition: width 0.5s ease;
+        }
+
+        /* Question Slide */
+        .slide {
+            display: none;
+            animation: slideIn 0.5s ease;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .question-box {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border-left: 6px solid var(--primary);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .question-title {
+            font-size: 1.3em;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .question-text {
+            font-size: 1.05em;
+            line-height: 1.7;
+            color: var(--dark);
+            margin-bottom: 15px;
+        }
+
+        .symptom-list {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            border: 2px solid #e0f2fe;
+        }
+
+        .symptom-list h4 {
+            color: var(--secondary);
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .symptom-list ul {
+            margin-left: 25px;
+        }
+
+        .symptom-list li {
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+
+        /* Options */
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin: 25px 0;
+        }
+
+        .option {
+            background: white;
+            border: 3px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 18px 22px;
+            font-size: 1.05em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .option:hover:not(.disabled) {
+            border-color: var(--primary);
+            background: #faf5ff;
+            transform: translateX(5px);
+        }
+
+        .option.selected {
+            border-color: var(--primary);
+            background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%);
+        }
+
+        .option.correct {
+            border-color: var(--success);
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            color: #065f46;
+        }
+
+        .option.correct::before {
+            content: '✓';
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            background: var(--success);
+            color: white;
+            border-radius: 50%;
+            font-weight: 900;
+            font-size: 1.1em;
+        }
+
+        .option.wrong {
+            border-color: var(--danger);
+            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+            color: #991b1b;
+        }
+
+        .option.wrong::before {
+            content: '✗';
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            background: var(--danger);
+            color: white;
+            border-radius: 50%;
+            font-weight: 900;
+            font-size: 1.1em;
+        }
+
+        .option.disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        .option input[type="radio"] {
+            width: 22px;
+            height: 22px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Buttons */
+        .btn-container {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 14px 32px;
+            border-radius: 12px;
+            border: none;
+            font-weight: 700;
+            font-size: 1.05em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, var(--primary), #7c3aed);
+            color: white;
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(139, 92, 246, 0.5);
+        }
+
+        .btn-next {
+            background: linear-gradient(135deg, var(--success), #059669);
+            color: white;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+            display: none;
+        }
+
+        .btn-next.show {
+            display: inline-flex;
+        }
+
+        .btn-next:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.5);
+        }
+
+        /* Feedback */
+        .feedback {
+            margin-top: 25px;
+            padding: 25px;
+            border-radius: 16px;
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .feedback.show {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .feedback.correct {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            border-left: 6px solid var(--success);
+        }
+
+        .feedback.wrong {
+            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+            border-left: 6px solid var(--danger);
+        }
+
+        .feedback-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .feedback-icon {
+            font-size: 2.5em;
+        }
+
+        .feedback-title {
+            font-size: 1.4em;
+            font-weight: 800;
+        }
+
+        .feedback.correct .feedback-title {
+            color: var(--success);
+        }
+
+        .feedback.wrong .feedback-title {
+            color: var(--danger);
+        }
+
+        .feedback-text {
+            font-size: 1.05em;
+            line-height: 1.7;
+            color: var(--dark);
+        }
+
+        .feedback-text strong {
+            color: var(--primary);
+            font-weight: 800;
+        }
+
+        .feedback-text ul {
+            margin: 12px 0 12px 25px;
+        }
+
+        .feedback-text li {
+            margin-bottom: 8px;
+        }
+
+        /* Result Screen */
+        .result-screen {
+            display: none;
+            text-align: center;
+            padding: 40px 20px;
+            animation: fadeIn 0.8s ease;
+        }
+
+        .result-screen.show {
+            display: block;
+        }
+
+        .result-icon {
+            font-size: 6em;
+            margin-bottom: 20px;
+            animation: bounce 1s ease;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .result-score {
+            font-size: 4em;
+            font-weight: 900;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .result-score.excellent {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .result-score.good {
+            background: linear-gradient(135deg, var(--success), #059669);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .result-score.poor {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .result-title {
+            font-size: 2.2em;
+            font-weight: 800;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+
+        .result-message {
+            font-size: 1.2em;
+            color: #64748b;
+            margin-bottom: 35px;
+            line-height: 1.6;
+        }
+
+        .result-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .quiz-container {
+                padding: 25px 20px;
+            }
+
+            .question-title {
+                font-size: 1.1em;
+            }
+
+            .question-text {
+                font-size: 1em;
+            }
+
+            .option {
+                padding: 15px 18px;
+                font-size: 1em;
+            }
+
+            .btn {
+                padding: 12px 24px;
+                font-size: 1em;
+            }
+
+            .result-icon {
+                font-size: 4em;
+            }
+
+            .result-score {
+                font-size: 3em;
+            }
+
+            .result-title {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation -->
+        <div class="nav-bar">
+            <div class="nav-title">✏️ Latihan Soal 13: Penyakit Pencernaan</div>
+            <div class="nav-buttons">
+                <a href="kisi-kisi-tkad-ipa.html" class="btn-nav btn-home">🏠 Menu</a>
+                <a href="13.html" class="btn-nav btn-materi">📖 Materi</a>
+            </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-container">
+            <!-- Progress Bar -->
+            <div class="progress-container">
+                <div class="progress-info">
+                    <div class="question-number">
+                        Soal <span id="currentQuestion">1</span> dari 5
+                    </div>
+                    <div class="score-display">
+                        Skor: <span id="score">0</span>/5
+                    </div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <!-- Quiz Content -->
+            <div id="quizContent">
+                <!-- Question 1 -->
+                <div class="slide active" data-question="1">
+                    <div class="question-box">
+                        <div class="question-title">📝 Soal 1 - Benar/Salah</div>
+                        <div class="question-text">
+                            Seorang pasien mengeluh:
+                        </div>
+                        <div class="symptom-list">
+                            <h4>Gejala yang dialami:</h4>
+                            <ul>
+                                <li>Nyeri perut dimulai di sekitar pusar</li>
+                                <li>Nyeri berpindah ke perut kanan bawah setelah beberapa jam</li>
+                                <li>Demam ringan (38°C)</li>
+                                <li>Mual dan tidak nafsu makan</li>
+                                <li>Nyeri bertambah parah saat batuk atau berjalan</li>
+                            </ul>
+                        </div>
+                        <div class="question-text">
+                            <strong>Pernyataan:</strong> Pasien mengalami apendisitis yang disebabkan oleh penyumbatan dan infeksi pada usus buntu.
+                        </div>
+                    </div>
+
+                    <div class="options">
+                        <div class="option" onclick="selectOption(1, 'benar')">
+                            <input type="radio" name="q1" value="benar">
+                            <span>Benar</span>
+                        </div>
+                        <div class="option" onclick="selectOption(1, 'salah')">
+                            <input type="radio" name="q1" value="salah">
+                            <span>Salah</span>
+                        </div>
+                    </div>
+
+                    <div class="btn-container">
+                        <button class="btn btn-submit" onclick="submitAnswer(1, 'benar')">
+                            Submit Jawaban ✓
+                        </button>
+                        <button class="btn btn-next" onclick="nextQuestion()">
+                            Soal Berikutnya →
+                        </button>
+                    </div>
+
+                    <div class="feedback" id="feedback1"></div>
+                </div>
+
+                <!-- Question 2 -->
+                <div class="slide" data-question="2">
+                    <div class="question-box">
+                        <div class="question-title">📝 Soal 2 - Benar/Salah</div>
+                        <div class="question-text">
+                            Seorang siswa mengalami:
+                        </div>
+                        <div class="symptom-list">
+                            <h4>Gejala yang dialami:</h4>
+                            <ul>
+                                <li>Buang air besar dengan feses cair lebih dari 5 kali sehari</li>
+                                <li>Kram perut</li>
+                                <li>Mual dan lemas</li>
+                                <li>Mulut terasa kering</li>
+                            </ul>
+                        </div>
+                        <div class="question-text">
+                            <strong>Pernyataan:</strong> Siswa mengalami diare yang disebabkan oleh sembelit berkepanjangan.
+                        </div>
+                    </div>
+
+                    <div class="options">
+                        <div class="option" onclick="selectOption(2, 'benar')">
+                            <input type="radio" name="q2" value="benar">
+                            <span>Benar</span>
+                        </div>
+                        <div class="option" onclick="selectOption(2, 'salah')">
+                            <input type="radio" name="q2" value="salah">
+                            <span>Salah</span>
+                        </div>
+                    </div>
+
+                    <div class="btn-container">
+                        <button class="btn btn-submit" onclick="submitAnswer(2, 'salah')">
+                            Submit Jawaban ✓
+                        </button>
+                        <button class="btn btn-next" onclick="nextQuestion()">
+                            Soal Berikutnya →
+                        </button>
+                    </div>
+
+                    <div class="feedback" id="feedback2"></div>
+                </div>
+
+                <!-- Question 3 -->
+                <div class="slide" data-question="3">
+                    <div class="question-box">
+                        <div class="question-title">📝 Soal 3 - Benar/Salah</div>
+                        <div class="question-text">
+                            Seorang pasien mengeluh:
+                        </div>
+                        <div class="symptom-list">
+                            <h4>Gejala yang dialami:</h4>
+                            <ul>
+                                <li>Kulit dan mata berwarna kuning</li>
+                                <li>Urin berwarna gelap seperti teh</li>
+                                <li>Feses berwarna pucat</li>
+                                <li>Nyeri di perut kanan atas</li>
+                                <li>Mudah lelah</li>
+                            </ul>
+                        </div>
+                        <div class="question-text">
+                            <strong>Pernyataan:</strong> Pasien mengalami hepatitis yang disebabkan oleh infeksi virus pada hati.
+                        </div>
+                    </div>
+
+                    <div class="options">
+                        <div class="option" onclick="selectOption(3, 'benar')">
+                            <input type="radio" name="q3" value="benar">
+                            <span>Benar</span>
+                        </div>
+                        <div class="option" onclick="selectOption(3, 'salah')">
+                            <input type="radio" name="q3" value="salah">
+                            <span>Salah</span>
+                        </div>
+                    </div>
+
+                    <div class="btn-container">
+                        <button class="btn btn-submit" onclick="submitAnswer(3, 'benar')">
+                            Submit Jawaban ✓
+                        </button>
+                        <button class="btn btn-next" onclick="nextQuestion()">
+                            Soal Berikutnya →
+                        </button>
+                    </div>
+
+                    <div class="feedback" id="feedback3"></div>
+                </div>
+
+                <!-- Question 4 -->
+                <div class="slide" data-question="4">
+                    <div class="question-box">
+                        <div class="question-title">📝 Soal 4 - Benar/Salah</div>
+                        <div class="question-text">
+                            Seorang pekerja kantoran sering melewatkan waktu makan dan mengalami:
+                        </div>
+                        <div class="symptom-list">
+                            <h4>Gejala yang dialami:</h4>
+                            <ul>
+                                <li>Nyeri atau perih di ulu hati</li>
+                                <li>Perut terasa kembung</li>
+                                <li>Mual terutama di pagi hari</li>
+                                <li>Sering sendawa</li>
+                                <li>Rasa panas di dada</li>
+                            </ul>
+                        </div>
+                        <div class="question-text">
+                            <strong>Pernyataan:</strong> Pasien mengalami maag (gastritis) yang disebabkan oleh pola makan tidak teratur dan dapat diperparah oleh stres.
+                        </div>
+                    </div>
+
+                    <div class="options">
+                        <div class="option" onclick="selectOption(4, 'benar')">
+                            <input type="radio" name="q4" value="benar">
+                            <span>Benar</span>
+                        </div>
+                        <div class="option" onclick="selectOption(4, 'salah')">
+                            <input type="radio" name="q4" value="salah">
+                            <span>Salah</span>
+                        </div>
+                    </div>
+
+                    <div class="btn-container">
+                        <button class="btn btn-submit" onclick="submitAnswer(4, 'benar')">
+                            Submit Jawaban ✓
+                        </button>
+                        <button class="btn btn-next" onclick="nextQuestion()">
+                            Soal Berikutnya →
+                        </button>
+                    </div>
+
+                    <div class="feedback" id="feedback4"></div>
+                </div>
+
+                <!-- Question 5 -->
+                <div class="slide" data-question="5">
+                    <div class="question-box">
+                        <div class="question-title">📝 Soal 5 - Benar/Salah</div>
+                        <div class="question-text">
+                            Seorang lansia mengeluh:
+                        </div>
+                        <div class="symptom-list">
+                            <h4>Gejala yang dialami:</h4>
+                            <ul>
+                                <li>Kesulitan buang air besar</li>
+                                <li>Feses keras dan kering</li>
+                                <li>Buang air besar hanya 2 kali seminggu</li>
+                                <li>Perut terasa kembung</li>
+                                <li>Harus mengejan kuat saat BAB</li>
+                            </ul>
+                        </div>
+                        <div class="question-text">
+                            <strong>Pernyataan:</strong> Pasien mengalami sembelit (konstipasi) yang disebabkan oleh konsumsi makanan pedas berlebihan.
+                        </div>
+                    </div>
+
+                    <div class="options">
+                        <div class="option" onclick="selectOption(5, 'benar')">
+                            <input type="radio" name="q5" value="benar">
+                            <span>Benar</span>
+                        </div>
+                        <div class="option" onclick="selectOption(5, 'salah')">
+                            <input type="radio" name="q5" value="salah">
+                            <span>Salah</span>
+                        </div>
+                    </div>
+
+                    <div class="btn-container">
+                        <button class="btn btn-submit" onclick="submitAnswer(5, 'salah')">
+                            Submit Jawaban ✓
+                        </button>
+                        <button class="btn btn-next" onclick="showResult()">
+                            Lihat Hasil →
+                        </button>
+                    </div>
+
+                    <div class="feedback" id="feedback5"></div>
+                </div>
+            </div>
+
+            <!-- Result Screen -->
+            <div class="result-screen" id="resultScreen">
+                <div class="result-icon" id="resultIcon">🏆</div>
+                <div class="result-score" id="resultScore">5/5</div>
+                <div class="result-title" id="resultTitle">Sempurna!</div>
+                <div class="result-message" id="resultMessage">
+                    Luar biasa! Kamu menguasai materi Penyakit Sistem Pencernaan dengan sempurna!
+                </div>
+                <div class="result-buttons">
+                    <button class="btn btn-submit" onclick="retryQuiz()">
+                        🔄 Ulangi Latihan
+                    </button>
+                    <a href="13.html" class="btn btn-next" style="text-decoration: none; display: inline-flex;">
+                        📖 Baca Materi Lagi
+                    </a>
+                    <a href="kisi-kisi-tkad-ipa.html" class="btn btn-home" style="text-decoration: none; display: inline-flex; background: linear-gradient(135deg, #64748b, #475569); color: white;">
+                        🏠 Kembali ke Menu
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 1;
+        let score = 0;
+        let answeredQuestions = [];
+
+        const explanations = {
+            1: {
+                correct: "Sempurna! Analisis yang tepat:<br><br><strong>Diagnosis: APENDISITIS ✓</strong><br><br><strong>Gejala Khas yang Cocok:</strong><br>• <strong>Nyeri pusar → kanan bawah</strong> - Ini adalah pola KHAS apendisitis (McBurney's point) ✓<br>• <strong>Nyeri bertambah saat batuk/berjalan</strong> - Tanda iritasi peritoneum ✓<br>• <strong>Demam ringan</strong> - Respon tubuh terhadap infeksi ✓<br>• <strong>Mual & tidak nafsu makan</strong> - Gejala penyerta umum ✓<br><br><strong>Penyebab yang Benar:</strong><br>Pernyataan bahwa apendisitis disebabkan oleh <strong>penyumbatan dan infeksi</strong> pada usus buntu adalah BENAR! ✓<br><br><strong>Mekanisme:</strong><br>1. Penyumbatan apendiks (oleh fekalit/feses keras, jaringan limfoid bengkak)<br>2. Bakteri berkembang di apendiks yang tersumbat<br>3. Terjadi peradangan dan infeksi<br>4. Nyeri berpindah dari pusar ke kanan bawah<br><br><strong>INGAT:</strong> Apendisitis adalah kondisi DARURAT yang memerlukan operasi!",
+                wrong: "Belum tepat. Mari kita analisis:<br><br><strong>Gejala-gejala tersebut adalah KHAS APENDISITIS:</strong><br><br>✓ <strong>Nyeri pusar → kanan bawah</strong> = Pola KHAS apendisitis!<br>✓ <strong>Nyeri saat batuk/jalan</strong> = Iritasi peritoneum<br>✓ <strong>Demam ringan</strong> = Ada infeksi<br>✓ <strong>Mual + tidak nafsu makan</strong> = Gejala penyerta<br><br><strong>Penyebab Apendisitis:</strong><br>• Penyumbatan lumen apendiks (fekalit) ✓<br>• Infeksi bakteri berkembang ✓<br>• Pembengkakan jaringan limfoid ✓<br><br>Semua gejala dan penyebab dalam pernyataan adalah BENAR!<br><br><strong>Jawaban yang benar: BENAR</strong><br><br><strong>Tanda Bahaya:</strong> Jika mengalami nyeri seperti ini, SEGERA ke dokter! Apendiks yang pecah dapat menyebabkan peritonitis yang mengancam jiwa."
+            },
+            2: {
+                correct: "Benar! Analisis yang tepat:<br><br><strong>Diagnosis: DIARE ✓</strong><br><br><strong>Gejala yang Cocok dengan Diare:</strong><br>• <strong>Feses cair >5x/hari</strong> - Ciri khas diare (normalnya <3x) ✓<br>• <strong>Kram perut</strong> - Kontraksi usus berlebihan ✓<br>• <strong>Mual dan lemas</strong> - Akibat kehilangan cairan ✓<br>• <strong>Mulut kering</strong> - Tanda awal dehidrasi ✓<br><br><strong>KESALAHAN dalam Pernyataan:</strong><br>❌ <strong>\"Disebabkan oleh sembelit\"</strong> - INI SALAH!<br><br>Diare BUKAN disebabkan oleh sembelit! Justru keduanya adalah kondisi yang BERLAWANAN:<br><br><strong>Perbedaan:</strong><br>• <strong>Diare:</strong> Feses CAIR, BAB >3x/hari<br>• <strong>Sembelit:</strong> Feses KERAS, BAB <3x/minggu<br><br><strong>Penyebab BENAR Diare:</strong><br>✓ Infeksi virus/bakteri<br>✓ Keracunan makanan<br>✓ Makanan tidak bersih<br>✓ Intoleransi makanan<br><br><strong>Pernyataan SALAH</strong> karena penyebabnya keliru!",
+                wrong: "Belum tepat. Perhatikan dengan teliti:<br><br><strong>Gejala memang DIARE:</strong><br>• Feses cair >5x/hari ✓<br>• Kram perut ✓<br>• Mual, lemas, mulut kering (dehidrasi) ✓<br><br><strong>TAPI pernyataan penyebabnya SALAH!</strong><br><br>❌ <strong>Diare BUKAN disebabkan oleh sembelit!</strong><br><br>Ini adalah kesalahan fatal! Diare dan sembelit adalah KEBALIKAN:<br><br><table style='margin: 10px 0; background: white; border-radius: 8px;'><tr><th>Diare</th><th>Sembelit</th></tr><tr><td>Feses CAIR</td><td>Feses KERAS</td></tr><tr><td>BAB sering (>3x/hari)</td><td>BAB jarang (<3x/minggu)</td></tr></table><br><strong>Penyebab BENAR diare:</strong><br>✓ Infeksi virus (rotavirus, norovirus)<br>✓ Infeksi bakteri (E. coli, Salmonella)<br>✓ Keracunan makanan<br>✓ Makanan tidak bersih<br><br><strong>Jawaban: SALAH</strong>"
+            },
+            3: {
+                correct: "Sempurna! Analisis yang sangat tepat:<br><br><strong>Diagnosis: HEPATITIS ✓</strong><br><br><strong>Gejala Khas Hepatitis (Semua Cocok!):</strong><br>• <strong>Kuning (Jaundice)</strong> - Akumulasi bilirubin karena hati rusak ✓<br>• <strong>Urin gelap seperti teh</strong> - Bilirubin keluar melalui urin ✓<br>• <strong>Feses pucat</strong> - Bilirubin tidak mencapai usus ✓<br>• <strong>Nyeri perut KANAN ATAS</strong> - Lokasi hati berada! ✓<br>• <strong>Mudah lelah</strong> - Fungsi hati terganggu ✓<br><br><strong>Penyebab yang Benar:</strong><br>Pernyataan bahwa hepatitis disebabkan oleh <strong>infeksi virus pada HATI</strong> adalah 100% BENAR! ✓<br><br><strong>Jenis Virus Hepatitis:</strong><br>• <strong>Hepatitis A</strong> - dari makanan/air terkontaminasi<br>• <strong>Hepatitis B</strong> - dari darah, cairan tubuh<br>• <strong>Hepatitis C</strong> - dari darah (jarum suntik)<br><br><strong>Organ yang Benar:</strong><br>✓ HATI (Hepar/Liver) - bukan usus!<br>✓ Lokasi: Perut kanan atas<br>✓ Fungsi: Metabolisme, detoksifikasi, produksi empedu",
+                wrong: "Belum tepat. Mari kita periksa:<br><br><strong>Semua gejala JELAS menunjukkan HEPATITIS:</strong><br><br>✓ Kuning = Bilirubin tinggi<br>✓ Urin gelap = Bilirubin keluar lewat urin<br>✓ Feses pucat = Bilirubin tidak ke usus<br>✓ Nyeri kanan atas = Lokasi HATI<br>✓ Mudah lelah = Hati tidak fungsi optimal<br><br><strong>Penyebab Hepatitis:</strong><br>✓ Infeksi virus (A, B, C, D, E) = BENAR!<br>✓ Organ yang terkena: HATI = BENAR!<br><br>Semua informasi dalam pernyataan adalah BENAR!<br><br><strong>Jawaban yang benar: BENAR</strong><br><br><strong>Pencegahan Hepatitis:</strong><br>• Vaksinasi (tersedia untuk Hep A & B)<br>• Cuci tangan sebelum makan<br>• Makanan & air bersih<br>• Hindari berbagi jarum<br>• Gunakan kondom"
+            },
+            4: {
+                correct: "Sempurna! Analisis yang sangat akurat:<br><br><strong>Diagnosis: MAAG (GASTRITIS) ✓</strong><br><br><strong>Gejala Khas Maag (Semua Cocok!):</strong><br>• <strong>Nyeri/perih ulu hati</strong> - Lokasi lambung ✓<br>• <strong>Perut kembung</strong> - Gas berlebih di lambung ✓<br>• <strong>Mual (pagi hari)</strong> - Asam lambung tinggi ✓<br>• <strong>Sering sendawa</strong> - Gas naik dari lambung ✓<br>• <strong>Rasa panas di dada (heartburn)</strong> - Asam naik ke kerongkongan ✓<br><br><strong>Penyebab yang BENAR:</strong><br>Pernyataan bahwa maag disebabkan oleh:<br>✓ <strong>Pola makan tidak teratur</strong> - Pekerja sering melewatkan waktu makan! BENAR!<br>✓ <strong>Dapat diperparah oleh stres</strong> - Stres kerja meningkatkan asam lambung! BENAR!<br><br><strong>Faktor Pemicu Maag:</strong><br>• Makan tidak teratur / terlambat<br>• Stres berkepanjangan<br>• Makanan pedas & asam<br>• Infeksi H. pylori<br>• Obat antiinflamasi<br><br><strong>Pencegahan:</strong><br>✓ Makan teratur<br>✓ Kelola stres<br>✓ Hindari makanan pemicu",
+                wrong: "Belum tepat. Mari kita analisis dengan cermat:<br><br><strong>Gejala-gejala tersebut JELAS menunjukkan MAAG:</strong><br><br>✓ <strong>Nyeri ulu hati</strong> = Peradangan lambung<br>✓ <strong>Kembung + sendawa</strong> = Gas berlebih<br>✓ <strong>Mual pagi hari</strong> = Asam lambung tinggi<br>✓ <strong>Panas di dada</strong> = Heartburn (GERD)<br><br><strong>Penyebab yang Disebutkan:</strong><br>✓ <strong>Pola makan tidak teratur</strong> = BENAR!<br>  → Pekerja kantoran sering melewatkan makan<br>  → Lambung kosong → asam lambung melukai dinding<br><br>✓ <strong>Diperparah oleh stres</strong> = BENAR!<br>  → Stres kerja meningkatkan produksi asam<br>  → Memperburuk peradangan lambung<br><br>Semua dalam pernyataan adalah BENAR!<br><br><strong>Jawaban yang benar: BENAR</strong><br><br><strong>Tips untuk Penderita Maag:</strong><br>• Makan porsi kecil tapi sering (5-6x/hari)<br>• Hindari telat makan<br>• Kelola stres dengan relaksasi<br>• Hindari makanan pedas, asam, berlemak"
+            },
+            5: {
+                correct: "Benar! Analisis yang tajam:<br><br><strong>Diagnosis: SEMBELIT (KONSTIPASI) ✓</strong><br><br><strong>Gejala Sembelit yang Cocok:</strong><br>• <strong>Kesulitan BAB</strong> ✓<br>• <strong>Feses keras & kering</strong> ✓<br>• <strong>BAB hanya 2x/minggu</strong> (normal 3x/minggu - 3x/hari) ✓<br>• <strong>Perut kembung</strong> - Feses menumpuk ✓<br>• <strong>Mengejan kuat</strong> - Feses sulit keluar ✓<br><br><strong>KESALAHAN dalam Pernyataan:</strong><br>❌ <strong>\"Disebabkan oleh makanan pedas\"</strong> - INI SALAH!<br><br>Makanan pedas BUKAN penyebab sembelit!<br><br><strong>Penyebab BENAR Sembelit (terutama pada lansia):</strong><br>✓ <strong>Kurang konsumsi SERAT</strong> (sayur, buah)<br>✓ <strong>Kurang minum AIR</strong> - feses jadi keras<br>✓ <strong>Kurang AKTIVITAS FISIK</strong> - pergerakan usus lambat<br>✓ <strong>Menahan BAB</strong> - kebiasaan buruk<br>✓ <strong>Efek samping obat</strong> (pada lansia)<br>✓ <strong>Gangguan hormon</strong> (hipotiroid)<br><br><strong>Makanan pedas malah bisa:</strong><br>• Merangsang pergerakan usus<br>• Menyebabkan DIARE (bukan sembelit)<br><br><strong>Pernyataan SALAH karena penyebabnya keliru!</strong>",
+                wrong: "Belum tepat. Mari kita periksa dengan teliti:<br><br><strong>Gejala memang SEMBELIT:</strong><br>✓ Kesulitan BAB<br>✓ Feses keras & kering<br>✓ BAB <3x/minggu<br>✓ Kembung & mengejan kuat<br><br><strong>TAPI pernyataan penyebabnya SALAH!</strong><br><br>❌ <strong>Makanan pedas BUKAN penyebab sembelit!</strong><br><br>Ini kesalahan konsep! Makanan pedas justru:<br>• Merangsang usus bergerak lebih cepat<br>• Bisa menyebabkan DIARE (kebalikan sembelit)<br>• Bukan penyebab feses keras<br><br><strong>Penyebab BENAR sembelit (pada lansia):</strong><br>✓ <strong>Kurang SERAT</strong> - kurang sayur & buah<br>✓ <strong>Kurang AIR</strong> - feses jadi keras<br>✓ <strong>Kurang GERAK</strong> - usus lambat<br>✓ <strong>Efek obat</strong> - lansia sering minum obat<br>✓ <strong>Menahan BAB</strong><br><br><strong>Pengobatan Sembelit:</strong><br>• Perbanyak serat (20-35 gram/hari)<br>• Minum 8-10 gelas air/hari<br>• Olahraga teratur<br>• Jangan tahan BAB<br><br><strong>Jawaban: SALAH</strong>"
+            }
+        };
+
+        function selectOption(questionNum, value) {
+            const slide = document.querySelector(`.slide[data-question="${questionNum}"]`);
+            const options = slide.querySelectorAll('.option');
+            
+            options.forEach(opt => {
+                opt.classList.remove('selected');
+                const input = opt.querySelector('input');
+                if (input && input.value === value) {
+                    opt.classList.add('selected');
+                    input.checked = true;
+                }
+            });
+        }
+
+        function submitAnswer(questionNum, correctAnswer) {
+            const slide = document.querySelector(`.slide[data-question="${questionNum}"]`);
+            const options = slide.querySelectorAll('.option');
+            const inputs = slide.querySelectorAll('input[type="radio"]');
+            const feedback = document.getElementById(`feedback${questionNum}`);
+            const submitBtn = slide.querySelector('.btn-submit');
+            const nextBtn = slide.querySelector('.btn-next');
+
+            let selectedAnswer = null;
+            inputs.forEach(input => {
+                if (input.checked) {
+                    selectedAnswer = input.value;
+                }
+            });
+
+            if (!selectedAnswer) {
+                alert('Silakan pilih jawaban terlebih dahulu!');
+                return;
+            }
+
+            // Disable options
+            options.forEach(opt => {
+                opt.classList.add('disabled');
+                opt.style.cursor = 'not-allowed';
+            });
+            inputs.forEach(input => input.disabled = true);
+            
+            submitBtn.style.display = 'none';
+            nextBtn.classList.add('show');
+
+            const isCorrect = selectedAnswer === correctAnswer;
+
+            // Mark correct/wrong
+            options.forEach(opt => {
+                const input = opt.querySelector('input');
+                if (input.value === correctAnswer) {
+                    opt.classList.add('correct');
+                }
+                if (input.checked && input.value !== correctAnswer) {
+                    opt.classList.add('wrong');
+                }
+            });
+
+            // Update score
+            if (isCorrect && !answeredQuestions.includes(questionNum)) {
+                score++;
+                answeredQuestions.push(questionNum);
+                document.getElementById('score').textContent = score;
+            }
+
+            // Show feedback
+            feedback.classList.add('show');
+            feedback.classList.add(isCorrect ? 'correct' : 'wrong');
+            
+            const icon = isCorrect ? '✅' : '❌';
+            const title = isCorrect ? 'Jawaban Benar!' : 'Jawaban Salah!';
+            const explanation = isCorrect ? explanations[questionNum].correct : explanations[questionNum].wrong;
+
+            feedback.innerHTML = `
+                <div class="feedback-header">
+                    <div class="feedback-icon">${icon}</div>
+                    <div class="feedback-title">${title}</div>
+                </div>
+                <div class="feedback-text">${explanation}</div>
+            `;
+
+            setTimeout(() => {
+                feedback.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 300);
+        }
+
+        function nextQuestion() {
+            const currentSlideEl = document.querySelector('.slide.active');
+            currentSlideEl.classList.remove('active');
+
+            currentSlide++;
+            const nextSlideEl = document.querySelector(`.slide[data-question="${currentSlide}"]`);
+            if (nextSlideEl) {
+                nextSlideEl.classList.add('active');
+                document.getElementById('currentQuestion').textContent = currentSlide;
+                
+                const progress = (currentSlide / 5) * 100;
+                document.getElementById('progressFill').style.width = progress + '%';
+
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        function showResult() {
+            document.getElementById('quizContent').style.display = 'none';
+            document.getElementById('resultScreen').classList.add('show');
+            document.querySelector('.progress-container').style.display = 'none';
+
+            const resultScore = document.getElementById('resultScore');
+            const resultIcon = document.getElementById('resultIcon');
+            const resultTitle = document.getElementById('resultTitle');
+            const resultMessage = document.getElementById('resultMessage');
+
+            resultScore.textContent = `${score}/5`;
+
+            if (score === 5) {
+                resultScore.classList.add('excellent');
+                resultIcon.textContent = '🏆';
+                resultTitle.textContent = 'Sempurna!';
+                resultMessage.textContent = 'Luar biasa! Kamu menguasai materi Penyakit Sistem Pencernaan dengan sempurna!';
+            } else if (score >= 3) {
+                resultScore.classList.add('good');
+                resultIcon.textContent = '👍';
+                resultTitle.textContent = 'Bagus!';
+                resultMessage.textContent = 'Kerja yang baik! Terus tingkatkan pemahamanmu tentang penyakit sistem pencernaan.';
+            } else {
+                resultScore.classList.add('poor');
+                resultIcon.textContent = '📚';
+                resultTitle.textContent = 'Tetap Semangat!';
+                resultMessage.textContent = 'Jangan menyerah! Pelajari materi penyakit pencernaan lagi dan coba ulangi latihannya.';
+            }
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function retryQuiz() {
+            currentSlide = 1;
+            score = 0;
+            answeredQuestions = [];
+
+            document.getElementById('score').textContent = '0';
+            document.getElementById('currentQuestion').textContent = '1';
+            document.getElementById('progressFill').style.width = '0%';
+
+            document.querySelectorAll('.slide').forEach((slide, index) => {
+                slide.classList.remove('active');
+                if (index === 0) slide.classList.add('active');
+
+                slide.querySelectorAll('.option').forEach(opt => {
+                    opt.classList.remove('selected', 'correct', 'wrong', 'disabled');
+                    opt.style.cursor = 'pointer';
+                });
+                
+                slide.querySelectorAll('input[type="radio"]').forEach(input => {
+                    input.checked = false;
+                    input.disabled = false;
+                });
+
+                slide.querySelector('.btn-submit').style.display = 'inline-block';
+                slide.querySelector('.btn-next').classList.remove('show');
+
+                const feedbackEl = slide.querySelector('.feedback');
+                feedbackEl.classList.remove('show', 'correct', 'wrong');
+                feedbackEl.innerHTML = '';
+            });
+
+            document.getElementById('quizContent').style.display = 'block';
+            document.getElementById('resultScreen').classList.remove('show');
+            document.querySelector('.progress-container').style.display = 'block';
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latihan Soal 11: Sistem Pencernaan - Zat Makanan</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #8b5cf6;
+            --secondary: #ec4899;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --dark: #1e293b;
+            --light: #f8fafc;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Navigation */
+        .nav-bar {
+            background: white;
+            border-radius: 16px;
+            padding: 15px 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .nav-title {
+            font-size: 1.2em;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn-nav {
+            padding: 10px 20px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-home {
+            background: linear-gradient(135deg, #64748b, #475569);
+            color: white;
+            box-shadow: 0 4px 12px rgba(100, 116, 139, 0.3);
+        }
+
+        .btn-home:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(100, 116, 139, 0.4);
+        }
+
+        .btn-materi {
+            background: linear-gradient(135deg, #059669, #047857);
+            color: white;
+            box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);
+        }
+
+        .btn-materi:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(5, 150, 105, 0.4);
+        }
+
+        /* Quiz Container */
+        .quiz-container {
+            background: white;
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quiz-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--warning));
+            background-size: 200% 100%;
+            animation: gradientMove 3s ease infinite;
+        }
+
+        @keyframes gradientMove {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            margin-bottom: 30px;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .question-number {
+            font-size: 1.1em;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .score-display {
+            font-size: 1em;
+            font-weight: 700;
+            color: var(--success);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background: #e2e8f0;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 20px;
+            transition: width 0.5s ease;
+        }
+
+        /* Question Slide */
+        .slide {
+            display: none;
+            animation: slideIn 0.5s ease;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .question-header {
+            background: linear-gradient(135deg, #faf5ff, #f3e8ff);
+            border-left: 5px solid var(--primary);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+        }
+
+        .question-title {
+            font-size: 1.3em;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .question-text {
+            font-size: 1.05em;
+            line-height: 1.8;
+            color: var(--dark);
+        }
+
+        /* Table in Question */
+        .question-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .question-table thead {
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+            color: white;
+        }
+
+        .question-table th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 700;
+        }
+
+        .question-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .question-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .question-table tbody tr:hover {
+            background: #faf5ff;
+        }
+
+        /* Options */
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin: 25px 0;
+        }
+
+        .option {
+            background: white;
+            border: 3px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 18px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.05em;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .option:hover:not(.disabled) {
+            border-color: var(--primary);
+            background: #faf5ff;
+            transform: translateX(5px);
+        }
+
+        .option.selected {
+            border-color: var(--primary);
+            background: linear-gradient(135deg, #faf5ff, #f3e8ff);
+            font-weight: 600;
+        }
+
+        .option.correct {
+            border-color: var(--success);
+            background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+            font-weight: 600;
+        }
+
+        .option.correct::before {
+            content: '✓';
+            color: var(--success);
+            font-weight: bold;
+            font-size: 1.3em;
+        }
+
+        .option.wrong {
+            border-color: var(--danger);
+            background: linear-gradient(135deg, #fef2f2, #fee2e2);
+        }
+
+        .option.wrong::before {
+            content: '✗';
+            color: var(--danger);
+            font-weight: bold;
+            font-size: 1.3em;
+        }
+
+        .option.disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        .option input[type="radio"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        /* Buttons */
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 14px 28px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, var(--primary), #7c3aed);
+            color: white;
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(139, 92, 246, 0.4);
+        }
+
+        .btn-next {
+            background: linear-gradient(135deg, var(--success), #059669);
+            color: white;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+            display: none;
+        }
+
+        .btn-next.show {
+            display: inline-flex;
+        }
+
+        .btn-next:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+        }
+
+        /* Feedback */
+        .feedback {
+            display: none;
+            margin-top: 25px;
+            padding: 25px;
+            border-radius: 12px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .feedback.show {
+            display: block;
+        }
+
+        .feedback.correct {
+            background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+            border-left: 5px solid var(--success);
+        }
+
+        .feedback.wrong {
+            background: linear-gradient(135deg, #fef2f2, #fee2e2);
+            border-left: 5px solid var(--danger);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .feedback-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .feedback-icon {
+            font-size: 2em;
+        }
+
+        .feedback-title {
+            font-size: 1.3em;
+            font-weight: 800;
+        }
+
+        .feedback.correct .feedback-title {
+            color: var(--success);
+        }
+
+        .feedback.wrong .feedback-title {
+            color: var(--danger);
+        }
+
+        .feedback-text {
+            line-height: 1.8;
+            color: var(--dark);
+        }
+
+        .feedback-text strong {
+            color: var(--primary);
+        }
+
+        /* Result Screen */
+        .result-screen {
+            display: none;
+            text-align: center;
+            animation: zoomIn 0.5s ease;
+        }
+
+        .result-screen.show {
+            display: block;
+        }
+
+        @keyframes zoomIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .result-icon {
+            font-size: 5em;
+            margin-bottom: 20px;
+        }
+
+        .result-score {
+            font-size: 4em;
+            font-weight: 900;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .result-score.excellent {
+            background: linear-gradient(135deg, #10b981, #059669);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .result-score.good {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .result-score.poor {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .result-title {
+            font-size: 2em;
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 15px;
+        }
+
+        .result-message {
+            font-size: 1.1em;
+            color: #64748b;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .result-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-retry {
+            background: linear-gradient(135deg, var(--primary), #7c3aed);
+            color: white;
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+        }
+
+        .btn-retry:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(139, 92, 246, 0.4);
+        }
+
+        .btn-back {
+            background: linear-gradient(135deg, #64748b, #475569);
+            color: white;
+            box-shadow: 0 4px 15px rgba(100, 116, 139, 0.3);
+        }
+
+        .btn-back:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(100, 116, 139, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .quiz-container {
+                padding: 25px 20px;
+            }
+
+            .question-title {
+                font-size: 1.1em;
+            }
+
+            .option {
+                padding: 15px;
+                font-size: 0.95em;
+            }
+
+            .result-score {
+                font-size: 3em;
+            }
+
+            .result-title {
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation Bar -->
+        <div class="nav-bar">
+            <div class="nav-title">🍎 Latihan Soal: Sistem Pencernaan - Zat Makanan</div>
+            <div class="nav-buttons">
+                <a href="kisi-kisi-tkad-ipa.html" class="btn-nav btn-home">🏠 Menu</a>
+                <a href="11.html" class="btn-nav btn-materi">📖 Materi</a>
+            </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-container">
+            <!-- Progress Bar -->
+            <div class="progress-container">
+                <div class="progress-info">
+                    <span class="question-number">Soal <span id="currentQuestion">1</span> dari 5</span>
+                    <span class="score-display">Skor: <span id="score">0</span>/5</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <!-- Quiz Content -->
+            <div id="quizContent">
+                <!-- Question 1 -->
+                <div class="slide active" data-question="1">
+                    <div class="question-header">
+                        <div class="question-title">Soal 1: Identifikasi Menu Tidak Sehat</div>
+                        <div class="question-text">
+                            <p>Perhatikan data kandungan zat gizi beberapa menu berikut:</p>
+                            
+                            <table class="question-table">
+                                <thead>
+                                    <tr>
+                                        <th>Menu</th>
+                                        <th>Kandungan</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Menu A</strong></td>
+                                        <td>Nasi putih 3 porsi, ayam goreng tepung, es teh manis, keripik kentang</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Menu B</strong></td>
+                                        <td>Nasi merah 1 porsi, ikan bakar, sayur bayam, tempe, buah apel, air putih</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Menu C</strong></td>
+                                        <td>Mie instant 2 bungkus, sosis goreng, minuman bersoda, donat 2 buah</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Menu D</strong></td>
+                                        <td>Roti gandum, telur rebus, salad sayur, yogurt, buah pisang, air putih</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <p style="margin-top: 15px;"><strong>Menu manakah yang PALING BERPOTENSI menimbulkan gangguan pencernaan jika dikonsumsi rutin?</strong></p>
+                        </div>
+                    </div>
+
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q1" value="A">
+                            <span>A. Menu A dan Menu C</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q1" value="B">
+                            <span>B. Menu B dan Menu D</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q1" value="C">
+                            <span>C. Menu A dan Menu D</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q1" value="D">
+                            <span>D. Menu B dan Menu C</span>
+                        </label>
+                    </div>
+
+                    <div class="button-group">
+                        <button class="btn btn-submit" onclick="submitAnswer(1, 'A')">Cek Jawaban</button>
+                        <button class="btn btn-next" onclick="nextQuestion()">Soal Berikutnya →</button>
+                    </div>
+
+                    <div class="feedback" id="feedback1"></div>
+                </div>
+
+                <!-- Question 2 -->
+                <div class="slide" data-question="2">
+                    <div class="question-header">
+                        <div class="question-title">Soal 2: Analisis Gangguan Pencernaan</div>
+                        <div class="question-text">
+                            <p>Seorang siswa bernama Budi memiliki pola makan sebagai berikut:</p>
+                            
+                            <table class="question-table">
+                                <thead>
+                                    <tr>
+                                        <th>Waktu</th>
+                                        <th>Menu</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Sarapan (kadang)</strong></td>
+                                        <td>Roti bakar + kopi manis</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Makan Siang</strong></td>
+                                        <td>Nasi + ayam goreng + sambal pedas + es jeruk manis</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Camilan</strong></td>
+                                        <td>Mie instant + keripik pedas + minuman bersoda</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Makan Malam</strong></td>
+                                        <td>Pizza + kentang goreng + es krim</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <p style="margin-top: 15px;"><strong>Gangguan pencernaan apa yang PALING MUNGKIN dialami Budi?</strong></p>
+                        </div>
+                    </div>
+
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q2" value="A">
+                            <span>A. Gastritis (maag) karena pola makan tidak teratur dan makanan pedas</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q2" value="B">
+                            <span>B. Malnutrisi karena kekurangan protein</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q2" value="C">
+                            <span>C. Diare karena makanan terlalu banyak air</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q2" value="D">
+                            <span>D. Konstipasi ringan karena banyak makan sayur</span>
+                        </label>
+                    </div>
+
+                    <div class="button-group">
+                        <button class="btn btn-submit" onclick="submitAnswer(2, 'A')">Cek Jawaban</button>
+                        <button class="btn btn-next" onclick="nextQuestion()">Soal Berikutnya →</button>
+                    </div>
+
+                    <div class="feedback" id="feedback2"></div>
+                </div>
+
+                <!-- Question 3 -->
+                <div class="slide" data-question="3">
+                    <div class="question-header">
+                        <div class="question-title">Soal 3: Kekurangan Serat</div>
+                        <div class="question-text">
+                            <p>Ani selalu mengonsumsi menu harian seperti ini:</p>
+                            
+                            <ul style="margin: 15px 0; padding-left: 30px;">
+                                <li>Sarapan: Nasi putih + telur goreng</li>
+                                <li>Makan Siang: Nasi putih + ayam goreng + kerupuk</li>
+                                <li>Makan Malam: Nasi putih + ikan goreng</li>
+                                <li>Minuman: Air putih 4 gelas/hari</li>
+                                <li>Tidak pernah makan sayur dan buah</li>
+                            </ul>
+
+                            <p style="margin-top: 15px;"><strong>Masalah kesehatan apa yang PALING MUNGKIN dialami Ani?</strong></p>
+                        </div>
+                    </div>
+
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q3" value="A">
+                            <span>A. Obesitas karena terlalu banyak makan</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q3" value="B">
+                            <span>B. Konstipasi (sembelit) karena kurang serat dan air</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q3" value="C">
+                            <span>C. Diare karena terlalu banyak protein</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q3" value="D">
+                            <span>D. Gastritis karena makanan terlalu berminyak</span>
+                        </label>
+                    </div>
+
+                    <div class="button-group">
+                        <button class="btn btn-submit" onclick="submitAnswer(3, 'B')">Cek Jawaban</button>
+                        <button class="btn btn-next" onclick="nextQuestion()">Soal Berikutnya →</button>
+                    </div>
+
+                    <div class="feedback" id="feedback3"></div>
+                </div>
+
+                <!-- Question 4 -->
+                <div class="slide" data-question="4">
+                    <div class="question-header">
+                        <div class="question-title">Soal 4: Menu Seimbang</div>
+                        <div class="question-text">
+                            <p>Perhatikan komposisi menu berikut:</p>
+                            
+                            <table class="question-table">
+                                <thead>
+                                    <tr>
+                                        <th>Menu</th>
+                                        <th>Komposisi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Menu P</strong></td>
+                                        <td>Nasi merah + ikan bakar + tumis brokoli + tahu + apel + air putih</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Menu Q</strong></td>
+                                        <td>Nasi goreng + kerupuk + acar + teh manis</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Menu R</strong></td>
+                                        <td>Burger + kentang goreng + cola + es krim</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Menu S</strong></td>
+                                        <td>Roti gandum + salad + alpukat + susu almond + strawberry</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <p style="margin-top: 15px;"><strong>Menu manakah yang PALING SEIMBANG dan baik untuk kesehatan pencernaan?</strong></p>
+                        </div>
+                    </div>
+
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q4" value="A">
+                            <span>A. Menu P dan Menu S</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q4" value="B">
+                            <span>B. Menu Q dan Menu R</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q4" value="C">
+                            <span>C. Menu P dan Menu Q</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q4" value="D">
+                            <span>D. Menu R dan Menu S</span>
+                        </label>
+                    </div>
+
+                    <div class="button-group">
+                        <button class="btn btn-submit" onclick="submitAnswer(4, 'A')">Cek Jawaban</button>
+                        <button class="btn btn-next" onclick="nextQuestion()">Soal Berikutnya →</button>
+                    </div>
+
+                    <div class="feedback" id="feedback4"></div>
+                </div>
+
+                <!-- Question 5 -->
+                <div class="slide" data-question="5">
+                    <div class="question-header">
+                        <div class="question-title">Soal 5: Dampak Makanan Cepat Saji</div>
+                        <div class="question-text">
+                            <p>Doni setiap hari mengonsumsi makanan cepat saji (fast food) dengan karakteristik:</p>
+                            
+                            <ul style="margin: 15px 0; padding-left: 30px;">
+                                <li>Tinggi kalori (1500-2000 kalori per porsi)</li>
+                                <li>Tinggi lemak jenuh dan lemak trans</li>
+                                <li>Tinggi gula dan garam</li>
+                                <li>Rendah serat (hampir tidak ada sayur dan buah)</li>
+                                <li>Porsi sangat besar</li>
+                            </ul>
+
+                            <p style="margin-top: 15px;"><strong>Jika pola makan ini berlanjut dalam jangka panjang, gangguan kesehatan apa yang PALING BERISIKO dialami Doni?</strong></p>
+                        </div>
+                    </div>
+
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q5" value="A">
+                            <span>A. Obesitas dan risiko penyakit jantung</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q5" value="B">
+                            <span>B. Malnutrisi dan kekurangan protein</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q5" value="C">
+                            <span>C. Anemia karena kekurangan zat besi</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q5" value="D">
+                            <span>D. Diare kronis karena bakteri</span>
+                        </label>
+                    </div>
+
+                    <div class="button-group">
+                        <button class="btn btn-submit" onclick="submitAnswer(5, 'A')">Cek Jawaban</button>
+                        <button class="btn btn-next" onclick="showResult()">Lihat Hasil →</button>
+                    </div>
+
+                    <div class="feedback" id="feedback5"></div>
+                </div>
+            </div>
+
+            <!-- Result Screen -->
+            <div class="result-screen" id="resultScreen">
+                <div class="result-icon" id="resultIcon">🎉</div>
+                <div class="result-score" id="resultScore">5/5</div>
+                <div class="result-title" id="resultTitle">Sempurna!</div>
+                <div class="result-message" id="resultMessage">
+                    Luar biasa! Kamu menguasai materi sistem pencernaan dan zat makanan dengan sempurna!
+                </div>
+                <div class="result-buttons">
+                    <button class="btn btn-retry" onclick="retryQuiz()">🔄 Ulangi Latihan</button>
+                    <a href="11.html" class="btn btn-back" style="text-decoration: none;">📖 Kembali ke Materi</a>
+                    <a href="kisi-kisi-tkad-ipa.html" class="btn btn-home" style="text-decoration: none;">🏠 Menu Utama</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 1;
+        let score = 0;
+        let answeredQuestions = [];
+
+        const explanations = {
+            1: {
+                correct: "Sempurna! Analisis yang tepat:<br><br><strong>Menu A - TIDAK SEHAT:</strong><br>• Karbohidrat berlebih (nasi 3 porsi + keripik)<br>• Tinggi lemak jenuh (ayam goreng tepung)<br>• Tinggi gula (es teh manis)<br>• Kurang serat (tidak ada sayur dan buah)<br>• Risiko: Obesitas, konstipasi, diabetes<br><br><strong>Menu C - SANGAT TIDAK SEHAT:</strong><br>• Tinggi natrium (mie instant 2 bungkus)<br>• Tinggi lemak trans (sosis goreng)<br>• Tinggi gula (soda + donat)<br>• Rendah vitamin dan mineral<br>• Banyak pengawet dan pewarna<br>• Risiko: Obesitas, hipertensi, gastritis<br><br><strong>Menu B & D - SEHAT:</strong><br>Menu B dan D mengandung karbohidrat kompleks, protein berkualitas, serat tinggi, vitamin, dan mineral yang cukup. Porsi seimbang dan tidak berlebihan!",
+                wrong: "Belum tepat. Perhatikan ciri menu tidak sehat:<br><br><strong>Yang TIDAK SEHAT (A & C):</strong><br>• Menu A: Karbohidrat berlebih, tinggi lemak & gula, kurang serat<br>• Menu C: Tinggi garam, lemak trans, gula, rendah nutrisi<br><br><strong>Yang SEHAT (B & D):</strong><br>• Menu B: Karbohidrat kompleks (nasi merah), protein (ikan, tempe), serat (sayur, buah), air putih<br>• Menu D: Gandum, protein (telur), serat (salad, buah), probiotik (yogurt)<br><br><strong>Tip:</strong> Menu tidak sehat = tinggi kalori, lemak, gula, garam + rendah serat!"
+            },
+            2: {
+                correct: "Benar sekali! Analisis yang akurat:<br><br><strong>Faktor Penyebab Gastritis pada Budi:</strong><br><br><strong>1. Pola Makan Tidak Teratur:</strong><br>• Sarapan hanya kadang-kadang<br>• Sering telat makan<br>• Lambung kosong terlalu lama → asam lambung meningkat<br><br><strong>2. Makanan Pedas Berlebihan:</strong><br>• Sambal pedas saat makan siang<br>• Keripik pedas saat camilan<br>• Iritasi dinding lambung<br><br><strong>3. Makanan Tidak Sehat:</strong><br>• Mie instant (tinggi MSG, pengawet)<br>• Gorengan (tinggi lemak)<br>• Minuman bersoda (asam)<br><br><strong>Gejala Gastritis:</strong><br>• Nyeri ulu hati<br>• Mual, muntah<br>• Perut kembung<br>• Kehilangan nafsu makan<br><br><strong>Solusi:</strong> Makan teratur 3x sehari, kurangi pedas, perbanyak sayur buah!",
+                wrong: "Belum tepat. Analisis data Budi:<br><br><strong>Faktor Risiko Gastritis:</strong><br>• Sarapan kadang-kadang (pola TIDAK TERATUR) ✗<br>• Makanan PEDAS berlebihan (sambal + keripik pedas) ✗<br>• Mie instant + soda (iritatif lambung) ✗<br><br><strong>BUKAN Malnutrisi:</strong><br>• Ada protein (ayam, ikan)<br>• Kalori cukup bahkan berlebih<br>• Masalahnya: komposisi tidak seimbang & pola makan buruk<br><br><strong>BUKAN Konstipasi utama:</strong><br>• Memang kurang serat, tapi gejala utama → gastritis<br><br><strong>BUKAN Diare:</strong><br>• Tidak ada indikasi makanan terkontaminasi"
+            },
+            3: {
+                correct: "Tepat sekali! Analisis yang baik:<br><br><strong>Masalah Pola Makan Ani:</strong><br><br><strong>1. Kurang Serat PARAH:</strong><br>• TIDAK PERNAH makan sayur<br>• TIDAK PERNAH makan buah<br>• Hanya karbohidrat + protein hewani<br>• Serat = 0 gram (harusnya 25-30 gram/hari)<br><br><strong>2. Kurang Air:</strong><br>• Hanya 4 gelas/hari<br>• Kebutuhan minimal: 8 gelas (2 liter)<br><br><strong>Dampak Konstipasi:</strong><br>• Serat membantu pembentukan feses<br>• Air melunakkan feses<br>• Kurang keduanya → feses keras & kering<br>• Sulit BAB, sakit saat BAB<br><br><strong>Solusi:</strong><br>• Makan 5 porsi sayur & buah setiap hari<br>• Minum minimal 8 gelas air putih<br>• Olahraga teratur<br>• Jangan menahan BAB",
+                wrong: "Belum tepat. Perhatikan data ini:<br><br><strong>Fakta Kunci:</strong><br>• TIDAK PERNAH makan sayur dan buah<br>• Hanya 4 gelas air (kurang dari 8 gelas)<br><br><strong>Dampak Kurang Serat + Air:</strong><br>• Feses keras dan kering<br>• Sulit buang air besar<br>• Ini = KONSTIPASI (sembelit)<br><br><strong>BUKAN Obesitas:</strong><br>• Porsi tidak berlebihan<br>• Menu standar<br><br><strong>BUKAN Diare:</strong><br>• Protein tidak menyebabkan diare<br>• Tidak ada kontaminasi<br><br><strong>BUKAN Gastritis utama:</strong><br>• Pola makan teratur<br>• Tidak ada makanan pedas/asam berlebih"
+            },
+            4: {
+                correct: "Luar biasa! Analisis menu yang sempurna:<br><br><strong>Menu P - SANGAT SEIMBANG ✓</strong><br>• Karbohidrat kompleks: Nasi merah<br>• Protein lengkap: Ikan bakar + tahu (hewani & nabati)<br>• Serat tinggi: Brokoli + apel<br>• Vitamin & mineral: dari sayur & buah<br>• Rendah gula: Air putih<br>• Metode masak sehat: bakar, tumis<br><br><strong>Menu S - SANGAT SEIMBANG ✓</strong><br>• Karbohidrat kompleks: Roti gandum<br>• Lemak sehat: Alpukat<br>• Serat: Salad + strawberry<br>• Protein & kalsium: Susu almond<br>• Bervariasi & berwarna-warni<br><br><strong>Menu Q & R - TIDAK SEIMBANG:</strong><br>• Q: Tinggi minyak, kurang protein & sayur<br>• R: Fast food (tinggi kalori, lemak, gula, rendah nutrisi)<br><br><strong>Prinsip Menu Seimbang:</strong><br>Karbohidrat kompleks + protein + serat + vitamin/mineral + rendah gula/lemak!",
+                wrong: "Belum tepat. Analisis menu:<br><br><strong>Menu SEIMBANG (P & S):</strong><br><br><strong>Menu P:</strong><br>• Nasi merah (karbohidrat kompleks) ✓<br>• Ikan + tahu (protein) ✓<br>• Brokoli + apel (serat, vitamin) ✓<br>• Air putih (hidrasi) ✓<br><br><strong>Menu S:</strong><br>• Roti gandum (karbohidrat kompleks) ✓<br>• Alpukat (lemak sehat, serat) ✓<br>• Salad + strawberry (serat, vitamin) ✓<br>• Susu almond (protein, kalsium) ✓<br><br><strong>Menu TIDAK Seimbang:</strong><br>• Q: Nasi goreng (tinggi minyak), kurang protein & sayur<br>• R: Fast food (tinggi kalori, lemak jenuh, gula, rendah nutrisi)<br><br><strong>Ciri menu sehat:</strong> Bervariasi, berwarna-warni, tinggi serat, rendah gula/lemak!"
+            },
+            5: {
+                correct: "Sempurna! Analisis risiko yang akurat:<br><br><strong>Dampak Fast Food Rutin:</strong><br><br><strong>1. OBESITAS (Risiko Utama):</strong><br>• Kalori sangat tinggi: 1500-2000 kal/porsi<br>• Kebutuhan harian: 2000-2500 kal<br>• 1 porsi fast food = hampir kebutuhan sehari!<br>• Porsi besar + sering = kalori berlebih → lemak menumpuk<br><br><strong>2. PENYAKIT JANTUNG:</strong><br>• Lemak jenuh & trans tinggi → kolesterol naik<br>• Garam tinggi → hipertensi<br>• Obesitas → beban jantung meningkat<br><br><strong>3. Dampak Lain:</strong><br>• Diabetes tipe 2 (gula tinggi)<br>• Fatty liver (hati berlemak)<br>• Konstipasi (rendah serat)<br>• GERD (asam lambung naik)<br><br><strong>Data WHO:</strong><br>Fast food rutin = faktor risiko utama obesitas & penyakit jantung pada remaja!<br><br><strong>Solusi:</strong> Batasi fast food max 1x/bulan, pilih menu seimbang!",
+                wrong: "Belum tepat. Analisis risiko:<br><br><strong>Karakteristik Fast Food:</strong><br>• Kalori SANGAT TINGGI (1500-2000/porsi)<br>• Lemak jenuh & trans TINGGI<br>• Gula & garam TINGGI<br>• Serat RENDAH<br>• Porsi BESAR<br><br><strong>Dampak Kalori Berlebih:</strong><br>• Konsumsi > Kebutuhan<br>• Kelebihan → disimpan sebagai LEMAK<br>• Lemak menumpuk → OBESITAS<br>• Obesitas → Risiko JANTUNG<br><br><strong>BUKAN Malnutrisi:</strong><br>• Ada protein (burger, ayam)<br>• Kalori bahkan berlebih<br><br><strong>BUKAN Anemia utama:</strong><br>• Ada zat besi dari daging<br>• Masalahnya: kelebihan kalori & lemak<br><br><strong>BUKAN Diare kronis:</strong><br>• Fast food tidak selalu terkontaminasi bakteri"
+            }
+        };
+
+        // Handle radio selection
+        document.querySelectorAll('.option').forEach(option => {
+            option.addEventListener('click', function(e) {
+                if (e.target.tagName !== 'INPUT' && !this.classList.contains('disabled')) {
+                    const radio = this.querySelector('input[type="radio"]');
+                    radio.checked = true;
+                }
+                
+                // Remove selected class from siblings
+                const siblings = this.parentElement.querySelectorAll('.option');
+                siblings.forEach(sib => sib.classList.remove('selected'));
+                
+                // Add selected class to clicked option
+                if (this.querySelector('input[type="radio"]').checked) {
+                    this.classList.add('selected');
+                }
+            });
+        });
+
+        function submitAnswer(questionNum, correctAnswer) {
+            const slide = document.querySelector(`.slide[data-question="${questionNum}"]`);
+            const options = slide.querySelectorAll('.option');
+            const radios = slide.querySelectorAll('input[type="radio"]');
+            const feedback = document.getElementById(`feedback${questionNum}`);
+            const submitBtn = slide.querySelector('.btn-submit');
+            const nextBtn = slide.querySelector('.btn-next');
+
+            // Get selected answer
+            let selectedAnswer = null;
+            radios.forEach(radio => {
+                if (radio.checked) selectedAnswer = radio.value;
+            });
+
+            if (!selectedAnswer) {
+                alert('Pilih salah satu jawaban terlebih dahulu!');
+                return;
+            }
+
+            // Disable further selection
+            options.forEach(opt => opt.classList.add('disabled'));
+            radios.forEach(radio => radio.disabled = true);
+            submitBtn.style.display = 'none';
+            nextBtn.classList.add('show');
+
+            // Check if answer is correct
+            const isCorrect = selectedAnswer === correctAnswer;
+
+            // Mark correct/wrong options
+            options.forEach(opt => {
+                const radio = opt.querySelector('input[type="radio"]');
+                if (radio.value === correctAnswer) {
+                    opt.classList.add('correct');
+                }
+                if (radio.checked && radio.value !== correctAnswer) {
+                    opt.classList.add('wrong');
+                }
+            });
+
+            // Update score
+            if (isCorrect && !answeredQuestions.includes(questionNum)) {
+                score++;
+                answeredQuestions.push(questionNum);
+                document.getElementById('score').textContent = score;
+            }
+
+            // Show feedback
+            feedback.classList.add('show');
+            feedback.classList.add(isCorrect ? 'correct' : 'wrong');
+            
+            const icon = isCorrect ? '✅' : '❌';
+            const title = isCorrect ? 'Jawaban Benar!' : 'Jawaban Salah!';
+            const explanation = isCorrect ? explanations[questionNum].correct : explanations[questionNum].wrong;
+
+            feedback.innerHTML = `
+                <div class="feedback-header">
+                    <div class="feedback-icon">${icon}</div>
+                    <div class="feedback-title">${title}</div>
+                </div>
+                <div class="feedback-text">${explanation}</div>
+            `;
+
+            // Scroll to feedback
+            setTimeout(() => {
+                feedback.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 300);
+        }
+
+        function nextQuestion() {
+            const currentSlideEl = document.querySelector('.slide.active');
+            currentSlideEl.classList.remove('active');
+
+            currentSlide++;
+            const nextSlideEl = document.querySelector(`.slide[data-question="${currentSlide}"]`);
+            if (nextSlideEl) {
+                nextSlideEl.classList.add('active');
+                document.getElementById('currentQuestion').textContent = currentSlide;
+                
+                // Update progress bar
+                const progress = ((currentSlide - 1) / 5) * 100;
+                document.getElementById('progressFill').style.width = progress + '%';
+
+                // Scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        function showResult() {
+            document.getElementById('quizContent').style.display = 'none';
+            document.getElementById('resultScreen').classList.add('show');
+            document.querySelector('.progress-container').style.display = 'none';
+
+            const resultScore = document.getElementById('resultScore');
+            const resultIcon = document.getElementById('resultIcon');
+            const resultTitle = document.getElementById('resultTitle');
+            const resultMessage = document.getElementById('resultMessage');
+
+            resultScore.textContent = `${score}/5`;
+
+            if (score === 5) {
+                resultScore.classList.add('excellent');
+                resultIcon.textContent = '🏆';
+                resultTitle.textContent = 'Sempurna!';
+                resultMessage.textContent = 'Luar biasa! Kamu menguasai materi sistem pencernaan dan zat makanan dengan sempurna! Kamu sudah paham menu seimbang dan gangguan pencernaan!';
+            } else if (score >= 3) {
+                resultScore.classList.add('good');
+                resultIcon.textContent = '👍';
+                resultTitle.textContent = 'Bagus!';
+                resultMessage.textContent = 'Kerja yang baik! Kamu sudah memahami sebagian besar materi. Pelajari lagi bagian menu seimbang dan dampak pola makan tidak sehat.';
+            } else {
+                resultScore.classList.add('poor');
+                resultIcon.textContent = '📚';
+                resultTitle.textContent = 'Tetap Semangat!';
+                resultMessage.textContent = 'Jangan menyerah! Pelajari kembali materi tentang zat makanan, menu seimbang, dan gangguan pencernaan. Latihan lagi ya!';
+            }
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function retryQuiz() {
+            // Reset variables
+            currentSlide = 1;
+            score = 0;
+            answeredQuestions = [];
+
+            // Reset UI
+            document.getElementById('score').textContent = '0';
+            document.getElementById('currentQuestion').textContent = '1';
+            document.getElementById('progressFill').style.width = '0%';
+
+            // Reset all slides
+            document.querySelectorAll('.slide').forEach((slide, index) => {
+                slide.classList.remove('active');
+                if (index === 0) slide.classList.add('active');
+
+                // Reset options and radios
+                slide.querySelectorAll('.option').forEach(opt => {
+                    opt.classList.remove('selected', 'correct', 'wrong', 'disabled');
+                });
+                
+                slide.querySelectorAll('input[type="radio"]').forEach(radio => {
+                    radio.checked = false;
+                    radio.disabled = false;
+                });
+
+                // Reset buttons
+                slide.querySelector('.btn-submit').style.display = 'inline-flex';
+                slide.querySelector('.btn-next').classList.remove('show');
+
+                // Reset feedback
+                const feedbackEl = slide.querySelector('.feedback');
+                feedbackEl.classList.remove('show', 'correct', 'wrong');
+                feedbackEl.innerHTML = '';
+            });
+
+            // Show quiz content
+            document.getElementById('quizContent').style.display = 'block';
+            document.getElementById('resultScreen').classList.remove('show');
+            document.querySelector('.progress-container').style.display = 'block';
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>

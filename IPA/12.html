@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Materi 12: Organ Pencernaan dan Enzim</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&family=Fira+Code:wght@400;500&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #059669;
+            --secondary: #0891b2;
+            --accent: #f59e0b;
+            --dark: #0f172a;
+            --light: #f8fafc;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: linear-gradient(135deg, #0f766e 0%, #0e7490 100%);
+            color: var(--dark);
+            line-height: 1.8;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Navigation Bar */
+        .nav-bar {
+            background: white;
+            border-radius: 16px;
+            padding: 20px 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .nav-title {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn-nav {
+            padding: 12px 24px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95em;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-home {
+            background: linear-gradient(135deg, #64748b, #475569);
+            color: white;
+            box-shadow: 0 4px 12px rgba(100, 116, 139, 0.3);
+        }
+
+        .btn-home:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(100, 116, 139, 0.4);
+        }
+
+        .btn-practice {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+        }
+
+        .btn-practice:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4);
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            border-radius: 20px;
+            padding: 50px 60px;
+            margin-bottom: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+        }
+
+        .header h1 {
+            font-size: 2.8em;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        .header .meta {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.95em;
+            color: #64748b;
+        }
+
+        .meta-item .icon {
+            font-size: 1.3em;
+        }
+
+        /* Content Section */
+        .content {
+            background: white;
+            border-radius: 20px;
+            padding: 50px 60px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .content h2 {
+            font-size: 2em;
+            font-weight: 700;
+            color: var(--primary);
+            margin-top: 40px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid var(--primary);
+        }
+
+        .content h2:first-child {
+            margin-top: 0;
+        }
+
+        .content h3 {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+
+        .content p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .content ul, .content ol {
+            margin: 15px 0 15px 30px;
+        }
+
+        .content li {
+            margin-bottom: 10px;
+        }
+
+        /* Info Box */
+        .info-box {
+            background: linear-gradient(135deg, #e0f2fe 0%, #dbeafe 100%);
+            border-left: 5px solid var(--secondary);
+            padding: 25px 30px;
+            margin: 25px 0;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(8, 145, 178, 0.1);
+        }
+
+        .info-box h4 {
+            color: var(--secondary);
+            font-size: 1.3em;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        /* Warning Box */
+        .warning-box {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-left: 5px solid var(--accent);
+            padding: 25px 30px;
+            margin: 25px 0;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.1);
+        }
+
+        .warning-box h4 {
+            color: #d97706;
+            font-size: 1.3em;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        /* Key Points Box */
+        .key-points {
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+            border-left: 5px solid var(--primary);
+            padding: 25px 30px;
+            margin: 25px 0;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(5, 150, 105, 0.1);
+        }
+
+        .key-points h4 {
+            color: var(--primary);
+            font-size: 1.3em;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        /* Image Container */
+        .image-container {
+            background: #f8fafc;
+            border: 3px solid #e2e8f0;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 25px 0;
+            text-align: center;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .image-caption {
+            margin-top: 15px;
+            font-style: italic;
+            color: #64748b;
+            font-size: 0.95em;
+        }
+
+        /* Example Box */
+        .example-box {
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 25px 30px;
+            margin: 25px 0;
+        }
+
+        .example-box h4 {
+            color: var(--accent);
+            font-size: 1.2em;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        /* Question Box */
+        .question {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .question-text {
+            font-size: 1.05em;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option {
+            padding: 15px 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .option.correct {
+            background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+            border-color: var(--primary);
+            font-weight: 600;
+        }
+
+        /* Explanation Box */
+        .explanation {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-radius: 10px;
+            padding: 20px 25px;
+            margin-top: 20px;
+        }
+
+        .explanation h5 {
+            color: #d97706;
+            font-size: 1.15em;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .explanation p {
+            margin-bottom: 12px;
+        }
+
+        .explanation ul {
+            margin: 10px 0 10px 25px;
+        }
+
+        .explanation li {
+            margin-bottom: 8px;
+        }
+
+        /* Table Styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        thead {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 700;
+            font-size: 1.05em;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 15px;
+            }
+
+            .header, .content {
+                padding: 30px 25px;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .content h2 {
+                font-size: 1.6em;
+            }
+
+            .nav-bar {
+                flex-direction: column;
+            }
+
+            .nav-buttons {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation Bar -->
+        <div class="nav-bar">
+            <div class="nav-title">📚 Materi IPA - Kelas 8</div>
+            <div class="nav-buttons">
+                <a href="kisi-kisi-tkad-ipa.html" class="btn-nav btn-home">🏠 Menu Utama</a>
+                <a href="Lat12.html" class="btn-nav btn-practice">✏️ Latihan Soal</a>
+            </div>
+        </div>
+
+        <!-- Header -->
+        <div class="header">
+            <h1>🍽️ Sistem Pencernaan: Organ dan Enzim</h1>
+            <div class="meta">
+                <div class="meta-item">
+                    <span class="icon">📖</span>
+                    <span>Materi 12</span>
+                </div>
+                <div class="meta-item">
+                    <span class="icon">🎯</span>
+                    <span>Kelas 8</span>
+                </div>
+                <div class="meta-item">
+                    <span class="icon">⏱️</span>
+                    <span>45 menit</span>
+                </div>
+                <div class="meta-item">
+                    <span class="icon">📊</span>
+                    <span>Level: L1 (Pengetahuan)</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <h2>🔬 Sistem Pencernaan Manusia</h2>
+            <p>
+                <strong>Sistem pencernaan</strong> adalah sistem organ yang berfungsi untuk memecah makanan menjadi molekul-molekul yang lebih kecil sehingga dapat diserap oleh tubuh. Proses pencernaan melibatkan dua jenis pencernaan: <strong>pencernaan mekanik</strong> (fisik) dan <strong>pencernaan kimiawi</strong> (menggunakan enzim).
+            </p>
+
+            <div class="info-box">
+                <h4>💡 Tahukah Kamu?</h4>
+                <p>Sistem pencernaan manusia memiliki panjang sekitar 9 meter dari mulut hingga anus! Proses pencernaan makanan membutuhkan waktu sekitar 24-72 jam untuk melewati seluruh saluran pencernaan.</p>
+            </div>
+
+            <h3>📋 Jenis Pencernaan</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Jenis Pencernaan</th>
+                        <th>Pengertian</th>
+                        <th>Contoh</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Pencernaan Mekanik</strong></td>
+                        <td>Pemecahan makanan secara fisik menjadi ukuran lebih kecil tanpa mengubah struktur kimianya</td>
+                        <td>
+                            • Pengunyahan di mulut oleh gigi<br>
+                            • Peristaltik (gerakan meremas) di kerongkongan dan usus<br>
+                            • Gerak mengaduk di lambung
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Pencernaan Kimiawi</strong></td>
+                        <td>Pemecahan molekul makanan kompleks menjadi molekul sederhana menggunakan enzim</td>
+                        <td>
+                            • Pemecahan karbohidrat oleh enzim amilase<br>
+                            • Pemecahan protein oleh enzim pepsin<br>
+                            • Pemecahan lemak oleh enzim lipase
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>🏥 Organ-Organ Pencernaan dan Fungsinya</h2>
+            
+            <div class="image-container">
+                <!-- GAMBAR YANG DIBUTUHKAN: sistem_pencernaan.jpg atau sistem_pencernaan.png -->
+                <!-- Gambar sistem pencernaan manusia lengkap dengan label organ -->
+                <img src="sistem_pencernaan.jpg" alt="Sistem Pencernaan Manusia" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22600%22 height=%22800%22%3E%3Crect fill=%22%23e2e8f0%22 width=%22600%22 height=%22800%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 font-size=%2224%22 text-anchor=%22middle%22 fill=%22%2364748b%22%3EGambar: Sistem Pencernaan Manusia%3C/text%3E%3Ctext x=%2250%25%22 y=%2255%25%22 font-size=%2216%22 text-anchor=%22middle%22 fill=%22%2364748b%22%3E(Mulut, Kerongkongan, Lambung, Usus Halus, Usus Besar)%3C/text%3E%3C/svg%3E';">
+                <p class="image-caption"><strong>Gambar 1:</strong> Sistem Pencernaan Manusia Lengkap</p>
+            </div>
+
+            <h3>1️⃣ Mulut (Rongga Mulut)</h3>
+            <p><strong>Fungsi:</strong></p>
+            <ul>
+                <li>Tempat masuknya makanan</li>
+                <li>Pencernaan mekanik oleh gigi (pengunyahan/mastikasi)</li>
+                <li>Pencernaan kimiawi oleh enzim di air liur</li>
+                <li>Pencampuran makanan dengan air liur membentuk bolus (gumpalan makanan)</li>
+            </ul>
+
+            <p><strong>Organ dan Kelenjar:</strong></p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Komponen</th>
+                        <th>Fungsi</th>
+                        <th>Enzim/Zat yang Dihasilkan</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Gigi</strong></td>
+                        <td>Memotong, merobek, dan mengunyah makanan</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Lidah</strong></td>
+                        <td>Mengaduk makanan, membantu menelan, mengecap rasa</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Kelenjar Ludah (Saliva)</strong></td>
+                        <td>Menghasilkan air liur untuk melembabkan dan mencerna makanan</td>
+                        <td>
+                            <strong>Enzim Amilase (Ptialin):</strong><br>
+                            • Memecah amilum (karbohidrat) → maltosa<br>
+                            • Bekerja di pH 6,8 (sedikit asam-netral)
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>2️⃣ Kerongkongan (Esofagus)</h3>
+            <p><strong>Fungsi:</strong></p>
+            <ul>
+                <li>Saluran yang menghubungkan mulut dengan lambung</li>
+                <li>Menggerakkan makanan ke lambung melalui <strong>gerak peristaltik</strong> (kontraksi otot)</li>
+                <li>TIDAK menghasilkan enzim pencernaan</li>
+            </ul>
+
+            <div class="warning-box">
+                <h4>⚠️ Penting!</h4>
+                <p><strong>Epiglotis</strong> adalah katup tulang rawan yang menutup tenggorokan saat menelan agar makanan tidak masuk ke saluran pernapasan. Jika epiglotis tidak menutup sempurna, makanan bisa masuk ke trakea dan menyebabkan tersedak!</p>
+            </div>
+
+            <h3>3️⃣ Lambung (Ventrikulus/Gaster)</h3>
+            <p><strong>Fungsi:</strong></p>
+            <ul>
+                <li>Tempat penyimpanan makanan sementara (2-6 jam)</li>
+                <li>Pencernaan mekanik dengan gerakan mengaduk (churning)</li>
+                <li>Pencernaan kimiawi dengan enzim dan asam lambung</li>
+                <li>Mengubah makanan menjadi bubur (chyme/kim)</li>
+                <li>Membunuh bakteri dengan asam lambung</li>
+            </ul>
+
+            <p><strong>Enzim dan Zat di Lambung:</strong></p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Enzim/Zat</th>
+                        <th>Fungsi</th>
+                        <th>Substrat → Produk</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>HCl (Asam Klorida)</strong></td>
+                        <td>
+                            • Mengaktifkan pepsinogen → pepsin<br>
+                            • Membunuh bakteri<br>
+                            • Menciptakan pH asam (1,5-3,5)
+                        </td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Pepsinogen</strong></td>
+                        <td>Bentuk tidak aktif dari pepsin</td>
+                        <td>Pepsinogen + HCl → Pepsin (aktif)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Pepsin</strong></td>
+                        <td>Memecah protein</td>
+                        <td>Protein → Pepton (asam amino sederhana)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Renin</strong></td>
+                        <td>Mengendapkan protein susu (kasein)</td>
+                        <td>Kaseinogen → Kasein (pada bayi)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Lipase Lambung</strong></td>
+                        <td>Memecah lemak (sedikit)</td>
+                        <td>Lemak → Asam lemak + Gliserol</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Mukus (Lendir)</strong></td>
+                        <td>Melindungi dinding lambung dari asam</td>
+                        <td>-</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="image-container">
+                <!-- GAMBAR YANG DIBUTUHKAN: lambung_enzim.jpg atau lambung_enzim.png -->
+                <!-- Diagram lambung dengan label kelenjar lambung dan enzim -->
+                <img src="lambung_enzim.jpg" alt="Lambung dan Enzim" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22500%22 height=%22400%22%3E%3Crect fill=%22%23e2e8f0%22 width=%22500%22 height=%22400%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 font-size=%2220%22 text-anchor=%22middle%22 fill=%22%2364748b%22%3EGambar: Lambung dan Enzim%3C/text%3E%3Ctext x=%2250%25%22 y=%2255%25%22 font-size=%2214%22 text-anchor=%22middle%22 fill=%22%2364748b%22%3E(HCl, Pepsin, Renin, Lipase, Mukus)%3C/text%3E%3C/svg%3E';">
+                <p class="image-caption"><strong>Gambar 2:</strong> Lambung dan Enzim yang Dihasilkan</p>
+            </div>
+
+            <h3>4️⃣ Usus Halus (Usus Kecil/Intestinum)</h3>
+            <p>
+                Usus halus adalah organ terpanjang dalam sistem pencernaan (sekitar 6-7 meter) dan merupakan tempat utama penyerapan nutrisi. Terbagi menjadi 3 bagian:
+            </p>
+
+            <h4>a) Duodenum (Usus 12 Jari) - ±25 cm</h4>
+            <p><strong>Fungsi:</strong> Pencernaan kimiawi paling intensif</p>
+            <p><strong>Enzim yang bekerja:</strong></p>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Sumber</th>
+                        <th>Enzim/Zat</th>
+                        <th>Fungsi</th>
+                        <th>Substrat → Produk</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td rowspan="3"><strong>Pankreas</strong></td>
+                        <td><strong>Amilase Pankreas</strong></td>
+                        <td>Memecah karbohidrat</td>
+                        <td>Amilum → Maltosa</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Tripsin</strong></td>
+                        <td>Memecah protein</td>
+                        <td>Protein/Pepton → Asam amino</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Lipase Pankreas</strong></td>
+                        <td>Memecah lemak</td>
+                        <td>Lemak → Asam lemak + Gliserol</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Hati</strong></td>
+                        <td><strong>Empedu (Getah Empedu)</strong></td>
+                        <td>Mengemulsikan lemak (bukan enzim!)</td>
+                        <td>Lemak besar → Butiran lemak kecil</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="4"><strong>Dinding Usus Halus</strong></td>
+                        <td><strong>Maltase</strong></td>
+                        <td>Memecah maltosa</td>
+                        <td>Maltosa → Glukosa + Glukosa</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Sukrase</strong></td>
+                        <td>Memecah sukrosa</td>
+                        <td>Sukrosa → Glukosa + Fruktosa</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Laktase</strong></td>
+                        <td>Memecah laktosa</td>
+                        <td>Laktosa → Glukosa + Galaktosa</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Peptidase (Erepsin)</strong></td>
+                        <td>Memecah peptida</td>
+                        <td>Peptida → Asam amino</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="image-container">
+                <!-- GAMBAR YANG DIBUTUHKAN: usus_halus_enzim.jpg atau usus_halus_enzim.png -->
+                <!-- Diagram usus halus (duodenum, jejunum, ileum) dengan label organ yang menyalurkan enzim -->
+                <img src="usus_halus_enzim.jpg" alt="Usus Halus dan Enzim" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22600%22 height=%22400%22%3E%3Crect fill=%22%23e2e8f0%22 width=%22600%22 height=%22400%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 font-size=%2220%22 text-anchor=%22middle%22 fill=%22%2364748b%22%3EGambar: Usus Halus dan Enzim%3C/text%3E%3Ctext x=%2250%25%22 y=%2255%25%22 font-size=%2214%22 text-anchor=%22middle%22 fill=%22%2364748b%22%3E(Pankreas, Hati, Enzim Usus)%3C/text%3E%3C/svg%3E';">
+                <p class="image-caption"><strong>Gambar 3:</strong> Usus Halus dan Sumber Enzim (Pankreas, Hati, Dinding Usus)</p>
+            </div>
+
+            <h4>b) Jejunum (Usus Kosong) - ±2,5 m</h4>
+            <p><strong>Fungsi:</strong> Penyerapan nutrisi (terutama karbohidrat dan protein)</p>
+
+            <h4>c) Ileum (Usus Penyerapan) - ±3,5 m</h4>
+            <p><strong>Fungsi:</strong> Penyerapan nutrisi (terutama lemak, vitamin, mineral)</p>
+            <p><strong>Ciri khas:</strong> Memiliki <strong>vili</strong> (jonjot usus) dan <strong>mikrovili</strong> untuk memperluas permukaan penyerapan</p>
+
+            <h3>5️⃣ Usus Besar (Kolon)</h3>
+            <p><strong>Fungsi:</strong></p>
+            <ul>
+                <li>Menyerap air dan mineral dari sisa makanan</li>
+                <li>Membentuk feses (tinja)</li>
+                <li>Tempat bakteri mengurai sisa makanan (menghasilkan vitamin K dan B12)</li>
+                <li>Menyimpan feses sebelum dikeluarkan</li>
+            </ul>
+            <p><strong>Catatan:</strong> Usus besar TIDAK menghasilkan enzim pencernaan!</p>
+
+            <h3>6️⃣ Rektum dan Anus</h3>
+            <p><strong>Fungsi:</strong></p>
+            <ul>
+                <li><strong>Rektum:</strong> Tempat penyimpanan feses sementara</li>
+                <li><strong>Anus:</strong> Tempat pengeluaran feses (defekasi)</li>
+            </ul>
+
+            <h2>🧬 Ringkasan Enzim Pencernaan</h2>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Organ</th>
+                        <th>Enzim</th>
+                        <th>Substrat</th>
+                        <th>Hasil</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td rowspan="1"><strong>Mulut</strong></td>
+                        <td>Amilase (Ptialin)</td>
+                        <td>Amilum (karbohidrat)</td>
+                        <td>Maltosa</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="3"><strong>Lambung</strong></td>
+                        <td>Pepsin</td>
+                        <td>Protein</td>
+                        <td>Pepton</td>
+                    </tr>
+                    <tr>
+                        <td>Renin</td>
+                        <td>Kaseinogen (protein susu)</td>
+                        <td>Kasein</td>
+                    </tr>
+                    <tr>
+                        <td>Lipase Lambung</td>
+                        <td>Lemak</td>
+                        <td>Asam lemak + Gliserol</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="3"><strong>Pankreas</strong></td>
+                        <td>Amilase Pankreas</td>
+                        <td>Amilum</td>
+                        <td>Maltosa</td>
+                    </tr>
+                    <tr>
+                        <td>Tripsin</td>
+                        <td>Protein/Pepton</td>
+                        <td>Asam amino</td>
+                    </tr>
+                    <tr>
+                        <td>Lipase Pankreas</td>
+                        <td>Lemak</td>
+                        <td>Asam lemak + Gliserol</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="4"><strong>Usus Halus</strong></td>
+                        <td>Maltase</td>
+                        <td>Maltosa</td>
+                        <td>Glukosa + Glukosa</td>
+                    </tr>
+                    <tr>
+                        <td>Sukrase</td>
+                        <td>Sukrosa</td>
+                        <td>Glukosa + Fruktosa</td>
+                    </tr>
+                    <tr>
+                        <td>Laktase</td>
+                        <td>Laktosa</td>
+                        <td>Glukosa + Galaktosa</td>
+                    </tr>
+                    <tr>
+                        <td>Peptidase (Erepsin)</td>
+                        <td>Peptida</td>
+                        <td>Asam amino</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>📝 Contoh Soal dan Pembahasan</h2>
+
+            <div class="example-box">
+                <h4>📌 Contoh Soal 1</h4>
+                <div class="question">
+                    <div class="image-container">
+                        <!-- GAMBAR SOAL: diagram lambung dengan tanda panah ke kelenjar -->
+                        <img src="soal_lambung.jpg" alt="Diagram Lambung" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22300%22%3E%3Crect fill=%22%23e2e8f0%22 width=%22400%22 height=%22300%22/%3E%3Ctext x=%2250%25%22 y=%2245%25%22 font-size=%2218%22 text-anchor=%22middle%22 fill=%22%2364748b%22%3EGambar: Diagram Lambung%3C/text%3E%3Ctext x=%2250%25%22 y=%2255%25%22 font-size=%2214%22 text-anchor=%22middle%22 fill=%22%2364748b%22%3EDengan panah menunjuk ke dinding lambung%3C/text%3E%3C/svg%3E';">
+                        <p class="image-caption">Gambar organ pencernaan yang ditunjuk oleh tanda panah</p>
+                    </div>
+
+                    <p class="question-text">
+                        Perhatikan gambar organ pencernaan di atas! Organ yang ditunjuk oleh tanda panah menghasilkan enzim pepsin yang berfungsi untuk...
+                    </p>
+
+                    <div class="options">
+                        <div class="option">A. Memecah amilum menjadi maltosa</div>
+                        <div class="option correct">B. Memecah protein menjadi pepton</div>
+                        <div class="option">C. Memecah lemak menjadi asam lemak dan gliserol</div>
+                        <div class="option">D. Memecah maltosa menjadi glukosa</div>
+                    </div>
+
+                    <div class="explanation">
+                        <h5>💡 Pembahasan:</h5>
+                        <p><strong>Jawaban yang benar: B (Memecah protein menjadi pepton)</strong></p>
+                        
+                        <p><strong>Analisis:</strong></p>
+                        <ul>
+                            <li><strong>Organ yang ditunjuk:</strong> Lambung (Ventrikulus)</li>
+                            <li><strong>Enzim Pepsin:</strong> Dihasilkan oleh kelenjar lambung dalam bentuk tidak aktif (pepsinogen), kemudian diaktifkan oleh HCl menjadi pepsin</li>
+                            <li><strong>Fungsi Pepsin:</strong> Memecah protein menjadi pepton (asam amino sederhana)</li>
+                            <li><strong>pH kerja:</strong> Asam (1,5-3,5) di lambung</li>
+                        </ul>
+
+                        <p style="margin-top: 15px;"><strong>Mengapa jawaban lain salah?</strong></p>
+                        <ul>
+                            <li><strong>A. SALAH:</strong> Memecah amilum → maltosa adalah fungsi enzim <strong>amilase</strong> (di mulut dan pankreas), BUKAN pepsin</li>
+                            <li><strong>C. SALAH:</strong> Memecah lemak → asam lemak + gliserol adalah fungsi enzim <strong>lipase</strong> (di lambung ada sedikit, lebih banyak di pankreas), BUKAN pepsin</li>
+                            <li><strong>D. SALAH:</strong> Memecah maltosa → glukosa adalah fungsi enzim <strong>maltase</strong> (di usus halus), BUKAN pepsin</li>
+                        </ul>
+
+                        <p style="margin-top: 15px;"><strong>Ingat urutan pencernaan protein:</strong></p>
+                        <p>
+                            Protein → <strong>(Pepsin di lambung)</strong> → Pepton → <strong>(Tripsin di pankreas)</strong> → Asam amino → <strong>(Peptidase di usus)</strong> → Asam amino siap diserap
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <h4>📌 Contoh Soal 2</h4>
+                <div class="question">
+                    <div class="image-container">
+                        <!-- GAMBAR SOAL: diagram usus halus dengan pankreas dan hati -->
+                        <img src="soal_usus_halus.jpg" alt="Diagram Usus Halus" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22450%22 height=%22350%22%3E%3Crect fill=%22%23e2e8f0%22 width=%22450%22 height=%22350%22/%3E%3Ctext x=%2250%25%22 y=%2245%25%22 font-size=%2218%22 text-anchor=%22middle%22 fill=%22%2364748b%22%3EGambar: Usus Halus (Duodenum)%3C/text%3E%3Ctext x=%2250%25%22 y=%2255%25%22 font-size=%2214%22 text-anchor=%22middle%22 fill=%22%2364748b%22%3EDengan panah menunjuk ke saluran pankreas%3C/text%3E%3C/svg%3E';">
+                        <p class="image-caption">Gambar organ yang menyalurkan getah ke usus halus</p>
+                    </div>
+
+                    <p class="question-text">
+                        Perhatikan gambar sistem pencernaan di atas! Organ yang ditunjuk oleh tanda panah X menghasilkan enzim tripsin yang berfungsi untuk...
+                    </p>
+
+                    <div class="options">
+                        <div class="option">A. Memecah amilum menjadi maltosa</div>
+                        <div class="option correct">B. Memecah protein menjadi asam amino</div>
+                        <div class="option">C. Mengemulsikan lemak menjadi butiran kecil</div>
+                        <div class="option">D. Memecah maltosa menjadi glukosa</div>
+                    </div>
+
+                    <div class="explanation">
+                        <h5>💡 Pembahasan:</h5>
+                        <p><strong>Jawaban yang benar: B (Memecah protein menjadi asam amino)</strong></p>
+                        
+                        <p><strong>Analisis:</strong></p>
+                        <ul>
+                            <li><strong>Organ yang ditunjuk (X):</strong> Pankreas</li>
+                            <li><strong>Lokasi kerja:</strong> Duodenum (bagian pertama usus halus)</li>
+                            <li><strong>Enzim Tripsin:</strong> Salah satu enzim dari getah pankreas</li>
+                            <li><strong>Fungsi Tripsin:</strong> Memecah protein atau pepton menjadi asam amino</li>
+                        </ul>
+
+                        <p style="margin-top: 15px;"><strong>Enzim-enzim dari Pankreas:</strong></p>
+                        <table style="margin-top: 10px;">
+                            <thead>
+                                <tr>
+                                    <th>Enzim</th>
+                                    <th>Fungsi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Amilase Pankreas</td>
+                                    <td>Amilum → Maltosa</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Tripsin</strong></td>
+                                    <td><strong>Protein/Pepton → Asam amino</strong></td>
+                                </tr>
+                                <tr>
+                                    <td>Lipase Pankreas</td>
+                                    <td>Lemak → Asam lemak + Gliserol</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <p style="margin-top: 15px;"><strong>Mengapa jawaban lain salah?</strong></p>
+                        <ul>
+                            <li><strong>A. SALAH:</strong> Ini fungsi <strong>amilase pankreas</strong> (pankreas juga menghasilkan ini, tapi bukan tripsin!)</li>
+                            <li><strong>C. SALAH:</strong> Mengemulsikan lemak adalah fungsi <strong>empedu dari hati</strong> (dan empedu BUKAN enzim!)</li>
+                            <li><strong>D. SALAH:</strong> Ini fungsi <strong>maltase</strong> yang dihasilkan dinding usus halus</li>
+                        </ul>
+
+                        <p style="margin-top: 15px;"><strong>Perbedaan Pepsin vs Tripsin:</strong></p>
+                        <ul>
+                            <li><strong>Pepsin:</strong> Di lambung, Protein → Pepton, pH asam (1,5-3,5)</li>
+                            <li><strong>Tripsin:</strong> Di usus halus, Protein/Pepton → Asam amino, pH basa (7,5-8,5)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <h2>🎓 Rangkuman</h2>
+            <div class="info-box">
+                <ol>
+                    <li><strong>Sistem pencernaan</strong> terdiri dari saluran pencernaan (mulut → anus) dan kelenjar pencernaan (ludah, lambung, pankreas, hati).</li>
+                    
+                    <li><strong>Pencernaan mekanik:</strong> Pemecahan fisik (gigi, peristaltik, churning)</li>
+                    
+                    <li><strong>Pencernaan kimiawi:</strong> Pemecahan dengan enzim</li>
+                    
+                    <li><strong>Enzim utama per organ:</strong>
+                        <ul>
+                            <li><strong>Mulut:</strong> Amilase (amilum → maltosa)</li>
+                            <li><strong>Lambung:</strong> Pepsin (protein → pepton), Renin, Lipase</li>
+                            <li><strong>Pankreas:</strong> Amilase, Tripsin (protein → asam amino), Lipase</li>
+                            <li><strong>Usus Halus:</strong> Maltase, Sukrase, Laktase, Peptidase</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Hati menghasilkan empedu</strong> untuk mengemulsikan lemak (BUKAN enzim!)</li>
+                    
+                    <li><strong>Usus halus</strong> adalah tempat utama penyerapan nutrisi dengan bantuan vili dan mikrovili</li>
+                    
+                    <li><strong>Usus besar</strong> menyerap air dan membentuk feses (TIDAK menghasilkan enzim)</li>
+                </ol>
+            </div>
+
+            <div class="key-points">
+                <h4>💪 Tips Mengingat Enzim</h4>
+                <ul>
+                    <li><strong>Akhiran "-ase" = enzim:</strong> Amilase, lipase, maltase, sukrase, dll</li>
+                    <li><strong>Nama enzim sesuai substrat:</strong> Amilase → amilum, Lipase → lipid (lemak), Maltase → maltosa</li>
+                    <li><strong>Protein dicerna bertahap:</strong> Pepsin (lambung) → Tripsin (pankreas) → Peptidase (usus)</li>
+                    <li><strong>Karbohidrat dicerna bertahap:</strong> Amilase (amilum → maltosa) → Maltase (maltosa → glukosa)</li>
+                    <li><strong>Empedu BUKAN enzim:</strong> Hanya mengemulsikan, tidak memecah ikatan kimia</li>
+                    <li><strong>Lokasi enzim:</strong> Mulut (amilase), Lambung (pepsin), Pankreas (tripsin), Usus (maltase)</li>
+                </ul>
+            </div>
+
+            <div class="warning-box">
+                <h4>⚠️ Kesalahan Umum yang Harus Dihindari</h4>
+                <ul>
+                    <li><strong>Mengira empedu adalah enzim:</strong> Empedu hanya mengemulsikan (memecah fisik), BUKAN enzim!</li>
+                    <li><strong>Tertukar pepsin dan tripsin:</strong> Pepsin di lambung (pH asam), Tripsin di usus (pH basa)</li>
+                    <li><strong>Lupa HCl bukan enzim:</strong> HCl mengaktifkan pepsin dan membunuh bakteri, tapi BUKAN enzim</li>
+                    <li><strong>Salah organ penghasil enzim:</strong> Tripsin dari pankreas (bukan lambung!), Amilase dari mulut DAN pankreas</li>
+                    <li><strong>Lupa usus besar tidak menghasilkan enzim:</strong> Usus besar hanya menyerap air!</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Navigation Bottom -->
+        <div class="nav-bar">
+            <div class="nav-buttons" style="width: 100%; justify-content: space-between;">
+                <a href="kisi-kisi-tkad-ipa.html" class="btn-nav btn-home">
+                    🏠 Kembali ke Menu
+                </a>
+                <a href="Lat12.html" class="btn-nav btn-practice">
+                    Lanjut ke Latihan Soal ✏️
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

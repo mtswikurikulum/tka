@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Materi 13: Penyakit Sistem Pencernaan</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&family=Fira+Code:wght@400;500&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #059669;
+            --secondary: #0891b2;
+            --accent: #f59e0b;
+            --dark: #0f172a;
+            --light: #f8fafc;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: linear-gradient(135deg, #0f766e 0%, #0e7490 100%);
+            color: var(--dark);
+            line-height: 1.8;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Navigation Bar */
+        .nav-bar {
+            background: white;
+            border-radius: 16px;
+            padding: 20px 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .nav-title {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn-nav {
+            padding: 12px 24px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95em;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-home {
+            background: linear-gradient(135deg, #64748b, #475569);
+            color: white;
+            box-shadow: 0 4px 12px rgba(100, 116, 139, 0.3);
+        }
+
+        .btn-home:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(100, 116, 139, 0.4);
+        }
+
+        .btn-practice {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+        }
+
+        .btn-practice:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4);
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            border-radius: 20px;
+            padding: 50px 60px;
+            margin-bottom: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+        }
+
+        .header h1 {
+            font-size: 2.8em;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        .header .meta {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.95em;
+            color: #64748b;
+        }
+
+        .meta-item .icon {
+            font-size: 1.3em;
+        }
+
+        /* Content Section */
+        .content {
+            background: white;
+            border-radius: 20px;
+            padding: 50px 60px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .content h2 {
+            font-size: 2em;
+            font-weight: 700;
+            color: var(--primary);
+            margin-top: 40px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid var(--primary);
+        }
+
+        .content h2:first-child {
+            margin-top: 0;
+        }
+
+        .content h3 {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+
+        .content p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .content ul, .content ol {
+            margin: 15px 0 15px 30px;
+        }
+
+        .content li {
+            margin-bottom: 10px;
+        }
+
+        /* Info Box */
+        .info-box {
+            background: linear-gradient(135deg, #e0f2fe 0%, #dbeafe 100%);
+            border-left: 6px solid var(--secondary);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 25px 0;
+            box-shadow: 0 4px 15px rgba(8, 145, 178, 0.15);
+        }
+
+        .info-box h4 {
+            color: var(--secondary);
+            font-size: 1.3em;
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Warning Box */
+        .warning-box {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-left: 6px solid var(--accent);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 25px 0;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.15);
+        }
+
+        .warning-box h4 {
+            color: #d97706;
+            font-size: 1.3em;
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Danger Box */
+        .danger-box {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            border-left: 6px solid #ef4444;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 25px 0;
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.15);
+        }
+
+        .danger-box h4 {
+            color: #dc2626;
+            font-size: 1.3em;
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Key Points Box */
+        .key-points {
+            background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
+            border-left: 6px solid var(--primary);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 25px 0;
+            box-shadow: 0 4px 15px rgba(5, 150, 105, 0.15);
+        }
+
+        .key-points h4 {
+            color: var(--primary);
+            font-size: 1.3em;
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Table Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        thead {
+            background: linear-gradient(135deg, var(--primary), #047857);
+        }
+
+        thead th {
+            color: white;
+            padding: 18px;
+            text-align: left;
+            font-weight: 700;
+            font-size: 1.05em;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid #e2e8f0;
+            transition: background 0.3s ease;
+        }
+
+        tbody tr:hover {
+            background: #f1f5f9;
+        }
+
+        tbody td {
+            padding: 16px 18px;
+            color: var(--dark);
+        }
+
+        tbody tr:last-child {
+            border-bottom: none;
+        }
+
+        /* Disease Card */
+        .disease-card {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 25px;
+            margin: 20px 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .disease-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        .disease-card h4 {
+            color: var(--primary);
+            font-size: 1.4em;
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .disease-card .section {
+            margin: 15px 0;
+        }
+
+        .disease-card .section-title {
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 8px;
+            font-size: 1.1em;
+        }
+
+        /* Image Placeholder */
+        .image-placeholder {
+            background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
+            border: 2px dashed #94a3b8;
+            border-radius: 12px;
+            padding: 40px;
+            text-align: center;
+            margin: 25px 0;
+            color: #64748b;
+        }
+
+        .image-placeholder h4 {
+            font-size: 1.2em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .image-placeholder p {
+            font-size: 0.95em;
+            margin: 5px 0;
+        }
+
+        /* Example Box */
+        .example-box {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 30px;
+            margin: 25px 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .example-box h4 {
+            color: var(--primary);
+            font-size: 1.4em;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .question {
+            margin-bottom: 20px;
+        }
+
+        .question-text {
+            font-size: 1.1em;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .options {
+            margin: 20px 0;
+        }
+
+        .option {
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 15px 20px;
+            margin-bottom: 12px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .option.correct {
+            background: #dcfce7;
+            border-color: var(--primary);
+            color: #065f46;
+        }
+
+        .option.correct::before {
+            content: '✓ ';
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .explanation {
+            background: linear-gradient(135deg, #f0fdfa 0%, #ccfbf1 100%);
+            border-radius: 12px;
+            padding: 25px;
+            margin-top: 20px;
+        }
+
+        .explanation h5 {
+            color: var(--primary);
+            font-size: 1.2em;
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .explanation p {
+            margin-bottom: 12px;
+        }
+
+        .explanation ul {
+            margin-left: 20px;
+        }
+
+        .explanation li {
+            margin-bottom: 8px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header {
+                padding: 30px 25px;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .content {
+                padding: 30px 25px;
+            }
+
+            .content h2 {
+                font-size: 1.6em;
+            }
+
+            .nav-bar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .nav-buttons {
+                width: 100%;
+                flex-direction: column;
+            }
+
+            .btn-nav {
+                width: 100%;
+                justify-content: center;
+            }
+
+            table {
+                font-size: 0.9em;
+            }
+
+            thead th, tbody td {
+                padding: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation Top -->
+        <div class="nav-bar">
+            <div class="nav-title">📚 Materi 13: Penyakit Sistem Pencernaan</div>
+            <div class="nav-buttons">
+                <a href="kisi-kisi-tkad-ipa.html" class="btn-nav btn-home">
+                    🏠 Kembali ke Menu
+                </a>
+                <a href="Lat13.html" class="btn-nav btn-practice">
+                    Latihan Soal ✏️
+                </a>
+            </div>
+        </div>
+
+        <!-- Header -->
+        <div class="header">
+            <h1>🏥 Penyakit pada Sistem Pencernaan</h1>
+            <div class="meta">
+                <div class="meta-item">
+                    <span class="icon">📖</span>
+                    <span>Kelas 8 - Fase D</span>
+                </div>
+                <div class="meta-item">
+                    <span class="icon">🎯</span>
+                    <span>Level Kognitif: L2</span>
+                </div>
+                <div class="meta-item">
+                    <span class="icon">⏱️</span>
+                    <span>Waktu Belajar: 60 menit</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="content">
+            <h2>🔍 Pendahuluan</h2>
+            
+            <p>Sistem pencernaan adalah sistem organ yang berfungsi untuk menerima makanan, mencernanya menjadi energi dan nutrien, serta mengeluarkan sisa-sisa proses tersebut. Sistem pencernaan terdiri dari saluran pencernaan (mulut, kerongkongan, lambung, usus halus, usus besar) dan organ aksesori (hati, pankreas, kantung empedu).</p>
+
+            <p>Gangguan atau penyakit pada sistem pencernaan dapat disebabkan oleh berbagai faktor seperti infeksi bakteri atau virus, pola makan yang tidak sehat, stres, atau kelainan organ. Memahami penyakit-penyakit ini penting untuk pencegahan dan penanganan yang tepat.</p>
+
+            <div class="image-placeholder">
+                <h4>📋 GAMBAR DIBUTUHKAN</h4>
+                <p><strong>Nama File:</strong> sistem-pencernaan.jpg atau sistem-pencernaan.png</p>
+                <p><strong>Deskripsi:</strong> Diagram lengkap sistem pencernaan manusia yang menunjukkan mulut, kerongkongan, lambung, usus halus, usus besar, hati, pankreas, dan kantung empedu dengan label yang jelas</p>
+                <p><strong>Cara Menggunakan:</strong> Simpan gambar dengan nama "sistem-pencernaan.jpg" di folder yang sama dengan file HTML ini</p>
+                <p><strong>Kode untuk menampilkan:</strong> &lt;img src="sistem-pencernaan.jpg" alt="Sistem Pencernaan" style="width: 100%; border-radius: 12px;"&gt;</p>
+            </div>
+
+            <h2>🦠 Penyakit-penyakit pada Sistem Pencernaan</h2>
+
+            <h3>1. Maag (Gastritis)</h3>
+            <div class="disease-card">
+                <h4>🔴 Maag (Gastritis)</h4>
+                
+                <div class="section">
+                    <div class="section-title">📝 Pengertian:</div>
+                    <p>Maag atau gastritis adalah peradangan pada dinding lambung yang menyebabkan rasa tidak nyaman dan nyeri pada perut bagian atas.</p>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">🤒 Gejala:</div>
+                    <ul>
+                        <li>Nyeri atau perih di ulu hati (perut bagian atas)</li>
+                        <li>Mual dan muntah</li>
+                        <li>Perut kembung dan terasa penuh</li>
+                        <li>Kehilangan nafsu makan</li>
+                        <li>Sendawa berlebihan</li>
+                        <li>Rasa panas di dada (heartburn)</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">🔬 Penyebab:</div>
+                    <ul>
+                        <li><strong>Infeksi bakteri Helicobacter pylori</strong> - bakteri yang merusak lapisan pelindung lambung</li>
+                        <li><strong>Pola makan tidak teratur</strong> - makan terlambat atau melewatkan waktu makan</li>
+                        <li><strong>Konsumsi makanan pedas dan asam berlebihan</strong></li>
+                        <li><strong>Stres berkepanjangan</strong> - meningkatkan produksi asam lambung</li>
+                        <li><strong>Konsumsi obat antiinflamasi</strong> (aspirin, ibuprofen) jangka panjang</li>
+                        <li><strong>Konsumsi alkohol berlebihan</strong></li>
+                        <li><strong>Merokok</strong></li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">💊 Pengobatan & Pencegahan:</div>
+                    <ul>
+                        <li>Makan teratur dengan porsi kecil tapi sering</li>
+                        <li>Hindari makanan pedas, asam, dan berlemak tinggi</li>
+                        <li>Kelola stres dengan baik</li>
+                        <li>Hindari merokok dan alkohol</li>
+                        <li>Konsumsi obat antasida atau obat penurun asam lambung</li>
+                        <li>Antibiotik jika disebabkan oleh H. pylori</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>2. Diare</h3>
+            <div class="disease-card">
+                <h4>💧 Diare</h4>
+                
+                <div class="section">
+                    <div class="section-title">📝 Pengertian:</div>
+                    <p>Diare adalah kondisi buang air besar dengan feses yang encer atau cair, dengan frekuensi lebih sering dari biasanya (lebih dari 3 kali sehari).</p>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">🤒 Gejala:</div>
+                    <ul>
+                        <li>Feses encer atau cair</li>
+                        <li>Buang air besar lebih sering (>3x sehari)</li>
+                        <li>Kram dan nyeri perut</li>
+                        <li>Mual dan muntah</li>
+                        <li>Demam (kadang-kadang)</li>
+                        <li>Dehidrasi (mulut kering, haus, lemas)</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">🔬 Penyebab:</div>
+                    <ul>
+                        <li><strong>Infeksi virus</strong> (rotavirus, norovirus) - paling sering pada anak-anak</li>
+                        <li><strong>Infeksi bakteri</strong> (E. coli, Salmonella, Shigella) - dari makanan/air terkontaminasi</li>
+                        <li><strong>Infeksi parasit</strong> (Giardia, Entamoeba)</li>
+                        <li><strong>Keracunan makanan</strong></li>
+                        <li><strong>Intoleransi makanan</strong> (laktosa, gluten)</li>
+                        <li><strong>Efek samping obat</strong> (antibiotik)</li>
+                        <li><strong>Konsumsi makanan pedas atau berlemak berlebihan</strong></li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">💊 Pengobatan & Pencegahan:</div>
+                    <ul>
+                        <li><strong>Rehidrasi</strong> - minum banyak air, oralit, atau cairan elektrolit</li>
+                        <li>Makan makanan lunak dan mudah dicerna (bubur, pisang, roti)</li>
+                        <li>Cuci tangan dengan sabun sebelum makan dan setelah dari toilet</li>
+                        <li>Konsumsi makanan yang bersih dan matang sempurna</li>
+                        <li>Hindari makanan pedas, berlemak, dan berserat tinggi saat diare</li>
+                        <li>Obat antidiare jika perlu (konsultasi dokter)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="danger-box">
+                <h4>⚠️ BAHAYA DEHIDRASI PADA DIARE!</h4>
+                <p><strong>Tanda-tanda Dehidrasi Berat:</strong></p>
+                <ul>
+                    <li>Mulut dan bibir sangat kering</li>
+                    <li>Tidak buang air kecil >8 jam</li>
+                    <li>Mata cekung</li>
+                    <li>Kulit tidak elastis (tidak kembali cepat saat dicubit)</li>
+                    <li>Lemas dan tidak responsif</li>
+                    <li>Denyut nadi cepat dan lemah</li>
+                </ul>
+                <p><strong>Jika mengalami tanda di atas, segera ke dokter atau rumah sakit!</strong></p>
+            </div>
+
+            <h3>3. Sembelit (Konstipasi)</h3>
+            <div class="disease-card">
+                <h4>🚫 Sembelit (Konstipasi)</h4>
+                
+                <div class="section">
+                    <div class="section-title">📝 Pengertian:</div>
+                    <p>Sembelit adalah kondisi kesulitan buang air besar yang ditandai dengan feses keras dan kering, serta frekuensi BAB yang jarang (kurang dari 3 kali seminggu).</p>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">🤒 Gejala:</div>
+                    <ul>
+                        <li>Feses keras dan kering</li>
+                        <li>Kesulitan mengeluarkan feses</li>
+                        <li>Buang air besar kurang dari 3x seminggu</li>
+                        <li>Perut terasa penuh dan kembung</li>
+                        <li>Nyeri saat buang air besar</li>
+                        <li>Perlu mengejan kuat</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">🔬 Penyebab:</div>
+                    <ul>
+                        <li><strong>Kurang konsumsi serat</strong> - kurang makan sayur dan buah</li>
+                        <li><strong>Kurang minum air</strong> - dehidrasi membuat feses keras</li>
+                        <li><strong>Kurang aktivitas fisik</strong> - jarang olahraga atau bergerak</li>
+                        <li><strong>Menahan BAB</strong> - kebiasaan menunda buang air besar</li>
+                        <li><strong>Efek samping obat</strong> (antasida, obat penghilang rasa sakit)</li>
+                        <li><strong>Stres dan perubahan rutinitas</strong></li>
+                        <li><strong>Gangguan hormon</strong> (hipotiroid)</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">💊 Pengobatan & Pencegahan:</div>
+                    <ul>
+                        <li>Konsumsi makanan tinggi serat (sayur, buah, gandum utuh)</li>
+                        <li>Minum air putih minimal 8 gelas sehari</li>
+                        <li>Olahraga teratur minimal 30 menit/hari</li>
+                        <li>Tidak menunda buang air besar</li>
+                        <li>Atur jadwal BAB yang teratur</li>
+                        <li>Konsumsi obat pencahar jika perlu (konsultasi dokter)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>4. Apendisitis (Radang Usus Buntu)</h3>
+            <div class="disease-card">
+                <h4>🔴 Apendisitis (Radang Usus Buntu)</h4>
+                
+                <div class="section">
+                    <div class="section-title">📝 Pengertian:</div>
+                    <p>Apendisitis adalah peradangan pada apendiks (usus buntu), yaitu kantung kecil berbentuk jari yang terhubung pada usus besar di bagian kanan bawah perut.</p>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">🤒 Gejala:</div>
+                    <ul>
+                        <li><strong>Nyeri perut khas:</strong> dimulai di sekitar pusar, kemudian berpindah ke kanan bawah</li>
+                        <li>Nyeri bertambah parah dalam beberapa jam</li>
+                        <li>Nyeri bertambah saat batuk, berjalan, atau menekan perut</li>
+                        <li>Mual dan muntah</li>
+                        <li>Kehilangan nafsu makan</li>
+                        <li>Demam ringan (37.5-38°C)</li>
+                        <li>Perut kembung</li>
+                        <li>Tidak bisa buang angin</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">🔬 Penyebab:</div>
+                    <ul>
+                        <li><strong>Penyumbatan lumen apendiks</strong> oleh feses keras (fekalit)</li>
+                        <li><strong>Infeksi</strong> - bakteri berkembang di apendiks yang tersumbat</li>
+                        <li><strong>Pembengkakan jaringan limfoid</strong> akibat infeksi saluran cerna</li>
+                        <li><strong>Benda asing atau parasit</strong> yang menyumbat apendiks</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">💊 Pengobatan & Pencegahan:</div>
+                    <ul>
+                        <li><strong>OPERASI (Apendektomi)</strong> - pengangkatan apendiks yang meradang</li>
+                        <li>Antibiotik untuk mengatasi infeksi</li>
+                        <li>Cairan infus untuk mencegah dehidrasi</li>
+                        <li><strong>Pencegahan:</strong> Konsumsi makanan berserat tinggi untuk mencegah sembelit</li>
+                        <li>Minum air putih cukup</li>
+                        <li>Hindari menelan biji-bijian kecil (mitos, belum terbukti)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="danger-box">
+                <h4>🚨 APENDISITIS ADALAH KONDISI DARURAT!</h4>
+                <p><strong>Apendiks yang pecah dapat menyebabkan:</strong></p>
+                <ul>
+                    <li><strong>Peritonitis</strong> - infeksi selaput perut yang mengancam jiwa</li>
+                    <li><strong>Abses</strong> - kantung nanah di rongga perut</li>
+                    <li><strong>Sepsis</strong> - infeksi yang menyebar ke seluruh tubuh</li>
+                </ul>
+                <p><strong>Jika merasakan nyeri perut hebat di kanan bawah, SEGERA KE DOKTER!</strong></p>
+            </div>
+
+            <h3>5. Tukak Lambung (Ulkus Peptikum)</h3>
+            <div class="disease-card">
+                <h4>🔴 Tukak Lambung (Ulkus Peptikum)</h4>
+                
+                <div class="section">
+                    <div class="section-title">📝 Pengertian:</div>
+                    <p>Tukak lambung adalah luka terbuka yang terbentuk pada lapisan dalam lambung atau usus dua belas jari (duodenum) akibat rusaknya lapisan pelindung mukosa.</p>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">🤒 Gejala:</div>
+                    <ul>
+                        <li>Nyeri seperti terbakar di ulu hati</li>
+                        <li>Nyeri perut yang membaik setelah makan (tukak lambung) atau memburuk setelah makan (tukak duodenum)</li>
+                        <li>Mual dan muntah</li>
+                        <li>Kembung dan sendawa</li>
+                        <li>Cepat kenyang</li>
+                        <li>Kehilangan nafsu makan dan berat badan turun</li>
+                        <li>Muntah darah atau feses hitam (pada kasus parah)</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">🔬 Penyebab:</div>
+                    <ul>
+                        <li><strong>Infeksi bakteri Helicobacter pylori</strong> - penyebab paling umum</li>
+                        <li><strong>Penggunaan obat antiinflamasi jangka panjang</strong> (aspirin, ibuprofen)</li>
+                        <li><strong>Produksi asam lambung berlebihan</strong></li>
+                        <li><strong>Merokok</strong> - meningkatkan produksi asam dan menghambat penyembuhan</li>
+                        <li><strong>Konsumsi alkohol berlebihan</strong></li>
+                        <li><strong>Stres</strong> - dapat memperparah gejala</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">💊 Pengobatan & Pencegahan:</div>
+                    <ul>
+                        <li>Obat penghambat pompa proton (PPI) untuk menurunkan asam lambung</li>
+                        <li>Antibiotik untuk memberantas H. pylori</li>
+                        <li>Antasida untuk menetralkan asam lambung</li>
+                        <li>Hindari makanan pedas, asam, dan berlemak</li>
+                        <li>Berhenti merokok dan konsumsi alkohol</li>
+                        <li>Kelola stres dengan baik</li>
+                        <li>Hindari penggunaan obat antiinflamasi tanpa resep dokter</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>6. Hepatitis</h3>
+            <div class="disease-card">
+                <h4>🔴 Hepatitis</h4>
+                
+                <div class="section">
+                    <div class="section-title">📝 Pengertian:</div>
+                    <p>Hepatitis adalah peradangan pada hati (liver) yang dapat disebabkan oleh infeksi virus, alkohol, obat-obatan, atau penyakit autoimun.</p>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">🤒 Gejala:</div>
+                    <ul>
+                        <li><strong>Kuning (Jaundice)</strong> - kulit dan mata berwarna kuning</li>
+                        <li>Urin berwarna gelap seperti teh</li>
+                        <li>Feses berwarna pucat</li>
+                        <li>Mual, muntah, dan kehilangan nafsu makan</li>
+                        <li>Nyeri perut kanan atas (area hati)</li>
+                        <li>Demam dan menggigil</li>
+                        <li>Kelelahan ekstrem</li>
+                        <li>Gatal-gatal pada kulit</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">🔬 Penyebab:</div>
+                    <ul>
+                        <li><strong>Hepatitis A</strong> - virus dari makanan/air terkontaminasi feses</li>
+                        <li><strong>Hepatitis B</strong> - virus dari darah, cairan tubuh, atau hubungan seksual</li>
+                        <li><strong>Hepatitis C</strong> - virus dari darah (jarum suntik, transfusi)</li>
+                        <li><strong>Hepatitis D dan E</strong> - lebih jarang terjadi</li>
+                        <li><strong>Alkohol</strong> - konsumsi alkohol jangka panjang</li>
+                        <li><strong>Obat-obatan</strong> - overdosis atau efek samping</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">💊 Pengobatan & Pencegahan:</div>
+                    <ul>
+                        <li><strong>Vaksinasi</strong> - tersedia untuk hepatitis A dan B</li>
+                        <li>Cuci tangan dengan sabun sebelum makan</li>
+                        <li>Konsumsi makanan dan air yang bersih</li>
+                        <li>Hindari berbagi jarum suntik atau alat cukur</li>
+                        <li>Gunakan kondom saat berhubungan seksual</li>
+                        <li>Antiviral untuk hepatitis B dan C kronis</li>
+                        <li>Istirahat cukup dan nutrisi yang baik</li>
+                        <li>Hindari alkohol</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h2>📊 Tabel Ringkasan Penyakit Sistem Pencernaan</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Penyakit</th>
+                        <th>Organ Terkena</th>
+                        <th>Penyebab Utama</th>
+                        <th>Gejala Khas</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Maag</strong></td>
+                        <td>Lambung</td>
+                        <td>H. pylori, pola makan tidak teratur, stres</td>
+                        <td>Nyeri ulu hati, mual, perut kembung</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Diare</strong></td>
+                        <td>Usus</td>
+                        <td>Infeksi virus/bakteri, keracunan makanan</td>
+                        <td>Feses cair >3x/hari, kram perut</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Sembelit</strong></td>
+                        <td>Usus besar</td>
+                        <td>Kurang serat, kurang minum, kurang gerak</td>
+                        <td>Feses keras, BAB <3x/minggu</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Apendisitis</strong></td>
+                        <td>Usus buntu</td>
+                        <td>Penyumbatan dan infeksi</td>
+                        <td>Nyeri kanan bawah perut, demam</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Tukak Lambung</strong></td>
+                        <td>Lambung/Duodenum</td>
+                        <td>H. pylori, obat antiinflamasi</td>
+                        <td>Nyeri terbakar ulu hati</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Hepatitis</strong></td>
+                        <td>Hati</td>
+                        <td>Virus (A, B, C), alkohol</td>
+                        <td>Kuning, urin gelap, feses pucat</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>📝 Contoh Soal dan Pembahasan</h2>
+
+            <div class="example-box">
+                <h4>📌 Contoh Soal 1</h4>
+                <div class="question">
+                    <p class="question-text">
+                        Seorang siswa mengalami gejala berikut:<br>
+                        • Nyeri perut yang dimulai di sekitar pusar<br>
+                        • Nyeri berpindah ke perut kanan bawah<br>
+                        • Demam ringan (38°C)<br>
+                        • Mual dan tidak nafsu makan<br>
+                        • Nyeri bertambah saat batuk atau berjalan<br><br>
+                        
+                        <strong>Pernyataan: Gejala tersebut menunjukkan siswa mengalami apendisitis yang disebabkan oleh penyumbatan usus buntu.</strong>
+                    </p>
+
+                    <div class="options">
+                        <div class="option correct">Benar</div>
+                        <div class="option">Salah</div>
+                    </div>
+
+                    <div class="explanation">
+                        <h5>💡 Pembahasan:</h5>
+                        <p><strong>Jawaban: BENAR</strong></p>
+                        
+                        <p><strong>Analisis Gejala:</strong></p>
+                        <ul>
+                            <li><strong>Nyeri khas apendisitis:</strong> Dimulai di pusar lalu berpindah ke kanan bawah perut (titik McBurney) ✓</li>
+                            <li><strong>Nyeri bertambah saat batuk/berjalan:</strong> Ciri khas iritasi peritoneum pada apendisitis ✓</li>
+                            <li><strong>Demam ringan:</strong> Menunjukkan adanya infeksi/peradangan ✓</li>
+                            <li><strong>Mual dan kehilangan nafsu makan:</strong> Gejala penyerta apendisitis ✓</li>
+                        </ul>
+
+                        <p style="margin-top: 15px;"><strong>Penyebab Apendisitis:</strong></p>
+                        <p>Pernyataan bahwa apendisitis disebabkan oleh <strong>penyumbatan usus buntu</strong> adalah BENAR. Penyumbatan ini dapat berupa:</p>
+                        <ul>
+                            <li><strong>Fekalit</strong> (feses yang mengeras)</li>
+                            <li><strong>Pembengkakan jaringan limfoid</strong></li>
+                            <li><strong>Benda asing atau parasit</strong></li>
+                        </ul>
+
+                        <p style="margin-top: 15px;"><strong>Mengapa Ini Apendisitis?</strong></p>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Gejala</th>
+                                    <th>Kesesuaian dengan Apendisitis</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Nyeri pusar → kanan bawah</td>
+                                    <td>✓ Pola nyeri KHAS apendisitis</td>
+                                </tr>
+                                <tr>
+                                    <td>Nyeri saat batuk/jalan</td>
+                                    <td>✓ Tanda iritasi peritoneum</td>
+                                </tr>
+                                <tr>
+                                    <td>Demam ringan</td>
+                                    <td>✓ Respon tubuh terhadap infeksi</td>
+                                </tr>
+                                <tr>
+                                    <td>Mual & tidak nafsu makan</td>
+                                    <td>✓ Gejala penyerta umum</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <p style="margin-top: 15px;"><strong>Kesimpulan:</strong> Semua gejala mengarah ke diagnosis apendisitis, dan penyebabnya memang penyumbatan usus buntu yang kemudian mengalami infeksi.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <h4>📌 Contoh Soal 2</h4>
+                <div class="question">
+                    <p class="question-text">
+                        Seorang pasien mengeluh:<br>
+                        • Kulit dan mata berwarna kuning<br>
+                        • Urin berwarna gelap seperti teh<br>
+                        • Feses berwarna pucat<br>
+                        • Mudah lelah<br>
+                        • Nyeri di perut kanan atas<br><br>
+                        
+                        <strong>Pernyataan: Pasien mengalami hepatitis yang disebabkan oleh infeksi virus pada usus halus.</strong>
+                    </p>
+
+                    <div class="options">
+                        <div class="option">Benar</div>
+                        <div class="option correct">Salah</div>
+                    </div>
+
+                    <div class="explanation">
+                        <h5>💡 Pembahasan:</h5>
+                        <p><strong>Jawaban: SALAH</strong></p>
+                        
+                        <p><strong>Analisis Gejala:</strong></p>
+                        <p>Gejala yang disebutkan memang menunjukkan <strong>HEPATITIS</strong>, yaitu:</p>
+                        <ul>
+                            <li><strong>Kuning (jaundice):</strong> Akumulasi bilirubin karena kerusakan hati ✓</li>
+                            <li><strong>Urin gelap:</strong> Bilirubin keluar melalui urin ✓</li>
+                            <li><strong>Feses pucat:</strong> Bilirubin tidak mencapai usus ✓</li>
+                            <li><strong>Mudah lelah:</strong> Hati tidak berfungsi optimal ✓</li>
+                            <li><strong>Nyeri perut kanan atas:</strong> Lokasi hati ✓</li>
+                        </ul>
+
+                        <p style="margin-top: 15px;"><strong>KESALAHAN dalam Pernyataan:</strong></p>
+                        <div class="danger-box" style="margin: 15px 0;">
+                            <h4>❌ Organ yang Salah!</h4>
+                            <p>Pernyataan menyebutkan hepatitis terjadi pada <strong>"usus halus"</strong> → INI SALAH!</p>
+                            <p><strong>Hepatitis terjadi pada HATI (LIVER), BUKAN usus halus!</strong></p>
+                        </div>
+
+                        <p><strong>Fakta Benar tentang Hepatitis:</strong></p>
+                        <ul>
+                            <li><strong>Organ terkena:</strong> HATI (hepar/liver), bukan usus halus</li>
+                            <li><strong>Penyebab:</strong> Infeksi virus hepatitis (A, B, C, D, E)</li>
+                            <li><strong>Lokasi nyeri:</strong> Perut KANAN ATAS (tempat hati berada)</li>
+                            <li><strong>Fungsi hati terganggu:</strong> Metabolisme, detoksifikasi, produksi empedu</li>
+                        </ul>
+
+                        <p style="margin-top: 15px;"><strong>Perbandingan:</strong></p>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Aspek</th>
+                                    <th>Pernyataan Soal</th>
+                                    <th>Fakta Benar</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Penyakit</td>
+                                    <td>✓ Hepatitis</td>
+                                    <td>✓ Hepatitis</td>
+                                </tr>
+                                <tr>
+                                    <td>Organ</td>
+                                    <td>❌ Usus halus</td>
+                                    <td>✓ Hati (Liver)</td>
+                                </tr>
+                                <tr>
+                                    <td>Penyebab</td>
+                                    <td>✓ Infeksi virus</td>
+                                    <td>✓ Infeksi virus</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <p style="margin-top: 15px;"><strong>Kesimpulan:</strong> Pernyataan SALAH karena hepatitis menyerang HATI, bukan usus halus. Gejala memang benar mengarah ke hepatitis, tetapi organ yang disebutkan keliru!</p>
+                    </div>
+                </div>
+            </div>
+
+            <h2>🎓 Rangkuman</h2>
+            <div class="info-box">
+                <ol>
+                    <li><strong>Maag (Gastritis):</strong> Peradangan lambung akibat H. pylori, pola makan tidak teratur, atau stres. Gejala: nyeri ulu hati, mual, kembung.</li>
+                    
+                    <li><strong>Diare:</strong> BAB cair >3x/hari akibat infeksi virus/bakteri atau keracunan makanan. Bahaya: dehidrasi!</li>
+                    
+                    <li><strong>Sembelit:</strong> Kesulitan BAB (<3x/minggu) akibat kurang serat, air, dan aktivitas fisik.</li>
+                    
+                    <li><strong>Apendisitis:</strong> Radang usus buntu akibat penyumbatan. Gejala khas: nyeri pusar → kanan bawah. KONDISI DARURAT!</li>
+                    
+                    <li><strong>Tukak Lambung:</strong> Luka pada lambung/duodenum akibat H. pylori atau obat antiinflamasi. Gejala: nyeri terbakar ulu hati.</li>
+                    
+                    <li><strong>Hepatitis:</strong> Peradangan hati akibat virus (A, B, C). Gejala khas: kuning, urin gelap, feses pucat.</li>
+                </ol>
+            </div>
+
+            <div class="key-points">
+                <h4>💪 Tips Mengerjakan Soal Penyakit Pencernaan</h4>
+                <ul>
+                    <li><strong>Identifikasi organ terkena:</strong> Perhatikan lokasi nyeri (ulu hati = lambung, kanan bawah = usus buntu, kanan atas = hati)</li>
+                    <li><strong>Cermati gejala khas:</strong> Setiap penyakit punya ciri khas (kuning = hepatitis, nyeri berpindah = apendisitis)</li>
+                    <li><strong>Hubungkan penyebab dengan gejala:</strong> Infeksi, pola makan, atau penyumbatan?</li>
+                    <li><strong>Perhatikan kata kunci:</strong> "berpindah", "kuning", "cair", "keras", "terbakar"</li>
+                    <li><strong>Jangan terburu-buru:</strong> Baca semua gejala sebelum menyimpulkan</li>
+                </ul>
+            </div>
+
+            <div class="warning-box">
+                <h4>⚠️ Kesalahan Umum yang Harus Dihindari</h4>
+                <ul>
+                    <li><strong>Salah organ:</strong> Hepatitis di hati, BUKAN di usus!</li>
+                    <li><strong>Menukar gejala:</strong> Diare = cair, Sembelit = keras, jangan terbalik!</li>
+                    <li><strong>Mengabaikan lokasi nyeri:</strong> Lokasi nyeri sangat penting untuk diagnosis!</li>
+                    <li><strong>Lupa pola nyeri apendisitis:</strong> Harus dimulai di pusar, lalu berpindah ke kanan bawah</li>
+                    <li><strong>Tidak membedakan maag dan tukak:</strong> Maag = peradangan, Tukak = ada luka</li>
+                </ul>
+            </div>
+
+            <div class="key-points">
+                <h4>🏥 Kapan Harus ke Dokter?</h4>
+                <ul>
+                    <li><strong>Nyeri perut hebat</strong> yang tidak hilang</li>
+                    <li><strong>Demam tinggi</strong> (>39°C)</li>
+                    <li><strong>Muntah atau BAB berdarah</strong></li>
+                    <li><strong>Kulit dan mata kuning</strong></li>
+                    <li><strong>Dehidrasi berat</strong> (tidak bisa minum, tidak BAK >8 jam)</li>
+                    <li><strong>Nyeri perut kanan bawah</strong> yang makin parah</li>
+                    <li><strong>Penurunan berat badan drastis</strong> tanpa sebab jelas</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Navigation Bottom -->
+        <div class="nav-bar">
+            <div class="nav-buttons" style="width: 100%; justify-content: space-between;">
+                <a href="kisi-kisi-tkad-ipa.html" class="btn-nav btn-home">
+                    🏠 Kembali ke Menu
+                </a>
+                <a href="Lat13.html" class="btn-nav btn-practice">
+                    Lanjut ke Latihan Soal ✏️
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

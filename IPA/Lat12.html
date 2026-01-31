@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latihan Soal 12: Organ Pencernaan dan Enzim</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #8b5cf6;
+            --secondary: #ec4899;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --dark: #1e293b;
+            --light: #f8fafc;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Navigation */
+        .nav-bar {
+            background: white;
+            border-radius: 16px;
+            padding: 15px 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .nav-title {
+            font-size: 1.2em;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn-nav {
+            padding: 10px 20px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-home {
+            background: linear-gradient(135deg, #64748b, #475569);
+            color: white;
+            box-shadow: 0 4px 12px rgba(100, 116, 139, 0.3);
+        }
+
+        .btn-home:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(100, 116, 139, 0.4);
+        }
+
+        .btn-materi {
+            background: linear-gradient(135deg, #059669, #047857);
+            color: white;
+            box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);
+        }
+
+        .btn-materi:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(5, 150, 105, 0.4);
+        }
+
+        /* Quiz Container */
+        .quiz-container {
+            background: white;
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quiz-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--warning));
+            background-size: 200% 100%;
+            animation: gradientMove 3s ease infinite;
+        }
+
+        @keyframes gradientMove {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            margin-bottom: 30px;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .question-number {
+            font-size: 1.1em;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .score-display {
+            font-size: 1em;
+            font-weight: 700;
+            color: var(--success);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background: #e2e8f0;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 20px;
+            transition: width 0.5s ease;
+        }
+
+        /* Question Slide */
+        .slide {
+            display: none;
+            animation: slideIn 0.5s ease;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .question-text {
+            font-size: 1.15em;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 25px;
+            line-height: 1.7;
+            padding: 20px;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border-radius: 12px;
+            border-left: 5px solid var(--primary);
+        }
+
+        /* Image in Question */
+        .question-image {
+            background: #f8fafc;
+            border: 3px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 15px;
+            margin: 15px 0 20px 0;
+            text-align: center;
+        }
+
+        .question-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .image-caption {
+            margin-top: 10px;
+            font-style: italic;
+            color: #64748b;
+            font-size: 0.9em;
+        }
+
+        /* Options */
+        .option {
+            padding: 18px 24px;
+            margin: 12px 0;
+            border: 3px solid #e2e8f0;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 1.05em;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .option:hover:not(.disabled) {
+            border-color: var(--primary);
+            background: linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%);
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.2);
+        }
+
+        .option.selected {
+            border-color: var(--primary);
+            background: linear-gradient(135deg, #ede9fe 0%, #ddd6fe 100%);
+        }
+
+        .option.correct {
+            border-color: var(--success);
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+        }
+
+        .option.wrong {
+            border-color: var(--danger);
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+        }
+
+        .option.disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        .option input[type="radio"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Feedback */
+        .feedback {
+            margin-top: 25px;
+            padding: 25px 30px;
+            border-radius: 15px;
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .feedback.show {
+            display: block;
+        }
+
+        .feedback.correct {
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+            border-left: 6px solid var(--success);
+        }
+
+        .feedback.wrong {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            border-left: 6px solid var(--danger);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .feedback-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .feedback-icon {
+            font-size: 2.5em;
+        }
+
+        .feedback-title {
+            font-size: 1.4em;
+            font-weight: 800;
+        }
+
+        .feedback.correct .feedback-title {
+            color: var(--success);
+        }
+
+        .feedback.wrong .feedback-title {
+            color: var(--danger);
+        }
+
+        .feedback-text {
+            font-size: 1.05em;
+            line-height: 1.7;
+            color: var(--dark);
+        }
+
+        /* Buttons */
+        .btn-container {
+            margin-top: 30px;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 15px 35px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 1.05em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(139, 92, 246, 0.4);
+        }
+
+        .btn-next {
+            background: linear-gradient(135deg, var(--success), #059669);
+            color: white;
+            display: none;
+        }
+
+        .btn-next.show {
+            display: inline-flex;
+        }
+
+        .btn-next:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+        }
+
+        /* Result Screen */
+        .result-screen {
+            display: none;
+            text-align: center;
+            padding: 40px 20px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .result-screen.show {
+            display: block;
+        }
+
+        .result-icon {
+            font-size: 6em;
+            margin-bottom: 20px;
+            animation: bounce 1s ease;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .result-score {
+            font-size: 4em;
+            font-weight: 900;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .result-score.excellent {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .result-score.good {
+            background: linear-gradient(135deg, var(--success), #059669);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .result-score.poor {
+            background: linear-gradient(135deg, var(--danger), #dc2626);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .result-title {
+            font-size: 2.5em;
+            font-weight: 800;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+
+        .result-message {
+            font-size: 1.3em;
+            color: #64748b;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        .result-actions {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-retry {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        .btn-retry:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(139, 92, 246, 0.4);
+        }
+
+        .btn-home-result {
+            background: linear-gradient(135deg, #64748b, #475569);
+            color: white;
+        }
+
+        .btn-home-result:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(100, 116, 139, 0.4);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .quiz-container {
+                padding: 25px 20px;
+            }
+
+            .question-text {
+                font-size: 1.05em;
+            }
+
+            .option {
+                font-size: 1em;
+                padding: 15px 18px;
+            }
+
+            .result-score {
+                font-size: 3em;
+            }
+
+            .result-title {
+                font-size: 2em;
+            }
+
+            .result-message {
+                font-size: 1.1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation Bar -->
+        <div class="nav-bar">
+            <div class="nav-title">✏️ Latihan Soal - Organ Pencernaan</div>
+            <div class="nav-buttons">
+                <a href="kisi-kisi-tkad-ipa.html" class="btn-nav btn-home">🏠 Menu</a>
+                <a href="12.html" class="btn-nav btn-materi">📖 Materi</a>
+            </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-container">
+            <!-- Progress Bar -->
+            <div class="progress-container">
+                <div class="progress-info">
+                    <div class="question-number">
+                        Soal <span id="currentQuestion">1</span> dari 5
+                    </div>
+                    <div class="score-display">
+                        Skor: <span id="score">0</span>/5
+                    </div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <!-- Quiz Content -->
+            <div id="quizContent">
+                <!-- Question 1 -->
+                <div class="slide active" data-question="1">
+                    <div class="question-text">
+                        <strong>Soal 1:</strong><br><br>
+                        Perhatikan gambar organ pencernaan berikut!
+                    </div>
+
+                    <div class="question-image">
+                        <!-- GAMBAR: lambung dengan panah menunjuk ke dinding lambung -->
+                        <img src="soal1_lambung.jpg" alt="Organ Lambung" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22300%22%3E%3Crect fill=%22%23e2e8f0%22 width=%22400%22 height=%22300%22/%3E%3Ctext x=%2250%25%22 y=%2245%25%22 font-size=%2218%22 text-anchor=%22middle%22 fill=%22%2364748b%22%3EGambar: LAMBUNG%3C/text%3E%3Ctext x=%2250%25%22 y=%2255%25%22 font-size=%2214%22 text-anchor=%22middle%22 fill=%22%2364748b%22%3E(Panah menunjuk ke dinding lambung)%3C/text%3E%3C/svg%3E';">
+                        <p class="image-caption">Organ yang ditunjuk oleh tanda panah</p>
+                    </div>
+
+                    <div class="question-text">
+                        Organ yang ditunjuk oleh tanda panah menghasilkan enzim <strong>pepsin</strong> yang berfungsi untuk...
+                    </div>
+
+                    <div class="option">
+                        <input type="radio" name="q1" value="A">
+                        <span>A. Memecah amilum menjadi maltosa</span>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q1" value="B">
+                        <span>B. Memecah protein menjadi pepton</span>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q1" value="C">
+                        <span>C. Memecah lemak menjadi asam lemak dan gliserol</span>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q1" value="D">
+                        <span>D. Memecah maltosa menjadi glukosa</span>
+                    </div>
+
+                    <div class="feedback" id="feedback1"></div>
+
+                    <div class="btn-container">
+                        <button class="btn btn-submit" onclick="submitAnswer(1, 'B')">
+                            Cek Jawaban 🔍
+                        </button>
+                        <button class="btn btn-next" onclick="nextQuestion()">
+                            Lanjut ➡️
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Question 2 -->
+                <div class="slide" data-question="2">
+                    <div class="question-text">
+                        <strong>Soal 2:</strong><br><br>
+                        Perhatikan gambar sistem pencernaan berikut!
+                    </div>
+
+                    <div class="question-image">
+                        <!-- GAMBAR: usus halus dengan panah ke pankreas -->
+                        <img src="soal2_pankreas.jpg" alt="Pankreas dan Usus Halus" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22450%22 height=%22300%22%3E%3Crect fill=%22%23e2e8f0%22 width=%22450%22 height=%22300%22/%3E%3Ctext x=%2250%25%22 y=%2245%25%22 font-size=%2218%22 text-anchor=%22middle%22 fill=%22%2364748b%22%3EGambar: PANKREAS dan DUODENUM%3C/text%3E%3Ctext x=%2250%25%22 y=%2255%25%22 font-size=%2214%22 text-anchor=%22middle%22 fill=%22%2364748b%22%3E(Panah menunjuk ke saluran pankreas)%3C/text%3E%3C/svg%3E';">
+                        <p class="image-caption">Organ X yang menyalurkan getah ke duodenum</p>
+                    </div>
+
+                    <div class="question-text">
+                        Organ yang ditunjuk tanda panah X menghasilkan enzim <strong>tripsin</strong> yang berfungsi untuk...
+                    </div>
+
+                    <div class="option">
+                        <input type="radio" name="q2" value="A">
+                        <span>A. Mengubah amilum menjadi maltosa</span>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q2" value="B">
+                        <span>B. Mengubah protein menjadi asam amino</span>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q2" value="C">
+                        <span>C. Mengemulsikan lemak menjadi butiran kecil</span>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q2" value="D">
+                        <span>D. Mengubah maltosa menjadi glukosa</span>
+                    </div>
+
+                    <div class="feedback" id="feedback2"></div>
+
+                    <div class="btn-container">
+                        <button class="btn btn-submit" onclick="submitAnswer(2, 'B')">
+                            Cek Jawaban 🔍
+                        </button>
+                        <button class="btn btn-next" onclick="nextQuestion()">
+                            Lanjut ➡️
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Question 3 -->
+                <div class="slide" data-question="3">
+                    <div class="question-text">
+                        <strong>Soal 3:</strong><br><br>
+                        Perhatikan gambar berikut!
+                    </div>
+
+                    <div class="question-image">
+                        <!-- GAMBAR: mulut dengan kelenjar ludah -->
+                        <img src="soal3_mulut.jpg" alt="Rongga Mulut dan Kelenjar Ludah" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22300%22%3E%3Crect fill=%22%23e2e8f0%22 width=%22400%22 height=%22300%22/%3E%3Ctext x=%2250%25%22 y=%2245%25%22 font-size=%2218%22 text-anchor=%22middle%22 fill=%22%2364748b%22%3EGambar: RONGGA MULUT%3C/text%3E%3Ctext x=%2250%25%22 y=%2255%25%22 font-size=%2214%22 text-anchor=%22middle%22 fill=%22%2364748b%22%3E(Panah menunjuk ke kelenjar ludah)%3C/text%3E%3C/svg%3E';">
+                        <p class="image-caption">Kelenjar yang ditunjuk oleh tanda panah</p>
+                    </div>
+
+                    <div class="question-text">
+                        Kelenjar yang ditunjuk menghasilkan air liur yang mengandung enzim <strong>amilase (ptialin)</strong> yang berfungsi untuk...
+                    </div>
+
+                    <div class="option">
+                        <input type="radio" name="q3" value="A">
+                        <span>A. Mengubah amilum menjadi maltosa</span>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q3" value="B">
+                        <span>B. Mengubah protein menjadi pepton</span>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q3" value="C">
+                        <span>C. Mengubah lemak menjadi asam lemak</span>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q3" value="D">
+                        <span>D. Mengubah maltosa menjadi glukosa</span>
+                    </div>
+
+                    <div class="feedback" id="feedback3"></div>
+
+                    <div class="btn-container">
+                        <button class="btn btn-submit" onclick="submitAnswer(3, 'A')">
+                            Cek Jawaban 🔍
+                        </button>
+                        <button class="btn btn-next" onclick="nextQuestion()">
+                            Lanjut ➡️
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Question 4 -->
+                <div class="slide" data-question="4">
+                    <div class="question-text">
+                        <strong>Soal 4:</strong><br><br>
+                        Perhatikan gambar sistem pencernaan berikut!
+                    </div>
+
+                    <div class="question-image">
+                        <!-- GAMBAR: usus halus dengan vili -->
+                        <img src="soal4_usus_halus.jpg" alt="Usus Halus dengan Vili" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22450%22 height=%22300%22%3E%3Crect fill=%22%23e2e8f0%22 width=%22450%22 height=%22300%22/%3E%3Ctext x=%2250%25%22 y=%2245%25%22 font-size=%2218%22 text-anchor=%22middle%22 fill=%22%2364748b%22%3EGambar: USUS HALUS (Dinding)%3C/text%3E%3Ctext x=%2250%25%22 y=%2255%25%22 font-size=%2214%22 text-anchor=%22middle%22 fill=%22%2364748b%22%3E(Panah menunjuk ke dinding usus halus)%3C/text%3E%3C/svg%3E';">
+                        <p class="image-caption">Dinding organ yang ditunjuk oleh tanda panah</p>
+                    </div>
+
+                    <div class="question-text">
+                        Dinding organ yang ditunjuk menghasilkan enzim <strong>maltase</strong> yang berfungsi untuk...
+                    </div>
+
+                    <div class="option">
+                        <input type="radio" name="q4" value="A">
+                        <span>A. Mengubah amilum menjadi maltosa</span>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q4" value="B">
+                        <span>B. Mengubah maltosa menjadi glukosa</span>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q4" value="C">
+                        <span>C. Mengubah protein menjadi asam amino</span>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q4" value="D">
+                        <span>D. Mengubah lemak menjadi asam lemak</span>
+                    </div>
+
+                    <div class="feedback" id="feedback4"></div>
+
+                    <div class="btn-container">
+                        <button class="btn btn-submit" onclick="submitAnswer(4, 'B')">
+                            Cek Jawaban 🔍
+                        </button>
+                        <button class="btn btn-next" onclick="nextQuestion()">
+                            Lanjut ➡️
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Question 5 -->
+                <div class="slide" data-question="5">
+                    <div class="question-text">
+                        <strong>Soal 5:</strong><br><br>
+                        Perhatikan gambar organ berikut!
+                    </div>
+
+                    <div class="question-image">
+                        <!-- GAMBAR: hati dengan saluran empedu -->
+                        <img src="soal5_hati.jpg" alt="Hati dan Kantung Empedu" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22300%22%3E%3Crect fill=%22%23e2e8f0%22 width=%22400%22 height=%22300%22/%3E%3Ctext x=%2250%25%22 y=%2245%25%22 font-size=%2218%22 text-anchor=%22middle%22 fill=%22%2364748b%22%3EGambar: HATI%3C/text%3E%3Ctext x=%2250%25%22 y=%2255%25%22 font-size=%2214%22 text-anchor=%22middle%22 fill=%22%2364748b%22%3E(Panah menunjuk ke hati)%3C/text%3E%3C/svg%3E';">
+                        <p class="image-caption">Organ yang ditunjuk oleh tanda panah</p>
+                    </div>
+
+                    <div class="question-text">
+                        Organ yang ditunjuk menghasilkan <strong>getah empedu</strong> yang berfungsi untuk...
+                    </div>
+
+                    <div class="option">
+                        <input type="radio" name="q5" value="A">
+                        <span>A. Memecah protein menjadi asam amino</span>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q5" value="B">
+                        <span>B. Mengemulsikan lemak menjadi butiran kecil</span>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q5" value="C">
+                        <span>C. Memecah amilum menjadi maltosa</span>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q5" value="D">
+                        <span>D. Memecah lemak menjadi asam lemak dan gliserol</span>
+                    </div>
+
+                    <div class="feedback" id="feedback5"></div>
+
+                    <div class="btn-container">
+                        <button class="btn btn-submit" onclick="submitAnswer(5, 'B')">
+                            Cek Jawaban 🔍
+                        </button>
+                        <button class="btn btn-next" onclick="showResult()">
+                            Lihat Hasil 🏆
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Result Screen -->
+            <div class="result-screen" id="resultScreen">
+                <div class="result-icon" id="resultIcon">🏆</div>
+                <div class="result-score" id="resultScore">5/5</div>
+                <div class="result-title" id="resultTitle">Sempurna!</div>
+                <div class="result-message" id="resultMessage">
+                    Luar biasa! Kamu menguasai materi Organ Pencernaan dan Enzim dengan sempurna!
+                </div>
+                <div class="result-actions">
+                    <button class="btn btn-retry" onclick="retryQuiz()">
+                        🔄 Ulangi Latihan
+                    </button>
+                    <a href="kisi-kisi-tkad-ipa.html" class="btn btn-home-result">
+                        🏠 Kembali ke Menu
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 1;
+        let score = 0;
+        let answeredQuestions = [];
+
+        const explanations = {
+            1: {
+                correct: "Benar sekali! 🎉<br><br><strong>B. Memecah protein menjadi pepton</strong><br><br><strong>Pembahasan:</strong><br><br><strong>Organ yang ditunjuk: LAMBUNG</strong><br><br><strong>Enzim Pepsin:</strong><br>• Dihasilkan oleh kelenjar lambung<br>• Bentuk tidak aktif: Pepsinogen<br>• Diaktifkan oleh HCl → menjadi Pepsin (aktif)<br>• <strong>Fungsi: Memecah PROTEIN → PEPTON</strong><br>• Bekerja di pH asam (1,5-3,5)<br><br><strong>Mengapa jawaban lain salah?</strong><br>• A ✗ Amilum → Maltosa = Amilase (mulut/pankreas)<br>• C ✗ Lemak → Asam lemak = Lipase (pankreas)<br>• D ✗ Maltosa → Glukosa = Maltase (usus halus)<br><br><strong>Ingat urutan protein:</strong><br>Protein → <strong>(Pepsin)</strong> → Pepton → <strong>(Tripsin)</strong> → Asam amino",
+                wrong: "Belum tepat! 🤔<br><br><strong>Jawaban yang benar: B</strong><br><br><strong>Analisis:</strong><br>• Organ = <strong>Lambung</strong><br>• Enzim = <strong>Pepsin</strong><br>• Fungsi = <strong>Protein → Pepton</strong><br><br><strong>Tips mengingat:</strong><br>• <strong>Pepsin</strong> untuk <strong>PEP</strong>ton<br>• Pepsin di lambung (pH asam)<br>• Tripsin di usus (pH basa)<br><br><strong>Enzim lambung:</strong><br>1. Pepsin → Protein menjadi Pepton ✓<br>2. Renin → Kaseinogen menjadi Kasein<br>3. Lipase → Lemak (sedikit)<br>4. HCl → Mengaktifkan pepsin (bukan enzim!)"
+            },
+            2: {
+                correct: "Sempurna! 🌟<br><br><strong>B. Mengubah protein menjadi asam amino</strong><br><br><strong>Pembahasan:</strong><br><br><strong>Organ X: PANKREAS</strong><br><br><strong>Enzim Tripsin:</strong><br>• Dari getah pankreas<br>• Bekerja di duodenum (usus halus)<br>• <strong>Fungsi: Protein/Pepton → Asam Amino</strong><br>• Bekerja di pH basa (7,5-8,5)<br><br><strong>Enzim Pankreas:</strong><br>1. <strong>Tripsin</strong> → Protein menjadi Asam Amino ✓<br>2. Amilase Pankreas → Amilum menjadi Maltosa<br>3. Lipase Pankreas → Lemak menjadi Asam Lemak<br><br><strong>Beda Pepsin vs Tripsin:</strong><br>• <strong>Pepsin:</strong> Lambung, pH asam, Protein→Pepton<br>• <strong>Tripsin:</strong> Usus, pH basa, Protein→Asam amino<br><br><strong>Mengapa C salah?</strong><br>Mengemulsikan = Empedu (BUKAN enzim!)",
+                wrong: "Belum tepat! 💡<br><br><strong>Jawaban yang benar: B</strong><br><br><strong>Organ X = PANKREAS</strong><br>• Menyalurkan getah ke duodenum<br>• Menghasilkan 3 enzim utama<br><br><strong>Enzim Tripsin:</strong><br>• Fungsi: <strong>Protein → Asam Amino</strong> ✓<br>• pH basa (berbeda dengan pepsin!)<br><br><strong>Jangan tertukar:</strong><br>• A ✗ = Amilase pankreas (bukan tripsin)<br>• C ✗ = Empedu dari HATI (bukan enzim!)<br>• D ✗ = Maltase dari usus halus<br><br><strong>Tripsin vs Pepsin:</strong><br>Keduanya mencerna protein, tapi:<br>• Pepsin: di lambung (asam)<br>• Tripsin: di usus (basa)"
+            },
+            3: {
+                correct: "Luar biasa! 🎊<br><br><strong>A. Mengubah amilum menjadi maltosa</strong><br><br><strong>Pembahasan:</strong><br><br><strong>Kelenjar: KELENJAR LUDAH (SALIVA)</strong><br><br><strong>Enzim Amilase (Ptialin):</strong><br>• Terkandung dalam air liur<br>• Enzim pertama yang bekerja dalam pencernaan<br>• <strong>Fungsi: AMILUM (karbohidrat) → MALTOSA</strong><br>• Bekerja di pH netral-sedikit asam (6,8)<br>• Mulai bekerja saat mengunyah makanan<br><br><strong>Proses di Mulut:</strong><br>1. Gigi → Pencernaan mekanik (mengunyah)<br>2. Lidah → Mengaduk makanan<br>3. Air liur → Melembabkan + Enzim Amilase<br>4. Hasil → Bolus (gumpalan makanan basah)<br><br><strong>Urutan karbohidrat:</strong><br>Amilum → <strong>(Amilase mulut)</strong> → Maltosa → <strong>(Amilase pankreas)</strong> → Maltosa → <strong>(Maltase usus)</strong> → Glukosa",
+                wrong: "Belum tepat! 🎯<br><br><strong>Jawaban yang benar: A</strong><br><br><strong>Kelenjar Ludah menghasilkan:</strong><br>• Air liur (saliva)<br>• Enzim <strong>Amilase/Ptialin</strong><br><br><strong>Fungsi Amilase:</strong><br>• <strong>AMILUM → MALTOSA</strong> ✓<br>• Pencernaan karbohidrat pertama<br>• Dimulai di mulut saat mengunyah<br><br><strong>Mengapa jawaban lain salah?</strong><br>• B ✗ Protein→Pepton = Pepsin (lambung)<br>• C ✗ Lemak→Asam lemak = Lipase (pankreas)<br>• D ✗ Maltosa→Glukosa = Maltase (usus)<br><br><strong>Ingat:</strong><br>AMIlase mencerna AMIlum (karbohidrat)!"
+            },
+            4: {
+                correct: "Hebat! 🏆<br><br><strong>B. Mengubah maltosa menjadi glukosa</strong><br><br><strong>Pembahasan:</strong><br><br><strong>Organ: USUS HALUS (Dinding)</strong><br><br><strong>Enzim Maltase:</strong><br>• Dihasilkan oleh dinding usus halus<br>• <strong>Fungsi: MALTOSA → GLUKOSA + GLUKOSA</strong><br>• Tahap akhir pencernaan karbohidrat<br>• Glukosa siap diserap oleh vili<br><br><strong>Enzim dari Dinding Usus Halus:</strong><br>1. <strong>Maltase</strong> → Maltosa menjadi Glukosa ✓<br>2. Sukrase → Sukrosa menjadi Glukosa + Fruktosa<br>3. Laktase → Laktosa menjadi Glukosa + Galaktosa<br>4. Peptidase (Erepsin) → Peptida menjadi Asam Amino<br><br><strong>Ingat pola nama enzim:</strong><br>• MALTase mencerna MALTosa<br>• SUKRase mencerna SUKRosa<br>• LAKTase mencerna LAKTosa<br><br><strong>Hasil akhir:</strong> Glukosa (diserap vili untuk energi)",
+                wrong: "Belum tepat! 💪<br><br><strong>Jawaban yang benar: B</strong><br><br><strong>Organ: USUS HALUS</strong><br><br><strong>Enzim Maltase:</strong><br>• Dari dinding usus halus<br>• <strong>MALTOSA → GLUKOSA</strong> ✓<br>• Tahap terakhir pencernaan karbohidrat<br><br><strong>Mengapa jawaban lain salah?</strong><br>• A ✗ Amilum→Maltosa = Amilase<br>• C ✗ Protein→Asam amino = Peptidase<br>• D ✗ Lemak→Asam lemak = Lipase<br><br><strong>Urutan lengkap karbohidrat:</strong><br>Amilum → (Amilase) → Maltosa → <strong>(Maltase)</strong> → Glukosa<br><br><strong>Tips:</strong> Nama enzim = substrat + ase<br>Maltase = enzim untuk maltosa!"
+            },
+            5: {
+                correct: "Sempurna! 🌟<br><br><strong>B. Mengemulsikan lemak menjadi butiran kecil</strong><br><br><strong>Pembahasan:</strong><br><br><strong>Organ: HATI (Hepar)</strong><br><br><strong>Getah Empedu:</strong><br>• Diproduksi oleh hati<br>• Disimpan di kantung empedu<br>• Disalurkan ke duodenum (usus halus)<br>• <strong>BUKAN ENZIM!</strong> (Ini penting!)<br><br><strong>Fungsi Empedu:</strong><br>• <strong>Mengemulsikan lemak</strong> (memecah fisik)<br>• Lemak besar → Butiran lemak kecil<br>• Mempermudah kerja lipase<br>• Tidak mengubah struktur kimia!<br><br><strong>Perbedaan Empedu vs Lipase:</strong><br>• <strong>Empedu:</strong> Mengemulsikan (fisik), BUKAN enzim<br>• <strong>Lipase:</strong> Memecah (kimia), adalah enzim<br><br><strong>Proses pencernaan lemak:</strong><br>1. Empedu → Emulsifikasi (lemak besar jadi butiran kecil)<br>2. Lipase → Pemecahan (lemak → asam lemak + gliserol)",
+                wrong: "Belum tepat! 🎯<br><br><strong>Jawaban yang benar: B</strong><br><br><strong>Organ: HATI (Hepar)</strong><br><br><strong>Getah Empedu:</strong><br>• Fungsi: <strong>Mengemulsikan lemak</strong> ✓<br>• BUKAN enzim! (sangat penting!)<br>• Hanya memecah fisik, bukan kimia<br><br><strong>Mengapa jawaban lain salah?</strong><br>• A ✗ Protein→Asam amino = Tripsin/Peptidase<br>• C ✗ Amilum→Maltosa = Amilase<br>• D ✗ Lemak→Asam lemak = Lipase (ENZIM)<br><br><strong>Bedakan:</strong><br>• <strong>EMPEDU:</strong> Mengemulsikan (bukan enzim)<br>• <strong>LIPASE:</strong> Memecah lemak (enzim)<br><br><strong>Cara mengingat:</strong><br>Empedu = Emulsifikasi (sama-sama 'E')<br>Lipase = Lipid (lemak)"
+            }
+        };
+
+        // Handle radio selection
+        document.querySelectorAll('.option').forEach(option => {
+            option.addEventListener('click', function() {
+                if (!this.classList.contains('disabled')) {
+                    const radio = this.querySelector('input[type="radio"]');
+                    radio.checked = true;
+                    
+                    // Remove selected class from siblings
+                    const parent = this.parentElement;
+                    parent.querySelectorAll('.option').forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+                    
+                    // Add selected class to this option
+                    this.classList.add('selected');
+                }
+            });
+        });
+
+        function submitAnswer(questionNum, correctAnswer) {
+            const slide = document.querySelector(`.slide[data-question="${questionNum}"]`);
+            const options = slide.querySelectorAll('.option');
+            const radios = slide.querySelectorAll('input[type="radio"]');
+            const feedback = document.getElementById(`feedback${questionNum}`);
+            const submitBtn = slide.querySelector('.btn-submit');
+            const nextBtn = slide.querySelector('.btn-next');
+
+            // Get selected answer
+            let selectedAnswer = null;
+            radios.forEach(radio => {
+                if (radio.checked) selectedAnswer = radio.value;
+            });
+
+            if (!selectedAnswer) {
+                alert('Pilih salah satu jawaban!');
+                return;
+            }
+
+            // Disable further selection
+            options.forEach(opt => opt.classList.add('disabled'));
+            radios.forEach(radio => radio.disabled = true);
+            submitBtn.style.display = 'none';
+            nextBtn.classList.add('show');
+
+            // Check if answer is correct
+            const isCorrect = selectedAnswer === correctAnswer;
+
+            // Mark correct/wrong options
+            options.forEach(opt => {
+                const radio = opt.querySelector('input[type="radio"]');
+                if (radio.value === correctAnswer) {
+                    opt.classList.add('correct');
+                }
+                if (radio.checked && radio.value !== correctAnswer) {
+                    opt.classList.add('wrong');
+                }
+            });
+
+            // Update score
+            if (isCorrect && !answeredQuestions.includes(questionNum)) {
+                score++;
+                answeredQuestions.push(questionNum);
+                document.getElementById('score').textContent = score;
+            }
+
+            // Show feedback
+            feedback.classList.add('show');
+            feedback.classList.add(isCorrect ? 'correct' : 'wrong');
+            
+            const icon = isCorrect ? '✅' : '❌';
+            const title = isCorrect ? 'Jawaban Benar!' : 'Jawaban Salah!';
+            const explanation = isCorrect ? explanations[questionNum].correct : explanations[questionNum].wrong;
+
+            feedback.innerHTML = `
+                <div class="feedback-header">
+                    <div class="feedback-icon">${icon}</div>
+                    <div class="feedback-title">${title}</div>
+                </div>
+                <div class="feedback-text">${explanation}</div>
+            `;
+
+            // Scroll to feedback
+            setTimeout(() => {
+                feedback.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 300);
+        }
+
+        function nextQuestion() {
+            const currentSlideEl = document.querySelector('.slide.active');
+            currentSlideEl.classList.remove('active');
+
+            currentSlide++;
+            const nextSlideEl = document.querySelector(`.slide[data-question="${currentSlide}"]`);
+            if (nextSlideEl) {
+                nextSlideEl.classList.add('active');
+                document.getElementById('currentQuestion').textContent = currentSlide;
+                
+                // Update progress bar
+                const progress = (currentSlide / 5) * 100;
+                document.getElementById('progressFill').style.width = progress + '%';
+
+                // Scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        function showResult() {
+            document.getElementById('quizContent').style.display = 'none';
+            document.getElementById('resultScreen').classList.add('show');
+            document.querySelector('.progress-container').style.display = 'none';
+
+            const resultScore = document.getElementById('resultScore');
+            const resultIcon = document.getElementById('resultIcon');
+            const resultTitle = document.getElementById('resultTitle');
+            const resultMessage = document.getElementById('resultMessage');
+
+            resultScore.textContent = `${score}/5`;
+
+            if (score === 5) {
+                resultScore.classList.add('excellent');
+                resultIcon.textContent = '🏆';
+                resultTitle.textContent = 'Sempurna!';
+                resultMessage.textContent = 'Luar biasa! Kamu menguasai materi Organ Pencernaan dan Enzim dengan sempurna!';
+            } else if (score >= 3) {
+                resultScore.classList.add('good');
+                resultIcon.textContent = '👍';
+                resultTitle.textContent = 'Bagus!';
+                resultMessage.textContent = 'Kerja yang baik! Terus tingkatkan pemahamanmu dengan belajar lebih banyak.';
+            } else {
+                resultScore.classList.add('poor');
+                resultIcon.textContent = '📚';
+                resultTitle.textContent = 'Tetap Semangat!';
+                resultMessage.textContent = 'Jangan menyerah! Pelajari materi lagi dan coba ulangi latihannya.';
+            }
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function retryQuiz() {
+            // Reset variables
+            currentSlide = 1;
+            score = 0;
+            answeredQuestions = [];
+
+            // Reset UI
+            document.getElementById('score').textContent = '0';
+            document.getElementById('currentQuestion').textContent = '1';
+            document.getElementById('progressFill').style.width = '0%';
+
+            // Reset all slides
+            document.querySelectorAll('.slide').forEach((slide, index) => {
+                slide.classList.remove('active');
+                if (index === 0) slide.classList.add('active');
+
+                // Reset options and radios
+                slide.querySelectorAll('.option').forEach(opt => {
+                    opt.classList.remove('selected', 'correct', 'wrong', 'disabled');
+                });
+                
+                slide.querySelectorAll('input[type="radio"]').forEach(radio => {
+                    radio.checked = false;
+                    radio.disabled = false;
+                });
+
+                // Reset buttons
+                slide.querySelector('.btn-submit').style.display = 'inline-block';
+                slide.querySelector('.btn-next').classList.remove('show');
+
+                // Reset feedback
+                const feedbackEl = slide.querySelector('.feedback');
+                feedbackEl.classList.remove('show', 'correct', 'wrong');
+                feedbackEl.innerHTML = '';
+            });
+
+            // Show quiz content
+            document.getElementById('quizContent').style.display = 'block';
+            document.getElementById('resultScreen').classList.remove('show');
+            document.querySelector('.progress-container').style.display = 'block';
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
