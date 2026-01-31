@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Materi 1: Ciri-Ciri Makhluk Hidup</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&family=Fira+Code:wght@400;500&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #059669;
+            --secondary: #0891b2;
+            --accent: #f59e0b;
+            --dark: #0f172a;
+            --light: #f8fafc;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: linear-gradient(135deg, #0f766e 0%, #0e7490 100%);
+            color: var(--dark);
+            line-height: 1.8;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Navigation Bar */
+        .nav-bar {
+            background: white;
+            border-radius: 16px;
+            padding: 20px 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .nav-title {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn-nav {
+            padding: 12px 24px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95em;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-home {
+            background: linear-gradient(135deg, #64748b, #475569);
+            color: white;
+            box-shadow: 0 4px 12px rgba(100, 116, 139, 0.3);
+        }
+
+        .btn-home:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(100, 116, 139, 0.4);
+        }
+
+        .btn-practice {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+        }
+
+        .btn-practice:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4);
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            border-radius: 20px;
+            padding: 50px 60px;
+            margin-bottom: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+        }
+
+        .header h1 {
+            font-size: 2.8em;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        .header .meta {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.95em;
+            color: #64748b;
+        }
+
+        .meta-item .icon {
+            font-size: 1.3em;
+        }
+
+        /* Content Section */
+        .content {
+            background: white;
+            border-radius: 20px;
+            padding: 50px 60px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .content h2 {
+            font-size: 2em;
+            font-weight: 700;
+            color: var(--primary);
+            margin-top: 40px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid var(--primary);
+        }
+
+        .content h2:first-child {
+            margin-top: 0;
+        }
+
+        .content h3 {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+
+        .content p {
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+
+        /* Info Box */
+        .info-box {
+            background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+            border-left: 5px solid var(--primary);
+            padding: 25px 30px;
+            border-radius: 12px;
+            margin: 30px 0;
+        }
+
+        .info-box h4 {
+            font-size: 1.2em;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 12px;
+        }
+
+        /* List Styling */
+        .content ul, .content ol {
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+
+        .content li {
+            margin-bottom: 12px;
+        }
+
+        .content li strong {
+            color: var(--primary);
+        }
+
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        thead {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        thead th {
+            padding: 18px 15px;
+            text-align: left;
+            font-weight: 700;
+            font-size: 0.95em;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        tbody tr:hover {
+            background: #f0fdfa;
+        }
+
+        tbody td {
+            padding: 18px 15px;
+        }
+
+        tbody td:first-child {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        /* Example Box */
+        .example-box {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            border-left: 5px solid var(--accent);
+            padding: 30px;
+            border-radius: 12px;
+            margin: 30px 0;
+        }
+
+        .example-box h4 {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: #92400e;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .question {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .question-text {
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 20px;
+            font-size: 1.05em;
+        }
+
+        .options {
+            margin: 20px 0;
+        }
+
+        .option {
+            background: #f8fafc;
+            padding: 12px 20px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border-left: 4px solid #cbd5e1;
+            transition: all 0.3s ease;
+        }
+
+        .option:hover {
+            background: #e2e8f0;
+            transform: translateX(5px);
+        }
+
+        .option.correct {
+            background: #d1fae5;
+            border-left-color: var(--primary);
+            font-weight: 600;
+        }
+
+        .explanation {
+            background: #e0f2fe;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            border-left: 4px solid var(--secondary);
+        }
+
+        .explanation h5 {
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 10px;
+        }
+
+        /* Image Container */
+        .image-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        }
+
+        .image-caption {
+            font-size: 0.9em;
+            color: #64748b;
+            margin-top: 12px;
+            font-style: italic;
+        }
+
+        /* Key Points */
+        .key-points {
+            background: linear-gradient(135deg, #e0e7ff, #c7d2fe);
+            padding: 30px;
+            border-radius: 12px;
+            margin: 30px 0;
+        }
+
+        .key-points h4 {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: #4338ca;
+            margin-bottom: 20px;
+        }
+
+        .key-points ul {
+            list-style: none;
+            margin-left: 0;
+        }
+
+        .key-points li {
+            padding-left: 30px;
+            position: relative;
+            margin-bottom: 15px;
+        }
+
+        .key-points li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #4338ca;
+            font-weight: 700;
+            font-size: 1.2em;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 10px;
+            }
+
+            .header, .content {
+                padding: 25px 20px;
+            }
+
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .content h2 {
+                font-size: 1.5em;
+            }
+
+            .content h3 {
+                font-size: 1.3em;
+            }
+
+            .nav-bar {
+                flex-direction: column;
+                text-align: center;
+                padding: 15px;
+            }
+
+            .nav-title {
+                font-size: 1.1em;
+            }
+
+            .nav-buttons {
+                width: 100%;
+                justify-content: center;
+                flex-direction: column;
+            }
+
+            .btn-nav {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .header .meta {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            table {
+                font-size: 0.85em;
+                display: block;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .info-box, .example-box, .key-points {
+                padding: 20px;
+            }
+
+            .question {
+                padding: 18px;
+            }
+
+            .option {
+                padding: 10px 15px;
+                font-size: 0.95em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.5em;
+            }
+
+            .content h2 {
+                font-size: 1.3em;
+            }
+
+            .content h3 {
+                font-size: 1.1em;
+            }
+
+            .content p, .content li {
+                font-size: 0.95em;
+            }
+
+            .btn-nav {
+                padding: 10px 18px;
+                font-size: 0.9em;
+            }
+
+            table {
+                font-size: 0.75em;
+            }
+
+            .info-box, .example-box, .key-points {
+                padding: 15px;
+            }
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header, .content, .nav-bar {
+            animation: fadeIn 0.6s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation -->
+        <div class="nav-bar">
+            <div class="nav-title">📖 Materi 1: Ciri-Ciri Makhluk Hidup</div>
+            <div class="nav-buttons">
+                <a href="kisi-kisi-tkad-ipa.html" class="btn-nav btn-home">
+                    🏠 Kembali ke Menu
+                </a>
+                <a href="Lat1.html" class="btn-nav btn-practice">
+                    ✏️ Latihan Soal
+                </a>
+            </div>
+        </div>
+
+        <!-- Header -->
+        <div class="header">
+            <h1>🌱 Ciri-Ciri Makhluk Hidup</h1>
+            <div class="meta">
+                <div class="meta-item">
+                    <span class="icon">📚</span>
+                    <span>Kelas 7</span>
+                </div>
+                <div class="meta-item">
+                    <span class="icon">🎯</span>
+                    <span>Level Kognitif: L3 (Penalaran)</span>
+                </div>
+                <div class="meta-item">
+                    <span class="icon">📝</span>
+                    <span>Bentuk Soal: Pilihan Ganda Kompleks</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <h2>🎯 Tujuan Pembelajaran</h2>
+            <p>Setelah mempelajari materi ini, peserta didik diharapkan mampu:</p>
+            <ul>
+                <li>Mengidentifikasi ciri-ciri makhluk hidup melalui pengamatan</li>
+                <li>Membedakan makhluk hidup dengan benda mati berdasarkan ciri-cirinya</li>
+                <li>Menganalisis data hasil pengamatan untuk menentukan suatu objek termasuk makhluk hidup atau benda mati</li>
+                <li>Menjelaskan setiap ciri makhluk hidup dengan contoh konkret</li>
+            </ul>
+
+            <h2>📖 Materi Pembelajaran</h2>
+            
+            <h3>A. Pengertian Makhluk Hidup</h3>
+            <p>
+                Makhluk hidup adalah organisme yang memiliki ciri-ciri kehidupan tertentu yang membedakannya dari benda mati. 
+                Makhluk hidup meliputi manusia, hewan, tumbuhan, jamur, dan mikroorganisme seperti bakteri dan protozoa. 
+                Semua makhluk hidup memiliki karakteristik khusus yang dapat diamati dan diidentifikasi.
+            </p>
+
+            <div class="info-box">
+                <h4>💡 Tahukah Kamu?</h4>
+                <p>
+                    Virus merupakan organisme yang unik karena menunjukkan ciri hidup hanya ketika berada di dalam sel inang. 
+                    Di luar sel inang, virus tidak menunjukkan ciri-ciri kehidupan sehingga para ilmuwan masih memperdebatkan 
+                    apakah virus termasuk makhluk hidup atau benda mati.
+                </p>
+            </div>
+
+            <h3>B. Ciri-Ciri Makhluk Hidup</h3>
+            <p>Ada 8 ciri utama yang dimiliki oleh makhluk hidup. Mari kita pelajari satu per satu dengan detail:</p>
+
+            <h3>1. Bernapas (Respirasi) 🫁</h3>
+            <p>
+                <strong>Bernapas</strong> adalah proses pengambilan oksigen (O₂) dan pengeluaran karbon dioksida (CO₂) 
+                untuk menghasilkan energi. Proses ini terjadi di dalam sel dan disebut respirasi seluler.
+            </p>
+            <p><strong>Contoh:</strong></p>
+            <ul>
+                <li><strong>Manusia dan mamalia:</strong> bernapas menggunakan paru-paru</li>
+                <li><strong>Ikan:</strong> bernapas menggunakan insang</li>
+                <li><strong>Serangga:</strong> bernapas menggunakan trakea (sistem saluran udara)</li>
+                <li><strong>Tumbuhan:</strong> bernapas melalui stomata (mulut daun) dan lentisel (celah di batang)</li>
+                <li><strong>Cacing:</strong> bernapas melalui permukaan kulit</li>
+            </ul>
+
+            <h3>2. Bergerak 🏃</h3>
+            <p>
+                <strong>Bergerak</strong> adalah kemampuan berpindah tempat atau mengubah posisi tubuh. Gerakan dapat 
+                bersifat aktif (perpindahan tempat) atau pasif (perubahan posisi).
+            </p>
+            <p><strong>Contoh:</strong></p>
+            <ul>
+                <li><strong>Manusia dan hewan:</strong> bergerak dengan berpindah tempat (berjalan, berlari, berenang, terbang)</li>
+                <li><strong>Tumbuhan:</strong> bergerak secara pasif
+                    <ul>
+                        <li>Gerak tropisme: akar tumbuh ke bawah (geotropisme), batang tumbuh ke arah cahaya (fototropisme)</li>
+                        <li>Gerak nasti: menutupnya daun putri malu saat disentuh</li>
+                        <li>Gerak taksis: gerak kloroplas mendekati cahaya</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h3>3. Memerlukan Makanan (Nutrisi) 🍽️</h3>
+            <p>
+                <strong>Nutrisi</strong> adalah proses mendapatkan dan mengolah makanan untuk energi, pertumbuhan, 
+                dan pemeliharaan tubuh.
+            </p>
+            <p><strong>Berdasarkan cara memperoleh makanan:</strong></p>
+            <ul>
+                <li><strong>Autotrof:</strong> dapat membuat makanan sendiri (tumbuhan hijau melalui fotosintesis)</li>
+                <li><strong>Heterotrof:</strong> tidak dapat membuat makanan sendiri, harus mendapatkan dari organisme lain (manusia, hewan)</li>
+            </ul>
+
+            <h3>4. Tumbuh dan Berkembang 📈</h3>
+            <p>
+                <strong>Tumbuh</strong> adalah bertambahnya ukuran dan massa tubuh yang bersifat irreversibel (tidak dapat kembali). 
+                <strong>Berkembang</strong> adalah proses menuju kedewasaan dengan munculnya fungsi-fungsi baru.
+            </p>
+            <p><strong>Contoh:</strong></p>
+            <ul>
+                <li><strong>Manusia:</strong> bayi → anak-anak → remaja → dewasa → tua</li>
+                <li><strong>Tumbuhan:</strong> biji → kecambah → tumbuhan muda → tumbuhan dewasa → berbunga dan berbuah</li>
+                <li><strong>Kupu-kupu:</strong> telur → larva (ulat) → pupa (kepompong) → kupu-kupu dewasa (metamorfosis sempurna)</li>
+            </ul>
+
+            <h3>5. Berkembang Biak (Reproduksi) 👶</h3>
+            <p>
+                <strong>Reproduksi</strong> adalah proses menghasilkan keturunan untuk menjaga kelestarian spesies. 
+                Ada dua cara reproduksi:
+            </p>
+            <ul>
+                <li><strong>Reproduksi seksual (generatif):</strong> memerlukan sel kelamin jantan dan betina
+                    <ul>
+                        <li>Contoh: perkawinan pada manusia dan hewan, penyerbukan pada tumbuhan berbunga</li>
+                    </ul>
+                </li>
+                <li><strong>Reproduksi aseksual (vegetatif):</strong> tidak memerlukan sel kelamin
+                    <ul>
+                        <li>Contoh: pembelahan biner pada bakteri, spora pada jamur, tunas pada Hydra, umbi pada kentang</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h3>6. Mengeluarkan Zat Sisa (Ekskresi) 💧</h3>
+            <p>
+                <strong>Ekskresi</strong> adalah proses pengeluaran zat-zat sisa metabolisme yang tidak diperlukan 
+                dan dapat membahayakan tubuh jika terakumulasi.
+            </p>
+            <p><strong>Contoh:</strong></p>
+            <ul>
+                <li><strong>Manusia:</strong> urin melalui ginjal, keringat melalui kulit, CO₂ melalui paru-paru</li>
+                <li><strong>Tumbuhan:</strong> O₂ (malam hari), air berlebih melalui gutasi dan transpirasi, getah</li>
+                <li><strong>Serangga:</strong> zat sisa melalui tubulus Malpighi</li>
+            </ul>
+
+            <h3>7. Peka terhadap Rangsang (Iritabilitas) 👂</h3>
+            <p>
+                <strong>Iritabilitas</strong> adalah kemampuan menanggapi rangsangan (stimulus) dari lingkungan. 
+                Rangsang dapat berupa cahaya, suara, sentuhan, bau, suhu, dan lain-lain.
+            </p>
+            <p><strong>Contoh:</strong></p>
+            <ul>
+                <li><strong>Manusia:</strong> mata melihat cahaya, telinga mendengar suara, kulit merasakan panas/dingin</li>
+                <li><strong>Hewan:</strong> kucing merespons gerakan tikus, anjing mencium bau makanan</li>
+                <li><strong>Tumbuhan:</strong> bunga matahari mengikuti arah matahari, putri malu menutup daunnya saat disentuh</li>
+            </ul>
+
+            <h3>8. Beradaptasi dengan Lingkungan 🌍</h3>
+            <p>
+                <strong>Adaptasi</strong> adalah penyesuaian diri makhluk hidup terhadap lingkungannya agar dapat bertahan hidup. 
+                Ada tiga jenis adaptasi:
+            </p>
+            <ul>
+                <li><strong>Adaptasi morfologi:</strong> penyesuaian bentuk tubuh
+                    <ul>
+                        <li>Contoh: paruh burung elang bengkok untuk merobek daging, kaktus berdaun duri untuk mengurangi penguapan</li>
+                    </ul>
+                </li>
+                <li><strong>Adaptasi fisiologi:</strong> penyesuaian fungsi organ tubuh
+                    <ul>
+                        <li>Contoh: unta dapat menyimpan air dalam punuknya, ular menghasilkan bisa untuk melumpuhkan mangsa</li>
+                    </ul>
+                </li>
+                <li><strong>Adaptasi tingkah laku:</strong> penyesuaian perilaku
+                    <ul>
+                        <li>Contoh: burung bermigrasi saat musim dingin, kadal berjemur di pagi hari untuk menghangatkan tubuh</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h2>📊 Tabel Perbandingan Ciri Makhluk Hidup dan Benda Mati</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Ciri-Ciri</th>
+                        <th>Makhluk Hidup</th>
+                        <th>Benda Mati</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Respirasi</td>
+                        <td>✓ Bernapas untuk menghasilkan energi</td>
+                        <td>✗ Tidak bernapas</td>
+                    </tr>
+                    <tr>
+                        <td>Gerak</td>
+                        <td>✓ Dapat bergerak aktif atau pasif</td>
+                        <td>✗ Hanya bergerak jika digerakkan</td>
+                    </tr>
+                    <tr>
+                        <td>Nutrisi</td>
+                        <td>✓ Memerlukan makanan</td>
+                        <td>✗ Tidak memerlukan makanan</td>
+                    </tr>
+                    <tr>
+                        <td>Tumbuh & Berkembang</td>
+                        <td>✓ Mengalami pertumbuhan dan perkembangan</td>
+                        <td>✗ Tidak tumbuh dan berkembang</td>
+                    </tr>
+                    <tr>
+                        <td>Reproduksi</td>
+                        <td>✓ Dapat berkembang biak</td>
+                        <td>✗ Tidak berkembang biak</td>
+                    </tr>
+                    <tr>
+                        <td>Ekskresi</td>
+                        <td>✓ Mengeluarkan zat sisa</td>
+                        <td>✗ Tidak mengeluarkan zat sisa</td>
+                    </tr>
+                    <tr>
+                        <td>Iritabilitas</td>
+                        <td>✓ Peka terhadap rangsang</td>
+                        <td>✗ Tidak peka terhadap rangsang</td>
+                    </tr>
+                    <tr>
+                        <td>Adaptasi</td>
+                        <td>✓ Dapat beradaptasi dengan lingkungan</td>
+                        <td>✗ Tidak beradaptasi</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="key-points">
+                <h4>🎯 Poin-Poin Penting</h4>
+                <ul>
+                    <li>Makhluk hidup memiliki 8 ciri utama yang membedakannya dari benda mati</li>
+                    <li>Semua ciri harus ada pada makhluk hidup, meskipun cara menunjukkannya berbeda-beda</li>
+                    <li>Tumbuhan juga memiliki semua ciri makhluk hidup meskipun gerakannya tidak terlihat jelas</li>
+                    <li>Respirasi adalah proses penghasilan energi, berbeda dengan pernapasan (pertukaran gas)</li>
+                    <li>Pertumbuhan bersifat irreversibel (tidak dapat kembali), berbeda dengan perkembangan</li>
+                    <li>Adaptasi membantu makhluk hidup untuk bertahan hidup di lingkungannya</li>
+                </ul>
+            </div>
+
+            <h2>📝 Contoh Soal dan Pembahasan</h2>
+
+            <div class="example-box">
+                <h4>📌 Contoh Soal 1</h4>
+                <div class="question">
+                    <p class="question-text">
+                        Perhatikan tabel hasil pengamatan terhadap beberapa objek berikut!
+                    </p>
+                    
+                    <table style="margin: 20px 0;">
+                        <thead>
+                            <tr>
+                                <th>Objek</th>
+                                <th>Ciri yang Diamati</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>A. Robot</td>
+                                <td>Dapat bergerak, memerlukan energi (baterai)</td>
+                            </tr>
+                            <tr>
+                                <td>B. Mobil</td>
+                                <td>Dapat bergerak, mengeluarkan asap (CO₂)</td>
+                            </tr>
+                            <tr>
+                                <td>C. Tumbuhan Putri Malu</td>
+                                <td>Daun menutup saat disentuh, tumbuh makin tinggi</td>
+                            </tr>
+                            <tr>
+                                <td>D. Api</td>
+                                <td>Bergerak, memerlukan oksigen, mengeluarkan CO₂</td>
+                            </tr>
+                            <tr>
+                                <td>E. Bakteri</td>
+                                <td>Dapat berkembang biak, bergerak, memerlukan nutrisi</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p class="question-text">
+                        Berdasarkan data tersebut, pilih lebih dari satu pernyataan yang benar mengenai ciri makhluk hidup!
+                    </p>
+
+                    <div class="options">
+                        <div class="option">A. Robot termasuk makhluk hidup karena dapat bergerak dan memerlukan energi</div>
+                        <div class="option">B. Mobil termasuk makhluk hidup karena dapat bergerak dan mengeluarkan CO₂</div>
+                        <div class="option correct">C. Putri malu termasuk makhluk hidup karena peka terhadap rangsang dan mengalami pertumbuhan</div>
+                        <div class="option">D. Api termasuk makhluk hidup karena bergerak, memerlukan oksigen, dan mengeluarkan CO₂</div>
+                        <div class="option correct">E. Bakteri termasuk makhluk hidup karena dapat berkembang biak, bergerak, dan memerlukan nutrisi</div>
+                    </div>
+
+                    <div class="explanation">
+                        <h5>💡 Pembahasan:</h5>
+                        <p><strong>Jawaban yang benar: C dan E</strong></p>
+                        <p><strong>Analisis setiap pilihan:</strong></p>
+                        <ul>
+                            <li><strong>A. SALAH</strong> - Robot dapat bergerak dan memerlukan energi, tetapi energi yang digunakan adalah energi listrik/baterai, bukan dari proses respirasi. Robot juga tidak memiliki ciri makhluk hidup lainnya seperti berkembang biak, tumbuh, atau peka terhadap rangsang secara biologis.</li>
+                            
+                            <li><strong>B. SALAH</strong> - Mobil dapat bergerak dan mengeluarkan CO₂ dari pembakaran bahan bakar, namun ini bukan proses respirasi seluler. Mobil tidak tumbuh, tidak berkembang biak, dan tidak memiliki ciri-ciri makhluk hidup lainnya.</li>
+                            
+                            <li><strong>C. BENAR</strong> - Putri malu menunjukkan ciri makhluk hidup:
+                                <ul>
+                                    <li>Peka terhadap rangsang (iritabilitas): daun menutup saat disentuh</li>
+                                    <li>Tumbuh: bertambah tinggi menunjukkan pertumbuhan</li>
+                                    <li>Selain itu, putri malu juga bernapas, memerlukan nutrisi (fotosintesis), berkembang biak, mengeluarkan zat sisa, dan beradaptasi</li>
+                                </ul>
+                            </li>
+                            
+                            <li><strong>D. SALAH</strong> - Api memang bergerak, memerlukan oksigen, dan mengeluarkan CO₂, tetapi ini adalah proses pembakaran kimia, bukan proses biologis. Api tidak tumbuh, tidak berkembang biak, tidak memerlukan nutrisi, dan tidak peka terhadap rangsang seperti makhluk hidup.</li>
+                            
+                            <li><strong>E. BENAR</strong> - Bakteri adalah makhluk hidup (mikroorganisme) yang memiliki semua ciri makhluk hidup:
+                                <ul>
+                                    <li>Berkembang biak: melalui pembelahan biner</li>
+                                    <li>Bergerak: menggunakan flagela (cambuk)</li>
+                                    <li>Memerlukan nutrisi: untuk pertumbuhan dan energi</li>
+                                    <li>Juga bernapas, tumbuh, mengeluarkan zat sisa, peka terhadap rangsang, dan beradaptasi</li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <p><strong>Kesimpulan:</strong> Untuk menentukan apakah suatu objek adalah makhluk hidup, kita harus menganalisis apakah objek tersebut memiliki SEMUA ciri makhluk hidup, bukan hanya satu atau dua ciri saja.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <h4>📌 Contoh Soal 2</h4>
+                <div class="question">
+                    <p class="question-text">
+                        Seorang siswa melakukan pengamatan terhadap beberapa objek di lingkungan sekolah. 
+                        Hasil pengamatannya dicatat dalam tabel berikut:
+                    </p>
+                    
+                    <table style="margin: 20px 0;">
+                        <thead>
+                            <tr>
+                                <th>Objek</th>
+                                <th>Ciri-Ciri yang Diamati</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>P. Jamur yang tumbuh di pohon</td>
+                                <td>Bertambah besar, berkembang biak dengan spora, tidak berpindah tempat</td>
+                            </tr>
+                            <tr>
+                                <td>Q. Kristal garam di air laut</td>
+                                <td>Bertambah besar ukurannya, keras, tidak bergerak</td>
+                            </tr>
+                            <tr>
+                                <td>R. Biji kacang hijau</td>
+                                <td>Tumbuh menjadi kecambah, akar tumbuh ke bawah, batang tumbuh ke atas</td>
+                            </tr>
+                            <tr>
+                                <td>S. Awan di langit</td>
+                                <td>Bergerak, berubah bentuk, dapat mengeluarkan air (hujan)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p class="question-text">
+                        Manakah pernyataan yang benar mengenai objek-objek tersebut? (Pilih lebih dari satu jawaban yang benar)
+                    </p>
+
+                    <div class="options">
+                        <div class="option correct">A. Jamur (P) adalah makhluk hidup karena dapat berkembang biak dan mengalami pertumbuhan</div>
+                        <div class="option">B. Kristal garam (Q) adalah makhluk hidup karena dapat bertambah besar</div>
+                        <div class="option correct">C. Kecambah (R) menunjukkan ciri gerak pada tumbuhan melalui geotropisme dan fototropisme</div>
+                        <div class="option">D. Awan (S) adalah makhluk hidup karena dapat bergerak dan mengeluarkan air</div>
+                        <div class="option correct">E. Hanya objek P dan R yang termasuk makhluk hidup</div>
+                    </div>
+
+                    <div class="explanation">
+                        <h5>💡 Pembahasan:</h5>
+                        <p><strong>Jawaban yang benar: A, C, dan E</strong></p>
+                        <p><strong>Analisis setiap pilihan:</strong></p>
+                        <ul>
+                            <li><strong>A. BENAR</strong> - Jamur adalah makhluk hidup (Kingdom Fungi) yang memiliki semua ciri makhluk hidup:
+                                <ul>
+                                    <li>Tumbuh: bertambah besar ukurannya</li>
+                                    <li>Berkembang biak: dengan spora (reproduksi aseksual)</li>
+                                    <li>Bernapas: melakukan respirasi seluler</li>
+                                    <li>Memerlukan nutrisi: menguraikan bahan organik</li>
+                                    <li>Meskipun tidak berpindah tempat, jamur tetap dapat bergerak (pertumbuhan hifa)</li>
+                                </ul>
+                            </li>
+                            
+                            <li><strong>B. SALAH</strong> - Kristal garam yang bertambah besar bukan merupakan pertumbuhan biologis, melainkan kristalisasi (proses fisika-kimia). Kristal garam:
+                                <ul>
+                                    <li>Tidak bernapas</li>
+                                    <li>Tidak berkembang biak</li>
+                                    <li>Tidak memerlukan nutrisi</li>
+                                    <li>Tidak peka terhadap rangsang</li>
+                                    <li>Tidak mengeluarkan zat sisa</li>
+                                </ul>
+                            </li>
+                            
+                            <li><strong>C. BENAR</strong> - Kecambah kacang hijau menunjukkan gerak pada tumbuhan:
+                                <ul>
+                                    <li><strong>Geotropisme positif:</strong> akar tumbuh ke bawah (mengikuti gravitasi)</li>
+                                    <li><strong>Geotropisme negatif/Fototropisme positif:</strong> batang tumbuh ke atas (menjauhi gravitasi/mendekati cahaya)</li>
+                                    <li>Ini membuktikan bahwa tumbuhan memiliki ciri bergerak meskipun tidak berpindah tempat</li>
+                                </ul>
+                            </li>
+                            
+                            <li><strong>D. SALAH</strong> - Awan bukan makhluk hidup. Gerakan awan disebabkan oleh angin, bukan gerakan aktif. Perubahan bentuk dan pengeluaran air (hujan) adalah proses fisika (kondensasi dan presipitasi), bukan proses biologis. Awan tidak memiliki ciri-ciri makhluk hidup lainnya.</li>
+                            
+                            <li><strong>E. BENAR</strong> - Kesimpulan yang tepat:
+                                <ul>
+                                    <li><strong>P (Jamur):</strong> Makhluk hidup ✓</li>
+                                    <li><strong>Q (Kristal garam):</strong> Benda mati ✗</li>
+                                    <li><strong>R (Kecambah):</strong> Makhluk hidup ✓</li>
+                                    <li><strong>S (Awan):</strong> Benda mati ✗</li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <p><strong>Pelajaran penting:</strong> Beberapa benda mati mungkin menunjukkan satu atau dua karakteristik yang mirip dengan makhluk hidup (misalnya kristal yang "tumbuh" atau api yang "bergerak"), tetapi mereka tidak memiliki SEMUA ciri makhluk hidup yang diperlukan.</p>
+                    </div>
+                </div>
+            </div>
+
+            <h2>🎓 Rangkuman</h2>
+            <div class="info-box">
+                <ol>
+                    <li><strong>Makhluk hidup</strong> memiliki 8 ciri utama: bernapas, bergerak, memerlukan makanan, tumbuh dan berkembang, berkembang biak, mengeluarkan zat sisa, peka terhadap rangsang, dan beradaptasi.</li>
+                    
+                    <li><strong>Semua ciri harus ada</strong> pada suatu organisme untuk dikategorikan sebagai makhluk hidup, meskipun cara menunjukkan ciri tersebut berbeda-beda.</li>
+                    
+                    <li><strong>Benda mati</strong> mungkin menunjukkan satu atau beberapa karakteristik yang mirip makhluk hidup (seperti robot yang bergerak atau api yang "bernapas"), tetapi tidak memiliki semua ciri makhluk hidup.</li>
+                    
+                    <li><strong>Tumbuhan</strong> memiliki semua ciri makhluk hidup meskipun gerakannya tidak sejelas hewan (gerak tropisme, nasti, taksis).</li>
+                    
+                    <li><strong>Mikroorganisme</strong> seperti bakteri dan jamur juga termasuk makhluk hidup karena memiliki semua ciri kehidupan.</li>
+                    
+                    <li>Untuk menganalisis apakah suatu objek adalah makhluk hidup, kita harus <strong>mengidentifikasi semua ciri</strong> yang dimilikinya, bukan hanya satu atau dua ciri saja.</li>
+                </ol>
+            </div>
+
+            <div class="key-points">
+                <h4>💪 Tips Mengerjakan Soal</h4>
+                <ul>
+                    <li>Baca dengan teliti data/tabel yang disajikan dalam soal</li>
+                    <li>Identifikasi ciri-ciri yang disebutkan untuk setiap objek</li>
+                    <li>Bandingkan dengan 8 ciri makhluk hidup yang sudah dipelajari</li>
+                    <li>Hati-hati dengan "jebakan" - beberapa benda mati mungkin menunjukkan ciri mirip makhluk hidup</li>
+                    <li>Ingat: SEMUA ciri harus ada, bukan hanya sebagian</li>
+                    <li>Pada soal pilihan ganda kompleks, bisa ada lebih dari satu jawaban benar</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Navigation Bottom -->
+        <div class="nav-bar">
+            <div class="nav-buttons" style="width: 100%; justify-content: space-between;">
+                <a href="kisi-kisi-tkad-ipa.html" class="btn-nav btn-home">
+                    🏠 Kembali ke Menu
+                </a>
+                <a href="Lat1.html" class="btn-nav btn-practice">
+                    Lanjut ke Latihan Soal ✏️
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
