@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Materi 18: Pesawat Sederhana - Bidang Miring</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&family=Fira+Code:wght@400;500&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #059669;
+            --secondary: #0891b2;
+            --accent: #f59e0b;
+            --dark: #0f172a;
+            --light: #f8fafc;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: linear-gradient(135deg, #0f766e 0%, #0e7490 100%);
+            color: var(--dark);
+            line-height: 1.8;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .nav-bar {
+            background: white;
+            border-radius: 16px;
+            padding: 20px 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .nav-title {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn-nav {
+            padding: 12px 24px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95em;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-home {
+            background: linear-gradient(135deg, #64748b, #475569);
+            color: white;
+            box-shadow: 0 4px 12px rgba(100, 116, 139, 0.3);
+        }
+
+        .btn-home:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(100, 116, 139, 0.4);
+        }
+
+        .btn-practice {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+        }
+
+        .btn-practice:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4);
+        }
+
+        .header {
+            background: white;
+            border-radius: 20px;
+            padding: 50px 60px;
+            margin-bottom: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+        }
+
+        .header h1 {
+            font-size: 2.8em;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        .header .meta {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.95em;
+            color: #64748b;
+        }
+
+        .meta-item .icon {
+            font-size: 1.3em;
+        }
+
+        .content {
+            background: white;
+            border-radius: 20px;
+            padding: 50px 60px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .content h2 {
+            font-size: 2em;
+            font-weight: 700;
+            color: var(--primary);
+            margin-top: 40px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid var(--primary);
+        }
+
+        .content h2:first-child {
+            margin-top: 0;
+        }
+
+        .content h3 {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+
+        .content p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .content ul, .content ol {
+            margin: 15px 0 15px 30px;
+        }
+
+        .content li {
+            margin-bottom: 10px;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #e0f2fe 0%, #dbeafe 100%);
+            border-left: 5px solid var(--secondary);
+            padding: 25px 30px;
+            border-radius: 12px;
+            margin: 25px 0;
+        }
+
+        .info-box h4 {
+            color: var(--secondary);
+            font-size: 1.2em;
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-left: 5px solid var(--accent);
+            padding: 25px 30px;
+            border-radius: 12px;
+            margin: 25px 0;
+        }
+
+        .warning-box h4 {
+            color: #d97706;
+            font-size: 1.2em;
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .success-box {
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+            border-left: 5px solid #059669;
+            padding: 25px 30px;
+            border-radius: 12px;
+            margin: 25px 0;
+        }
+
+        .success-box h4 {
+            color: #059669;
+            font-size: 1.2em;
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .formula-box {
+            background: linear-gradient(135deg, #fce7f3, #fbcfe8);
+            border-left: 5px solid #ec4899;
+            padding: 25px 30px;
+            border-radius: 12px;
+            margin: 25px 0;
+        }
+
+        .formula-box h4 {
+            color: #ec4899;
+            font-size: 1.2em;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .formula {
+            font-family: 'Fira Code', monospace;
+            background: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin: 10px 0;
+            font-size: 1.1em;
+            text-align: center;
+            border: 2px solid #ec4899;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        thead {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        th {
+            padding: 18px 20px;
+            text-align: left;
+            font-weight: 700;
+            font-size: 1em;
+        }
+
+        td {
+            padding: 15px 20px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .diagram-box {
+            background: #f8fafc;
+            border-radius: 16px;
+            padding: 30px;
+            margin: 30px 0;
+            border: 2px solid #e2e8f0;
+            text-align: center;
+        }
+
+        .diagram-placeholder {
+            background: white;
+            border-radius: 12px;
+            padding: 40px 30px;
+            margin: 20px 0;
+            border: 2px dashed var(--secondary);
+        }
+
+        .example-box {
+            background: #f8fafc;
+            border-radius: 16px;
+            padding: 30px;
+            margin: 30px 0;
+            border: 2px solid #e2e8f0;
+        }
+
+        .example-box h4 {
+            color: var(--primary);
+            font-size: 1.3em;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .question {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin: 20px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .question-text {
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+
+        .options {
+            margin: 20px 0;
+        }
+
+        .option {
+            background: #f8fafc;
+            padding: 15px 20px;
+            margin: 12px 0;
+            border-radius: 10px;
+            border: 2px solid #e2e8f0;
+        }
+
+        .option.correct {
+            background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+            border-color: #059669;
+        }
+
+        .explanation {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            padding: 25px;
+            border-radius: 12px;
+            margin-top: 25px;
+            border-left: 5px solid var(--accent);
+        }
+
+        .explanation h5 {
+            color: #d97706;
+            font-size: 1.1em;
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .key-points {
+            background: linear-gradient(135deg, #fce7f3, #fbcfe8);
+            border-left: 5px solid #ec4899;
+            padding: 25px 30px;
+            border-radius: 12px;
+            margin: 25px 0;
+        }
+
+        .key-points h4 {
+            color: #ec4899;
+            font-size: 1.2em;
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 15px;
+            }
+
+            .header, .content {
+                padding: 30px 25px;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .content h2 {
+                font-size: 1.6em;
+            }
+
+            .content h3 {
+                font-size: 1.3em;
+            }
+
+            table {
+                font-size: 0.9em;
+            }
+
+            th, td {
+                padding: 12px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav-bar">
+            <div class="nav-title">📚 Materi 18: Pesawat Sederhana - Bidang Miring</div>
+            <div class="nav-buttons">
+                <a href="kisi-kisi-tkad-ipa.html" class="btn-nav btn-home">🏠 Menu Utama</a>
+                <a href="Lat18.html" class="btn-nav btn-practice">✏️ Latihan Soal</a>
+            </div>
+        </div>
+
+        <div class="header">
+            <h1>⚙️ Pesawat Sederhana: Bidang Miring</h1>
+            <div class="meta">
+                <div class="meta-item">
+                    <span class="icon">📖</span>
+                    <span>Kelas VIII</span>
+                </div>
+                <div class="meta-item">
+                    <span class="icon">🎯</span>
+                    <span>Fase D</span>
+                </div>
+                <div class="meta-item">
+                    <span class="icon">⏱️</span>
+                    <span>Level Kognitif: L3</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="content">
+            <h2>🔧 Pengertian Pesawat Sederhana</h2>
+            
+            <p><strong>Pesawat sederhana</strong> adalah alat yang dapat mempermudah pekerjaan manusia. Pesawat sederhana bekerja dengan mengubah arah atau besar gaya yang diberikan untuk melakukan suatu usaha.</p>
+
+            <div class="info-box">
+                <h4>💡 Tujuan Pesawat Sederhana</h4>
+                <ul>
+                    <li><strong>Mengubah arah gaya:</strong> Memudahkan dalam menerapkan gaya (contoh: katrol)</li>
+                    <li><strong>Memperbesar gaya:</strong> Menggunakan gaya kecil untuk menghasilkan gaya besar (contoh: tuas, bidang miring)</li>
+                    <li><strong>Menempuh jarak lebih jauh:</strong> Dengan gaya yang sama (contoh: roda)</li>
+                </ul>
+            </div>
+
+            <h2>📐 Bidang Miring</h2>
+
+            <p><strong>Bidang miring</strong> adalah permukaan datar yang membentuk sudut tertentu terhadap permukaan horizontal. Bidang miring memudahkan pekerjaan dengan cara mengubah gaya besar menjadi gaya yang lebih kecil, tetapi dengan jarak yang lebih panjang.</p>
+
+            <div class="diagram-box">
+                <h3 style="color: var(--primary); margin-bottom: 20px;">🔺 Ilustrasi Bidang Miring</h3>
+                <div class="diagram-placeholder">
+                    <p style="color: #64748b; line-height: 2; text-align: left;">
+                        <strong>Komponen Bidang Miring:</strong><br><br>
+                        
+                        📏 <strong>Panjang Bidang Miring (s):</strong> Jarak yang ditempuh beban di sepanjang bidang miring<br>
+                        📐 <strong>Tinggi Bidang (h):</strong> Ketinggian vertikal yang harus dicapai beban<br>
+                        ⚖️ <strong>Beban (w):</strong> Berat benda yang akan dipindahkan (w = m × g)<br>
+                        💪 <strong>Gaya (F):</strong> Gaya yang diperlukan untuk mendorong beban di bidang miring<br><br>
+                        
+                        <strong>Prinsip:</strong> Semakin landai bidang miring (s semakin panjang), semakin kecil gaya yang diperlukan!
+                    </p>
+                </div>
+            </div>
+
+            <h2>📊 Keuntungan Mekanis (KM)</h2>
+
+            <p><strong>Keuntungan Mekanis (KM)</strong> adalah perbandingan antara gaya beban dengan gaya kuasa yang diberikan. KM menunjukkan seberapa besar pesawat sederhana dapat memperbesar gaya.</p>
+
+            <div class="formula-box">
+                <h4>🧮 Rumus Keuntungan Mekanis Bidang Miring</h4>
+                
+                <div class="formula">
+                    KM = w / F = s / h
+                </div>
+                
+                <p style="margin-top: 15px;"><strong>Keterangan:</strong></p>
+                <ul>
+                    <li><strong>KM</strong> = Keuntungan Mekanis (tidak ada satuan)</li>
+                    <li><strong>w</strong> = Berat beban (N)</li>
+                    <li><strong>F</strong> = Gaya yang diperlukan (N)</li>
+                    <li><strong>s</strong> = Panjang bidang miring (m)</li>
+                    <li><strong>h</strong> = Tinggi bidang miring (m)</li>
+                </ul>
+                
+                <div class="success-box" style="margin-top: 20px;">
+                    <h4>✨ Interpretasi Nilai KM</h4>
+                    <ul>
+                        <li><strong>KM > 1:</strong> Ada keuntungan! Gaya yang diperlukan lebih kecil dari berat beban</li>
+                        <li><strong>KM = 1:</strong> Tidak ada keuntungan, gaya sama dengan berat beban</li>
+                        <li><strong>KM < 1:</strong> Tidak menguntungkan, gaya lebih besar dari berat beban</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>Contoh Perhitungan KM:</h3>
+
+            <div class="info-box">
+                <h4>📝 Contoh Soal KM</h4>
+                <p><strong>Soal:</strong> Sebuah bidang miring memiliki panjang 6 meter dan tinggi 2 meter. Berapa keuntungan mekanisnya?</p>
+                
+                <p style="margin-top: 15px;"><strong>Penyelesaian:</strong></p>
+                <p>Diketahui: s = 6 m, h = 2 m</p>
+                <p>KM = s / h = 6 / 2 = <strong>3</strong></p>
+                
+                <p style="margin-top: 15px;"><strong>Artinya:</strong> Menggunakan bidang miring ini, gaya yang diperlukan hanya 1/3 dari berat beban. Jika beban 300 N, gaya yang diperlukan hanya 100 N!</p>
+            </div>
+
+            <h2>⚡ Efisiensi Bidang Miring</h2>
+
+            <p><strong>Efisiensi</strong> adalah perbandingan antara usaha keluaran dengan usaha masukan, dinyatakan dalam persen. Efisiensi menunjukkan seberapa efektif pesawat sederhana bekerja (memperhitungkan energi yang terbuang karena gesekan).</p>
+
+            <div class="formula-box">
+                <h4>🧮 Rumus Efisiensi</h4>
+                
+                <div class="formula">
+                    η (eta) = (Usaha Keluaran / Usaha Masukan) × 100%
+                </div>
+                
+                <div class="formula" style="margin-top: 10px;">
+                    η = (w × h / F × s) × 100%
+                </div>
+                
+                <p style="margin-top: 15px;"><strong>Keterangan:</strong></p>
+                <ul>
+                    <li><strong>η (eta)</strong> = Efisiensi (%)</li>
+                    <li><strong>Usaha Keluaran</strong> = w × h (usaha untuk mengangkat beban)</li>
+                    <li><strong>Usaha Masukan</strong> = F × s (usaha yang diberikan pada bidang miring)</li>
+                </ul>
+                
+                <div class="warning-box" style="margin-top: 20px;">
+                    <h4>⚠️ Penting!</h4>
+                    <ul>
+                        <li><strong>Efisiensi ideal = 100%</strong> (tidak ada gesekan)</li>
+                        <li><strong>Efisiensi riil < 100%</strong> (selalu ada gesekan/kehilangan energi)</li>
+                        <li>Semakin licin permukaan, semakin tinggi efisiensi</li>
+                        <li>Efisiensi TIDAK PERNAH > 100% (melanggar hukum kekekalan energi!)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>Hubungan KM dan Efisiensi:</h3>
+
+            <div class="info-box">
+                <h4>🔗 Hubungan KM dengan Efisiensi</h4>
+                <ul>
+                    <li><strong>Jika tidak ada gesekan (ideal):</strong> η = 100%, maka KM = s/h</li>
+                    <li><strong>Jika ada gesekan (riil):</strong> η < 100%, maka KM riil < KM ideal</li>
+                    <li><strong>Rumus:</strong> KM riil = η × KM ideal / 100%</li>
+                </ul>
+            </div>
+
+            <h2>📝 Contoh Soal Lengkap</h2>
+
+            <div class="example-box">
+                <h4>📌 Contoh Soal 1 - Analisis Keuntungan Mekanis</h4>
+                <div class="question">
+                    <p class="question-text">
+                        Perhatikan data tiga bidang miring berikut yang digunakan untuk memindahkan beban yang sama!
+                    </p>
+                    
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Bidang Miring</th>
+                                <th>Panjang (m)</th>
+                                <th>Tinggi (m)</th>
+                                <th>Gaya yang Diperlukan (N)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>A</td>
+                                <td>4</td>
+                                <td>2</td>
+                                <td>150</td>
+                            </tr>
+                            <tr>
+                                <td>B</td>
+                                <td>6</td>
+                                <td>2</td>
+                                <td>100</td>
+                            </tr>
+                            <tr>
+                                <td>C</td>
+                                <td>8</td>
+                                <td>2</td>
+                                <td>75</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p class="question-text">
+                        Manakah pernyataan yang BENAR berdasarkan data di atas? (Pilih lebih dari satu)
+                    </p>
+
+                    <div class="options">
+                        <div class="option correct">A. Bidang miring C memiliki keuntungan mekanis paling besar</div>
+                        <div class="option correct">B. Semakin panjang bidang miring, semakin kecil gaya yang diperlukan</div>
+                        <div class="option correct">C. Keuntungan mekanis bidang miring C adalah 4</div>
+                        <div class="option">D. Bidang miring A paling efisien karena jaraknya paling pendek</div>
+                    </div>
+
+                    <div class="explanation">
+                        <h5>💡 Pembahasan:</h5>
+                        <p><strong>Jawaban yang benar: A, B, dan C</strong></p>
+                        
+                        <p><strong>Perhitungan KM untuk masing-masing:</strong></p>
+                        <ul>
+                            <li><strong>Bidang Miring A:</strong> KM = s/h = 4/2 = 2 (atau KM = w/F = 300/150 = 2)</li>
+                            <li><strong>Bidang Miring B:</strong> KM = s/h = 6/2 = 3 (atau KM = w/F = 300/100 = 3)</li>
+                            <li><strong>Bidang Miring C:</strong> KM = s/h = 8/2 = 4 (atau KM = w/F = 300/75 = 4)</li>
+                        </ul>
+
+                        <p style="margin-top: 15px;"><strong>A. BENAR ✓</strong> Bidang miring C memiliki KM = 4 (paling besar)</p>
+                        
+                        <p style="margin-top: 10px;"><strong>B. BENAR ✓</strong> Data menunjukkan: s naik (4→6→8 m), F turun (150→100→75 N)</p>
+                        
+                        <p style="margin-top: 10px;"><strong>C. BENAR ✓</strong> KM C = 8/2 = 4</p>
+                        
+                        <p style="margin-top: 10px;"><strong>D. SALAH ✗</strong> Efisiensi tidak ditentukan oleh panjang bidang saja, tetapi oleh gesekan. Tanpa data gesekan, kita tidak bisa menentukan yang paling efisien. Malah, bidang yang lebih panjang bisa lebih efisien karena gaya lebih kecil → gesekan lebih kecil!</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <h4>📌 Contoh Soal 2 - Analisis Efisiensi</h4>
+                <div class="question">
+                    <p class="question-text">
+                        Sebuah bidang miring dengan panjang 5 meter dan tinggi 1 meter digunakan untuk memindahkan peti bermassa 60 kg. Gaya yang diperlukan untuk mendorong peti adalah 150 N. (g = 10 m/s²)
+                    </p>
+                    
+                    <p class="question-text">
+                        Hitunglah efisiensi bidang miring tersebut!
+                    </p>
+
+                    <div class="explanation">
+                        <h5>💡 Pembahasan:</h5>
+                        
+                        <p><strong>Diketahui:</strong></p>
+                        <ul>
+                            <li>Panjang bidang miring (s) = 5 m</li>
+                            <li>Tinggi bidang (h) = 1 m</li>
+                            <li>Massa beban (m) = 60 kg</li>
+                            <li>Gaya yang diperlukan (F) = 150 N</li>
+                            <li>g = 10 m/s²</li>
+                        </ul>
+
+                        <p style="margin-top: 15px;"><strong>Ditanya:</strong> Efisiensi (η) = ?</p>
+
+                        <p style="margin-top: 15px;"><strong>Penyelesaian:</strong></p>
+                        
+                        <p><strong>Langkah 1:</strong> Hitung berat beban (w)</p>
+                        <p>w = m × g = 60 × 10 = <strong>600 N</strong></p>
+                        
+                        <p style="margin-top: 10px;"><strong>Langkah 2:</strong> Hitung Usaha Keluaran</p>
+                        <p>Usaha Keluaran = w × h = 600 × 1 = <strong>600 J</strong></p>
+                        
+                        <p style="margin-top: 10px;"><strong>Langkah 3:</strong> Hitung Usaha Masukan</p>
+                        <p>Usaha Masukan = F × s = 150 × 5 = <strong>750 J</strong></p>
+                        
+                        <p style="margin-top: 10px;"><strong>Langkah 4:</strong> Hitung Efisiensi</p>
+                        <p>η = (Usaha Keluaran / Usaha Masukan) × 100%</p>
+                        <p>η = (600 / 750) × 100%</p>
+                        <p>η = 0,8 × 100% = <strong>80%</strong></p>
+
+                        <p style="margin-top: 15px;"><strong>Kesimpulan:</strong></p>
+                        <p>Efisiensi bidang miring adalah 80%, artinya 80% energi digunakan untuk mengangkat beban, sedangkan 20% terbuang karena gesekan!</p>
+                    </div>
+                </div>
+            </div>
+
+            <h2>🎓 Rangkuman</h2>
+            <div class="info-box">
+                <ol>
+                    <li><strong>Bidang miring</strong> adalah pesawat sederhana yang mempermudah pekerjaan dengan mengubah gaya besar menjadi gaya kecil</li>
+                    
+                    <li><strong>Keuntungan Mekanis (KM):</strong>
+                        <ul>
+                            <li>Rumus: KM = w/F = s/h</li>
+                            <li>KM > 1: ada keuntungan (gaya lebih kecil dari beban)</li>
+                            <li>Semakin panjang bidang miring, semakin besar KM</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Efisiensi (η):</strong>
+                        <ul>
+                            <li>Rumus: η = (w × h)/(F × s) × 100%</li>
+                            <li>Efisiensi ideal = 100% (tanpa gesekan)</li>
+                            <li>Efisiensi riil < 100% (ada gesekan)</li>
+                            <li>Efisiensi TIDAK PERNAH > 100%</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Hubungan:</strong> Semakin panjang bidang miring → KM semakin besar → gaya semakin kecil</li>
+                </ol>
+            </div>
+
+            <div class="key-points">
+                <h4>💪 Tips Mengerjakan Soal</h4>
+                <ul>
+                    <li>Identifikasi data yang diberikan: s, h, F, w (atau m dan g)</li>
+                    <li>Untuk menghitung KM: gunakan rumus KM = s/h (paling mudah!)</li>
+                    <li>Untuk menghitung efisiensi: hitung usaha keluaran (w×h) dan usaha masukan (F×s)</li>
+                    <li>Ingat: w = m × g (jangan lupa konversi massa ke berat!)</li>
+                    <li>Efisiensi selalu < 100% karena ada gesekan</li>
+                    <li>Bidang miring lebih panjang = KM lebih besar = gaya lebih kecil</li>
+                </ul>
+            </div>
+
+            <div class="warning-box">
+                <h4>⚠️ Kesalahan Umum yang Harus Dihindari</h4>
+                <ul>
+                    <li><strong>Mengira KM = h/s:</strong> SALAH! Yang benar KM = s/h</li>
+                    <li><strong>Lupa mengalikan m dengan g:</strong> Ingat w = m × g!</li>
+                    <li><strong>Mengira efisiensi bisa > 100%:</strong> TIDAK MUNGKIN! Melanggar hukum kekekalan energi</li>
+                    <li><strong>Salah menghitung usaha:</strong> Usaha = gaya × jarak (bukan gaya + jarak!)</li>
+                    <li><strong>Tertukar antara KM dan efisiensi:</strong> KM tidak ada %, efisiensi ada %</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="nav-bar">
+            <div class="nav-buttons" style="width: 100%; justify-content: space-between;">
+                <a href="kisi-kisi-tkad-ipa.html" class="btn-nav btn-home">
+                    🏠 Kembali ke Menu
+                </a>
+                <a href="Lat18.html" class="btn-nav btn-practice">
+                    Lanjut ke Latihan Soal ✏️
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

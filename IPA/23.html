@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Materi 23: Pewarisan Sifat - Monohibrid</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&family=Fira+Code:wght@400;500&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #059669;
+            --secondary: #0891b2;
+            --accent: #f59e0b;
+            --dark: #0f172a;
+            --light: #f8fafc;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: linear-gradient(135deg, #0f766e 0%, #0e7490 100%);
+            color: var(--dark);
+            line-height: 1.8;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Navigation Bar */
+        .nav-bar {
+            background: white;
+            border-radius: 16px;
+            padding: 20px 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .nav-title {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn-nav {
+            padding: 12px 24px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95em;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-home {
+            background: linear-gradient(135deg, #64748b, #475569);
+            color: white;
+            box-shadow: 0 4px 12px rgba(100, 116, 139, 0.3);
+        }
+
+        .btn-home:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(100, 116, 139, 0.4);
+        }
+
+        .btn-practice {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+        }
+
+        .btn-practice:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4);
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            border-radius: 20px;
+            padding: 50px 60px;
+            margin-bottom: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+        }
+
+        .header h1 {
+            font-size: 2.8em;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        .header .meta {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.95em;
+            color: #64748b;
+        }
+
+        .meta-item .icon {
+            font-size: 1.3em;
+        }
+
+        /* Content Section */
+        .content {
+            background: white;
+            border-radius: 20px;
+            padding: 50px 60px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .content h2 {
+            font-size: 2em;
+            font-weight: 700;
+            color: var(--primary);
+            margin-top: 40px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid var(--primary);
+        }
+
+        .content h2:first-child {
+            margin-top: 0;
+        }
+
+        .content h3 {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+
+        .content h4 {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: var(--dark);
+            margin-top: 25px;
+            margin-bottom: 12px;
+        }
+
+        .content p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .content ul, .content ol {
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+
+        .content li {
+            margin-bottom: 10px;
+        }
+
+        .content strong {
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        /* Info Box */
+        .info-box {
+            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+            border-left: 5px solid var(--secondary);
+            padding: 25px 30px;
+            margin: 25px 0;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(8, 145, 178, 0.1);
+        }
+
+        .info-box h4 {
+            color: var(--secondary);
+            font-weight: 700;
+            margin-bottom: 12px;
+            font-size: 1.1em;
+        }
+
+        /* Warning Box */
+        .warning-box {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-left: 5px solid var(--accent);
+            padding: 25px 30px;
+            margin: 25px 0;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.1);
+        }
+
+        .warning-box h4 {
+            color: var(--accent);
+            font-weight: 700;
+            margin-bottom: 12px;
+            font-size: 1.1em;
+        }
+
+        /* Example Box */
+        .example-box {
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .example-box h4 {
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 1.3em;
+            margin-bottom: 20px;
+        }
+
+        /* Punnett Square */
+        .punnett-square {
+            display: inline-block;
+            margin: 20px 0;
+            border: 3px solid #059669;
+            border-radius: 10px;
+            overflow: hidden;
+            background: white;
+        }
+
+        .punnett-row {
+            display: flex;
+        }
+
+        .punnett-cell {
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.1em;
+            border: 2px solid #cbd5e1;
+            font-family: 'Fira Code', monospace;
+        }
+
+        .punnett-header {
+            background: linear-gradient(135deg, #059669, #047857);
+            color: white;
+        }
+
+        .punnett-result {
+            background: #f0fdf4;
+        }
+
+        /* Key Points */
+        .key-points {
+            background: linear-gradient(135deg, #fae8ff 0%, #f3e8ff 100%);
+            border-left: 5px solid #a855f7;
+            padding: 25px 30px;
+            margin: 25px 0;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(168, 85, 247, 0.1);
+        }
+
+        .key-points h4 {
+            color: #7c3aed;
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .key-points ul {
+            margin-left: 20px;
+        }
+
+        .key-points li {
+            margin-bottom: 10px;
+            color: #581c87;
+        }
+
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        thead {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        th {
+            padding: 18px 15px;
+            text-align: left;
+            font-weight: 700;
+            font-size: 1em;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        /* Calculation Box */
+        .calculation-box {
+            background: #fef3c7;
+            border: 2px solid #fbbf24;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            font-family: 'Fira Code', monospace;
+        }
+
+        .calculation-step {
+            margin: 10px 0;
+            padding: 8px;
+            background: white;
+            border-radius: 6px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 15px;
+            }
+
+            .header, .content {
+                padding: 30px 25px;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .content h2 {
+                font-size: 1.6em;
+            }
+
+            .punnett-cell {
+                width: 60px;
+                height: 60px;
+                font-size: 0.9em;
+            }
+
+            table {
+                font-size: 0.9em;
+            }
+
+            th, td {
+                padding: 12px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation Top -->
+        <div class="nav-bar">
+            <div class="nav-title">📚 Materi Pembelajaran IPA</div>
+            <div class="nav-buttons">
+                <a href="kisi-kisi-tkad-ipa.html" class="btn-nav btn-home">🏠 Menu Utama</a>
+                <a href="Lat23.html" class="btn-nav btn-practice">✏️ Latihan Soal</a>
+            </div>
+        </div>
+
+        <!-- Header -->
+        <div class="header">
+            <h1>🧬 Pewarisan Sifat - Persilangan Monohibrid</h1>
+            <div class="meta">
+                <div class="meta-item">
+                    <span class="icon">📖</span>
+                    <span>Materi 23</span>
+                </div>
+                <div class="meta-item">
+                    <span class="icon">🎯</span>
+                    <span>Kelas 9</span>
+                </div>
+                <div class="meta-item">
+                    <span class="icon">⏱️</span>
+                    <span>60 menit</span>
+                </div>
+                <div class="meta-item">
+                    <span class="icon">📊</span>
+                    <span>Level Kognitif: L2</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <h2>🎯 Tujuan Pembelajaran</h2>
+            <p>Setelah mempelajari materi ini, peserta didik diharapkan dapat:</p>
+            <ol>
+                <li>Memahami konsep pewarisan sifat menurut Hukum Mendel</li>
+                <li>Membedakan genotipe dan fenotipe</li>
+                <li>Membedakan sifat dominan dan resesif</li>
+                <li>Membuat diagram persilangan monohibrid</li>
+                <li>Menentukan rasio genotipe dan fenotipe keturunan F1 dan F2</li>
+                <li>Menghitung peluang/probabilitas genotipe dan fenotipe</li>
+            </ol>
+
+            <h2>📚 Konsep Dasar Pewarisan Sifat</h2>
+            
+            <div class="info-box">
+                <h4>💡 Hukum Mendel</h4>
+                <p><strong>Gregor Johann Mendel</strong> (1822-1884) adalah bapak genetika yang melakukan percobaan pewarisan sifat pada tanaman kacang ercis (Pisum sativum).</p>
+                <p><strong>Hukum Mendel I (Hukum Segregasi):</strong> Setiap individu memiliki sepasang faktor keturunan (gen) untuk setiap sifat. Pasangan gen ini akan berpisah (segregasi) saat pembentukan gamet (sel kelamin).</p>
+            </div>
+
+            <h3>Istilah-Istilah Penting</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Istilah</th>
+                        <th>Penjelasan</th>
+                        <th>Contoh</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Gen</strong></td>
+                        <td>Faktor pembawa sifat keturunan</td>
+                        <td>Gen untuk warna bunga</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Alel</strong></td>
+                        <td>Bentuk alternatif dari gen yang sama</td>
+                        <td>M (merah), m (putih)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Genotipe</strong></td>
+                        <td>Susunan gen dalam individu (tidak terlihat)</td>
+                        <td>MM, Mm, mm</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Fenotipe</strong></td>
+                        <td>Penampakan sifat yang terlihat</td>
+                        <td>Merah, Putih</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Dominan</strong></td>
+                        <td>Gen yang menutupi gen lain (huruf BESAR)</td>
+                        <td>M (merah dominan)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Resesif</strong></td>
+                        <td>Gen yang tertutup gen dominan (huruf kecil)</td>
+                        <td>m (putih resesif)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Homozigot</strong></td>
+                        <td>Pasangan gen yang sama (dominan/resesif)</td>
+                        <td>MM (homozigot dominan)<br>mm (homozigot resesif)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Heterozigot</strong></td>
+                        <td>Pasangan gen yang berbeda</td>
+                        <td>Mm (heterozigot)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Parental (P)</strong></td>
+                        <td>Induk/orang tua</td>
+                        <td>P: MM × mm</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Filial 1 (F1)</strong></td>
+                        <td>Keturunan generasi pertama</td>
+                        <td>F1: Mm</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Filial 2 (F2)</strong></td>
+                        <td>Keturunan generasi kedua</td>
+                        <td>F2: MM, Mm, Mm, mm</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>🔬 Persilangan Monohibrid</h2>
+            <p><strong>Persilangan Monohibrid</strong> adalah persilangan dengan <strong>satu sifat beda</strong>.</p>
+
+            <div class="example-box">
+                <h4>📌 Contoh: Persilangan Warna Bunga Kacang Ercis</h4>
+                
+                <p><strong>Keterangan sifat:</strong></p>
+                <ul>
+                    <li>M = gen merah (dominan) → fenotipe: merah</li>
+                    <li>m = gen putih (resesif) → fenotipe: putih</li>
+                </ul>
+
+                <p><strong>Persilangan P (Induk):</strong></p>
+                <p style="font-family: 'Fira Code', monospace; background: #f0fdf4; padding: 15px; border-radius: 8px;">
+                    P: Bunga merah (MM) × Bunga putih (mm)
+                </p>
+
+                <p><strong>Gamet (Sel Kelamin):</strong></p>
+                <ul>
+                    <li>Gamet MM → M dan M (hanya menghasilkan M)</li>
+                    <li>Gamet mm → m dan m (hanya menghasilkan m)</li>
+                </ul>
+
+                <p><strong>Diagram Persilangan F1:</strong></p>
+                <div class="punnett-square">
+                    <div class="punnett-row">
+                        <div class="punnett-cell punnett-header"></div>
+                        <div class="punnett-cell punnett-header">M</div>
+                        <div class="punnett-cell punnett-header">M</div>
+                    </div>
+                    <div class="punnett-row">
+                        <div class="punnett-cell punnett-header">m</div>
+                        <div class="punnett-cell punnett-result">Mm</div>
+                        <div class="punnett-cell punnett-result">Mm</div>
+                    </div>
+                    <div class="punnett-row">
+                        <div class="punnett-cell punnett-header">m</div>
+                        <div class="punnett-cell punnett-result">Mm</div>
+                        <div class="punnett-cell punnett-result">Mm</div>
+                    </div>
+                </div>
+
+                <p><strong>Hasil F1:</strong></p>
+                <ul>
+                    <li><strong>Genotipe:</strong> 100% Mm (semua heterozigot)</li>
+                    <li><strong>Fenotipe:</strong> 100% Merah (karena M dominan terhadap m)</li>
+                    <li><strong>Rasio Genotipe F1:</strong> Mm = 4:0 atau 100%</li>
+                    <li><strong>Rasio Fenotipe F1:</strong> Merah = 4:0 atau 100%</li>
+                </ul>
+            </div>
+
+            <div class="example-box">
+                <h4>📌 Persilangan F1 × F1 (Menghasilkan F2)</h4>
+                
+                <p><strong>Persilangan:</strong></p>
+                <p style="font-family: 'Fira Code', monospace; background: #f0fdf4; padding: 15px; border-radius: 8px;">
+                    F1 × F1: Mm × Mm
+                </p>
+
+                <p><strong>Gamet:</strong></p>
+                <ul>
+                    <li>Gamet Mm → M dan m</li>
+                    <li>Gamet Mm → M dan m</li>
+                </ul>
+
+                <p><strong>Diagram Persilangan F2:</strong></p>
+                <div class="punnett-square">
+                    <div class="punnett-row">
+                        <div class="punnett-cell punnett-header"></div>
+                        <div class="punnett-cell punnett-header">M</div>
+                        <div class="punnett-cell punnett-header">m</div>
+                    </div>
+                    <div class="punnett-row">
+                        <div class="punnett-cell punnett-header">M</div>
+                        <div class="punnett-cell punnett-result">MM</div>
+                        <div class="punnett-cell punnett-result">Mm</div>
+                    </div>
+                    <div class="punnett-row">
+                        <div class="punnett-cell punnett-header">m</div>
+                        <div class="punnett-cell punnett-result">Mm</div>
+                        <div class="punnett-cell punnett-result">mm</div>
+                    </div>
+                </div>
+
+                <p><strong>Hasil F2:</strong></p>
+                <div class="calculation-box">
+                    <p><strong>Genotipe F2:</strong></p>
+                    <div class="calculation-step">1 MM : 2 Mm : 1 mm</div>
+                    <div class="calculation-step">Atau rasio 1:2:1</div>
+                    
+                    <p style="margin-top: 15px;"><strong>Fenotipe F2:</strong></p>
+                    <div class="calculation-step">MM = Merah (1)</div>
+                    <div class="calculation-step">Mm = Merah (2)</div>
+                    <div class="calculation-step">mm = Putih (1)</div>
+                    <div class="calculation-step" style="background: #dcfce7; font-weight: 700;">
+                        Rasio Fenotipe: 3 Merah : 1 Putih
+                    </div>
+                </div>
+
+                <p><strong>Peluang/Probabilitas F2:</strong></p>
+                <ul>
+                    <li>Peluang genotipe MM = 1/4 = 25%</li>
+                    <li>Peluang genotipe Mm = 2/4 = 50%</li>
+                    <li>Peluang genotipe mm = 1/4 = 25%</li>
+                    <li>Peluang fenotipe Merah = 3/4 = 75%</li>
+                    <li>Peluang fenotipe Putih = 1/4 = 25%</li>
+                </ul>
+            </div>
+
+            <h2>📊 Rasio Khas Monohibrid</h2>
+            
+            <div class="warning-box">
+                <h4>⚡ Rasio yang Harus Diingat</h4>
+                
+                <p><strong>1. Persilangan P (MM × mm):</strong></p>
+                <ul>
+                    <li>F1 Genotipe: 100% Mm (semua heterozigot)</li>
+                    <li>F1 Fenotipe: 100% dominan</li>
+                </ul>
+
+                <p><strong>2. Persilangan F1 × F1 (Mm × Mm):</strong></p>
+                <ul>
+                    <li>F2 Genotipe: 1 MM : 2 Mm : 1 mm (rasio 1:2:1)</li>
+                    <li>F2 Fenotipe: 3 dominan : 1 resesif (rasio 3:1)</li>
+                </ul>
+
+                <p><strong>3. Persilangan Heterozigot × Homozigot Resesif (Mm × mm):</strong></p>
+                <ul>
+                    <li>Genotipe: 1 Mm : 1 mm (rasio 1:1)</li>
+                    <li>Fenotipe: 1 dominan : 1 resesif (rasio 1:1)</li>
+                </ul>
+            </div>
+
+            <h2>📝 Contoh Soal dan Pembahasan</h2>
+            
+            <div class="example-box">
+                <h4>📌 Contoh Soal</h4>
+                
+                <p><strong>Soal:</strong></p>
+                <p>Pada tanaman kacang ercis, gen T (batang tinggi) dominan terhadap gen t (batang pendek). Jika dilakukan persilangan antara tanaman heterozigot tinggi (Tt) dengan tanaman heterozigot tinggi (Tt), tentukan:</p>
+                <ol>
+                    <li>Rasio genotipe F1</li>
+                    <li>Rasio fenotipe F1</li>
+                    <li>Peluang mendapatkan keturunan bergenotipe TT</li>
+                    <li>Peluang mendapatkan keturunan berfenotipe pendek</li>
+                </ol>
+
+                <p><strong>Penyelesaian:</strong></p>
+                
+                <p><strong>Persilangan:</strong> P: Tt × Tt</p>
+                <p><strong>Gamet:</strong> T, t × T, t</p>
+
+                <p><strong>Diagram Persilangan:</strong></p>
+                <div class="punnett-square">
+                    <div class="punnett-row">
+                        <div class="punnett-cell punnett-header"></div>
+                        <div class="punnett-cell punnett-header">T</div>
+                        <div class="punnett-cell punnett-header">t</div>
+                    </div>
+                    <div class="punnett-row">
+                        <div class="punnett-cell punnett-header">T</div>
+                        <div class="punnett-cell punnett-result">TT</div>
+                        <div class="punnett-cell punnett-result">Tt</div>
+                    </div>
+                    <div class="punnett-row">
+                        <div class="punnett-cell punnett-header">t</div>
+                        <div class="punnett-cell punnett-result">Tt</div>
+                        <div class="punnett-cell punnett-result">tt</div>
+                    </div>
+                </div>
+
+                <div class="calculation-box">
+                    <p><strong>Jawaban:</strong></p>
+                    
+                    <p><strong>1. Rasio Genotipe F1:</strong></p>
+                    <div class="calculation-step">TT : Tt : tt = 1 : 2 : 1</div>
+                    
+                    <p style="margin-top: 15px;"><strong>2. Rasio Fenotipe F1:</strong></p>
+                    <div class="calculation-step">Tinggi (TT + Tt) : Pendek (tt)</div>
+                    <div class="calculation-step">= 3 : 1</div>
+                    
+                    <p style="margin-top: 15px;"><strong>3. Peluang TT:</strong></p>
+                    <div class="calculation-step">1 TT dari 4 total = 1/4 = 25%</div>
+                    
+                    <p style="margin-top: 15px;"><strong>4. Peluang Pendek (tt):</strong></p>
+                    <div class="calculation-step">1 tt dari 4 total = 1/4 = 25%</div>
+                </div>
+            </div>
+
+            <h2>🎓 Rangkuman</h2>
+            <div class="info-box">
+                <ol>
+                    <li><strong>Monohibrid:</strong> Persilangan dengan satu sifat beda</li>
+                    
+                    <li><strong>Genotipe:</strong> Susunan gen (tidak terlihat) - MM, Mm, mm</li>
+                    
+                    <li><strong>Fenotipe:</strong> Tampilan sifat (terlihat) - Tinggi, Pendek</li>
+                    
+                    <li><strong>Gen Dominan:</strong> Huruf BESAR, menutupi gen resesif</li>
+                    
+                    <li><strong>Gen Resesif:</strong> Huruf kecil, tertutup gen dominan</li>
+                    
+                    <li><strong>Rasio Khas F2 (Mm × Mm):</strong>
+                        <ul>
+                            <li>Genotipe: 1:2:1 (1 MM : 2 Mm : 1 mm)</li>
+                            <li>Fenotipe: 3:1 (3 dominan : 1 resesif)</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Peluang:</strong> Jumlah individu tertentu / Total individu</li>
+                </ol>
+            </div>
+
+            <div class="key-points">
+                <h4>💪 Tips Mengerjakan Soal</h4>
+                <ul>
+                    <li>Tentukan simbol gen (huruf besar untuk dominan, kecil untuk resesif)</li>
+                    <li>Tulis genotipe induk (P) dengan jelas</li>
+                    <li>Tentukan gamet (gen yang dihasilkan induk)</li>
+                    <li>Buat diagram persilangan (Punnett Square) untuk melihat semua kemungkinan</li>
+                    <li>Hitung jumlah setiap genotipe dan fenotipe</li>
+                    <li>Buat rasio dengan menyederhanakan bilangan</li>
+                    <li>Untuk peluang: (jumlah yang dicari) / (total semua) × 100%</li>
+                    <li>Ingat rasio khas: F1 (Mm × Mm) → F2 genotipe 1:2:1, fenotipe 3:1</li>
+                </ul>
+            </div>
+
+            <div class="warning-box">
+                <h4>⚠️ Kesalahan Umum yang Harus Dihindari</h4>
+                <ul>
+                    <li>Salah menentukan dominan dan resesif (huruf besar vs kecil)</li>
+                    <li>Lupa memisahkan gen saat membuat gamet</li>
+                    <li>Salah menghitung rasio (tidak menyederhanakan)</li>
+                    <li>Bingung antara genotipe dan fenotipe</li>
+                    <li>Salah menghitung peluang (lupa dibagi total)</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Navigation Bottom -->
+        <div class="nav-bar">
+            <div class="nav-buttons" style="width: 100%; justify-content: space-between;">
+                <a href="kisi-kisi-tkad-ipa.html" class="btn-nav btn-home">
+                    🏠 Kembali ke Menu
+                </a>
+                <a href="Lat23.html" class="btn-nav btn-practice">
+                    Lanjut ke Latihan Soal ✏️
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

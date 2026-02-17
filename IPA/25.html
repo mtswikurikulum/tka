@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Materi 25: Pewarisan Sifat - Golongan Darah</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&family=Fira+Code:wght@400;500&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #059669;
+            --secondary: #0891b2;
+            --accent: #f59e0b;
+            --dark: #0f172a;
+            --light: #f8fafc;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: linear-gradient(135deg, #0f766e 0%, #0e7490 100%);
+            color: var(--dark);
+            line-height: 1.8;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Navigation Bar */
+        .nav-bar {
+            background: white;
+            border-radius: 16px;
+            padding: 20px 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .nav-title {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn-nav {
+            padding: 12px 24px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95em;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-home {
+            background: linear-gradient(135deg, #64748b, #475569);
+            color: white;
+            box-shadow: 0 4px 12px rgba(100, 116, 139, 0.3);
+        }
+
+        .btn-home:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(100, 116, 139, 0.4);
+        }
+
+        .btn-practice {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+        }
+
+        .btn-practice:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4);
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            border-radius: 20px;
+            padding: 50px 60px;
+            margin-bottom: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+        }
+
+        .header h1 {
+            font-size: 2.8em;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        .header .meta {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.95em;
+            color: #64748b;
+        }
+
+        .meta-item .icon {
+            font-size: 1.3em;
+        }
+
+        /* Content Section */
+        .content {
+            background: white;
+            border-radius: 20px;
+            padding: 50px 60px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .content h2 {
+            font-size: 2em;
+            font-weight: 700;
+            color: var(--primary);
+            margin-top: 40px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid var(--primary);
+        }
+
+        .content h2:first-child {
+            margin-top: 0;
+        }
+
+        .content h3 {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+
+        .content p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .content ul, .content ol {
+            margin: 15px 0 15px 30px;
+        }
+
+        .content li {
+            margin-bottom: 10px;
+        }
+
+        /* Info Boxes */
+        .info-box {
+            background: linear-gradient(135deg, #e0f2fe 0%, #dbeafe 100%);
+            border-left: 5px solid var(--secondary);
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 12px;
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-left: 5px solid var(--accent);
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 12px;
+        }
+
+        .success-box {
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+            border-left: 5px solid var(--primary);
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 12px;
+        }
+
+        .danger-box {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            border-left: 5px solid #ef4444;
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 12px;
+        }
+
+        /* Example Box */
+        .example-box {
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+
+        .example-box h4 {
+            color: var(--primary);
+            font-size: 1.3em;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        /* Question Styles */
+        .question {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin: 20px 0;
+        }
+
+        .question-text {
+            font-size: 1.05em;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+
+        .options {
+            margin: 20px 0;
+        }
+
+        .option {
+            background: #f8fafc;
+            padding: 15px 20px;
+            margin: 10px 0;
+            border-radius: 10px;
+            border: 2px solid #e2e8f0;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .option:hover {
+            background: #e0f2fe;
+            border-color: var(--secondary);
+        }
+
+        .option.correct {
+            background: #d1fae5;
+            border-color: var(--primary);
+            font-weight: 600;
+        }
+
+        .option.correct::before {
+            content: '✓ ';
+            color: var(--primary);
+            font-weight: bold;
+            margin-right: 5px;
+        }
+
+        /* Explanation */
+        .explanation {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            padding: 25px;
+            border-radius: 12px;
+            margin-top: 20px;
+            border-left: 5px solid var(--accent);
+        }
+
+        .explanation h5 {
+            color: #92400e;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        thead {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        th {
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.9em;
+            letter-spacing: 0.5px;
+        }
+
+        tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Key Points */
+        .key-points {
+            background: linear-gradient(135deg, #fae8ff 0%, #f3e8ff 100%);
+            border-left: 5px solid #a855f7;
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 12px;
+        }
+
+        .key-points h4 {
+            color: #6b21a8;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        /* Punnett Square */
+        .punnett-square {
+            background: white;
+            border: 3px solid var(--primary);
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 25px auto;
+            max-width: 500px;
+        }
+
+        .punnett-square table {
+            margin: 0;
+            box-shadow: none;
+        }
+
+        .punnett-square th {
+            background: var(--primary);
+            color: white;
+            font-size: 1.1em;
+            padding: 15px;
+        }
+
+        .punnett-square td {
+            text-align: center;
+            font-weight: 600;
+            font-size: 1.05em;
+            padding: 20px;
+        }
+
+        .punnett-square .parent-cell {
+            background: #e0f2fe;
+            color: var(--secondary);
+            font-weight: 700;
+        }
+
+        .punnett-square .offspring-cell {
+            background: #f0fdf4;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header {
+                padding: 30px 25px;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .content {
+                padding: 30px 25px;
+            }
+
+            .content h2 {
+                font-size: 1.6em;
+            }
+
+            table {
+                font-size: 0.9em;
+            }
+
+            th, td {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation Top -->
+        <div class="nav-bar">
+            <div class="nav-title">📚 TKAD IPA - Kelas 9</div>
+            <div class="nav-buttons">
+                <a href="kisi-kisi-tkad-ipa.html" class="btn-nav btn-home">
+                    🏠 Menu Utama
+                </a>
+                <a href="Lat25.html" class="btn-nav btn-practice">
+                    ✏️ Latihan Soal
+                </a>
+            </div>
+        </div>
+
+        <!-- Header -->
+        <div class="header">
+            <h1>🧬 Pewarisan Sifat - Golongan Darah</h1>
+            <div class="meta">
+                <div class="meta-item">
+                    <span class="icon">📖</span>
+                    <span>Materi: Pewarisan Sifat pada Manusia</span>
+                </div>
+                <div class="meta-item">
+                    <span class="icon">🎯</span>
+                    <span>Level: L2 (Aplikasi)</span>
+                </div>
+                <div class="meta-item">
+                    <span class="icon">📝</span>
+                    <span>Bentuk: Pilihan Ganda Tunggal</span>
+                </div>
+                <div class="meta-item">
+                    <span class="icon">🏫</span>
+                    <span>Kelas: 9 SMP</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <h2>🎯 Tujuan Pembelajaran</h2>
+            <p>
+                Setelah mempelajari materi ini, peserta didik diharapkan dapat:
+            </p>
+            <ul>
+                <li>Memahami sistem pewarisan golongan darah ABO dan rhesus</li>
+                <li>Menentukan genotipe dan fenotipe golongan darah</li>
+                <li>Menghitung peluang/probabilitas golongan darah keturunan</li>
+                <li>Menganalisis data distribusi golongan darah dalam keluarga</li>
+                <li>Menerapkan hukum Mendel pada pewarisan golongan darah</li>
+            </ul>
+
+            <h2>📚 Materi Pembelajaran</h2>
+            
+            <h3>A. Sistem Golongan Darah ABO</h3>
+            <p>
+                Golongan darah ABO ditemukan oleh <strong>Karl Landsteiner</strong> pada tahun 1900. Sistem ini dikendalikan oleh satu gen dengan <strong>3 alel</strong> (alel ganda/multiple alleles):
+            </p>
+
+            <div class="info-box">
+                <h4>🧬 Tiga Alel Golongan Darah ABO</h4>
+                <ul>
+                    <li><strong>I<sup>A</sup></strong> - Mengkode antigen A (kodominan dengan I<sup>B</sup>)</li>
+                    <li><strong>I<sup>B</sup></strong> - Mengkode antigen B (kodominan dengan I<sup>A</sup>)</li>
+                    <li><strong>i</strong> - Tidak mengkode antigen (resesif terhadap I<sup>A</sup> dan I<sup>B</sup>)</li>
+                </ul>
+                <p style="margin-top: 15px;"><strong>Hubungan Dominansi:</strong></p>
+                <ul>
+                    <li>I<sup>A</sup> dan I<sup>B</sup> <strong>kodominan</strong> (sama kuat, keduanya muncul)</li>
+                    <li>I<sup>A</sup> <strong>dominan</strong> terhadap i</li>
+                    <li>I<sup>B</sup> <strong>dominan</strong> terhadap i</li>
+                </ul>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Golongan Darah (Fenotipe)</th>
+                        <th>Genotipe yang Mungkin</th>
+                        <th>Antigen pada Eritrosit</th>
+                        <th>Antibodi dalam Plasma</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>A</strong></td>
+                        <td>I<sup>A</sup>I<sup>A</sup> atau I<sup>A</sup>i</td>
+                        <td>Antigen A</td>
+                        <td>Anti-B</td>
+                    </tr>
+                    <tr>
+                        <td><strong>B</strong></td>
+                        <td>I<sup>B</sup>I<sup>B</sup> atau I<sup>B</sup>i</td>
+                        <td>Antigen B</td>
+                        <td>Anti-A</td>
+                    </tr>
+                    <tr>
+                        <td><strong>AB</strong></td>
+                        <td>I<sup>A</sup>I<sup>B</sup> (hanya 1 kemungkinan)</td>
+                        <td>Antigen A dan B</td>
+                        <td>Tidak ada antibodi</td>
+                    </tr>
+                    <tr>
+                        <td><strong>O</strong></td>
+                        <td>ii (hanya 1 kemungkinan)</td>
+                        <td>Tidak ada antigen</td>
+                        <td>Anti-A dan Anti-B</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="warning-box">
+                <h4>⚠️ Poin Penting untuk Diingat</h4>
+                <ul>
+                    <li><strong>Golongan A dan B:</strong> Masing-masing memiliki 2 kemungkinan genotipe (homozigot dan heterozigot)</li>
+                    <li><strong>Golongan AB dan O:</strong> Hanya 1 kemungkinan genotipe</li>
+                    <li><strong>Kodominansi:</strong> I<sup>A</sup>I<sup>B</sup> menghasilkan golongan AB (kedua antigen muncul)</li>
+                    <li><strong>Alel resesif:</strong> Golongan O (ii) hanya muncul jika kedua orang tua mewariskan alel i</li>
+                </ul>
+            </div>
+
+            <h3>B. Aturan Pewarisan Golongan Darah</h3>
+            
+            <div class="success-box">
+                <h4>📋 Aturan Dasar Pewarisan</h4>
+                <ol>
+                    <li><strong>Setiap orang memiliki 2 alel</strong> untuk golongan darah (1 dari ayah, 1 dari ibu)</li>
+                    <li><strong>Setiap orang tua hanya mewariskan 1 alel</strong> kepada anaknya</li>
+                    <li><strong>Kombinasi 2 alel</strong> menentukan golongan darah anak</li>
+                    <li><strong>Probabilitas setiap alel diwariskan = 50%</strong></li>
+                </ol>
+            </div>
+
+            <h3>C. Kemungkinan Golongan Darah Anak</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Golongan Ayah</th>
+                        <th>Golongan Ibu</th>
+                        <th>Kemungkinan Golongan Anak</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>A (I<sup>A</sup>I<sup>A</sup>)</td>
+                        <td>A (I<sup>A</sup>I<sup>A</sup>)</td>
+                        <td>100% A</td>
+                    </tr>
+                    <tr>
+                        <td>A (I<sup>A</sup>i)</td>
+                        <td>A (I<sup>A</sup>i)</td>
+                        <td>75% A, 25% O</td>
+                    </tr>
+                    <tr>
+                        <td>A (I<sup>A</sup>i)</td>
+                        <td>B (I<sup>B</sup>i)</td>
+                        <td>25% A, 25% B, 25% AB, 25% O</td>
+                    </tr>
+                    <tr>
+                        <td>AB (I<sup>A</sup>I<sup>B</sup>)</td>
+                        <td>AB (I<sup>A</sup>I<sup>B</sup>)</td>
+                        <td>25% A, 50% AB, 25% B (tidak mungkin O)</td>
+                    </tr>
+                    <tr>
+                        <td>AB (I<sup>A</sup>I<sup>B</sup>)</td>
+                        <td>O (ii)</td>
+                        <td>50% A, 50% B (tidak mungkin AB atau O)</td>
+                    </tr>
+                    <tr>
+                        <td>O (ii)</td>
+                        <td>O (ii)</td>
+                        <td>100% O</td>
+                    </tr>
+                    <tr>
+                        <td>A (I<sup>A</sup>i)</td>
+                        <td>O (ii)</td>
+                        <td>50% A, 50% O</td>
+                    </tr>
+                    <tr>
+                        <td>B (I<sup>B</sup>i)</td>
+                        <td>O (ii)</td>
+                        <td>50% B, 50% O</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="danger-box">
+                <h4>🚫 Kombinasi yang TIDAK MUNGKIN</h4>
+                <ul>
+                    <li><strong>Orang tua AB × AB:</strong> Tidak mungkin punya anak golongan O</li>
+                    <li><strong>Orang tua AB × O:</strong> Tidak mungkin punya anak golongan AB atau O</li>
+                    <li><strong>Orang tua O × O:</strong> Tidak mungkin punya anak golongan A, B, atau AB</li>
+                    <li><strong>Satu orang tua O:</strong> Anak pasti mewarisi alel i dari orang tua O ini</li>
+                </ul>
+            </div>
+
+            <h3>D. Cara Menghitung Peluang Golongan Darah</h3>
+
+            <div class="example-box">
+                <h4>📌 Contoh 1: Kedua Orang Tua Golongan A Heterozigot</h4>
+                <div class="question">
+                    <p class="question-text">
+                        <strong>Diketahui:</strong> Ayah golongan A (I<sup>A</sup>i) × Ibu golongan A (I<sup>A</sup>i)
+                    </p>
+                    <p class="question-text">
+                        <strong>Ditanya:</strong> Berapa peluang anak bergolongan A dan O?
+                    </p>
+
+                    <div class="punnett-square">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>I<sup>A</sup> (Ibu)</th>
+                                    <th>i (Ibu)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="parent-cell">I<sup>A</sup> (Ayah)</td>
+                                    <td class="offspring-cell">I<sup>A</sup>I<sup>A</sup><br>(A)</td>
+                                    <td class="offspring-cell">I<sup>A</sup>i<br>(A)</td>
+                                </tr>
+                                <tr>
+                                    <td class="parent-cell">i (Ayah)</td>
+                                    <td class="offspring-cell">I<sup>A</sup>i<br>(A)</td>
+                                    <td class="offspring-cell">ii<br>(O)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="explanation">
+                        <h5>💡 Pembahasan:</h5>
+                        <p><strong>Hasil Persilangan:</strong></p>
+                        <ul>
+                            <li>I<sup>A</sup>I<sup>A</sup> = Golongan A (1 kotak)</li>
+                            <li>I<sup>A</sup>i = Golongan A (2 kotak)</li>
+                            <li>ii = Golongan O (1 kotak)</li>
+                        </ul>
+                        <p style="margin-top: 15px;"><strong>Peluang:</strong></p>
+                        <ul>
+                            <li><strong>Golongan A:</strong> 3/4 = 75%</li>
+                            <li><strong>Golongan O:</strong> 1/4 = 25%</li>
+                        </ul>
+                        <p style="margin-top: 15px;"><strong>Rasio Fenotipe:</strong> A : O = 3 : 1</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <h4>📌 Contoh 2: Ayah Golongan A Heterozigot, Ibu Golongan B Heterozigot</h4>
+                <div class="question">
+                    <p class="question-text">
+                        <strong>Diketahui:</strong> Ayah golongan A (I<sup>A</sup>i) × Ibu golongan B (I<sup>B</sup>i)
+                    </p>
+                    <p class="question-text">
+                        <strong>Ditanya:</strong> Berapa peluang masing-masing golongan darah anak?
+                    </p>
+
+                    <div class="punnett-square">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>I<sup>B</sup> (Ibu)</th>
+                                    <th>i (Ibu)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="parent-cell">I<sup>A</sup> (Ayah)</td>
+                                    <td class="offspring-cell">I<sup>A</sup>I<sup>B</sup><br>(AB)</td>
+                                    <td class="offspring-cell">I<sup>A</sup>i<br>(A)</td>
+                                </tr>
+                                <tr>
+                                    <td class="parent-cell">i (Ayah)</td>
+                                    <td class="offspring-cell">I<sup>B</sup>i<br>(B)</td>
+                                    <td class="offspring-cell">ii<br>(O)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="explanation">
+                        <h5>💡 Pembahasan:</h5>
+                        <p><strong>Hasil Persilangan:</strong></p>
+                        <ul>
+                            <li>I<sup>A</sup>I<sup>B</sup> = Golongan AB (1 kotak)</li>
+                            <li>I<sup>A</sup>i = Golongan A (1 kotak)</li>
+                            <li>I<sup>B</sup>i = Golongan B (1 kotak)</li>
+                            <li>ii = Golongan O (1 kotak)</li>
+                        </ul>
+                        <p style="margin-top: 15px;"><strong>Peluang:</strong></p>
+                        <ul>
+                            <li><strong>Golongan A:</strong> 1/4 = 25%</li>
+                            <li><strong>Golongan B:</strong> 1/4 = 25%</li>
+                            <li><strong>Golongan AB:</strong> 1/4 = 25%</li>
+                            <li><strong>Golongan O:</strong> 1/4 = 25%</li>
+                        </ul>
+                        <p style="margin-top: 15px;"><strong>Rasio Fenotipe:</strong> A : B : AB : O = 1 : 1 : 1 : 1</p>
+                        <p style="margin-top: 10px;"><em>Ini adalah satu-satunya kombinasi yang bisa menghasilkan SEMUA golongan darah!</em></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <h4>📌 Contoh 3: Ayah Golongan AB, Ibu Golongan O</h4>
+                <div class="question">
+                    <p class="question-text">
+                        <strong>Diketahui:</strong> Ayah golongan AB (I<sup>A</sup>I<sup>B</sup>) × Ibu golongan O (ii)
+                    </p>
+                    <p class="question-text">
+                        <strong>Ditanya:</strong> Berapa peluang masing-masing golongan darah anak?
+                    </p>
+
+                    <div class="punnett-square">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>i (Ibu)</th>
+                                    <th>i (Ibu)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="parent-cell">I<sup>A</sup> (Ayah)</td>
+                                    <td class="offspring-cell">I<sup>A</sup>i<br>(A)</td>
+                                    <td class="offspring-cell">I<sup>A</sup>i<br>(A)</td>
+                                </tr>
+                                <tr>
+                                    <td class="parent-cell">I<sup>B</sup> (Ayah)</td>
+                                    <td class="offspring-cell">I<sup>B</sup>i<br>(B)</td>
+                                    <td class="offspring-cell">I<sup>B</sup>i<br>(B)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="explanation">
+                        <h5>💡 Pembahasan:</h5>
+                        <p><strong>Hasil Persilangan:</strong></p>
+                        <ul>
+                            <li>I<sup>A</sup>i = Golongan A (2 kotak)</li>
+                            <li>I<sup>B</sup>i = Golongan B (2 kotak)</li>
+                        </ul>
+                        <p style="margin-top: 15px;"><strong>Peluang:</strong></p>
+                        <ul>
+                            <li><strong>Golongan A:</strong> 2/4 = 50%</li>
+                            <li><strong>Golongan B:</strong> 2/4 = 50%</li>
+                            <li><strong>Golongan AB:</strong> 0% (TIDAK MUNGKIN)</li>
+                            <li><strong>Golongan O:</strong> 0% (TIDAK MUNGKIN)</li>
+                        </ul>
+                        <p style="margin-top: 15px;"><strong>Rasio Fenotipe:</strong> A : B = 1 : 1</p>
+                        <p style="margin-top: 10px;"><strong>Catatan Penting:</strong></p>
+                        <ul>
+                            <li>Semua anak pasti mewarisi alel <strong>i</strong> dari ibu (golongan O)</li>
+                            <li>Dari ayah AB, anak mewarisi I<sup>A</sup> atau I<sup>B</sup> (tidak pernah keduanya sekaligus untuk 1 anak)</li>
+                            <li>Hasil: Semua anak heterozigot (I<sup>A</sup>i atau I<sup>B</sup>i)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <h3>E. Sistem Rhesus (Rh)</h3>
+            <p>
+                Selain sistem ABO, terdapat juga sistem rhesus yang menentukan apakah seseorang Rh+ atau Rh-.
+            </p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Fenotipe</th>
+                        <th>Genotipe</th>
+                        <th>Keterangan</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Rh+ (Rhesus positif)</strong></td>
+                        <td>RR atau Rr</td>
+                        <td>Memiliki antigen Rh (dominan)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Rh- (Rhesus negatif)</strong></td>
+                        <td>rr</td>
+                        <td>Tidak memiliki antigen Rh (resesif)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="info-box">
+                <h4>🔬 Kombinasi Golongan Darah ABO dan Rhesus</h4>
+                <p>Golongan darah lengkap ditulis dengan menggabungkan ABO dan Rh, misalnya:</p>
+                <ul>
+                    <li><strong>A+</strong> (A Rhesus positif): Genotipe I<sup>A</sup>I<sup>A</sup>RR, I<sup>A</sup>I<sup>A</sup>Rr, I<sup>A</sup>iRR, atau I<sup>A</sup>iRr</li>
+                    <li><strong>O-</strong> (O Rhesus negatif): Genotipe iirr (paling sederhana)</li>
+                    <li><strong>AB+</strong> (AB Rhesus positif): Genotipe I<sup>A</sup>I<sup>B</sup>RR atau I<sup>A</sup>I<sup>B</sup>Rr</li>
+                </ul>
+            </div>
+
+            <h3>F. Aplikasi dalam Analisis Data Keluarga</h3>
+
+            <div class="example-box">
+                <h4>📌 Contoh Soal Analisis Data Keluarga</h4>
+                <div class="question">
+                    <p class="question-text">
+                        Dalam suatu keluarga, terdapat data golongan darah sebagai berikut:
+                    </p>
+                    
+                    <table style="margin: 20px 0;">
+                        <thead>
+                            <tr>
+                                <th>Anggota Keluarga</th>
+                                <th>Golongan Darah</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Ayah</td>
+                                <td>A</td>
+                            </tr>
+                            <tr>
+                                <td>Ibu</td>
+                                <td>B</td>
+                            </tr>
+                            <tr>
+                                <td>Anak 1</td>
+                                <td>AB</td>
+                            </tr>
+                            <tr>
+                                <td>Anak 2</td>
+                                <td>O</td>
+                            </tr>
+                            <tr>
+                                <td>Anak 3</td>
+                                <td>A</td>
+                            </tr>
+                            <tr>
+                                <td>Anak 4</td>
+                                <td>B</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p class="question-text">
+                        Berdasarkan data tersebut, tentukan:
+                    </p>
+                    <ol>
+                        <li>Genotipe ayah dan ibu</li>
+                        <li>Peluang anak kelima bergolongan darah O</li>
+                        <li>Pernyataan mana yang benar?</li>
+                    </ol>
+
+                    <div class="explanation">
+                        <h5>💡 Pembahasan Lengkap:</h5>
+                        
+                        <p><strong>1. Menentukan Genotipe Orang Tua</strong></p>
+                        <p>Kunci analisis: Perhatikan anak yang bergolongan O!</p>
+                        <ul>
+                            <li><strong>Anak 2 bergolongan O (ii)</strong> → Genotipe pasti ii</li>
+                            <li>Anak mendapat 1 alel i dari ayah dan 1 alel i dari ibu</li>
+                            <li><strong>Kesimpulan:</strong>
+                                <ul>
+                                    <li>Ayah bergolongan A, pasti genotipe <strong>I<sup>A</sup>i</strong> (bukan I<sup>A</sup>I<sup>A</sup>)</li>
+                                    <li>Ibu bergolongan B, pasti genotipe <strong>I<sup>B</sup>i</strong> (bukan I<sup>B</sup>I<sup>B</sup>)</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                        <p style="margin-top: 20px;"><strong>2. Verifikasi dengan Anak Lain</strong></p>
+                        <p>Mari cek apakah semua anak mungkin dari persilangan I<sup>A</sup>i × I<sup>B</sup>i:</p>
+                        
+                        <div class="punnett-square" style="margin: 20px auto;">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>I<sup>B</sup></th>
+                                        <th>i</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="parent-cell">I<sup>A</sup></td>
+                                        <td class="offspring-cell">I<sup>A</sup>I<sup>B</sup><br>AB ✓</td>
+                                        <td class="offspring-cell">I<sup>A</sup>i<br>A ✓</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="parent-cell">i</td>
+                                        <td class="offspring-cell">I<sup>B</sup>i<br>B ✓</td>
+                                        <td class="offspring-cell">ii<br>O ✓</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <ul>
+                            <li>Anak 1 (AB) → I<sup>A</sup>I<sup>B</sup> ✓ Mungkin</li>
+                            <li>Anak 2 (O) → ii ✓ Mungkin</li>
+                            <li>Anak 3 (A) → I<sup>A</sup>i ✓ Mungkin</li>
+                            <li>Anak 4 (B) → I<sup>B</sup>i ✓ Mungkin</li>
+                        </ul>
+                        <p><strong>Semua anak sesuai dengan prediksi! ✓</strong></p>
+
+                        <p style="margin-top: 20px;"><strong>3. Peluang Anak Kelima Bergolongan O</strong></p>
+                        <p>Dari papan Punnett di atas:</p>
+                        <ul>
+                            <li>Golongan O (ii) = 1 kotak dari 4 kotak</li>
+                            <li><strong>Peluang = 1/4 = 25%</strong></li>
+                        </ul>
+
+                        <p style="margin-top: 20px;"><strong>4. Pernyataan yang Benar:</strong></p>
+                        <ul>
+                            <li>✓ Ayah bergenotipe I<sup>A</sup>i (heterozigot)</li>
+                            <li>✓ Ibu bergenotipe I<sup>B</sup>i (heterozigot)</li>
+                            <li>✓ Setiap anak memiliki peluang 25% untuk setiap golongan darah (A, B, AB, O)</li>
+                            <li>✓ Ini adalah satu-satunya kombinasi orang tua yang bisa menghasilkan semua golongan darah</li>
+                            <li>✗ Ayah tidak mungkin I<sup>A</sup>I<sup>A</sup> (karena punya anak O)</li>
+                            <li>✗ Ibu tidak mungkin I<sup>B</sup>I<sup>B</sup> (karena punya anak O)</li>
+                        </ul>
+
+                        <p style="margin-top: 20px;"><strong>Kesimpulan Penting:</strong></p>
+                        <p>Keberadaan anak bergolongan O adalah KUNCI untuk menentukan bahwa kedua orang tua pasti heterozigot (I<sup>A</sup>i dan I<sup>B</sup>i), karena anak O harus mendapat alel i dari kedua orang tuanya.</p>
+                    </div>
+                </div>
+            </div>
+
+            <h2>🎓 Rangkuman</h2>
+            <div class="info-box">
+                <ol>
+                    <li><strong>Sistem ABO:</strong> 3 alel (I<sup>A</sup>, I<sup>B</sup>, i) menghasilkan 4 golongan darah (A, B, AB, O)</li>
+                    
+                    <li><strong>Genotipe:</strong>
+                        <ul>
+                            <li>A: I<sup>A</sup>I<sup>A</sup> atau I<sup>A</sup>i</li>
+                            <li>B: I<sup>B</sup>I<sup>B</sup> atau I<sup>B</sup>i</li>
+                            <li>AB: I<sup>A</sup>I<sup>B</sup></li>
+                            <li>O: ii</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Hubungan Dominansi:</strong>
+                        <ul>
+                            <li>I<sup>A</sup> kodominan dengan I<sup>B</sup></li>
+                            <li>I<sup>A</sup> dan I<sup>B</sup> dominan terhadap i</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Kombinasi Khusus:</strong>
+                        <ul>
+                            <li>I<sup>A</sup>i × I<sup>B</sup>i → Satu-satunya yang bisa menghasilkan SEMUA golongan (A, B, AB, O) dengan peluang sama (25% : 25% : 25% : 25%)</li>
+                            <li>AB × O → Hanya A dan B (50% : 50%), tidak mungkin AB atau O</li>
+                            <li>O × O → 100% O</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Cara Menentukan Genotipe Orang Tua:</strong>
+                        <ul>
+                            <li>Lihat golongan darah anak, terutama anak yang bergolongan O atau AB</li>
+                            <li>Anak O (ii) → kedua orang tua pasti membawa alel i</li>
+                            <li>Orang tua A dengan anak O → orang tua pasti I<sup>A</sup>i</li>
+                            <li>Orang tua B dengan anak O → orang tua pasti I<sup>B</sup>i</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Menghitung Peluang:</strong> Gunakan papan Punnett, hitung rasio dari total kotak</li>
+                </ol>
+            </div>
+
+            <div class="key-points">
+                <h4>💪 Tips Mengerjakan Soal</h4>
+                <ul>
+                    <li><strong>Identifikasi genotipe orang tua:</strong> Perhatikan anak yang bergolongan O atau AB sebagai kunci</li>
+                    <li><strong>Buat papan Punnett:</strong> Visualisasi memudahkan perhitungan peluang</li>
+                    <li><strong>Hitung rasio:</strong> Jumlah kotak dengan golongan tertentu dibagi total kotak (biasanya 4)</li>
+                    <li><strong>Ingat kombinasi yang tidak mungkin:</strong> AB × AB tidak mungkin O, AB × O tidak mungkin AB/O, dll</li>
+                    <li><strong>Perhatikan kata kunci:</strong> "heterozigot" = dua alel berbeda, "homozigot" = dua alel sama</li>
+                    <li><strong>Verifikasi jawaban:</strong> Cek apakah semua anak dalam data bisa dihasilkan dari genotipe yang ditentukan</li>
+                </ul>
+            </div>
+
+            <div class="warning-box">
+                <h4>⚠️ Kesalahan Umum yang Harus Dihindari</h4>
+                <ul>
+                    <li>❌ Mengira golongan A dan B hanya punya 1 genotipe</li>
+                    <li>❌ Lupa bahwa I<sup>A</sup>I<sup>B</sup> menghasilkan AB (kodominan), bukan A atau B</li>
+                    <li>❌ Mengira AB × O bisa menghasilkan anak AB atau O</li>
+                    <li>❌ Tidak memperhatikan anak bergolongan O sebagai kunci menentukan genotipe orang tua</li>
+                    <li>❌ Salah menghitung peluang dari papan Punnett</li>
+                    <li>✅ Selalu buat papan Punnett untuk perhitungan yang akurat</li>
+                    <li>✅ Ingat bahwa setiap anak adalah kejadian independen (peluang tetap sama)</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Navigation Bottom -->
+        <div class="nav-bar">
+            <div class="nav-buttons" style="width: 100%; justify-content: space-between;">
+                <a href="kisi-kisi-tkad-ipa.html" class="btn-nav btn-home">
+                    🏠 Kembali ke Menu
+                </a>
+                <a href="Lat25.html" class="btn-nav btn-practice">
+                    Lanjut ke Latihan Soal ✏️
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

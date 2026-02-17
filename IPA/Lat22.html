@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latihan Soal 18: Bidang Miring</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Nunito', sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; }
+        .container { max-width: 1000px; margin: 0 auto; padding: 20px; }
+        .nav-bar { background: white; border-radius: 16px; padding: 15px 25px; margin-bottom: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.15); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+        .nav-title { font-size: 1.2em; font-weight: 800; background: linear-gradient(135deg, #8b5cf6, #ec4899); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .btn-nav { padding: 10px 20px; border-radius: 10px; text-decoration: none; font-weight: 700; font-size: 0.9em; color: white; display: inline-flex; align-items: center; gap: 8px; transition: all 0.3s ease; }
+        .btn-home { background: linear-gradient(135deg, #64748b, #475569); }
+        .btn-materi { background: linear-gradient(135deg, #059669, #047857); }
+        .quiz-container { background: white; border-radius: 24px; padding: 40px; box-shadow: 0 20px 60px rgba(0,0,0,0.2); position: relative; }
+        .quiz-container::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 8px; background: linear-gradient(90deg, #8b5cf6, #ec4899, #f59e0b); }
+        .progress-info { display: flex; justify-content: space-between; margin-bottom: 12px; }
+        .question-number { font-size: 1.1em; font-weight: 800; color: #8b5cf6; }
+        .score-display { font-size: 1em; font-weight: 700; color: #10b981; }
+        .progress-bar { width: 100%; height: 12px; background: #e2e8f0; border-radius: 20px; overflow: hidden; margin-bottom: 30px; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, #8b5cf6, #ec4899); transition: width 0.5s ease; }
+        .slide { display: none; }
+        .slide.active { display: block; }
+        .question-box { background: linear-gradient(135deg, #f1f5f9, #e2e8f0); border-radius: 16px; padding: 30px; margin-bottom: 30px; border-left: 6px solid #8b5cf6; }
+        .question-text { font-size: 1.05em; font-weight: 600; line-height: 1.8; margin-bottom: 20px; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; border-radius: 8px; overflow: hidden; }
+        thead { background: linear-gradient(135deg, #8b5cf6, #ec4899); color: white; }
+        th, td { padding: 12px 15px; text-align: left; }
+        td { border-bottom: 1px solid #e2e8f0; }
+        tbody tr:last-child td { border-bottom: none; }
+        .option { background: white; border: 3px solid #e2e8f0; border-radius: 12px; padding: 18px 24px; cursor: pointer; margin: 12px 0; display: flex; gap: 12px; transition: all 0.3s; }
+        .option:hover:not(.disabled) { border-color: #8b5cf6; background: #faf5ff; transform: translateX(5px); }
+        .option input[type="checkbox"] { width: 20px; height: 20px; cursor: pointer; }
+        .option.selected { border-color: #8b5cf6; background: #ede9fe; }
+        .option.correct { border-color: #10b981; background: #d1fae5; }
+        .option.wrong { border-color: #ef4444; background: #fee2e2; }
+        .option.disabled { cursor: not-allowed; opacity: 0.7; }
+        .btn { padding: 14px 32px; border: none; border-radius: 12px; font-weight: 700; cursor: pointer; color: white; transition: all 0.3s; }
+        .btn-submit { background: linear-gradient(135deg, #8b5cf6, #ec4899); }
+        .btn-next { background: linear-gradient(135deg, #10b981, #059669); display: none; }
+        .btn-next.show { display: inline-block; }
+        .feedback { margin-top: 25px; padding: 25px; border-radius: 12px; display: none; }
+        .feedback.show { display: block; }
+        .feedback.correct { background: #d1fae5; border-left: 6px solid #10b981; }
+        .feedback.wrong { background: #fee2e2; border-left: 6px solid #ef4444; }
+        .feedback-header { display: flex; align-items: center; gap: 12px; margin-bottom: 15px; }
+        .feedback-icon { font-size: 2em; }
+        .feedback-title { font-size: 1.3em; font-weight: 800; }
+        .feedback.correct .feedback-title { color: #10b981; }
+        .feedback.wrong .feedback-title { color: #ef4444; }
+        .result-screen { display: none; text-align: center; padding: 40px 20px; }
+        .result-screen.show { display: block; }
+        .result-icon { font-size: 5em; margin-bottom: 20px; }
+        .result-title { font-size: 2.5em; font-weight: 900; margin-bottom: 15px; background: linear-gradient(135deg, #8b5cf6, #ec4899); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .result-score { font-size: 4em; font-weight: 900; margin: 20px 0; }
+        .result-score.excellent { color: #10b981; }
+        .result-score.good { color: #f59e0b; }
+        .result-score.poor { color: #ef4444; }
+        .result-message { font-size: 1.2em; color: #64748b; margin-bottom: 30px; }
+        .result-buttons { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav-bar">
+            <div class="nav-title">✏️ Latihan 18: Bidang Miring</div>
+            <div style="display: flex; gap: 10px;">
+                <a href="kisi-kisi-tkad-ipa.html" class="btn-nav btn-home">🏠 Menu</a>
+                <a href="18.html" class="btn-nav btn-materi">📖 Materi</a>
+            </div>
+        </div>
+        <div class="quiz-container">
+            <div class="progress-info">
+                <div class="question-number">Soal <span id="currentQuestion">1</span> dari 5</div>
+                <div class="score-display">Nilai: <span id="score">0</span>/5</div>
+            </div>
+            <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width: 0%"></div></div>
+            <div id="quizContent">

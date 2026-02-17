@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Materi 24: Pewarisan Sifat - Dihibrid</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&family=Fira+Code:wght@400;500&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #059669;
+            --secondary: #0891b2;
+            --accent: #f59e0b;
+            --dark: #0f172a;
+            --light: #f8fafc;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: linear-gradient(135deg, #0f766e 0%, #0e7490 100%);
+            color: var(--dark);
+            line-height: 1.8;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Navigation Bar */
+        .nav-bar {
+            background: white;
+            border-radius: 16px;
+            padding: 20px 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .nav-title {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn-nav {
+            padding: 12px 24px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95em;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-home {
+            background: linear-gradient(135deg, #64748b, #475569);
+            color: white;
+            box-shadow: 0 4px 12px rgba(100, 116, 139, 0.3);
+        }
+
+        .btn-home:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(100, 116, 139, 0.4);
+        }
+
+        .btn-practice {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+        }
+
+        .btn-practice:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4);
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            border-radius: 20px;
+            padding: 50px 60px;
+            margin-bottom: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+        }
+
+        .header h1 {
+            font-size: 2.8em;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        .header .meta {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.95em;
+            color: #64748b;
+        }
+
+        .meta-item .icon {
+            font-size: 1.3em;
+        }
+
+        /* Content Section */
+        .content {
+            background: white;
+            border-radius: 20px;
+            padding: 50px 60px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .content h2 {
+            font-size: 2em;
+            font-weight: 700;
+            color: var(--primary);
+            margin-top: 40px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid var(--primary);
+        }
+
+        .content h2:first-child {
+            margin-top: 0;
+        }
+
+        .content h3 {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+
+        .content p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .content ul, .content ol {
+            margin: 15px 0 15px 30px;
+        }
+
+        .content li {
+            margin-bottom: 10px;
+        }
+
+        /* Info Box */
+        .info-box {
+            background: linear-gradient(135deg, #e0f2fe 0%, #dbeafe 100%);
+            border-left: 5px solid var(--secondary);
+            padding: 25px 30px;
+            margin: 25px 0;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(8, 145, 178, 0.1);
+        }
+
+        .info-box h4 {
+            color: var(--secondary);
+            font-size: 1.3em;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        /* Warning Box */
+        .warning-box {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-left: 5px solid var(--accent);
+            padding: 25px 30px;
+            margin: 25px 0;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.1);
+        }
+
+        .warning-box h4 {
+            color: #d97706;
+            font-size: 1.3em;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        /* Key Points Box */
+        .key-points {
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+            border-left: 5px solid var(--primary);
+            padding: 25px 30px;
+            margin: 25px 0;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(5, 150, 105, 0.1);
+        }
+
+        .key-points h4 {
+            color: var(--primary);
+            font-size: 1.3em;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        /* Punnett Square */
+        .punnett-square {
+            background: #f8fafc;
+            border: 3px solid var(--primary);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 25px 0;
+            overflow-x: auto;
+        }
+
+        .punnett-table {
+            border-collapse: collapse;
+            margin: 15px auto;
+            min-width: 500px;
+        }
+
+        .punnett-table td {
+            border: 2px solid #64748b;
+            padding: 15px;
+            text-align: center;
+            font-weight: 600;
+            min-width: 80px;
+        }
+
+        .punnett-table .gamete-row {
+            background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+            font-weight: 800;
+            color: var(--secondary);
+        }
+
+        .punnett-table .gamete-col {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            font-weight: 800;
+            color: #d97706;
+        }
+
+        .punnett-table .result-cell {
+            background: white;
+            font-family: 'Fira Code', monospace;
+        }
+
+        /* Table Styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        thead {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 700;
+            font-size: 1.05em;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Example Box */
+        .example-box {
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 25px 30px;
+            margin: 25px 0;
+        }
+
+        .example-box h4 {
+            color: var(--accent);
+            font-size: 1.2em;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 15px;
+            }
+
+            .header, .content {
+                padding: 30px 25px;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .content h2 {
+                font-size: 1.6em;
+            }
+
+            .nav-bar {
+                flex-direction: column;
+            }
+
+            .nav-buttons {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .punnett-square {
+                overflow-x: scroll;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation Bar -->
+        <div class="nav-bar">
+            <div class="nav-title">📚 Materi IPA - Kelas 9</div>
+            <div class="nav-buttons">
+                <a href="kisi-kisi-tkad-ipa.html" class="btn-nav btn-home">🏠 Menu Utama</a>
+                <a href="Lat24.html" class="btn-nav btn-practice">✏️ Latihan Soal</a>
+            </div>
+        </div>
+
+        <!-- Header -->
+        <div class="header">
+            <h1>🧬 Pewarisan Sifat: Persilangan Dihibrid</h1>
+            <div class="meta">
+                <div class="meta-item">
+                    <span class="icon">📖</span>
+                    <span>Materi 24</span>
+                </div>
+                <div class="meta-item">
+                    <span class="icon">🎯</span>
+                    <span>Kelas 9</span>
+                </div>
+                <div class="meta-item">
+                    <span class="icon">⏱️</span>
+                    <span>50 menit</span>
+                </div>
+                <div class="meta-item">
+                    <span class="icon">📊</span>
+                    <span>Level: L2 (Aplikasi)</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <h2>🔬 Apa itu Persilangan Dihibrid?</h2>
+            <p>
+                <strong>Persilangan dihibrid</strong> adalah persilangan antara dua individu dengan <strong>DUA sifat beda</strong> yang diwariskan. Berbeda dengan monohibrid yang hanya memperhatikan satu sifat, dihibrid memperhatikan dua sifat sekaligus.
+            </p>
+
+            <div class="info-box">
+                <h4>💡 Contoh Sederhana</h4>
+                <p><strong>Monohibrid:</strong> Persilangan kacang ercis berdasarkan <strong>satu sifat saja</strong></p>
+                <ul>
+                    <li>Hanya memperhatikan: Bentuk biji (bulat vs keriput)</li>
+                    <li>ATAU hanya memperhatikan: Warna biji (kuning vs hijau)</li>
+                </ul>
+                
+                <p style="margin-top: 15px;"><strong>Dihibrid:</strong> Persilangan kacang ercis berdasarkan <strong>dua sifat sekaligus</strong></p>
+                <ul>
+                    <li>Memperhatikan: Bentuk biji (bulat vs keriput) <strong>DAN</strong> Warna biji (kuning vs hijau)</li>
+                    <li>Dua sifat diamati bersamaan dalam satu persilangan</li>
+                </ul>
+            </div>
+
+            <h2>📋 Istilah-Istilah Penting dalam Genetika</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Istilah</th>
+                        <th>Pengertian</th>
+                        <th>Contoh</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Gen</strong></td>
+                        <td>Unit pewarisan sifat yang menentukan karakteristik tertentu</td>
+                        <td>Gen untuk warna bunga, tinggi tanaman</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Alel</strong></td>
+                        <td>Bentuk alternatif dari suatu gen</td>
+                        <td>Merah (M) vs Putih (m)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Genotipe</strong></td>
+                        <td>Susunan genetik (huruf/simbol gen)</td>
+                        <td>MM, Mm, mm</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Fenotipe</strong></td>
+                        <td>Tampilan fisik yang terlihat</td>
+                        <td>Merah, Putih</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Dominan</strong></td>
+                        <td>Sifat yang muncul/menutupi sifat lain (huruf besar)</td>
+                        <td>B (Bulat) dominan terhadap b (keriput)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Resesif</strong></td>
+                        <td>Sifat yang tertutupi oleh sifat dominan (huruf kecil)</td>
+                        <td>b (keriput) resesif terhadap B (Bulat)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Homozigot</strong></td>
+                        <td>Kedua alel sama (murni)</td>
+                        <td>BB (homozigot dominan), bb (homozigot resesif)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Heterozigot</strong></td>
+                        <td>Kedua alel berbeda (hibrida)</td>
+                        <td>Bb (heterozigot)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>P (Parental)</strong></td>
+                        <td>Generasi orang tua</td>
+                        <td>BB × bb</td>
+                    </tr>
+                    <tr>
+                        <td><strong>F1 (Filial 1)</strong></td>
+                        <td>Generasi keturunan pertama</td>
+                        <td>Bb</td>
+                    </tr>
+                    <tr>
+                        <td><strong>F2 (Filial 2)</strong></td>
+                        <td>Generasi keturunan kedua (hasil persilangan F1 × F1)</td>
+                        <td>BB, Bb, Bb, bb</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>🧮 Hukum Mendel dalam Dihibrid</h2>
+
+            <h3>1️⃣ Hukum Mendel I (Hukum Segregasi)</h3>
+            <p>
+                Setiap pasangan alel akan memisah (segregasi) saat pembentukan gamet, sehingga setiap gamet hanya membawa satu alel dari setiap gen.
+            </p>
+
+            <h3>2️⃣ Hukum Mendel II (Hukum Asortasi/Pengelompokan Bebas)</h3>
+            <div class="info-box">
+                <h4>📌 Hukum Mendel II - Kunci Dihibrid!</h4>
+                <p><strong>"Pemisahan suatu pasangan alel tidak bergantung pada pemisahan pasangan alel yang lain."</strong></p>
+                <p style="margin-top: 10px;">Artinya: Gen untuk sifat 1 (misalnya bentuk biji) diwariskan secara <strong>independen/bebas</strong> dari gen untuk sifat 2 (misalnya warna biji).</p>
+            </div>
+
+            <h2>📊 Persilangan Dihibrid: Langkah demi Langkah</h2>
+
+            <h3>Contoh Klasik: Kacang Ercis (Pisum sativum)</h3>
+
+            <p><strong>Sifat yang diperhatikan:</strong></p>
+            <ul>
+                <li><strong>Sifat 1 - Bentuk Biji:</strong>
+                    <ul>
+                        <li>B = Bulat (dominan)</li>
+                        <li>b = Keriput (resesif)</li>
+                    </ul>
+                </li>
+                <li><strong>Sifat 2 - Warna Biji:</strong>
+                    <ul>
+                        <li>K = Kuning (dominan)</li>
+                        <li>k = Hijau (resesif)</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <div class="example-box">
+                <h4>📌 Contoh Persilangan Dihibrid Lengkap</h4>
+                
+                <p><strong>Kasus:</strong> Kacang ercis berbiji bulat-kuning (BBKK) disilangkan dengan kacang ercis berbiji keriput-hijau (bbkk)</p>
+
+                <p style="margin-top: 20px;"><strong>Langkah 1: Tentukan Genotipe P (Parental)</strong></p>
+                <ul>
+                    <li>P1 (Induk 1): <strong>BBKK</strong> (Bulat-Kuning, homozigot dominan)</li>
+                    <li>P2 (Induk 2): <strong>bbkk</strong> (Keriput-Hijau, homozigot resesif)</li>
+                </ul>
+
+                <p style="margin-top: 20px;"><strong>Langkah 2: Tentukan Gamet P</strong></p>
+                <ul>
+                    <li>Gamet P1: <strong>BK</strong> (semua gamet sama karena homozigot)</li>
+                    <li>Gamet P2: <strong>bk</strong> (semua gamet sama karena homozigot)</li>
+                </ul>
+
+                <p style="margin-top: 20px;"><strong>Langkah 3: Buat Persilangan P → F1</strong></p>
+                <p>BK × bk = <strong>BbKk</strong> (semua F1 heterozigot)</p>
+
+                <p style="margin-top: 20px;"><strong>Hasil F1:</strong></p>
+                <ul>
+                    <li>Genotipe: <strong>100% BbKk</strong></li>
+                    <li>Fenotipe: <strong>100% Bulat-Kuning</strong></li>
+                </ul>
+
+                <p style="margin-top: 20px;"><strong>Langkah 4: Tentukan Gamet F1</strong></p>
+                <p>Dari BbKk, gamet yang terbentuk ada <strong>4 macam</strong> (kombinasi bebas):</p>
+                <ul>
+                    <li>BK (B dengan K)</li>
+                    <li>Bk (B dengan k)</li>
+                    <li>bK (b dengan K)</li>
+                    <li>bk (b dengan k)</li>
+                </ul>
+
+                <div class="warning-box">
+                    <h4>⚠️ Cara Mudah Menentukan Gamet Dihibrid</h4>
+                    <p>Dari <strong>BbKk</strong>, pisahkan setiap pasangan:</p>
+                    <ul>
+                        <li>Pasangan 1: B dan b</li>
+                        <li>Pasangan 2: K dan k</li>
+                    </ul>
+                    <p>Kombinasikan semua kemungkinan:</p>
+                    <ol>
+                        <li>B + K = <strong>BK</strong></li>
+                        <li>B + k = <strong>Bk</strong></li>
+                        <li>b + K = <strong>bK</strong></li>
+                        <li>b + k = <strong>bk</strong></li>
+                    </ol>
+                    <p>Total: <strong>4 jenis gamet</strong></p>
+                </div>
+
+                <p style="margin-top: 20px;"><strong>Langkah 5: Buat Papan Punnett Square F1 × F1</strong></p>
+                
+                <div class="punnett-square">
+                    <p style="text-align: center; font-weight: 700; margin-bottom: 15px;">Papan Punnett F1 × F1 (BbKk × BbKk)</p>
+                    <table class="punnett-table">
+                        <tr>
+                            <td></td>
+                            <td class="gamete-row">BK</td>
+                            <td class="gamete-row">Bk</td>
+                            <td class="gamete-row">bK</td>
+                            <td class="gamete-row">bk</td>
+                        </tr>
+                        <tr>
+                            <td class="gamete-col">BK</td>
+                            <td class="result-cell">BBKK</td>
+                            <td class="result-cell">BBKk</td>
+                            <td class="result-cell">BbKK</td>
+                            <td class="result-cell">BbKk</td>
+                        </tr>
+                        <tr>
+                            <td class="gamete-col">Bk</td>
+                            <td class="result-cell">BBKk</td>
+                            <td class="result-cell">BBkk</td>
+                            <td class="result-cell">BbKk</td>
+                            <td class="result-cell">Bbkk</td>
+                        </tr>
+                        <tr>
+                            <td class="gamete-col">bK</td>
+                            <td class="result-cell">BbKK</td>
+                            <td class="result-cell">BbKk</td>
+                            <td class="result-cell">bbKK</td>
+                            <td class="result-cell">bbKk</td>
+                        </tr>
+                        <tr>
+                            <td class="gamete-col">bk</td>
+                            <td class="result-cell">BbKk</td>
+                            <td class="result-cell">Bbkk</td>
+                            <td class="result-cell">bbKk</td>
+                            <td class="result-cell">bbkk</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <p style="margin-top: 20px;"><strong>Langkah 6: Hitung Rasio Genotipe F2</strong></p>
+                <p>Total: 16 kotak</p>
+                <ul>
+                    <li>BBKK: 1</li>
+                    <li>BBKk: 2</li>
+                    <li>BBkk: 1</li>
+                    <li>BbKK: 2</li>
+                    <li>BbKk: 4</li>
+                    <li>Bbkk: 2</li>
+                    <li>bbKK: 1</li>
+                    <li>bbKk: 2</li>
+                    <li>bbkk: 1</li>
+                </ul>
+                <p><strong>Rasio Genotipe = 1:2:1:2:4:2:1:2:1</strong></p>
+
+                <p style="margin-top: 20px;"><strong>Langkah 7: Hitung Rasio Fenotipe F2</strong></p>
+                <ul>
+                    <li><strong>Bulat-Kuning</strong> (B_K_): BBKK(1) + BBKk(2) + BbKK(2) + BbKk(4) = <strong>9</strong></li>
+                    <li><strong>Bulat-Hijau</strong> (B_kk): BBkk(1) + Bbkk(2) = <strong>3</strong></li>
+                    <li><strong>Keriput-Kuning</strong> (bbK_): bbKK(1) + bbKk(2) = <strong>3</strong></li>
+                    <li><strong>Keriput-Hijau</strong> (bbkk): bbkk(1) = <strong>1</strong></li>
+                </ul>
+                
+                <div class="key-points">
+                    <h4>🎯 Rasio Fenotipe F2 Dihibrid = <strong>9 : 3 : 3 : 1</strong></h4>
+                    <p>Ini adalah rasio klasik Mendel untuk persilangan dihibrid dengan sifat dominan penuh!</p>
+                    <ul>
+                        <li><strong>9</strong> → Bulat-Kuning (kedua sifat dominan)</li>
+                        <li><strong>3</strong> → Bulat-Hijau (sifat 1 dominan, sifat 2 resesif)</li>
+                        <li><strong>3</strong> → Keriput-Kuning (sifat 1 resesif, sifat 2 dominan)</li>
+                        <li><strong>1</strong> → Keriput-Hijau (kedua sifat resesif)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h2>📐 Cara Cepat Menghitung Rasio F2 Dihibrid</h2>
+
+            <div class="info-box">
+                <h4>⚡ Rumus Cepat Tanpa Papan Punnett</h4>
+                
+                <p><strong>Jika diketahui F1 = BbKk × BbKk</strong></p>
+                
+                <p style="margin-top: 15px;"><strong>Langkah 1:</strong> Pisahkan menjadi dua persilangan monohibrid</p>
+                <ul>
+                    <li>Sifat 1: Bb × Bb → Rasio F2 = <strong>3 Bulat : 1 Keriput</strong></li>
+                    <li>Sifat 2: Kk × Kk → Rasio F2 = <strong>3 Kuning : 1 Hijau</strong></li>
+                </ul>
+
+                <p style="margin-top: 15px;"><strong>Langkah 2:</strong> Kalikan rasio fenotipe</p>
+                <ul>
+                    <li>Bulat-Kuning = 3 × 3 = <strong>9</strong></li>
+                    <li>Bulat-Hijau = 3 × 1 = <strong>3</strong></li>
+                    <li>Keriput-Kuning = 1 × 3 = <strong>3</strong></li>
+                    <li>Keriput-Hijau = 1 × 1 = <strong>1</strong></li>
+                </ul>
+
+                <p style="margin-top: 15px;"><strong>Hasil: 9 : 3 : 3 : 1</strong> ✓</p>
+            </div>
+
+            <h2>📊 Tabel Perbandingan Monohibrid vs Dihibrid</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Aspek</th>
+                        <th>Monohibrid</th>
+                        <th>Dihibrid</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Jumlah Sifat</strong></td>
+                        <td>1 sifat</td>
+                        <td>2 sifat</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Contoh P</strong></td>
+                        <td>BB × bb</td>
+                        <td>BBKK × bbkk</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Genotipe F1</strong></td>
+                        <td>Bb</td>
+                        <td>BbKk</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Jenis Gamet F1</strong></td>
+                        <td>2 macam (B, b)</td>
+                        <td>4 macam (BK, Bk, bK, bk)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Kotak Punnett F2</strong></td>
+                        <td>2 × 2 = 4 kotak</td>
+                        <td>4 × 4 = 16 kotak</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Rasio Genotipe F2</strong></td>
+                        <td>1 : 2 : 1</td>
+                        <td>1:2:1:2:4:2:1:2:1</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Rasio Fenotipe F2</strong></td>
+                        <td>3 : 1</td>
+                        <td>9 : 3 : 3 : 1</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>🎓 Rangkuman</h2>
+            <div class="info-box">
+                <ol>
+                    <li><strong>Dihibrid</strong> = persilangan dengan 2 sifat beda yang diwariskan bersamaan</li>
+                    
+                    <li><strong>Hukum Mendel II:</strong> Gen untuk sifat yang berbeda diwariskan secara bebas/independen</li>
+                    
+                    <li><strong>Gamet F1 dihibrid:</strong> Dari BbKk → 4 jenis gamet (BK, Bk, bK, bk)</li>
+                    
+                    <li><strong>Papan Punnett F2:</strong> 4 × 4 = 16 kotak</li>
+                    
+                    <li><strong>Rasio Fenotipe F2 = 9 : 3 : 3 : 1</strong>
+                        <ul>
+                            <li>9 → Dominan-Dominan</li>
+                            <li>3 → Dominan-resesif</li>
+                            <li>3 → resesif-Dominan</li>
+                            <li>1 → resesif-resesif</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Cara cepat:</strong> Kalikan rasio monohibrid (3:1) × (3:1) = 9:3:3:1</li>
+                </ol>
+            </div>
+
+            <div class="key-points">
+                <h4>💪 Tips Mengerjakan Soal Dihibrid</h4>
+                <ol>
+                    <li><strong>Identifikasi genotipe P:</strong> Baca soal dengan teliti, tentukan genotipe orang tua</li>
+                    <li><strong>Tentukan gamet P:</strong> Ingat, homozigot → 1 jenis gamet, heterozigot → beberapa jenis</li>
+                    <li><strong>Tentukan F1:</strong> Silangkan gamet P</li>
+                    <li><strong>Jika ditanya F2:</strong> Tentukan gamet F1 (4 macam dari BbKk)</li>
+                    <li><strong>Buat Papan Punnett:</strong> 4×4 = 16 kotak</li>
+                    <li><strong>Hitung rasio:</strong> Kelompokkan berdasarkan fenotipe</li>
+                    <li><strong>Alternatif cepat:</strong> Gunakan perkalian rasio monohibrid</li>
+                </ol>
+            </div>
+
+            <div class="warning-box">
+                <h4>⚠️ Kesalahan Umum yang Harus Dihindari</h4>
+                <ul>
+                    <li><strong>Salah menentukan gamet:</strong> BbKk menghasilkan 4 gamet (BK, Bk, bK, bk), BUKAN 2!</li>
+                    <li><strong>Lupa kombinasi bebas:</strong> B bisa berpasangan dengan K ATAU k, begitu juga b</li>
+                    <li><strong>Salah hitung rasio:</strong> Pastikan total 16 kotak, bukan 4 kotak seperti monohibrid</li>
+                    <li><strong>Tertukar fenotipe:</strong> B_K_ = Bulat-Kuning (ada B dan K dominan), bukan yang lain</li>
+                    <li><strong>Tidak teliti:</strong> BBKk ≠ BbKK (genotipe berbeda meski fenotipe sama!)</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Navigation Bottom -->
+        <div class="nav-bar">
+            <div class="nav-buttons" style="width: 100%; justify-content: space-between;">
+                <a href="kisi-kisi-tkad-ipa.html" class="btn-nav btn-home">
+                    🏠 Kembali ke Menu
+                </a>
+                <a href="Lat24.html" class="btn-nav btn-practice">
+                    Lanjut ke Latihan Soal ✏️
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
