@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latihan Soal 17: Tuas (Pesawat Sederhana)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #8b5cf6;
+            --secondary: #ec4899;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --dark: #1e293b;
+            --light: #f8fafc;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Navigation */
+        .nav-bar {
+            background: white;
+            border-radius: 16px;
+            padding: 15px 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .nav-title {
+            font-size: 1.2em;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn-nav {
+            padding: 10px 20px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-home {
+            background: linear-gradient(135deg, #64748b, #475569);
+            color: white;
+            box-shadow: 0 4px 12px rgba(100, 116, 139, 0.3);
+        }
+
+        .btn-home:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(100, 116, 139, 0.4);
+        }
+
+        .btn-materi {
+            background: linear-gradient(135deg, #059669, #047857);
+            color: white;
+            box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);
+        }
+
+        .btn-materi:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(5, 150, 105, 0.4);
+        }
+
+        /* Quiz Container */
+        .quiz-container {
+            background: white;
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quiz-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--warning));
+            background-size: 200% 100%;
+            animation: gradientMove 3s ease infinite;
+        }
+
+        @keyframes gradientMove {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            margin-bottom: 30px;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .question-number {
+            font-size: 1.1em;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .score-display {
+            font-size: 1em;
+            font-weight: 700;
+            color: var(--success);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background: #e2e8f0;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 20px;
+            transition: width 0.5s ease;
+        }
+
+        /* Question Slide */
+        .slide {
+            display: none;
+            animation: slideIn 0.5s ease;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .question-box {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border-left: 6px solid var(--primary);
+            padding: 25px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+        }
+
+        .question-text {
+            font-size: 1.15em;
+            font-weight: 700;
+            color: var(--dark);
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+
+        .question-data {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 15px;
+            border: 2px solid #bae6fd;
+        }
+
+        .question-data table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .question-data th,
+        .question-data td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .question-data th {
+            background: #f1f5f9;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .question-data ul,
+        .question-data ol {
+            margin: 10px 0 10px 25px;
+        }
+
+        .question-data li {
+            margin: 8px 0;
+        }
+
+        /* Options */
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .option {
+            background: white;
+            border: 3px solid #e2e8f0;
+            padding: 18px 22px;
+            border-radius: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.05em;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .option:hover:not(.disabled) {
+            border-color: var(--primary);
+            background: #faf5ff;
+            transform: translateX(5px);
+        }
+
+        .option.selected {
+            border-color: var(--primary);
+            background: linear-gradient(135deg, #f3e8ff 0%, #fae8ff 100%);
+        }
+
+        .option.correct {
+            border-color: var(--success);
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+        }
+
+        .option.wrong {
+            border-color: var(--danger);
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+        }
+
+        .option.disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        .option-label {
+            width: 35px;
+            height: 35px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            flex-shrink: 0;
+        }
+
+        .option.correct .option-label {
+            background: var(--success);
+        }
+
+        .option.wrong .option-label {
+            background: var(--danger);
+        }
+
+        /* Buttons */
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .btn {
+            padding: 14px 30px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: 0 6px 20px rgba(139, 92, 246, 0.4);
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(139, 92, 246, 0.5);
+        }
+
+        .btn-next {
+            background: linear-gradient(135deg, var(--success), #059669);
+            color: white;
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+            display: none;
+        }
+
+        .btn-next.show {
+            display: inline-flex;
+        }
+
+        .btn-next:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.5);
+        }
+
+        /* Feedback */
+        .feedback {
+            margin-top: 25px;
+            padding: 25px;
+            border-radius: 16px;
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .feedback.show {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .feedback.correct {
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+            border-left: 6px solid var(--success);
+        }
+
+        .feedback.wrong {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            border-left: 6px solid var(--danger);
+        }
+
+        .feedback-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .feedback-icon {
+            font-size: 2em;
+        }
+
+        .feedback-title {
+            font-size: 1.3em;
+            font-weight: 800;
+        }
+
+        .feedback-text {
+            font-size: 1.05em;
+            line-height: 1.7;
+            color: var(--dark);
+        }
+
+        /* Result Screen */
+        .result-screen {
+            display: none;
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .result-screen.show {
+            display: block;
+            animation: zoomIn 0.6s ease;
+        }
+
+        @keyframes zoomIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .result-icon {
+            font-size: 6em;
+            margin-bottom: 20px;
+            animation: bounce 1s ease infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .result-score {
+            font-size: 4em;
+            font-weight: 900;
+            margin: 20px 0;
+        }
+
+        .result-score.excellent {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .result-score.good {
+            background: linear-gradient(135deg, var(--success), #059669);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .result-score.poor {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .result-title {
+            font-size: 2em;
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 15px;
+        }
+
+        .result-message {
+            font-size: 1.2em;
+            color: #64748b;
+            margin-bottom: 35px;
+            line-height: 1.7;
+        }
+
+        .result-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-retry {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 16px 35px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1em;
+            box-shadow: 0 6px 20px rgba(139, 92, 246, 0.4);
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-retry:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(139, 92, 246, 0.5);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .quiz-container {
+                padding: 25px 20px;
+            }
+
+            .question-text {
+                font-size: 1.05em;
+            }
+
+            .option {
+                padding: 15px 18px;
+                font-size: 1em;
+            }
+
+            .result-score {
+                font-size: 3em;
+            }
+
+            .result-title {
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation -->
+        <div class="nav-bar">
+            <div class="nav-title">🎯 Latihan Soal: Tuas</div>
+            <div class="nav-buttons">
+                <a href="kisi-kisi-tkad-ipa.html" class="btn-nav btn-home">🏠 Menu Utama</a>
+                <a href="17.html" class="btn-nav btn-materi">📖 Lihat Materi</a>
+            </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-container">
+            <!-- Progress Bar -->
+            <div class="progress-container">
+                <div class="progress-info">
+                    <div class="question-number">
+                        Soal <span id="currentQuestion">1</span> dari 5
+                    </div>
+                    <div class="score-display">
+                        Skor: <span id="score">0</span>/5
+                    </div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill" style="width: 20%;"></div>
+                </div>
+            </div>
+
+            <!-- Quiz Content -->
+            <div id="quizContent">
+                <!-- Question 1 -->
+                <div class="slide active" data-question="1">
+                    <div class="question-box">
+                        <div class="question-text">
+                            Perhatikan beberapa alat berikut yang sering digunakan dalam kehidupan sehari-hari:
+                        </div>
+                        <div class="question-data">
+                            <ol>
+                                <li><strong>Gunting</strong> - untuk memotong kertas</li>
+                                <li><strong>Sapu</strong> - untuk menyapu lantai</li>
+                                <li><strong>Pinset</strong> - untuk mengambil duri</li>
+                                <li><strong>Linggis</strong> - untuk mencabut paku</li>
+                                <li><strong>Gerobak dorong</strong> - untuk mengangkut pasir</li>
+                            </ol>
+                        </div>
+                        <div class="question-text" style="margin-top: 15px;">
+                            Alat manakah yang menggunakan prinsip tuas dengan <strong>titik tumpu di tengah</strong> (Tuas Golongan I)?
+                        </div>
+                    </div>
+
+                    <div class="options-container">
+                        <div class="option" data-answer="A">
+                            <div class="option-label">A</div>
+                            <div>Gunting dan Linggis</div>
+                        </div>
+                        <div class="option" data-answer="B">
+                            <div class="option-label">B</div>
+                            <div>Sapu dan Pinset</div>
+                        </div>
+                        <div class="option" data-answer="C">
+                            <div class="option-label">C</div>
+                            <div>Gerobak dorong dan Sapu</div>
+                        </div>
+                        <div class="option" data-answer="D">
+                            <div class="option-label">D</div>
+                            <div>Pinset dan Gerobak dorong</div>
+                        </div>
+                    </div>
+
+                    <div class="button-group">
+                        <button class="btn btn-submit" onclick="submitAnswer(1, 'A')">Jawab ✓</button>
+                        <button class="btn btn-next" onclick="nextQuestion()">Lanjut →</button>
+                    </div>
+
+                    <div class="feedback" id="feedback1"></div>
+                </div>
+
+                <!-- Question 2 -->
+                <div class="slide" data-question="2">
+                    <div class="question-box">
+                        <div class="question-text">
+                            Seorang tukang bangunan menggunakan beberapa alat untuk menyelesaikan pekerjaannya:
+                        </div>
+                        <div class="question-data">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Alat</th>
+                                        <th>Fungsi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>P. Tang potong</td>
+                                        <td>Memotong kawat</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Q. Sekop</td>
+                                        <td>Menggali dan mengangkat tanah</td>
+                                    </tr>
+                                    <tr>
+                                        <td>R. Catut</td>
+                                        <td>Mencabut paku dari kayu</td>
+                                    </tr>
+                                    <tr>
+                                        <td>S. Gerobak dorong</td>
+                                        <td>Mengangkut batu bata</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="question-text" style="margin-top: 15px;">
+                            Manakah pasangan alat yang keduanya merupakan <strong>Tuas Golongan I</strong>?
+                        </div>
+                    </div>
+
+                    <div class="options-container">
+                        <div class="option" data-answer="A">
+                            <div class="option-label">A</div>
+                            <div>Tang potong (P) dan Catut (R)</div>
+                        </div>
+                        <div class="option" data-answer="B">
+                            <div class="option-label">B</div>
+                            <div>Sekop (Q) dan Gerobak dorong (S)</div>
+                        </div>
+                        <div class="option" data-answer="C">
+                            <div class="option-label">C</div>
+                            <div>Tang potong (P) dan Sekop (Q)</div>
+                        </div>
+                        <div class="option" data-answer="D">
+                            <div class="option-label">D</div>
+                            <div>Catut (R) dan Gerobak dorong (S)</div>
+                        </div>
+                    </div>
+
+                    <div class="button-group">
+                        <button class="btn btn-submit" onclick="submitAnswer(2, 'A')">Jawab ✓</button>
+                        <button class="btn btn-next" onclick="nextQuestion()">Lanjut →</button>
+                    </div>
+
+                    <div class="feedback" id="feedback2"></div>
+                </div>
+
+                <!-- Question 3 -->
+                <div class="slide" data-question="3">
+                    <div class="question-box">
+                        <div class="question-text">
+                            Perhatikan pernyataan berikut tentang beberapa alat:
+                        </div>
+                        <div class="question-data">
+                            <ol>
+                                <li>Pembuka tutup botol memiliki beban di tengah antara kuasa dan titik tumpu</li>
+                                <li>Stapler memiliki kuasa di tengah antara beban dan titik tumpu</li>
+                                <li>Jungkat-jungkit memiliki titik tumpu di tengah</li>
+                                <li>Pemotong kuku memiliki beban di tengah</li>
+                            </ol>
+                        </div>
+                        <div class="question-text" style="margin-top: 15px;">
+                            Pernyataan yang <strong>BENAR</strong> adalah...
+                        </div>
+                    </div>
+
+                    <div class="options-container">
+                        <div class="option" data-answer="A">
+                            <div class="option-label">A</div>
+                            <div>1, 2, dan 3</div>
+                        </div>
+                        <div class="option" data-answer="B">
+                            <div class="option-label">B</div>
+                            <div>1, 3, dan 4</div>
+                        </div>
+                        <div class="option" data-answer="C">
+                            <div class="option-label">C</div>
+                            <div>2, 3, dan 4</div>
+                        </div>
+                        <div class="option" data-answer="D">
+                            <div class="option-label">D</div>
+                            <div>1, 2, dan 4</div>
+                        </div>
+                    </div>
+
+                    <div class="button-group">
+                        <button class="btn btn-submit" onclick="submitAnswer(3, 'A')">Jawab ✓</button>
+                        <button class="btn btn-next" onclick="nextQuestion()">Lanjut →</button>
+                    </div>
+
+                    <div class="feedback" id="feedback3"></div>
+                </div>
+
+                <!-- Question 4 -->
+                <div class="slide" data-question="4">
+                    <div class="question-box">
+                        <div class="question-text">
+                            Di laboratorium, tersedia beberapa alat dengan karakteristik berikut:
+                        </div>
+                        <div class="question-data">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Alat</th>
+                                        <th>Posisi Komponen</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Pinset</td>
+                                        <td>Beban di depan, Kuasa di tengah, Titik tumpu di belakang</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Pelubang kertas</td>
+                                        <td>Kuasa di depan, Beban di tengah, Titik tumpu di belakang</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Pemotong kertas</td>
+                                        <td>Kuasa di depan, Beban di tengah, Titik tumpu di belakang</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Gunting bedah</td>
+                                        <td>Kuasa di ujung, Titik tumpu di tengah, Beban di ujung lain</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="question-text" style="margin-top: 15px;">
+                            Alat yang termasuk <strong>Tuas Golongan III</strong> adalah...
+                        </div>
+                    </div>
+
+                    <div class="options-container">
+                        <div class="option" data-answer="A">
+                            <div class="option-label">A</div>
+                            <div>Pinset saja</div>
+                        </div>
+                        <div class="option" data-answer="B">
+                            <div class="option-label">B</div>
+                            <div>Pelubang kertas dan Pemotong kertas</div>
+                        </div>
+                        <div class="option" data-answer="C">
+                            <div class="option-label">C</div>
+                            <div>Gunting bedah saja</div>
+                        </div>
+                        <div class="option" data-answer="D">
+                            <div class="option-label">D</div>
+                            <div>Semua alat tersebut</div>
+                        </div>
+                    </div>
+
+                    <div class="button-group">
+                        <button class="btn btn-submit" onclick="submitAnswer(4, 'A')">Jawab ✓</button>
+                        <button class="btn btn-next" onclick="nextQuestion()">Lanjut →</button>
+                    </div>
+
+                    <div class="feedback" id="feedback4"></div>
+                </div>
+
+                <!-- Question 5 -->
+                <div class="slide" data-question="5">
+                    <div class="question-box">
+                        <div class="question-text">
+                            Pak Rudi memiliki beberapa alat di rumahnya. Dia ingin mengelompokkan alat-alatnya berdasarkan golongan tuas:
+                        </div>
+                        <div class="question-data">
+                            <ul>
+                                <li>Gunting kuku</li>
+                                <li>Penjepit roti (tongs)</li>
+                                <li>Tang jepit</li>
+                                <li>Pembuka kaleng</li>
+                                <li>Sapu lantai</li>
+                            </ul>
+                        </div>
+                        <div class="question-text" style="margin-top: 15px;">
+                            Jika Pak Rudi ingin mengumpulkan alat yang menggunakan prinsip tuas untuk <strong>memperbesar gaya atau mengubah arah gaya</strong> (biasanya KM ≥ 1), alat mana yang harus dia pilih?
+                        </div>
+                    </div>
+
+                    <div class="options-container">
+                        <div class="option" data-answer="A">
+                            <div class="option-label">A</div>
+                            <div>Gunting kuku, Tang jepit, dan Pembuka kaleng</div>
+                        </div>
+                        <div class="option" data-answer="B">
+                            <div class="option-label">B</div>
+                            <div>Penjepit roti dan Sapu lantai</div>
+                        </div>
+                        <div class="option" data-answer="C">
+                            <div class="option-label">C</div>
+                            <div>Hanya Gunting kuku dan Tang jepit</div>
+                        </div>
+                        <div class="option" data-answer="D">
+                            <div class="option-label">D</div>
+                            <div>Semua alat tersebut</div>
+                        </div>
+                    </div>
+
+                    <div class="button-group">
+                        <button class="btn btn-submit" onclick="submitAnswer(5, 'A')">Jawab ✓</button>
+                        <button class="btn btn-next" onclick="showResult()">Lihat Hasil 🎯</button>
+                    </div>
+
+                    <div class="feedback" id="feedback5"></div>
+                </div>
+            </div>
+
+            <!-- Result Screen -->
+            <div class="result-screen" id="resultScreen">
+                <div class="result-icon" id="resultIcon">🏆</div>
+                <div class="result-score" id="resultScore">5/5</div>
+                <div class="result-title" id="resultTitle">Sempurna!</div>
+                <div class="result-message" id="resultMessage">
+                    Luar biasa! Kamu menguasai materi Tuas (Pesawat Sederhana) dengan sempurna!
+                </div>
+                <div class="result-actions">
+                    <button class="btn-retry" onclick="retryQuiz()">🔄 Ulangi Latihan</button>
+                    <a href="17.html" class="btn-retry" style="background: linear-gradient(135deg, #059669, #047857);">📖 Pelajari Materi Lagi</a>
+                    <a href="kisi-kisi-tkad-ipa.html" class="btn-retry" style="background: linear-gradient(135deg, #64748b, #475569);">🏠 Kembali ke Menu</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 1;
+        let score = 0;
+        let answeredQuestions = [];
+
+        const explanations = {
+            1: {
+                correct: "Sempurna! <strong>Gunting</strong> dan <strong>Linggis</strong> adalah tuas golongan I dengan titik tumpu di tengah:<br><br><strong>Gunting:</strong><br>• Titik tumpu: poros/sekrup di tengah gunting<br>• Kuasa: jari yang menekan gagang<br>• Beban: kertas yang dipotong<br>• Susunan: E-F-L (Kuasa - Titik Tumpu - Beban)<br><br><strong>Linggis:</strong><br>• Titik tumpu: tepi kayu/batu yang menjadi tumpuan<br>• Kuasa: tangan yang menekan ujung linggis<br>• Beban: paku yang dicabut<br>• Susunan: E-F-L",
+                wrong: "Belum tepat. Mari kita analisis setiap alat:<br><br><strong>Gunting:</strong> Golongan I (titik tumpu di tengah) ✓<br><strong>Sapu:</strong> Golongan III (kuasa di tengah) ✗<br><strong>Pinset:</strong> Golongan III (kuasa di tengah) ✗<br><strong>Linggis:</strong> Golongan I (titik tumpu di tengah) ✓<br><strong>Gerobak dorong:</strong> Golongan II (beban di tengah) ✗<br><br>Tuas Golongan I memiliki susunan: Kuasa - Titik Tumpu - Beban (E-F-L). Yang benar adalah <strong>Gunting dan Linggis</strong>."
+            },
+            2: {
+                correct: "Benar sekali! <strong>Tang potong</strong> dan <strong>Catut</strong> adalah tuas golongan I:<br><br><strong>Tang potong (P):</strong><br>• Titik tumpu: poros/sekrup penghubung<br>• Kuasa: tangan menekan gagang<br>• Beban: kawat yang dipotong<br>• Susunan: E-F-L → Golongan I<br><br><strong>Catut (R):</strong><br>• Titik tumpu: ujung catut yang menempel pada kayu<br>• Kuasa: tangan menekan gagang<br>• Beban: paku yang dicabut<br>• Susunan: E-F-L → Golongan I",
+                wrong: "Belum benar. Perhatikan analisis berikut:<br><br><strong>P. Tang potong:</strong> Golongan I (F di tengah) ✓<br><strong>Q. Sekop:</strong> Golongan III (kuasa di tengah, bukan F di tengah) ✗<br><strong>R. Catut:</strong> Golongan I (F di tengah) ✓<br><strong>S. Gerobak dorong:</strong> Golongan II (beban di tengah) ✗<br><br>Sekop sering dikira golongan II, padahal golongan III karena tangan bagian bawah (kuasa) berada di antara beban (tanah) dan titik tumpu (tangan atas). Yang benar: <strong>Tang potong dan Catut</strong>."
+            },
+            3: {
+                correct: "Excellent! Analisis yang tepat:<br><br><strong>1. Pembuka tutup botol - BENAR ✓</strong><br>Golongan II: Kuasa - Beban (tutup) - Titik tumpu (tepi botol)<br><br><strong>2. Stapler - BENAR ✓</strong><br>Golongan III: Beban (kertas) - Kuasa (tangan) - Titik tumpu (engsel belakang)<br><br><strong>3. Jungkat-jungkit - BENAR ✓</strong><br>Golongan I: Kuasa - Titik tumpu (poros tengah) - Beban<br><br><strong>4. Pemotong kuku - SALAH ✗</strong><br>Golongan I (titik tumpu di tengah), BUKAN beban di tengah",
+                wrong: "Belum tepat. Mari kita periksa satu per satu:<br><br><strong>Pernyataan 1:</strong> Pembuka tutup botol → Beban di tengah → Golongan II ✓ BENAR<br><strong>Pernyataan 2:</strong> Stapler → Kuasa di tengah → Golongan III ✓ BENAR<br><strong>Pernyataan 3:</strong> Jungkat-jungkit → Titik tumpu di tengah → Golongan I ✓ BENAR<br><strong>Pernyataan 4:</strong> Pemotong kuku → Beban di tengah? ✗ SALAH!<br><br>Pemotong kuku adalah golongan I dengan <strong>titik tumpu (poros) di tengah</strong>, bukan beban di tengah. Jawaban yang benar: 1, 2, dan 3."
+            },
+            4: {
+                correct: "Sempurna! <strong>Pinset</strong> adalah satu-satunya tuas golongan III dalam daftar:<br><br><strong>Pinset:</strong><br>• Susunan: Beban (di depan) - Kuasa (di tengah) - Titik tumpu (di belakang)<br>• Pola: L-E-F → Golongan III ✓<br><br><strong>Alat lain:</strong><br>• Pelubang kertas: E-L-F → Golongan II<br>• Pemotong kertas: E-L-F → Golongan II<br>• Gunting bedah: E-F-L → Golongan I<br><br>Tuas golongan III memiliki kuasa di tengah antara beban dan titik tumpu (L-E-F).",
+                wrong: "Belum benar. Mari kita identifikasi golongan setiap alat:<br><br><strong>Pinset:</strong> Beban-Kuasa-Titik tumpu = L-E-F → Golongan III ✓<br><strong>Pelubang kertas:</strong> Kuasa-Beban-Titik tumpu = E-L-F → Golongan II ✗<br><strong>Pemotong kertas:</strong> Kuasa-Beban-Titik tumpu = E-L-F → Golongan II ✗<br><strong>Gunting bedah:</strong> Kuasa-Titik tumpu-Beban = E-F-L → Golongan I ✗<br><br>Tuas golongan III memiliki pola L-E-F (kuasa di tengah). Hanya <strong>Pinset</strong> yang memenuhi kriteria ini."
+            },
+            5: {
+                correct: "Benar sekali! <strong>Gunting kuku, Tang jepit, dan Pembuka kaleng</strong> semuanya adalah tuas golongan I atau II yang KM ≥ 1:<br><br><strong>Gunting kuku:</strong> Golongan I, KM bisa > 1<br><strong>Tang jepit:</strong> Golongan I, KM > 1 (menguntungkan)<br><strong>Pembuka kaleng:</strong> Golongan I atau II tergantung jenisnya, KM > 1<br><br><strong>Yang TIDAK termasuk:</strong><br>• Penjepit roti: Golongan III, KM < 1 (tidak memperbesar gaya)<br>• Sapu lantai: Golongan III, KM < 1 (tidak memperbesar gaya)<br><br>Tuas golongan III mengutamakan kecepatan/presisi, bukan memperbesar gaya.",
+                wrong: "Belum tepat. Perhatikan karakteristik setiap alat:<br><br><strong>Gunting kuku:</strong> Golongan I, KM ≥ 1 ✓<br><strong>Tang jepit:</strong> Golongan I, KM > 1 ✓<br><strong>Pembuka kaleng:</strong> Golongan I/II, KM > 1 ✓<br><strong>Penjepit roti:</strong> Golongan III, KM < 1 (tidak memperbesar gaya) ✗<br><strong>Sapu lantai:</strong> Golongan III, KM < 1 (tidak memperbesar gaya) ✗<br><br>Tuas golongan III (Penjepit roti dan Sapu) memiliki KM < 1, sehingga TIDAK memperbesar gaya. Mereka justru mengutamakan kecepatan dan presisi gerakan."
+            }
+        };
+
+        // Handle option click
+        document.querySelectorAll('.option').forEach(option => {
+            option.addEventListener('click', function() {
+                if (!this.classList.contains('disabled')) {
+                    const parent = this.closest('.slide');
+                    parent.querySelectorAll('.option').forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+                    this.classList.add('selected');
+                }
+            });
+        });
+
+        function submitAnswer(questionNum, correctAnswer) {
+            const slide = document.querySelector(`.slide[data-question="${questionNum}"]`);
+            const options = slide.querySelectorAll('.option');
+            const selected = slide.querySelector('.option.selected');
+            const feedback = document.getElementById(`feedback${questionNum}`);
+            const submitBtn = slide.querySelector('.btn-submit');
+            const nextBtn = slide.querySelector('.btn-next');
+
+            if (!selected) {
+                alert('Pilih jawaban terlebih dahulu!');
+                return;
+            }
+
+            // Disable further selection
+            options.forEach(opt => opt.classList.add('disabled'));
+            submitBtn.style.display = 'none';
+            nextBtn.classList.add('show');
+
+            const userAnswer = selected.getAttribute('data-answer');
+            const isCorrect = userAnswer === correctAnswer;
+
+            // Mark correct/wrong
+            options.forEach(opt => {
+                if (opt.getAttribute('data-answer') === correctAnswer) {
+                    opt.classList.add('correct');
+                }
+                if (opt === selected && !isCorrect) {
+                    opt.classList.add('wrong');
+                }
+            });
+
+            // Update score
+            if (isCorrect && !answeredQuestions.includes(questionNum)) {
+                score++;
+                answeredQuestions.push(questionNum);
+                document.getElementById('score').textContent = score;
+            }
+
+            // Show feedback
+            feedback.classList.add('show');
+            feedback.classList.add(isCorrect ? 'correct' : 'wrong');
+            
+            const icon = isCorrect ? '✅' : '❌';
+            const title = isCorrect ? 'Jawaban Benar!' : 'Jawaban Salah!';
+            const explanation = isCorrect ? explanations[questionNum].correct : explanations[questionNum].wrong;
+
+            feedback.innerHTML = `
+                <div class="feedback-header">
+                    <div class="feedback-icon">${icon}</div>
+                    <div class="feedback-title">${title}</div>
+                </div>
+                <div class="feedback-text">${explanation}</div>
+            `;
+
+            // Scroll to feedback
+            setTimeout(() => {
+                feedback.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 300);
+        }
+
+        function nextQuestion() {
+            const currentSlideEl = document.querySelector('.slide.active');
+            currentSlideEl.classList.remove('active');
+
+            currentSlide++;
+            const nextSlideEl = document.querySelector(`.slide[data-question="${currentSlide}"]`);
+            if (nextSlideEl) {
+                nextSlideEl.classList.add('active');
+                document.getElementById('currentQuestion').textContent = currentSlide;
+                
+                // Update progress bar
+                const progress = (currentSlide / 5) * 100;
+                document.getElementById('progressFill').style.width = progress + '%';
+
+                // Scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        function showResult() {
+            document.getElementById('quizContent').style.display = 'none';
+            document.getElementById('resultScreen').classList.add('show');
+            document.querySelector('.progress-container').style.display = 'none';
+
+            const resultScore = document.getElementById('resultScore');
+            const resultIcon = document.getElementById('resultIcon');
+            const resultTitle = document.getElementById('resultTitle');
+            const resultMessage = document.getElementById('resultMessage');
+
+            resultScore.textContent = `${score}/5`;
+
+            if (score === 5) {
+                resultScore.classList.add('excellent');
+                resultIcon.textContent = '🏆';
+                resultTitle.textContent = 'Sempurna!';
+                resultMessage.textContent = 'Luar biasa! Kamu menguasai materi Tuas (Pesawat Sederhana) dengan sempurna!';
+            } else if (score >= 3) {
+                resultScore.classList.add('good');
+                resultIcon.textContent = '👍';
+                resultTitle.textContent = 'Bagus!';
+                resultMessage.textContent = 'Kerja yang baik! Terus tingkatkan pemahamanmu dengan belajar lebih banyak.';
+            } else {
+                resultScore.classList.add('poor');
+                resultIcon.textContent = '📚';
+                resultTitle.textContent = 'Tetap Semangat!';
+                resultMessage.textContent = 'Jangan menyerah! Pelajari materi lagi dan coba ulangi latihannya.';
+            }
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function retryQuiz() {
+            // Reset variables
+            currentSlide = 1;
+            score = 0;
+            answeredQuestions = [];
+
+            // Reset UI
+            document.getElementById('score').textContent = '0';
+            document.getElementById('currentQuestion').textContent = '1';
+            document.getElementById('progressFill').style.width = '20%';
+
+            // Reset all slides
+            document.querySelectorAll('.slide').forEach((slide, index) => {
+                slide.classList.remove('active');
+                if (index === 0) slide.classList.add('active');
+
+                // Reset options
+                slide.querySelectorAll('.option').forEach(opt => {
+                    opt.classList.remove('selected', 'correct', 'wrong', 'disabled');
+                });
+
+                // Reset buttons
+                slide.querySelector('.btn-submit').style.display = 'inline-block';
+                slide.querySelector('.btn-next').classList.remove('show');
+
+                // Reset feedback
+                const feedbackEl = slide.querySelector('.feedback');
+                feedbackEl.classList.remove('show', 'correct', 'wrong');
+                feedbackEl.innerHTML = '';
+            });
+
+            // Show quiz content
+            document.getElementById('quizContent').style.display = 'block';
+            document.getElementById('resultScreen').classList.remove('show');
+            document.querySelector('.progress-container').style.display = 'block';
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>

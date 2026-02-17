@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Materi 17: Tuas (Pesawat Sederhana)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&family=Fira+Code:wght@400;500&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #059669;
+            --secondary: #0891b2;
+            --accent: #f59e0b;
+            --dark: #0f172a;
+            --light: #f8fafc;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: linear-gradient(135deg, #0f766e 0%, #0e7490 100%);
+            color: var(--dark);
+            line-height: 1.8;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Navigation Bar */
+        .nav-bar {
+            background: white;
+            border-radius: 16px;
+            padding: 20px 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .nav-title {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn-nav {
+            padding: 12px 24px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95em;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-home {
+            background: linear-gradient(135deg, #64748b, #475569);
+            color: white;
+            box-shadow: 0 4px 12px rgba(100, 116, 139, 0.3);
+        }
+
+        .btn-home:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(100, 116, 139, 0.4);
+        }
+
+        .btn-practice {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+        }
+
+        .btn-practice:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4);
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            border-radius: 20px;
+            padding: 50px 60px;
+            margin-bottom: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+        }
+
+        .header h1 {
+            font-size: 2.8em;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        .header .meta {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.95em;
+            color: #64748b;
+        }
+
+        .meta-item .icon {
+            font-size: 1.3em;
+        }
+
+        /* Content Section */
+        .content {
+            background: white;
+            border-radius: 20px;
+            padding: 50px 60px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .content h2 {
+            font-size: 2em;
+            font-weight: 700;
+            color: var(--primary);
+            margin-top: 40px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid var(--primary);
+        }
+
+        .content h2:first-child {
+            margin-top: 0;
+        }
+
+        .content h3 {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+
+        .content p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .content ul, .content ol {
+            margin: 15px 0 15px 30px;
+        }
+
+        .content li {
+            margin-bottom: 10px;
+        }
+
+        /* Info Boxes */
+        .info-box {
+            background: linear-gradient(135deg, #e0f2fe 0%, #dbeafe 100%);
+            border-left: 5px solid var(--secondary);
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 12px;
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-left: 5px solid var(--accent);
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 12px;
+        }
+
+        .success-box {
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+            border-left: 5px solid var(--primary);
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 12px;
+        }
+
+        /* Example Box */
+        .example-box {
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+
+        .example-box h4 {
+            color: var(--primary);
+            font-size: 1.3em;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        /* Question Styles */
+        .question {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin: 20px 0;
+        }
+
+        .question-text {
+            font-size: 1.05em;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+
+        .options {
+            margin: 20px 0;
+        }
+
+        .option {
+            background: #f8fafc;
+            padding: 15px 20px;
+            margin: 10px 0;
+            border-radius: 10px;
+            border: 2px solid #e2e8f0;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .option:hover {
+            background: #e0f2fe;
+            border-color: var(--secondary);
+        }
+
+        .option.correct {
+            background: #d1fae5;
+            border-color: var(--primary);
+            font-weight: 600;
+        }
+
+        .option.correct::before {
+            content: '✓ ';
+            color: var(--primary);
+            font-weight: bold;
+            margin-right: 5px;
+        }
+
+        /* Explanation */
+        .explanation {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            padding: 25px;
+            border-radius: 12px;
+            margin-top: 20px;
+            border-left: 5px solid var(--accent);
+        }
+
+        .explanation h5 {
+            color: #92400e;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        thead {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        th {
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.9em;
+            letter-spacing: 0.5px;
+        }
+
+        tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Key Points */
+        .key-points {
+            background: linear-gradient(135deg, #fae8ff 0%, #f3e8ff 100%);
+            border-left: 5px solid #a855f7;
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 12px;
+        }
+
+        .key-points h4 {
+            color: #6b21a8;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        /* Formula Box */
+        .formula-box {
+            background: #1e293b;
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+            font-family: 'Fira Code', monospace;
+            text-align: center;
+            font-size: 1.1em;
+        }
+
+        /* Diagram Container */
+        .diagram-container {
+            background: #f8fafc;
+            padding: 30px;
+            border-radius: 12px;
+            margin: 25px 0;
+            text-align: center;
+            border: 2px solid #e2e8f0;
+        }
+
+        .diagram-img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header {
+                padding: 30px 25px;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .content {
+                padding: 30px 25px;
+            }
+
+            .content h2 {
+                font-size: 1.6em;
+            }
+
+            table {
+                font-size: 0.9em;
+            }
+
+            th, td {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation Top -->
+        <div class="nav-bar">
+            <div class="nav-title">📚 TKAD IPA - Kelas 8</div>
+            <div class="nav-buttons">
+                <a href="kisi-kisi-tkad-ipa.html" class="btn-nav btn-home">
+                    🏠 Menu Utama
+                </a>
+                <a href="Lat17.html" class="btn-nav btn-practice">
+                    ✏️ Latihan Soal
+                </a>
+            </div>
+        </div>
+
+        <!-- Header -->
+        <div class="header">
+            <h1>⚙️ Tuas (Pesawat Sederhana)</h1>
+            <div class="meta">
+                <div class="meta-item">
+                    <span class="icon">📖</span>
+                    <span>Materi: Pesawat Sederhana</span>
+                </div>
+                <div class="meta-item">
+                    <span class="icon">🎯</span>
+                    <span>Level: L1 (Pengenalan)</span>
+                </div>
+                <div class="meta-item">
+                    <span class="icon">📝</span>
+                    <span>Bentuk: Benar-Salah</span>
+                </div>
+                <div class="meta-item">
+                    <span class="icon">🏫</span>
+                    <span>Kelas: 8 SMP</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <h2>🎯 Tujuan Pembelajaran</h2>
+            <p>
+                Setelah mempelajari materi ini, peserta didik diharapkan dapat:
+            </p>
+            <ul>
+                <li>Memahami pengertian tuas dan prinsip kerjanya</li>
+                <li>Mengidentifikasi bagian-bagian tuas (titik tumpu, beban, dan kuasa)</li>
+                <li>Mengenali jenis-jenis tuas (golongan I, II, dan III)</li>
+                <li>Mengidentifikasi alat-alat dalam kehidupan sehari-hari yang menggunakan prinsip tuas</li>
+                <li>Menerapkan konsep keuntungan mekanis tuas</li>
+            </ul>
+
+            <h2>📚 Materi Pembelajaran</h2>
+            
+            <h3>A. Pengertian Tuas (Pengungkit)</h3>
+            <p>
+                <strong>Tuas atau pengungkit</strong> adalah pesawat sederhana yang digunakan untuk mengangkat atau memindahkan beban dengan menggunakan batang yang keras dan dapat berputar pada suatu titik tumpu. Tuas memudahkan pekerjaan manusia dengan memperbesar gaya atau mengubah arah gaya yang diberikan.
+            </p>
+
+            <div class="info-box">
+                <h4>💡 Tahukah Kamu?</h4>
+                <p>
+                    Archimedes, ilmuwan Yunani kuno, pernah berkata: <em>"Berikan aku titik tumpu yang tepat, dan aku akan menggerakkan bumi!"</em> Pernyataan ini menunjukkan betapa kuatnya prinsip tuas dalam memperbesar gaya.
+                </p>
+            </div>
+
+            <h3>B. Bagian-Bagian Tuas</h3>
+            <p>Setiap tuas memiliki tiga komponen utama:</p>
+            <ol>
+                <li><strong>Titik Tumpu (Fulcrum/F):</strong> Titik di mana tuas dapat berputar atau bertumpu</li>
+                <li><strong>Beban (Load/L):</strong> Benda atau gaya yang akan diangkat atau dipindahkan</li>
+                <li><strong>Kuasa (Effort/E):</strong> Gaya yang diberikan untuk mengangkat atau memindahkan beban</li>
+            </ol>
+
+            <div class="diagram-container">
+                <p style="font-weight: 600; margin-bottom: 15px;">Skema Bagian-Bagian Tuas</p>
+                <div style="text-align: left; max-width: 600px; margin: 0 auto;">
+                    <pre style="font-family: 'Fira Code', monospace; font-size: 0.9em; line-height: 1.6;">
+    KUASA (E)                              BEBAN (L)
+        ↓                                      ↓
+        │                                      │
+        │                                      │
+    ════╪══════════════════════════════════════╪════
+                        △
+                   TITIK TUMPU (F)
+                    </pre>
+                </div>
+            </div>
+
+            <h3>C. Jenis-Jenis Tuas</h3>
+            <p>Berdasarkan posisi titik tumpu, beban, dan kuasa, tuas dibedakan menjadi tiga golongan:</p>
+
+            <div class="success-box">
+                <h4>🔧 Tuas Golongan I (Titik Tumpu di Tengah)</h4>
+                <p><strong>Susunan:</strong> Kuasa - Titik Tumpu - Beban (E-F-L)</p>
+                <p><strong>Karakteristik:</strong> Titik tumpu berada di antara kuasa dan beban</p>
+                <p><strong>Contoh:</strong></p>
+                <ul>
+                    <li>Gunting</li>
+                    <li>Tang</li>
+                    <li>Jungkat-jungkit</li>
+                    <li>Linggis/dongkrak</li>
+                    <li>Pemotong kuku</li>
+                    <li>Catut</li>
+                </ul>
+            </div>
+
+            <div class="info-box">
+                <h4>🔧 Tuas Golongan II (Beban di Tengah)</h4>
+                <p><strong>Susunan:</strong> Kuasa - Beban - Titik Tumpu (E-L-F)</p>
+                <p><strong>Karakteristik:</strong> Beban berada di antara kuasa dan titik tumpu</p>
+                <p><strong>Contoh:</strong></p>
+                <ul>
+                    <li>Gerobak dorong (kereta sorong)</li>
+                    <li>Pemecah kemiri</li>
+                    <li>Pembuka tutup botol</li>
+                    <li>Pelubang kertas (perforator)</li>
+                    <li>Pemotong kertas (paper cutter)</li>
+                </ul>
+            </div>
+
+            <div class="warning-box">
+                <h4>🔧 Tuas Golongan III (Kuasa di Tengah)</h4>
+                <p><strong>Susunan:</strong> Beban - Kuasa - Titik Tumpu (L-E-F)</p>
+                <p><strong>Karakteristik:</strong> Kuasa berada di antara beban dan titik tumpu</p>
+                <p><strong>Contoh:</strong></p>
+                <ul>
+                    <li>Pinset</li>
+                    <li>Stapler</li>
+                    <li>Penjepit roti</li>
+                    <li>Sekop</li>
+                    <li>Lengan tangan manusia (saat mengangkat beban)</li>
+                </ul>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Golongan</th>
+                        <th>Susunan</th>
+                        <th>Keuntungan Mekanis</th>
+                        <th>Fungsi Utama</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Golongan I</td>
+                        <td>E - F - L</td>
+                        <td>Bisa > 1, = 1, atau < 1</td>
+                        <td>Memperbesar gaya atau mengubah arah gaya</td>
+                    </tr>
+                    <tr>
+                        <td>Golongan II</td>
+                        <td>E - L - F</td>
+                        <td>Selalu > 1</td>
+                        <td>Memperbesar gaya (menghemat tenaga)</td>
+                    </tr>
+                    <tr>
+                        <td>Golongan III</td>
+                        <td>L - E - F</td>
+                        <td>Selalu < 1</td>
+                        <td>Memperbesar kecepatan atau jarak</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>D. Prinsip Kerja Tuas</h3>
+            <p>Tuas bekerja berdasarkan prinsip momen gaya atau torsi. Keseimbangan tuas tercapai ketika:</p>
+            
+            <div class="formula-box">
+                Kuasa × Lengan Kuasa = Beban × Lengan Beban
+                <br>
+                F<sub>kuasa</sub> × l<sub>kuasa</sub> = F<sub>beban</sub> × l<sub>beban</sub>
+            </div>
+
+            <p>Di mana:</p>
+            <ul>
+                <li><strong>F<sub>kuasa</sub></strong> = Gaya yang diberikan (N)</li>
+                <li><strong>l<sub>kuasa</sub></strong> = Jarak dari kuasa ke titik tumpu (m)</li>
+                <li><strong>F<sub>beban</sub></strong> = Gaya beban yang harus diangkat (N)</li>
+                <li><strong>l<sub>beban</sub></strong> = Jarak dari beban ke titik tumpu (m)</li>
+            </ul>
+
+            <h3>E. Keuntungan Mekanis (KM)</h3>
+            <p>Keuntungan mekanis menunjukkan seberapa besar tuas dapat memperbesar gaya yang diberikan.</p>
+            
+            <div class="formula-box">
+                KM = F<sub>beban</sub> / F<sub>kuasa</sub>
+                <br>
+                atau
+                <br>
+                KM = l<sub>kuasa</sub> / l<sub>beban</sub>
+            </div>
+
+            <div class="info-box">
+                <h4>📊 Interpretasi Keuntungan Mekanis:</h4>
+                <ul>
+                    <li><strong>KM > 1:</strong> Tuas menguntungkan (menghemat gaya/tenaga)</li>
+                    <li><strong>KM = 1:</strong> Gaya kuasa sama dengan beban</li>
+                    <li><strong>KM < 1:</strong> Tuas tidak menguntungkan dalam hal gaya, tetapi menguntungkan dalam hal kecepatan</li>
+                </ul>
+            </div>
+
+            <h3>F. Penerapan Tuas dalam Kehidupan Sehari-hari</h3>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Alat</th>
+                        <th>Golongan Tuas</th>
+                        <th>Fungsi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Gunting</td>
+                        <td>Golongan I</td>
+                        <td>Memotong kertas, kain, rambut</td>
+                    </tr>
+                    <tr>
+                        <td>Tang</td>
+                        <td>Golongan I</td>
+                        <td>Memegang dan memotong kawat</td>
+                    </tr>
+                    <tr>
+                        <td>Linggis</td>
+                        <td>Golongan I</td>
+                        <td>Mencabut paku atau mengungkit benda berat</td>
+                    </tr>
+                    <tr>
+                        <td>Gerobak dorong</td>
+                        <td>Golongan II</td>
+                        <td>Mengangkut beban berat</td>
+                    </tr>
+                    <tr>
+                        <td>Pembuka tutup botol</td>
+                        <td>Golongan II</td>
+                        <td>Membuka tutup botol</td>
+                    </tr>
+                    <tr>
+                        <td>Pinset</td>
+                        <td>Golongan III</td>
+                        <td>Mengambil benda kecil dengan presisi</td>
+                    </tr>
+                    <tr>
+                        <td>Stapler</td>
+                        <td>Golongan III</td>
+                        <td>Menjepitkan kertas</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>📝 Contoh Soal dan Pembahasan</h2>
+
+            <div class="example-box">
+                <h4>📌 Contoh Soal 1</h4>
+                <div class="question">
+                    <p class="question-text">
+                        Perhatikan gambar beberapa alat di bawah ini yang digunakan dalam kehidupan sehari-hari:
+                    </p>
+                    
+                    <div style="background: #f8fafc; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                        <p style="font-weight: 600; margin-bottom: 10px;">Daftar Alat:</p>
+                        <ol style="margin-left: 20px;">
+                            <li>Gunting untuk memotong kain</li>
+                            <li>Sapu untuk menyapu lantai</li>
+                            <li>Gerobak dorong untuk mengangkut pasir</li>
+                            <li>Obeng untuk membuka sekrup</li>
+                            <li>Pinset untuk mengambil duri</li>
+                        </ol>
+                    </div>
+
+                    <p class="question-text">
+                        Tentukan pernyataan yang BENAR mengenai alat-alat tersebut!
+                    </p>
+
+                    <div class="options">
+                        <div class="option correct">A. Gunting menggunakan prinsip tuas golongan I dengan titik tumpu di tengah</div>
+                        <div class="option">B. Sapu bukan termasuk tuas karena tidak memiliki titik tumpu yang jelas</div>
+                        <div class="option correct">C. Gerobak dorong adalah tuas golongan II dengan beban di antara kuasa dan titik tumpu</div>
+                        <div class="option">D. Obeng tidak menggunakan prinsip tuas</div>
+                        <div class="option correct">E. Pinset adalah tuas golongan III dengan kuasa di antara beban dan titik tumpu</div>
+                    </div>
+
+                    <div class="explanation">
+                        <h5>💡 Pembahasan:</h5>
+                        <p><strong>Jawaban yang benar: A, C, dan E</strong></p>
+                        <p><strong>Analisis setiap pilihan:</strong></p>
+                        <ul>
+                            <li><strong>A. BENAR</strong> - Gunting adalah tuas golongan I:
+                                <ul>
+                                    <li>Titik tumpu: poros/sekrup di tengah gunting</li>
+                                    <li>Kuasa: jari yang menekan gagang gunting</li>
+                                    <li>Beban: kertas/kain yang dipotong</li>
+                                    <li>Susunan: Kuasa - Titik Tumpu - Beban (E-F-L)</li>
+                                </ul>
+                            </li>
+                            
+                            <li><strong>B. SALAH</strong> - Sapu sebenarnya menggunakan prinsip tuas golongan III:
+                                <ul>
+                                    <li>Titik tumpu: tangan bagian atas yang memegang sapu</li>
+                                    <li>Kuasa: tangan bagian bawah yang menggerakkan sapu</li>
+                                    <li>Beban: ujung sapu yang menyentuh lantai dan kotoran</li>
+                                    <li>Susunan: Beban - Kuasa - Titik Tumpu (L-E-F)</li>
+                                </ul>
+                            </li>
+                            
+                            <li><strong>C. BENAR</strong> - Gerobak dorong adalah tuas golongan II:
+                                <ul>
+                                    <li>Titik tumpu: roda gerobak</li>
+                                    <li>Beban: pasir atau barang yang diangkut</li>
+                                    <li>Kuasa: tangan yang mendorong pegangan gerobak</li>
+                                    <li>Susunan: Kuasa - Beban - Titik Tumpu (E-L-F)</li>
+                                    <li>KM > 1, sehingga menghemat tenaga</li>
+                                </ul>
+                            </li>
+                            
+                            <li><strong>D. SALAH</strong> - Obeng menggunakan prinsip roda berporos (wheel and axle), yang merupakan jenis pesawat sederhana lain. Meskipun demikian, roda berporos adalah modifikasi dari prinsip tuas. Jadi obeng tetap memanfaatkan prinsip dasar tuas.</li>
+                            
+                            <li><strong>E. BENAR</strong> - Pinset adalah tuas golongan III:
+                                <ul>
+                                    <li>Titik tumpu: ujung atas pinset yang dipegang</li>
+                                    <li>Kuasa: jari yang menekan bagian tengah pinset</li>
+                                    <li>Beban: duri atau benda kecil yang dijepit</li>
+                                    <li>Susunan: Beban - Kuasa - Titik Tumpu (L-E-F)</li>
+                                    <li>KM < 1, tetapi memberikan presisi dan kecepatan gerakan</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <h4>📌 Contoh Soal 2</h4>
+                <div class="question">
+                    <p class="question-text">
+                        Seorang siswa mengamati beberapa alat yang ada di rumah dan mencatat penggunaannya dalam tabel berikut:
+                    </p>
+                    
+                    <table style="margin: 20px 0;">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Nama Alat</th>
+                                <th>Fungsi</th>
+                                <th>Analisis Siswa</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Tang</td>
+                                <td>Memotong kawat</td>
+                                <td>Tuas golongan I</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Pelubang kertas</td>
+                                <td>Melubangi kertas</td>
+                                <td>Tuas golongan II</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>Jungkat-jungkit</td>
+                                <td>Bermain di taman</td>
+                                <td>Tuas golongan I</td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>Sekop</td>
+                                <td>Menggali tanah</td>
+                                <td>Tuas golongan II</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p class="question-text">
+                        Tentukan pernyataan yang BENAR berdasarkan analisis siswa tersebut!
+                    </p>
+
+                    <div class="options">
+                        <div class="option correct">A. Analisis untuk tang sudah benar, karena titik tumpu berada di tengah</div>
+                        <div class="option correct">B. Analisis untuk pelubang kertas sudah benar, karena beban (kertas) berada di tengah</div>
+                        <div class="option correct">C. Analisis untuk jungkat-jungkit sudah benar, karena titik tumpu di tengah</div>
+                        <div class="option">D. Analisis untuk sekop sudah benar sebagai tuas golongan II</div>
+                        <div class="option">E. Semua analisis siswa benar</div>
+                    </div>
+
+                    <div class="explanation">
+                        <h5>💡 Pembahasan:</h5>
+                        <p><strong>Jawaban yang benar: A, B, dan C</strong></p>
+                        <p><strong>Analisis setiap alat:</strong></p>
+                        <ul>
+                            <li><strong>A. BENAR</strong> - Tang adalah tuas golongan I:
+                                <ul>
+                                    <li>Titik tumpu: poros/sekrup penghubung kedua gagang tang</li>
+                                    <li>Kuasa: tangan yang menekan gagang</li>
+                                    <li>Beban: kawat yang dipotong</li>
+                                    <li>Posisi titik tumpu memang di tengah antara kuasa dan beban</li>
+                                </ul>
+                            </li>
+                            
+                            <li><strong>B. BENAR</strong> - Pelubang kertas (perforator) adalah tuas golongan II:
+                                <ul>
+                                    <li>Titik tumpu: ujung belakang pelubang (engsel)</li>
+                                    <li>Kuasa: tangan yang menekan gagang pelubang</li>
+                                    <li>Beban: kertas yang akan dilubangi</li>
+                                    <li>Kertas (beban) memang berada di tengah antara kuasa dan titik tumpu</li>
+                                </ul>
+                            </li>
+                            
+                            <li><strong>C. BENAR</strong> - Jungkat-jungkit adalah tuas golongan I:
+                                <ul>
+                                    <li>Titik tumpu: poros di tengah papan jungkat-jungkit</li>
+                                    <li>Kuasa: berat badan anak di satu sisi</li>
+                                    <li>Beban: berat badan anak di sisi lain</li>
+                                    <li>Titik tumpu berada tepat di tengah</li>
+                                </ul>
+                            </li>
+                            
+                            <li><strong>D. SALAH</strong> - Sekop sebenarnya adalah tuas golongan III, bukan golongan II:
+                                <ul>
+                                    <li>Titik tumpu: tangan bagian atas (pemegang gagang atas)</li>
+                                    <li>Kuasa: tangan bagian bawah yang mendorong gagang</li>
+                                    <li>Beban: tanah yang diangkat di ujung sekop</li>
+                                    <li>Susunan: Beban - Kuasa - Titik Tumpu (L-E-F) → Golongan III</li>
+                                </ul>
+                            </li>
+                            
+                            <li><strong>E. SALAH</strong> - Tidak semua analisis benar karena analisis untuk sekop salah (seharusnya golongan III, bukan golongan II).</li>
+                        </ul>
+                        <p><strong>Kesimpulan:</strong> Untuk menentukan golongan tuas, perhatikan dengan teliti posisi relatif antara titik tumpu, beban, dan kuasa. Jangan hanya menebak berdasarkan fungsi alat, tetapi analisis komponen-komponennya.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <h4>📌 Contoh Soal 3</h4>
+                <div class="question">
+                    <p class="question-text">
+                        Perhatikan daftar alat berikut dan karakteristiknya:
+                    </p>
+                    
+                    <table style="margin: 20px 0;">
+                        <thead>
+                            <tr>
+                                <th>Alat</th>
+                                <th>Karakteristik</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>P. Pemotong kuku</td>
+                                <td>Memiliki poros di tengah, memudahkan pemotongan kuku</td>
+                            </tr>
+                            <tr>
+                                <td>Q. Catut</td>
+                                <td>Digunakan untuk mencabut paku dengan titik tumpu di ujung</td>
+                            </tr>
+                            <tr>
+                                <td>R. Stapler</td>
+                                <td>Menjepitkan kertas dengan menekan bagian tengah</td>
+                            </tr>
+                            <tr>
+                                <td>S. Pembuka kaleng</td>
+                                <td>Mengangkat tutup kaleng dengan mengungkit</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p class="question-text">
+                        Tentukan pernyataan yang BENAR tentang alat-alat tersebut!
+                    </p>
+
+                    <div class="options">
+                        <div class="option correct">A. Pemotong kuku (P) adalah tuas golongan I dengan titik tumpu di poros tengah</div>
+                        <div class="option">B. Catut (Q) adalah tuas golongan II karena digunakan untuk mencabut paku</div>
+                        <div class="option correct">C. Stapler (R) adalah tuas golongan III karena kuasa berada di tengah</div>
+                        <div class="option correct">D. Pembuka kaleng (S) menggunakan prinsip tuas golongan I</div>
+                        <div class="option">E. Semua alat tersebut adalah tuas golongan I</div>
+                    </div>
+
+                    <div class="explanation">
+                        <h5>💡 Pembahasan:</h5>
+                        <p><strong>Jawaban yang benar: A, C, dan D</strong></p>
+                        <p><strong>Analisis setiap alat:</strong></p>
+                        <ul>
+                            <li><strong>A. BENAR</strong> - Pemotong kuku adalah tuas golongan I:
+                                <ul>
+                                    <li>Titik tumpu: poros/engsel di tengah pemotong kuku</li>
+                                    <li>Kuasa: jari yang menekan gagang pemotong</li>
+                                    <li>Beban: kuku yang dipotong</li>
+                                    <li>Susunan: E-F-L (Kuasa - Titik Tumpu - Beban)</li>
+                                </ul>
+                            </li>
+                            
+                            <li><strong>B. SALAH</strong> - Catut adalah tuas golongan I, bukan golongan II:
+                                <ul>
+                                    <li>Titik tumpu: ujung catut yang menempel pada kayu</li>
+                                    <li>Beban: paku yang dicabut</li>
+                                    <li>Kuasa: tangan yang menekan gagang catut</li>
+                                    <li>Susunan: E-F-L (Kuasa - Titik Tumpu - Beban) → Golongan I</li>
+                                    <li>Fungsinya untuk mencabut tidak menentukan golongannya, tetapi posisi komponen-komponennya</li>
+                                </ul>
+                            </li>
+                            
+                            <li><strong>C. BENAR</strong> - Stapler adalah tuas golongan III:
+                                <ul>
+                                    <li>Titik tumpu: bagian belakang stapler (engsel)</li>
+                                    <li>Kuasa: tangan yang menekan bagian tengah/atas stapler</li>
+                                    <li>Beban: kertas yang dijepitkan di ujung depan</li>
+                                    <li>Susunan: L-E-F (Beban - Kuasa - Titik Tumpu) → Golongan III</li>
+                                </ul>
+                            </li>
+                            
+                            <li><strong>D. BENAR</strong> - Pembuka kaleng adalah tuas golongan I:
+                                <ul>
+                                    <li>Titik tumpu: tepi kaleng tempat pembuka bertumpu</li>
+                                    <li>Beban: tutup kaleng yang diungkit</li>
+                                    <li>Kuasa: tangan yang menekan gagang pembuka</li>
+                                    <li>Susunan: E-F-L (Kuasa - Titik Tumpu - Beban)</li>
+                                </ul>
+                            </li>
+                            
+                            <li><strong>E. SALAH</strong> - Tidak semua alat adalah tuas golongan I. Stapler adalah tuas golongan III.</li>
+                        </ul>
+                        <p><strong>Tips:</strong> Jangan terkecoh dengan fungsi atau nama alat. Yang penting adalah mengidentifikasi posisi titik tumpu, beban, dan kuasa untuk menentukan golongan tuas.</p>
+                    </div>
+                </div>
+            </div>
+
+            <h2>🎓 Rangkuman</h2>
+            <div class="info-box">
+                <ol>
+                    <li><strong>Tuas (pengungkit)</strong> adalah pesawat sederhana yang terdiri dari batang keras yang dapat berputar pada titik tumpu untuk memudahkan mengangkat atau memindahkan beban.</li>
+                    
+                    <li><strong>Tiga komponen tuas:</strong> Titik Tumpu (F), Beban (L), dan Kuasa (E).</li>
+                    
+                    <li><strong>Tuas Golongan I:</strong> Titik tumpu di tengah (E-F-L). Contoh: gunting, tang, linggis, jungkat-jungkit.</li>
+                    
+                    <li><strong>Tuas Golongan II:</strong> Beban di tengah (E-L-F). Contoh: gerobak dorong, pembuka tutup botol, pelubang kertas. KM selalu > 1.</li>
+                    
+                    <li><strong>Tuas Golongan III:</strong> Kuasa di tengah (L-E-F). Contoh: pinset, stapler, sekop, sapu. KM selalu < 1.</li>
+                    
+                    <li><strong>Keuntungan Mekanis (KM):</strong> KM = F<sub>beban</sub>/F<sub>kuasa</sub> = l<sub>kuasa</sub>/l<sub>beban</sub></li>
+                    
+                    <li>Tuas golongan II paling menguntungkan untuk menghemat tenaga karena KM > 1.</li>
+                    
+                    <li>Tuas golongan III menguntungkan dalam hal kecepatan dan presisi gerakan meskipun KM < 1.</li>
+                </ol>
+            </div>
+
+            <div class="key-points">
+                <h4>💪 Tips Mengidentifikasi Tuas dalam Soal</h4>
+                <ul>
+                    <li><strong>Langkah 1:</strong> Identifikasi titik tumpu (titik putar/tumpuan alat)</li>
+                    <li><strong>Langkah 2:</strong> Tentukan posisi beban (apa yang diangkat/dipotong/dipindahkan)</li>
+                    <li><strong>Langkah 3:</strong> Tentukan posisi kuasa (di mana gaya diberikan)</li>
+                    <li><strong>Langkah 4:</strong> Lihat posisi relatif ketiga komponen tersebut</li>
+                    <li><strong>Langkah 5:</strong> Cocokkan dengan pola E-F-L (gol. I), E-L-F (gol. II), atau L-E-F (gol. III)</li>
+                    <li><strong>Tips:</strong> Jangan tertipu dengan nama atau fungsi alat. Fokus pada posisi komponen!</li>
+                    <li><strong>Ingat:</strong> Beberapa alat seperti gunting, tang, catut, pemotong kuku adalah golongan I (titik tumpu di tengah)</li>
+                    <li><strong>Ingat:</strong> Gerobak dorong, pembuka botol, pelubang kertas adalah golongan II (beban di tengah)</li>
+                    <li><strong>Ingat:</strong> Pinset, stapler, sekop, sapu adalah golongan III (kuasa di tengah)</li>
+                </ul>
+            </div>
+
+            <div class="warning-box">
+                <h4>⚠️ Kesalahan Umum yang Harus Dihindari</h4>
+                <ul>
+                    <li>❌ Menentukan golongan tuas hanya berdasarkan fungsi alat tanpa menganalisis posisi komponen</li>
+                    <li>❌ Mengira bahwa semua alat pemotong adalah golongan I</li>
+                    <li>❌ Berpikir bahwa tuas golongan III tidak berguna karena KM < 1</li>
+                    <li>❌ Tidak memperhatikan di mana titik tumpu berada</li>
+                    <li>✅ Selalu identifikasi ketiga komponen (F, L, E) terlebih dahulu</li>
+                    <li>✅ Perhatikan posisi relatif komponen, bukan fungsi alat</li>
+                    <li>✅ Ingat bahwa setiap golongan tuas memiliki keunggulan tersendiri</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Navigation Bottom -->
+        <div class="nav-bar">
+            <div class="nav-buttons" style="width: 100%; justify-content: space-between;">
+                <a href="kisi-kisi-tkad-ipa.html" class="btn-nav btn-home">
+                    🏠 Kembali ke Menu
+                </a>
+                <a href="Lat17.html" class="btn-nav btn-practice">
+                    Lanjut ke Latihan Soal ✏️
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

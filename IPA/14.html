@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Materi 14: Sistem Peredaran Darah</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&family=Fira+Code:wght@400;500&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #059669;
+            --secondary: #0891b2;
+            --accent: #f59e0b;
+            --dark: #0f172a;
+            --light: #f8fafc;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: linear-gradient(135deg, #0f766e 0%, #0e7490 100%);
+            color: var(--dark);
+            line-height: 1.8;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Navigation Bar */
+        .nav-bar {
+            background: white;
+            border-radius: 16px;
+            padding: 20px 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .nav-title {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn-nav {
+            padding: 12px 24px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95em;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-home {
+            background: linear-gradient(135deg, #64748b, #475569);
+            color: white;
+            box-shadow: 0 4px 12px rgba(100, 116, 139, 0.3);
+        }
+
+        .btn-home:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(100, 116, 139, 0.4);
+        }
+
+        .btn-practice {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+        }
+
+        .btn-practice:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4);
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            border-radius: 20px;
+            padding: 50px 60px;
+            margin-bottom: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+        }
+
+        .header h1 {
+            font-size: 2.8em;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        .header .meta {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.95em;
+            color: #64748b;
+        }
+
+        .meta-item .icon {
+            font-size: 1.3em;
+        }
+
+        /* Content Section */
+        .content {
+            background: white;
+            border-radius: 20px;
+            padding: 50px 60px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .content h2 {
+            font-size: 2em;
+            font-weight: 700;
+            color: var(--primary);
+            margin-top: 40px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid var(--primary);
+        }
+
+        .content h2:first-child {
+            margin-top: 0;
+        }
+
+        .content h3 {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+
+        .content p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .content ul, .content ol {
+            margin: 15px 0 15px 30px;
+        }
+
+        .content li {
+            margin-bottom: 10px;
+        }
+
+        /* Info Box */
+        .info-box {
+            background: linear-gradient(135deg, #e0f2fe 0%, #dbeafe 100%);
+            border-left: 5px solid var(--secondary);
+            padding: 25px 30px;
+            border-radius: 12px;
+            margin: 25px 0;
+        }
+
+        .info-box h4 {
+            color: var(--secondary);
+            font-size: 1.2em;
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Warning Box */
+        .warning-box {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-left: 5px solid var(--accent);
+            padding: 25px 30px;
+            border-radius: 12px;
+            margin: 25px 0;
+        }
+
+        .warning-box h4 {
+            color: #d97706;
+            font-size: 1.2em;
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Success Box */
+        .success-box {
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+            border-left: 5px solid #059669;
+            padding: 25px 30px;
+            border-radius: 12px;
+            margin: 25px 0;
+        }
+
+        .success-box h4 {
+            color: #059669;
+            font-size: 1.2em;
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Danger Box */
+        .danger-box {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            border-left: 5px solid #ef4444;
+            padding: 25px 30px;
+            border-radius: 12px;
+            margin: 25px 0;
+        }
+
+        .danger-box h4 {
+            color: #ef4444;
+            font-size: 1.2em;
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        thead {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        th {
+            padding: 18px 20px;
+            text-align: left;
+            font-weight: 700;
+            font-size: 1em;
+        }
+
+        td {
+            padding: 15px 20px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Diagram Box */
+        .diagram-box {
+            background: #f8fafc;
+            border-radius: 16px;
+            padding: 30px;
+            margin: 30px 0;
+            border: 2px solid #e2e8f0;
+            text-align: center;
+        }
+
+        .diagram-placeholder {
+            background: white;
+            border-radius: 12px;
+            padding: 50px 30px;
+            margin: 20px 0;
+            border: 2px dashed var(--secondary);
+        }
+
+        .diagram-title {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        /* Example Box */
+        .example-box {
+            background: #f8fafc;
+            border-radius: 16px;
+            padding: 30px;
+            margin: 30px 0;
+            border: 2px solid #e2e8f0;
+        }
+
+        .example-box h4 {
+            color: var(--primary);
+            font-size: 1.3em;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .question {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin: 20px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .question-text {
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+
+        .options {
+            margin: 20px 0;
+        }
+
+        .option {
+            background: #f8fafc;
+            padding: 15px 20px;
+            margin: 12px 0;
+            border-radius: 10px;
+            border: 2px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+
+        .option.correct {
+            background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+            border-color: #059669;
+        }
+
+        .explanation {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            padding: 25px;
+            border-radius: 12px;
+            margin-top: 25px;
+            border-left: 5px solid var(--accent);
+        }
+
+        .explanation h5 {
+            color: #d97706;
+            font-size: 1.1em;
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Key Points */
+        .key-points {
+            background: linear-gradient(135deg, #fce7f3, #fbcfe8);
+            border-left: 5px solid #ec4899;
+            padding: 25px 30px;
+            border-radius: 12px;
+            margin: 25px 0;
+        }
+
+        .key-points h4 {
+            color: #ec4899;
+            font-size: 1.2em;
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 15px;
+            }
+
+            .header, .content {
+                padding: 30px 25px;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .content h2 {
+                font-size: 1.6em;
+            }
+
+            .content h3 {
+                font-size: 1.3em;
+            }
+
+            table {
+                font-size: 0.9em;
+            }
+
+            th, td {
+                padding: 12px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation Bar -->
+        <div class="nav-bar">
+            <div class="nav-title">📚 Materi 14: Sistem Peredaran Darah</div>
+            <div class="nav-buttons">
+                <a href="kisi-kisi-tkad-ipa.html" class="btn-nav btn-home">🏠 Menu Utama</a>
+                <a href="Lat14.html" class="btn-nav btn-practice">✏️ Latihan Soal</a>
+            </div>
+        </div>
+
+        <!-- Header -->
+        <div class="header">
+            <h1>❤️ Sistem Peredaran Darah Manusia</h1>
+            <div class="meta">
+                <div class="meta-item">
+                    <span class="icon">📖</span>
+                    <span>Kelas VIII</span>
+                </div>
+                <div class="meta-item">
+                    <span class="icon">🎯</span>
+                    <span>Fase D</span>
+                </div>
+                <div class="meta-item">
+                    <span class="icon">⏱️</span>
+                    <span>Level Kognitif: L2</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <h2>🩸 Pengertian Sistem Peredaran Darah</h2>
+            
+            <p><strong>Sistem peredaran darah</strong> (sistem kardiovaskular) adalah sistem organ yang berfungsi memindahkan zat ke dan dari sel. Sistem ini terdiri dari jantung, pembuluh darah, dan darah yang mengalir di dalamnya.</p>
+
+            <div class="info-box">
+                <h4>💡 Fungsi Utama Sistem Peredaran Darah</h4>
+                <ol>
+                    <li><strong>Transportasi:</strong> Mengangkut oksigen, nutrisi, hormon, dan zat-zat penting ke seluruh tubuh</li>
+                    <li><strong>Proteksi:</strong> Mengangkut sel darah putih dan antibodi untuk melawan infeksi</li>
+                    <li><strong>Regulasi:</strong> Mengatur suhu tubuh dan pH darah</li>
+                    <li><strong>Ekskresi:</strong> Mengangkut zat sisa metabolisme (CO₂, urea) ke organ ekskresi</li>
+                </ol>
+            </div>
+
+            <h2>❤️ Jantung: Pompa Kehidupan</h2>
+
+            <p>Jantung adalah organ berotot yang berfungsi memompa darah ke seluruh tubuh. Jantung manusia berukuran sekepalan tangan pemiliknya dan terletak di rongga dada sebelah kiri, di antara kedua paru-paru.</p>
+
+            <h3>Struktur Jantung:</h3>
+
+            <div class="diagram-box">
+                <div class="diagram-title">🫀 Struktur Jantung Manusia</div>
+                <div class="diagram-placeholder">
+                    <p style="color: #64748b; line-height: 1.8; text-align: left;">
+                        <strong>Jantung terbagi menjadi 4 ruang:</strong><br><br>
+                        
+                        <strong>Bagian Atas (Atrium/Serambi):</strong><br>
+                        • <strong>Atrium Kanan:</strong> Menerima darah kotor dari tubuh<br>
+                        • <strong>Atrium Kiri:</strong> Menerima darah bersih dari paru-paru<br><br>
+                        
+                        <strong>Bagian Bawah (Ventrikel/Bilik):</strong><br>
+                        • <strong>Ventrikel Kanan:</strong> Memompa darah kotor ke paru-paru<br>
+                        • <strong>Ventrikel Kiri:</strong> Memompa darah bersih ke seluruh tubuh<br><br>
+                        
+                        <strong>Katup Jantung:</strong><br>
+                        • Katup Trikuspid (3 daun katup): Antara atrium kanan - ventrikel kanan<br>
+                        • Katup Bikuspid/Mitral (2 daun katup): Antara atrium kiri - ventrikel kiri<br>
+                        • Katup Semilunar Pulmonal: Antara ventrikel kanan - arteri pulmonalis<br>
+                        • Katup Semilunar Aorta: Antara ventrikel kiri - aorta
+                    </p>
+                </div>
+            </div>
+
+            <h3>Fungsi Ruang-Ruang Jantung:</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Ruang Jantung</th>
+                        <th>Fungsi Utama</th>
+                        <th>Jenis Darah</th>
+                        <th>Ketebalan Dinding</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Atrium Kanan</strong></td>
+                        <td>Menerima darah dari seluruh tubuh melalui vena cava</td>
+                        <td>Darah kotor (kaya CO₂)</td>
+                        <td>Tipis (tekanan rendah)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Ventrikel Kanan</strong></td>
+                        <td>Memompa darah ke paru-paru melalui arteri pulmonalis</td>
+                        <td>Darah kotor (kaya CO₂)</td>
+                        <td>Sedang (jarak dekat)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Atrium Kiri</strong></td>
+                        <td>Menerima darah dari paru-paru melalui vena pulmonalis</td>
+                        <td>Darah bersih (kaya O₂)</td>
+                        <td>Tipis (tekanan rendah)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Ventrikel Kiri</strong></td>
+                        <td>Memompa darah ke seluruh tubuh melalui aorta</td>
+                        <td>Darah bersih (kaya O₂)</td>
+                        <td>Paling tebal (tekanan tinggi, jarak jauh)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="success-box">
+                <h4>✨ Fakta Penting tentang Ventrikel Kiri</h4>
+                <p><strong>Mengapa dinding ventrikel kiri lebih tebal?</strong></p>
+                <ul>
+                    <li>Ventrikel kiri harus memompa darah ke SELURUH TUBUH (dari kepala hingga kaki)</li>
+                    <li>Jarak tempuh sangat jauh, membutuhkan tekanan tinggi</li>
+                    <li>Dinding otot yang tebal menghasilkan kontraksi kuat untuk menghasilkan tekanan tinggi</li>
+                    <li>Ketebalan dinding ventrikel kiri ≈ 3x lipat dari ventrikel kanan</li>
+                </ul>
+            </div>
+
+            <h3>Fungsi Katup Jantung:</h3>
+
+            <div class="warning-box">
+                <h4>⚡ Peran Katup Jantung</h4>
+                <ul>
+                    <li><strong>Mencegah aliran balik darah:</strong> Katup memastikan darah mengalir satu arah saja</li>
+                    <li><strong>Katup Atrioventrikular (Trikuspid & Bikuspid):</strong> Mencegah darah kembali dari ventrikel ke atrium saat jantung berkontraksi</li>
+                    <li><strong>Katup Semilunar (Pulmonal & Aorta):</strong> Mencegah darah kembali dari arteri ke ventrikel saat jantung berelaksasi</li>
+                    <li><strong>Bunyi jantung "lub-dub":</strong> Disebabkan oleh penutupan katup jantung</li>
+                </ul>
+            </div>
+
+            <h2>🔄 Sistem Peredaran Darah</h2>
+
+            <p>Sistem peredaran darah manusia adalah <strong>sistem peredaran darah tertutup ganda</strong>, artinya darah mengalir dalam pembuluh darah dan melewati jantung dua kali dalam satu kali peredaran lengkap.</p>
+
+            <h3>1️⃣ Peredaran Darah Kecil (Pulmonal):</h3>
+
+            <div class="info-box">
+                <h4>🫁 Jantung → Paru-paru → Jantung</h4>
+                <p><strong>Jalur:</strong></p>
+                <p>Ventrikel Kanan → Arteri Pulmonalis → Paru-paru (pertukaran gas: CO₂ dibuang, O₂ diambil) → Vena Pulmonalis → Atrium Kiri</p>
+                <p style="margin-top: 15px;"><strong>Fungsi:</strong> Mengambil O₂ dan membuang CO₂ di paru-paru</p>
+                <p><strong>Catatan Penting:</strong> Arteri pulmonalis membawa darah KOTOR (kaya CO₂), ini pengecualian karena biasanya arteri membawa darah bersih!</p>
+            </div>
+
+            <h3>2️⃣ Peredaran Darah Besar (Sistemik):</h3>
+
+            <div class="info-box">
+                <h4>🏃 Jantung → Seluruh Tubuh → Jantung</h4>
+                <p><strong>Jalur:</strong></p>
+                <p>Ventrikel Kiri → Aorta → Seluruh Tubuh (memberikan O₂, mengambil CO₂) → Vena Cava → Atrium Kanan</p>
+                <p style="margin-top: 15px;"><strong>Fungsi:</strong> Mengedarkan O₂ dan nutrisi ke seluruh tubuh, mengambil CO₂ dan zat sisa</p>
+            </div>
+
+            <h3>Perbandingan Peredaran Darah:</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Aspek</th>
+                        <th>Peredaran Kecil</th>
+                        <th>Peredaran Besar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Dimulai dari</strong></td>
+                        <td>Ventrikel Kanan</td>
+                        <td>Ventrikel Kiri</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Tujuan</strong></td>
+                        <td>Paru-paru</td>
+                        <td>Seluruh tubuh</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Berakhir di</strong></td>
+                        <td>Atrium Kiri</td>
+                        <td>Atrium Kanan</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Fungsi</strong></td>
+                        <td>Pertukaran gas (O₂ & CO₂)</td>
+                        <td>Distribusi O₂ & nutrisi</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Jarak</strong></td>
+                        <td>Pendek (hanya ke paru-paru)</td>
+                        <td>Panjang (ke seluruh tubuh)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Tekanan</strong></td>
+                        <td>Rendah</td>
+                        <td>Tinggi</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>🩺 Denyut Jantung</h2>
+
+            <p><strong>Denyut jantung</strong> adalah jumlah detak jantung per menit. Denyut jantung normal orang dewasa dalam keadaan istirahat adalah 60-100 kali per menit.</p>
+
+            <div class="success-box">
+                <h4>📊 Denyut Jantung Normal</h4>
+                <table style="margin-top: 15px;">
+                    <thead>
+                        <tr>
+                            <th>Kelompok Usia</th>
+                            <th>Denyut Normal (per menit)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Bayi (0-1 tahun)</td>
+                            <td>100-160</td>
+                        </tr>
+                        <tr>
+                            <td>Anak (1-10 tahun)</td>
+                            <td>70-120</td>
+                        </tr>
+                        <tr>
+                            <td>Remaja-Dewasa</td>
+                            <td>60-100</td>
+                        </tr>
+                        <tr>
+                            <td>Atlet terlatih</td>
+                            <td>40-60</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Faktor yang Mempengaruhi Denyut Jantung:</h3>
+
+            <div class="warning-box">
+                <h4>⚡ Faktor-Faktor Penentu</h4>
+                <ul>
+                    <li><strong>Aktivitas Fisik:</strong> Olahraga meningkatkan denyut jantung</li>
+                    <li><strong>Emosi:</strong> Stres, takut, senang dapat meningkatkan denyut</li>
+                    <li><strong>Usia:</strong> Bayi dan anak memiliki denyut lebih cepat</li>
+                    <li><strong>Ukuran Tubuh:</strong> Tubuh besar cenderung denyut lebih lambat</li>
+                    <li><strong>Suhu:</strong> Demam meningkatkan denyut jantung</li>
+                    <li><strong>Posisi Tubuh:</strong> Berdiri/duduk meningkatkan denyut dibanding berbaring</li>
+                </ul>
+            </div>
+
+            <h2>📝 Contoh Soal dan Pembahasan</h2>
+
+            <div class="example-box">
+                <h4>📌 Contoh Soal 1</h4>
+                <div class="question">
+                    <p class="question-text">
+                        Perhatikan data pengukuran denyut jantung berikut!
+                    </p>
+                    
+                    <table style="margin: 20px 0;">
+                        <thead>
+                            <tr>
+                                <th>Kondisi</th>
+                                <th>Denyut Jantung (per menit)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Budi istirahat</td>
+                                <td>72</td>
+                            </tr>
+                            <tr>
+                                <td>Budi setelah lari 400m</td>
+                                <td>140</td>
+                            </tr>
+                            <tr>
+                                <td>Ani istirahat</td>
+                                <td>68</td>
+                            </tr>
+                            <tr>
+                                <td>Ani setelah lari 400m</td>
+                                <td>135</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p class="question-text">
+                        Fungsi jantung yang paling berkaitan dengan peningkatan denyut jantung saat aktivitas fisik adalah...
+                    </p>
+
+                    <div class="options">
+                        <div class="option">A. Menyaring darah dari zat racun</div>
+                        <div class="option">B. Mengatur suhu tubuh agar tetap stabil</div>
+                        <div class="option correct">C. Memompa darah lebih cepat untuk meningkatkan suplai oksigen ke otot</div>
+                        <div class="option">D. Memproduksi sel darah merah untuk menggantikan yang rusak</div>
+                    </div>
+
+                    <div class="explanation">
+                        <h5>💡 Pembahasan:</h5>
+                        <p><strong>Jawaban yang benar: C. Memompa darah lebih cepat untuk meningkatkan suplai oksigen ke otot</strong></p>
+                        
+                        <p><strong>Analisis Data:</strong></p>
+                        <ul>
+                            <li>Budi: 72 → 140 (naik 68 denyut/menit atau 94%)</li>
+                            <li>Ani: 68 → 135 (naik 67 denyut/menit atau 99%)</li>
+                            <li>Peningkatan signifikan denyut jantung setelah aktivitas fisik (lari)</li>
+                        </ul>
+
+                        <p style="margin-top: 15px;"><strong>Mengapa C adalah jawaban yang benar?</strong></p>
+                        <ul>
+                            <li>Saat berlari, otot bekerja keras dan membutuhkan O₂ lebih banyak</li>
+                            <li>Jantung memompa lebih cepat untuk mengedarkan darah yang kaya O₂ ke otot</li>
+                            <li>Denyut jantung meningkat = volume darah yang dipompa per menit meningkat</li>
+                            <li>Ini memastikan kebutuhan O₂ otot terpenuhi dan CO₂ dibuang lebih cepat</li>
+                        </ul>
+
+                        <p style="margin-top: 15px;"><strong>Mengapa pilihan lain salah?</strong></p>
+                        <ul>
+                            <li><strong>A.</strong> Menyaring darah adalah fungsi GINJAL, bukan jantung</li>
+                            <li><strong>B.</strong> Mengatur suhu adalah fungsi KULIT dan HIPOTALAMUS, jantung hanya membantu dengan sirkulasi</li>
+                            <li><strong>D.</strong> Memproduksi sel darah merah adalah fungsi SUMSUM TULANG, bukan jantung</li>
+                        </ul>
+
+                        <p style="margin-top: 15px;"><strong>Kesimpulan:</strong> Peningkatan denyut jantung saat aktivitas fisik adalah mekanisme tubuh untuk memenuhi kebutuhan O₂ yang meningkat pada otot yang bekerja. Ini adalah fungsi TRANSPORTASI jantung!</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <h4>📌 Contoh Soal 2</h4>
+                <div class="question">
+                    <p class="question-text">
+                        Seorang dokter menjelaskan bahwa pasiennya mengalami gangguan pada katup bikuspid yang tidak menutup sempurna. Akibatnya, sebagian darah mengalir kembali ke atrium kiri saat ventrikel kiri berkontraksi.
+                    </p>
+                    
+                    <p class="question-text">
+                        Berdasarkan kasus tersebut, fungsi normal katup bikuspid adalah...
+                    </p>
+
+                    <div class="options">
+                        <div class="option">A. Mencegah darah mengalir balik dari aorta ke ventrikel kiri</div>
+                        <div class="option correct">B. Mencegah darah mengalir balik dari ventrikel kiri ke atrium kiri</div>
+                        <div class="option">C. Mencegah darah mengalir balik dari ventrikel kanan ke atrium kanan</div>
+                        <div class="option">D. Mencegah darah mengalir balik dari arteri pulmonalis ke ventrikel kanan</div>
+                    </div>
+
+                    <div class="explanation">
+                        <h5>💡 Pembahasan:</h5>
+                        <p><strong>Jawaban yang benar: B. Mencegah darah mengalir balik dari ventrikel kiri ke atrium kiri</strong></p>
+                        
+                        <p><strong>Analisis Kasus:</strong></p>
+                        <ul>
+                            <li><strong>Katup yang bermasalah:</strong> Katup Bikuspid (Mitral)</li>
+                            <li><strong>Lokasi:</strong> Antara atrium kiri dan ventrikel kiri</li>
+                            <li><strong>Masalah:</strong> Tidak menutup sempurna</li>
+                            <li><strong>Akibat:</strong> Darah bocor kembali dari ventrikel kiri ke atrium kiri</li>
+                        </ul>
+
+                        <p style="margin-top: 15px;"><strong>Fungsi Normal Katup Bikuspid:</strong></p>
+                        <ul>
+                            <li>Terletak di antara atrium kiri dan ventrikel kiri</li>
+                            <li>Terbuka saat atrium kiri berkontraksi → darah mengalir ke ventrikel kiri</li>
+                            <li>Menutup saat ventrikel kiri berkontraksi → mencegah darah kembali ke atrium kiri</li>
+                            <li>Memastikan darah dipompa maju ke aorta, bukan bocor ke belakang</li>
+                        </ul>
+
+                        <p style="margin-top: 15px;"><strong>Pembahasan Pilihan Lain:</strong></p>
+                        <ul>
+                            <li><strong>A.</strong> Ini fungsi katup SEMILUNAR AORTA (antara ventrikel kiri - aorta)</li>
+                            <li><strong>C.</strong> Ini fungsi katup TRIKUSPID (antara atrium kanan - ventrikel kanan)</li>
+                            <li><strong>D.</strong> Ini fungsi katup SEMILUNAR PULMONAL (antara ventrikel kanan - arteri pulmonalis)</li>
+                        </ul>
+
+                        <p style="margin-top: 15px;"><strong>Kesimpulan:</strong> Katup bikuspid mencegah aliran balik darah dari ventrikel kiri ke atrium kiri. Jika rusak, darah bocor kembali dan jantung harus bekerja lebih keras untuk memompa darah yang cukup ke tubuh!</p>
+                    </div>
+                </div>
+            </div>
+
+            <h2>🎓 Rangkuman</h2>
+            <div class="info-box">
+                <ol>
+                    <li><strong>Jantung</strong> adalah organ berotot yang memompa darah ke seluruh tubuh.</li>
+                    
+                    <li><strong>Struktur jantung:</strong> 4 ruang (2 atrium, 2 ventrikel) dan 4 katup</li>
+                    
+                    <li><strong>Fungsi ruang jantung:</strong>
+                        <ul>
+                            <li>Atrium kanan: menerima darah kotor dari tubuh</li>
+                            <li>Ventrikel kanan: memompa darah kotor ke paru-paru</li>
+                            <li>Atrium kiri: menerima darah bersih dari paru-paru</li>
+                            <li>Ventrikel kiri: memompa darah bersih ke seluruh tubuh (dinding paling tebal)</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Fungsi katup:</strong> Mencegah aliran balik darah, memastikan darah mengalir satu arah</li>
+                    
+                    <li><strong>Sistem peredaran darah ganda:</strong>
+                        <ul>
+                            <li>Peredaran kecil: Jantung → Paru-paru → Jantung</li>
+                            <li>Peredaran besar: Jantung → Seluruh tubuh → Jantung</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Denyut jantung normal dewasa:</strong> 60-100 kali/menit (meningkat saat aktivitas fisik)</li>
+                </ol>
+            </div>
+
+            <div class="key-points">
+                <h4>💪 Tips Mengerjakan Soal</h4>
+                <ul>
+                    <li>Pahami perbedaan fungsi setiap ruang jantung (atrium vs ventrikel, kanan vs kiri)</li>
+                    <li>Ingat posisi dan fungsi setiap katup jantung</li>
+                    <li>Pahami perbedaan peredaran darah kecil dan besar</li>
+                    <li>Ketahui bahwa ventrikel kiri memiliki dinding paling tebal (pompa ke seluruh tubuh)</li>
+                    <li>Denyut jantung meningkat saat aktivitas fisik untuk meningkatkan suplai O₂</li>
+                    <li>Baca stimulus dengan teliti untuk mengidentifikasi organ atau fungsi yang ditanyakan</li>
+                </ul>
+            </div>
+
+            <div class="danger-box">
+                <h4>⚠️ Kesalahan Umum yang Harus Dihindari</h4>
+                <ul>
+                    <li><strong>Mengira semua arteri membawa darah bersih:</strong> Arteri pulmonalis membawa darah kotor!</li>
+                    <li><strong>Tertukar fungsi atrium dan ventrikel:</strong> Atrium menerima, Ventrikel memompa</li>
+                    <li><strong>Lupa bahwa ventrikel kiri lebih tebal:</strong> Karena memompa ke seluruh tubuh (jarak jauh, tekanan tinggi)</li>
+                    <li><strong>Mengira jantung menyaring darah:</strong> Yang menyaring adalah GINJAL!</li>
+                    <li><strong>Tidak memahami fungsi katup:</strong> Katup mencegah aliran balik, bukan mengatur kecepatan aliran</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Navigation Bottom -->
+        <div class="nav-bar">
+            <div class="nav-buttons" style="width: 100%; justify-content: space-between;">
+                <a href="kisi-kisi-tkad-ipa.html" class="btn-nav btn-home">
+                    🏠 Kembali ke Menu
+                </a>
+                <a href="Lat14.html" class="btn-nav btn-practice">
+                    Lanjut ke Latihan Soal ✏️
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

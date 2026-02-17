@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Materi 15: Gerak Lurus Berubah Beraturan (GLBB)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&family=Fira+Code:wght@400;500&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #059669;
+            --secondary: #0891b2;
+            --accent: #f59e0b;
+            --dark: #0f172a;
+            --light: #f8fafc;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: linear-gradient(135deg, #0f766e 0%, #0e7490 100%);
+            color: var(--dark);
+            line-height: 1.8;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Navigation Bar */
+        .nav-bar {
+            background: white;
+            border-radius: 16px;
+            padding: 20px 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .nav-title {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn-nav {
+            padding: 12px 24px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95em;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-home {
+            background: linear-gradient(135deg, #64748b, #475569);
+            color: white;
+            box-shadow: 0 4px 12px rgba(100, 116, 139, 0.3);
+        }
+
+        .btn-home:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(100, 116, 139, 0.4);
+        }
+
+        .btn-practice {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+        }
+
+        .btn-practice:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4);
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            border-radius: 20px;
+            padding: 50px 60px;
+            margin-bottom: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+        }
+
+        .header h1 {
+            font-size: 2.8em;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        .header .meta {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.95em;
+            color: #64748b;
+        }
+
+        .meta-item .icon {
+            font-size: 1.3em;
+        }
+
+        /* Content Section */
+        .content {
+            background: white;
+            border-radius: 20px;
+            padding: 50px 60px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .content h2 {
+            font-size: 2em;
+            font-weight: 700;
+            color: var(--primary);
+            margin-top: 40px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid var(--primary);
+        }
+
+        .content h2:first-child {
+            margin-top: 0;
+        }
+
+        .content h3 {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+
+        .content h4 {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: var(--dark);
+            margin-top: 25px;
+            margin-bottom: 12px;
+        }
+
+        .content p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .content ul, .content ol {
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+
+        .content li {
+            margin-bottom: 10px;
+        }
+
+        .content strong {
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        /* Info Box */
+        .info-box {
+            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+            border-left: 5px solid var(--secondary);
+            padding: 25px 30px;
+            margin: 25px 0;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(8, 145, 178, 0.1);
+        }
+
+        .info-box h4 {
+            color: var(--secondary);
+            font-weight: 700;
+            margin-bottom: 12px;
+            font-size: 1.1em;
+        }
+
+        /* Warning Box */
+        .warning-box {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-left: 5px solid var(--accent);
+            padding: 25px 30px;
+            margin: 25px 0;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.1);
+        }
+
+        .warning-box h4 {
+            color: var(--accent);
+            font-weight: 700;
+            margin-bottom: 12px;
+            font-size: 1.1em;
+        }
+
+        /* Example Box */
+        .example-box {
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .example-box h4 {
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 1.3em;
+            margin-bottom: 20px;
+        }
+
+        /* Motion Type Box */
+        .motion-box {
+            background: white;
+            border: 3px solid #e2e8f0;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            transition: all 0.3s ease;
+        }
+
+        .motion-box:hover {
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            transform: translateY(-3px);
+        }
+
+        .motion-box.glb {
+            border-color: #3b82f6;
+            background: linear-gradient(135deg, #dbeafe 0%, #eff6ff 100%);
+        }
+
+        .motion-box.glbb {
+            border-color: #10b981;
+            background: linear-gradient(135deg, #d1fae5 0%, #ecfdf5 100%);
+        }
+
+        .motion-box.glbb-dipercepat {
+            border-color: #f59e0b;
+            background: linear-gradient(135deg, #fef3c7 0%, #fffbeb 100%);
+        }
+
+        .motion-box.glbb-diperlambat {
+            border-color: #ef4444;
+            background: linear-gradient(135deg, #fee2e2 0%, #fef2f2 100%);
+        }
+
+        .motion-title {
+            font-size: 1.3em;
+            font-weight: 700;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Formula Box */
+        .formula-box {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            border: 3px solid #22c55e;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+            text-align: center;
+        }
+
+        .formula-box h4 {
+            color: #15803d;
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .formula {
+            font-size: 1.4em;
+            font-weight: 700;
+            color: #15803d;
+            font-family: 'Fira Code', monospace;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            display: inline-block;
+            margin: 10px 0;
+        }
+
+        /* Key Points */
+        .key-points {
+            background: linear-gradient(135deg, #fae8ff 0%, #f3e8ff 100%);
+            border-left: 5px solid #a855f7;
+            padding: 25px 30px;
+            margin: 25px 0;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(168, 85, 247, 0.1);
+        }
+
+        .key-points h4 {
+            color: #7c3aed;
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .key-points ul {
+            margin-left: 20px;
+        }
+
+        .key-points li {
+            margin-bottom: 10px;
+            color: #581c87;
+        }
+
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        thead {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        th {
+            padding: 18px 15px;
+            text-align: left;
+            font-weight: 700;
+            font-size: 1em;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        /* Question */
+        .question {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            border: 2px solid #e2e8f0;
+            margin-bottom: 20px;
+        }
+
+        .question-text {
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 20px;
+            font-size: 1.05em;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option {
+            padding: 15px 20px;
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            font-size: 0.95em;
+        }
+
+        .option.correct {
+            background: #dcfce7;
+            border-color: #22c55e;
+            font-weight: 600;
+        }
+
+        .option.correct::before {
+            content: '✓ ';
+            color: #16a34a;
+            font-weight: 700;
+        }
+
+        .explanation {
+            background: #f0f9ff;
+            border-left: 4px solid #0284c7;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 8px;
+        }
+
+        .explanation h5 {
+            color: #0369a1;
+            font-weight: 700;
+            margin-bottom: 12px;
+            font-size: 1.1em;
+        }
+
+        /* Calculation Box */
+        .calculation-box {
+            background: #fef3c7;
+            border: 2px solid #fbbf24;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            font-family: 'Fira Code', monospace;
+        }
+
+        .calculation-step {
+            margin: 10px 0;
+            padding: 8px;
+            background: white;
+            border-radius: 6px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 15px;
+            }
+
+            .header, .content {
+                padding: 30px 25px;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .content h2 {
+                font-size: 1.6em;
+            }
+
+            table {
+                font-size: 0.9em;
+            }
+
+            th, td {
+                padding: 12px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation Top -->
+        <div class="nav-bar">
+            <div class="nav-title">📚 Materi Pembelajaran IPA</div>
+            <div class="nav-buttons">
+                <a href="kisi-kisi-tkad-ipa.html" class="btn-nav btn-home">🏠 Menu Utama</a>
+                <a href="Lat15.html" class="btn-nav btn-practice">✏️ Latihan Soal</a>
+            </div>
+        </div>
+
+        <!-- Header -->
+        <div class="header">
+            <h1>🚗 Gerak Lurus Berubah Beraturan (GLBB)</h1>
+            <div class="meta">
+                <div class="meta-item">
+                    <span class="icon">📖</span>
+                    <span>Materi 15</span>
+                </div>
+                <div class="meta-item">
+                    <span class="icon">🎯</span>
+                    <span>Kelas 8</span>
+                </div>
+                <div class="meta-item">
+                    <span class="icon">⏱️</span>
+                    <span>60 menit</span>
+                </div>
+                <div class="meta-item">
+                    <span class="icon">📊</span>
+                    <span>Level Kognitif: L3</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <h2>🎯 Tujuan Pembelajaran</h2>
+            <p>Setelah mempelajari materi ini, peserta didik diharapkan dapat:</p>
+            <ol>
+                <li>Memahami konsep gerak lurus berubah beraturan (GLBB)</li>
+                <li>Membedakan GLBB dipercepat dan GLBB diperlambat</li>
+                <li>Menganalisis data hubungan waktu dan kecepatan</li>
+                <li>Menentukan jenis gerak berdasarkan tabel atau grafik</li>
+                <li>Memahami karakteristik GLBB (percepatan konstan)</li>
+                <li>Menghitung percepatan dari data kecepatan dan waktu</li>
+            </ol>
+
+            <h2>📚 Jenis-Jenis Gerak Lurus</h2>
+            
+            <h3>1. Gerak Lurus Beraturan (GLB)</h3>
+            <div class="motion-box glb">
+                <div class="motion-title">
+                    <span>➡️</span>
+                    <span>Gerak Lurus Beraturan (GLB)</span>
+                </div>
+                <p><strong>Definisi:</strong> Gerak pada lintasan lurus dengan kecepatan tetap (konstan)</p>
+                <p><strong>Karakteristik:</strong></p>
+                <ul>
+                    <li>Kecepatan tetap (tidak berubah)</li>
+                    <li>Percepatan = 0 (tidak ada percepatan)</li>
+                    <li>Dalam waktu yang sama, jarak yang ditempuh sama</li>
+                </ul>
+                <p><strong>Contoh:</strong> Mobil melaju di jalan tol dengan kecepatan 80 km/jam yang konstan</p>
+            </div>
+
+            <h3>2. Gerak Lurus Berubah Beraturan (GLBB)</h3>
+            <div class="motion-box glbb">
+                <div class="motion-title">
+                    <span>🔄</span>
+                    <span>Gerak Lurus Berubah Beraturan (GLBB)</span>
+                </div>
+                <p><strong>Definisi:</strong> Gerak pada lintasan lurus dengan kecepatan yang berubah secara beraturan (percepatan konstan)</p>
+                <p><strong>Karakteristik:</strong></p>
+                <ul>
+                    <li>Kecepatan berubah (bertambah atau berkurang)</li>
+                    <li>Percepatan tetap/konstan (tidak berubah)</li>
+                    <li>Perubahan kecepatan setiap selang waktu yang sama adalah sama</li>
+                </ul>
+            </div>
+
+            <h2>🔍 Jenis-Jenis GLBB</h2>
+
+            <div class="motion-box glbb-dipercepat">
+                <div class="motion-title">
+                    <span>⬆️</span>
+                    <span>GLBB Dipercepat</span>
+                </div>
+                <p><strong>Definisi:</strong> GLBB dengan kecepatan yang bertambah secara beraturan</p>
+                <p><strong>Ciri-ciri:</strong></p>
+                <ul>
+                    <li>Kecepatan bertambah setiap waktu</li>
+                    <li>Percepatan bernilai positif (a > 0)</li>
+                    <li>v<sub>akhir</sub> > v<sub>awal</sub></li>
+                </ul>
+                <p><strong>Contoh:</strong></p>
+                <ul>
+                    <li>Mobil yang mulai berjalan dari keadaan diam</li>
+                    <li>Bola yang menggelinding menuruni bidang miring</li>
+                    <li>Benda jatuh bebas</li>
+                </ul>
+            </div>
+
+            <div class="motion-box glbb-diperlambat">
+                <div class="motion-title">
+                    <span>⬇️</span>
+                    <span>GLBB Diperlambat</span>
+                </div>
+                <p><strong>Definisi:</strong> GLBB dengan kecepatan yang berkurang secara beraturan</p>
+                <p><strong>Ciri-ciri:</strong></p>
+                <ul>
+                    <li>Kecepatan berkurang setiap waktu</li>
+                    <li>Percepatan bernilai negatif (a < 0) atau disebut perlambatan</li>
+                    <li>v<sub>akhir</sub> < v<sub>awal</sub></li>
+                </ul>
+                <p><strong>Contoh:</strong></p>
+                <ul>
+                    <li>Mobil yang direm hingga berhenti</li>
+                    <li>Bola yang dilempar ke atas</li>
+                    <li>Sepeda yang berhenti mengayuh di jalan datar</li>
+                </ul>
+            </div>
+
+            <h2>📐 Rumus-Rumus GLBB</h2>
+            
+            <div class="formula-box">
+                <h4>Rumus Percepatan</h4>
+                <div class="formula">
+                    a = (v<sub>t</sub> - v<sub>0</sub>) / t
+                </div>
+                <p style="margin-top: 15px; color: #15803d;">
+                    <strong>Keterangan:</strong><br>
+                    a = percepatan (m/s²)<br>
+                    v<sub>t</sub> = kecepatan akhir (m/s)<br>
+                    v<sub>0</sub> = kecepatan awal (m/s)<br>
+                    t = waktu (s)
+                </p>
+            </div>
+
+            <div class="formula-box">
+                <h4>Rumus Kecepatan Akhir</h4>
+                <div class="formula">
+                    v<sub>t</sub> = v<sub>0</sub> + a × t
+                </div>
+            </div>
+
+            <div class="formula-box">
+                <h4>Rumus Jarak Tempuh</h4>
+                <div class="formula">
+                    s = v<sub>0</sub> × t + ½ × a × t²
+                </div>
+            </div>
+
+            <h2>📊 Cara Menganalisis Data GLBB</h2>
+            
+            <div class="warning-box">
+                <h4>🔑 Langkah-Langkah Analisis</h4>
+                <ol>
+                    <li><strong>Perhatikan data kecepatan dan waktu</strong>
+                        <ul>
+                            <li>Buat tabel untuk melihat pola perubahan</li>
+                        </ul>
+                    </li>
+                    <li><strong>Hitung perubahan kecepatan (Δv)</strong>
+                        <ul>
+                            <li>Δv = v<sub>akhir</sub> - v<sub>awal</sub> untuk setiap selang waktu</li>
+                        </ul>
+                    </li>
+                    <li><strong>Periksa pola perubahan kecepatan</strong>
+                        <ul>
+                            <li>Jika Δv = 0 → GLB (kecepatan tetap)</li>
+                            <li>Jika Δv sama untuk setiap selang waktu → GLBB</li>
+                            <li>Jika Δv berbeda-beda → Gerak tidak beraturan</li>
+                        </ul>
+                    </li>
+                    <li><strong>Tentukan jenis GLBB</strong>
+                        <ul>
+                            <li>Jika kecepatan bertambah → GLBB dipercepat</li>
+                            <li>Jika kecepatan berkurang → GLBB diperlambat</li>
+                        </ul>
+                    </li>
+                    <li><strong>Hitung percepatan</strong>
+                        <ul>
+                            <li>a = Δv / Δt</li>
+                        </ul>
+                    </li>
+                </ol>
+            </div>
+
+            <h2>📝 Contoh Soal dan Pembahasan</h2>
+            
+            <div class="example-box">
+                <h4>📌 Contoh Soal 1</h4>
+                <div class="question">
+                    <p class="question-text">
+                        Perhatikan tabel hubungan waktu dan kecepatan sebuah mobil berikut!
+                    </p>
+                    
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Waktu (s)</th>
+                                <th>Kecepatan (m/s)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>0</td>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>4</td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>8</td>
+                            </tr>
+                            <tr>
+                                <td>6</td>
+                                <td>12</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p class="question-text">
+                        <strong>Pertanyaan:</strong> Jenis gerak mobil tersebut adalah...
+                    </p>
+
+                    <div class="options">
+                        <div class="option">A. Gerak Lurus Beraturan (GLB)</div>
+                        <div class="option correct">B. GLBB dipercepat</div>
+                        <div class="option">C. GLBB diperlambat</div>
+                        <div class="option">D. Gerak tidak beraturan</div>
+                    </div>
+
+                    <div class="explanation">
+                        <h5>💡 Pembahasan:</h5>
+                        <p><strong>Jawaban: B. GLBB dipercepat</strong></p>
+                        
+                        <div class="calculation-box">
+                            <p><strong>Analisis perubahan kecepatan:</strong></p>
+                            <div class="calculation-step">t = 0 s → 2 s: Δv = 4 - 0 = 4 m/s</div>
+                            <div class="calculation-step">t = 2 s → 4 s: Δv = 8 - 4 = 4 m/s</div>
+                            <div class="calculation-step">t = 4 s → 6 s: Δv = 12 - 8 = 4 m/s</div>
+                            
+                            <p style="margin-top: 15px;"><strong>Kesimpulan:</strong></p>
+                            <div class="calculation-step" style="background: #dcfce7; font-weight: 700;">
+                                Perubahan kecepatan SAMA (4 m/s) setiap 2 detik<br>
+                                → GLBB dengan percepatan konstan
+                            </div>
+                            
+                            <p style="margin-top: 15px;"><strong>Hitung percepatan:</strong></p>
+                            <div class="calculation-step">a = Δv / Δt = 4 m/s / 2 s = 2 m/s²</div>
+                            <div class="calculation-step" style="background: #dcfce7; font-weight: 700;">
+                                a = +2 m/s² (positif) → GLBB DIPERCEPAT ✓
+                            </div>
+                        </div>
+
+                        <p><strong>Ciri-ciri yang terlihat:</strong></p>
+                        <ul>
+                            <li>✓ Kecepatan bertambah dari 0 → 4 → 8 → 12 m/s</li>
+                            <li>✓ Perubahan kecepatan konstan (4 m/s setiap 2 detik)</li>
+                            <li>✓ Percepatan positif (a = +2 m/s²)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <h4>📌 Contoh Soal 2</h4>
+                <div class="question">
+                    <p class="question-text">
+                        Data kecepatan sebuah kereta api yang sedang mendekati stasiun:
+                    </p>
+                    
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Waktu (s)</th>
+                                <th>Kecepatan (m/s)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>0</td>
+                                <td>30</td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td>25</td>
+                            </tr>
+                            <tr>
+                                <td>10</td>
+                                <td>20</td>
+                            </tr>
+                            <tr>
+                                <td>15</td>
+                                <td>15</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p class="question-text">
+                        <strong>Pertanyaan:</strong> Jenis gerak dan besar percepatan kereta adalah...
+                    </p>
+
+                    <div class="options">
+                        <div class="option">A. GLB, percepatan 0 m/s²</div>
+                        <div class="option">B. GLBB dipercepat, percepatan +1 m/s²</div>
+                        <div class="option correct">C. GLBB diperlambat, percepatan -1 m/s²</div>
+                        <div class="option">D. Gerak tidak beraturan</div>
+                    </div>
+
+                    <div class="explanation">
+                        <h5>💡 Pembahasan:</h5>
+                        <p><strong>Jawaban: C. GLBB diperlambat, percepatan -1 m/s²</strong></p>
+                        
+                        <div class="calculation-box">
+                            <p><strong>Analisis perubahan kecepatan:</strong></p>
+                            <div class="calculation-step">t = 0 s → 5 s: Δv = 25 - 30 = -5 m/s</div>
+                            <div class="calculation-step">t = 5 s → 10 s: Δv = 20 - 25 = -5 m/s</div>
+                            <div class="calculation-step">t = 10 s → 15 s: Δv = 15 - 20 = -5 m/s</div>
+                            
+                            <p style="margin-top: 15px;"><strong>Kesimpulan:</strong></p>
+                            <div class="calculation-step" style="background: #fee2e2; font-weight: 700;">
+                                Perubahan kecepatan SAMA (-5 m/s) setiap 5 detik<br>
+                                → GLBB dengan percepatan konstan
+                            </div>
+                            
+                            <p style="margin-top: 15px;"><strong>Hitung percepatan:</strong></p>
+                            <div class="calculation-step">a = Δv / Δt = -5 m/s / 5 s = -1 m/s²</div>
+                            <div class="calculation-step" style="background: #fee2e2; font-weight: 700;">
+                                a = -1 m/s² (negatif) → GLBB DIPERLAMBAT ✓
+                            </div>
+                        </div>
+
+                        <p><strong>Ciri-ciri yang terlihat:</strong></p>
+                        <ul>
+                            <li>✓ Kecepatan berkurang dari 30 → 25 → 20 → 15 m/s</li>
+                            <li>✓ Perubahan kecepatan konstan (-5 m/s setiap 5 detik)</li>
+                            <li>✓ Percepatan negatif atau perlambatan (a = -1 m/s²)</li>
+                            <li>✓ Kereta sedang direm untuk berhenti di stasiun</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <h2>📊 Tabel Perbandingan Jenis Gerak</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Aspek</th>
+                        <th>GLB</th>
+                        <th>GLBB Dipercepat</th>
+                        <th>GLBB Diperlambat</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Kecepatan</strong></td>
+                        <td>Tetap/konstan</td>
+                        <td>Bertambah</td>
+                        <td>Berkurang</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Percepatan</strong></td>
+                        <td>a = 0</td>
+                        <td>a > 0 (positif)</td>
+                        <td>a < 0 (negatif)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Perubahan Kecepatan</strong></td>
+                        <td>Δv = 0</td>
+                        <td>Δv > 0 (sama setiap Δt)</td>
+                        <td>Δv < 0 (sama setiap Δt)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Contoh</strong></td>
+                        <td>Mobil di jalan tol kecepatan konstan</td>
+                        <td>Mobil mulai bergerak dari diam</td>
+                        <td>Mobil yang direm</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>🎓 Rangkuman</h2>
+            <div class="info-box">
+                <ol>
+                    <li><strong>GLB:</strong> Kecepatan tetap, percepatan = 0</li>
+                    
+                    <li><strong>GLBB:</strong> Kecepatan berubah secara beraturan, percepatan konstan</li>
+                    
+                    <li><strong>GLBB Dipercepat:</strong> Kecepatan bertambah, a > 0</li>
+                    
+                    <li><strong>GLBB Diperlambat:</strong> Kecepatan berkurang, a < 0</li>
+                    
+                    <li><strong>Cara mengidentifikasi GLBB dari tabel:</strong>
+                        <ul>
+                            <li>Hitung perubahan kecepatan (Δv) setiap selang waktu</li>
+                            <li>Jika Δv sama → GLBB</li>
+                            <li>Jika Δv positif → GLBB dipercepat</li>
+                            <li>Jika Δv negatif → GLBB diperlambat</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Rumus percepatan:</strong> a = (v<sub>t</sub> - v<sub>0</sub>) / t</li>
+                </ol>
+            </div>
+
+            <div class="key-points">
+                <h4>💪 Tips Mengerjakan Soal</h4>
+                <ul>
+                    <li>Buat tabel tambahan untuk menghitung Δv setiap selang waktu</li>
+                    <li>Periksa apakah Δv sama → jika ya, maka GLBB</li>
+                    <li>Lihat tanda Δv:
+                        <ul>
+                            <li>Positif (+) → kecepatan naik → GLBB dipercepat</li>
+                            <li>Negatif (-) → kecepatan turun → GLBB diperlambat</li>
+                        </ul>
+                    </li>
+                    <li>Hitung percepatan dengan rumus a = Δv / Δt</li>
+                    <li>Perhatikan satuan (m/s untuk kecepatan, m/s² untuk percepatan)</li>
+                    <li>Grafik v-t: Jika garis lurus miring → GLBB, jika horizontal → GLB</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Navigation Bottom -->
+        <div class="nav-bar">
+            <div class="nav-buttons" style="width: 100%; justify-content: space-between;">
+                <a href="kisi-kisi-tkad-ipa.html" class="btn-nav btn-home">
+                    🏠 Kembali ke Menu
+                </a>
+                <a href="Lat15.html" class="btn-nav btn-practice">
+                    Lanjut ke Latihan Soal ✏️
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latihan Soal 14: Sistem Peredaran Darah</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #8b5cf6;
+            --secondary: #ec4899;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --dark: #1e293b;
+            --light: #f8fafc;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Navigation */
+        .nav-bar {
+            background: white;
+            border-radius: 16px;
+            padding: 15px 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .nav-title {
+            font-size: 1.2em;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn-nav {
+            padding: 10px 20px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-home {
+            background: linear-gradient(135deg, #64748b, #475569);
+            color: white;
+            box-shadow: 0 4px 12px rgba(100, 116, 139, 0.3);
+        }
+
+        .btn-home:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(100, 116, 139, 0.4);
+        }
+
+        .btn-materi {
+            background: linear-gradient(135deg, #059669, #047857);
+            color: white;
+            box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);
+        }
+
+        .btn-materi:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(5, 150, 105, 0.4);
+        }
+
+        /* Quiz Container */
+        .quiz-container {
+            background: white;
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quiz-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--warning));
+            background-size: 200% 100%;
+            animation: gradientMove 3s ease infinite;
+        }
+
+        @keyframes gradientMove {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            margin-bottom: 30px;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .question-number {
+            font-size: 1.1em;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .score-display {
+            font-size: 1em;
+            font-weight: 700;
+            color: var(--success);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background: #e2e8f0;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 20px;
+            transition: width 0.5s ease;
+        }
+
+        /* Question Slide */
+        .slide {
+            display: none;
+            animation: slideIn 0.5s ease;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .question-box {
+            background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-left: 6px solid var(--primary);
+        }
+
+        .question-text {
+            font-size: 1.1em;
+            font-weight: 600;
+            color: var(--dark);
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .question-text table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .question-text thead {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        .question-text th {
+            padding: 12px 15px;
+            text-align: left;
+            font-weight: 700;
+        }
+
+        .question-text td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .question-text tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Options */
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option {
+            background: white;
+            border: 3px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 18px 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .option:hover:not(.disabled) {
+            border-color: var(--primary);
+            background: linear-gradient(135deg, #faf5ff, #f3e8ff);
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.2);
+        }
+
+        .option.selected {
+            border-color: var(--primary);
+            background: linear-gradient(135deg, #ede9fe, #ddd6fe);
+        }
+
+        .option.correct {
+            border-color: var(--success);
+            background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+        }
+
+        .option.wrong {
+            border-color: var(--danger);
+            background: linear-gradient(135deg, #fee2e2, #fecaca);
+        }
+
+        .option.disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 14px 32px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(139, 92, 246, 0.4);
+        }
+
+        .btn-next {
+            background: linear-gradient(135deg, var(--success), #059669);
+            color: white;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+            display: none;
+        }
+
+        .btn-next.show {
+            display: inline-flex;
+        }
+
+        .btn-next:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+        }
+
+        /* Feedback */
+        .feedback {
+            margin-top: 25px;
+            padding: 25px;
+            border-radius: 12px;
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .feedback.show {
+            display: block;
+        }
+
+        .feedback.correct {
+            background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+            border-left: 6px solid var(--success);
+        }
+
+        .feedback.wrong {
+            background: linear-gradient(135deg, #fee2e2, #fecaca);
+            border-left: 6px solid var(--danger);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .feedback-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .feedback-icon {
+            font-size: 2em;
+        }
+
+        .feedback-title {
+            font-size: 1.3em;
+            font-weight: 800;
+        }
+
+        .feedback.correct .feedback-title {
+            color: var(--success);
+        }
+
+        .feedback.wrong .feedback-title {
+            color: var(--danger);
+        }
+
+        .feedback-text {
+            font-size: 1em;
+            line-height: 1.8;
+            color: var(--dark);
+        }
+
+        .feedback-text ul {
+            margin: 10px 0 10px 25px;
+        }
+
+        .feedback-text li {
+            margin: 8px 0;
+        }
+
+        /* Result Screen */
+        .result-screen {
+            display: none;
+            text-align: center;
+            padding: 40px 20px;
+            animation: scaleIn 0.5s ease;
+        }
+
+        .result-screen.show {
+            display: block;
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .result-icon {
+            font-size: 5em;
+            margin-bottom: 20px;
+            animation: bounce 1s ease infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .result-title {
+            font-size: 2.5em;
+            font-weight: 900;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .result-score {
+            font-size: 4em;
+            font-weight: 900;
+            margin: 20px 0;
+        }
+
+        .result-score.excellent {
+            color: var(--success);
+        }
+
+        .result-score.good {
+            color: var(--warning);
+        }
+
+        .result-score.poor {
+            color: var(--danger);
+        }
+
+        .result-message {
+            font-size: 1.2em;
+            color: #64748b;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .result-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-retry {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        .btn-retry:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(139, 92, 246, 0.4);
+        }
+
+        .btn-back {
+            background: linear-gradient(135deg, #64748b, #475569);
+            color: white;
+        }
+
+        .btn-back:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(100, 116, 139, 0.4);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            .quiz-container {
+                padding: 25px 20px;
+            }
+
+            .question-box {
+                padding: 20px;
+            }
+
+            .question-text {
+                font-size: 1em;
+            }
+
+            .option {
+                padding: 15px 18px;
+                font-size: 0.95em;
+            }
+
+            .btn {
+                padding: 12px 24px;
+                font-size: 0.95em;
+            }
+
+            .result-score {
+                font-size: 3em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation -->
+        <div class="nav-bar">
+            <div class="nav-title">✏️ Latihan Soal 14: Sistem Peredaran Darah</div>
+            <div class="nav-buttons">
+                <a href="kisi-kisi-tkad-ipa.html" class="btn-nav btn-home">🏠 Menu</a>
+                <a href="14.html" class="btn-nav btn-materi">📖 Materi</a>
+            </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-container">
+            <!-- Progress Bar -->
+            <div class="progress-container">
+                <div class="progress-info">
+                    <div class="question-number">
+                        Soal <span id="currentQuestion">1</span> dari 5
+                    </div>
+                    <div class="score-display">
+                        Nilai: <span id="score">0</span>/5
+                    </div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <!-- Quiz Content -->
+            <div id="quizContent">
+                <!-- Question 1 -->
+                <div class="slide active" data-question="1">
+                    <div class="question-box">
+                        <div class="question-text">
+                            <p><strong>Soal 1</strong></p>
+                            <p>Perhatikan data hasil pengukuran denyut jantung Andi berikut!</p>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Kondisi</th>
+                                        <th>Denyut Jantung (per menit)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Sebelum olahraga (istirahat)</td>
+                                        <td>70</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Setelah berlari 10 menit</td>
+                                        <td>145</td>
+                                    </tr>
+                                    <tr>
+                                        <td>5 menit setelah berhenti</td>
+                                        <td>95</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <p>Berdasarkan data tersebut, fungsi jantung yang paling tepat untuk menjelaskan peningkatan denyut jantung saat berlari adalah...</p>
+                        </div>
+                    </div>
+
+                    <div class="options">
+                        <div class="option" data-answer="A">A. Mengatur suhu tubuh agar tetap normal saat berlari</div>
+                        <div class="option" data-answer="B">B. Memompa darah lebih cepat untuk meningkatkan suplai oksigen ke otot</div>
+                        <div class="option" data-answer="C">C. Menyaring zat racun yang dihasilkan selama aktivitas fisik</div>
+                        <div class="option" data-answer="D">D. Memproduksi sel darah merah tambahan untuk menggantikan yang rusak</div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="btn btn-submit" onclick="submitAnswer(1, 'B')">Periksa Jawaban ✓</button>
+                        <button class="btn btn-next" onclick="nextQuestion()">Soal Berikutnya →</button>
+                    </div>
+
+                    <div class="feedback" id="feedback1"></div>
+                </div>
+
+                <!-- Question 2 -->
+                <div class="slide" data-question="2">
+                    <div class="question-box">
+                        <div class="question-text">
+                            <p><strong>Soal 2</strong></p>
+                            <p>Dalam pemeriksaan kesehatan, dokter mendeteksi bahwa katup trikuspid pasien tidak menutup sempurna. Akibatnya, sebagian darah mengalir balik ke ruang jantung yang seharusnya tidak terjadi.</p>
+                            <p>Fungsi normal katup trikuspid adalah...</p>
+                        </div>
+                    </div>
+
+                    <div class="options">
+                        <div class="option" data-answer="A">A. Mencegah darah mengalir balik dari ventrikel kiri ke atrium kiri</div>
+                        <div class="option" data-answer="B">B. Mencegah darah mengalir balik dari ventrikel kanan ke atrium kanan</div>
+                        <div class="option" data-answer="C">C. Mencegah darah mengalir balik dari aorta ke ventrikel kiri</div>
+                        <div class="option" data-answer="D">D. Mencegah darah mengalir balik dari arteri pulmonalis ke ventrikel kanan</div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="btn btn-submit" onclick="submitAnswer(2, 'B')">Periksa Jawaban ✓</button>
+                        <button class="btn btn-next" onclick="nextQuestion()">Soal Berikutnya →</button>
+                    </div>
+
+                    <div class="feedback" id="feedback2"></div>
+                </div>
+
+                <!-- Question 3 -->
+                <div class="slide" data-question="3">
+                    <div class="question-box">
+                        <div class="question-text">
+                            <p><strong>Soal 3</strong></p>
+                            <p>Perhatikan pernyataan berikut tentang ventrikel kiri!</p>
+                            <p style="margin-top: 15px; font-style: italic;">"Ventrikel kiri memiliki dinding otot yang lebih tebal dibandingkan ventrikel kanan. Ketebalan dinding ventrikel kiri sekitar 10-12 mm, sedangkan ventrikel kanan hanya 3-5 mm."</p>
+                            <p style="margin-top: 15px;">Alasan UTAMA ventrikel kiri memiliki dinding lebih tebal adalah...</p>
+                        </div>
+                    </div>
+
+                    <div class="options">
+                        <div class="option" data-answer="A">A. Untuk menerima darah dari paru-paru yang bertekanan tinggi</div>
+                        <div class="option" data-answer="B">B. Untuk memompa darah ke seluruh tubuh yang membutuhkan tekanan tinggi</div>
+                        <div class="option" data-answer="C">C. Untuk menyimpan lebih banyak darah bersih dari paru-paru</div>
+                        <div class="option" data-answer="D">D. Untuk menghasilkan sel darah merah yang dibutuhkan tubuh</div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="btn btn-submit" onclick="submitAnswer(3, 'B')">Periksa Jawaban ✓</button>
+                        <button class="btn btn-next" onclick="nextQuestion()">Soal Berikutnya →</button>
+                    </div>
+
+                    <div class="feedback" id="feedback3"></div>
+                </div>
+
+                <!-- Question 4 -->
+                <div class="slide" data-question="4">
+                    <div class="question-box">
+                        <div class="question-text">
+                            <p><strong>Soal 4</strong></p>
+                            <p>Seorang siswa membuat tabel perbandingan ruang jantung sebagai berikut:</p>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Ruang Jantung</th>
+                                        <th>Menerima Darah Dari</th>
+                                        <th>Memompa Darah Ke</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Atrium Kanan</td>
+                                        <td>Seluruh tubuh (vena cava)</td>
+                                        <td>Ventrikel Kanan</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Ventrikel Kanan</td>
+                                        <td>Atrium Kanan</td>
+                                        <td>Paru-paru (arteri pulmonalis)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Atrium Kiri</td>
+                                        <td>Paru-paru (vena pulmonalis)</td>
+                                        <td>Ventrikel Kiri</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Ventrikel Kiri</td>
+                                        <td>Atrium Kiri</td>
+                                        <td>Seluruh tubuh (aorta)</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <p>Berdasarkan tabel di atas, ruang jantung yang memompa darah kaya oksigen ke seluruh tubuh adalah...</p>
+                        </div>
+                    </div>
+
+                    <div class="options">
+                        <div class="option" data-answer="A">A. Atrium Kanan</div>
+                        <div class="option" data-answer="B">B. Ventrikel Kanan</div>
+                        <div class="option" data-answer="C">C. Atrium Kiri</div>
+                        <div class="option" data-answer="D">D. Ventrikel Kiri</div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="btn btn-submit" onclick="submitAnswer(4, 'D')">Periksa Jawaban ✓</button>
+                        <button class="btn btn-next" onclick="nextQuestion()">Soal Berikutnya →</button>
+                    </div>
+
+                    <div class="feedback" id="feedback4"></div>
+                </div>
+
+                <!-- Question 5 -->
+                <div class="slide" data-question="5">
+                    <div class="question-box">
+                        <div class="question-text">
+                            <p><strong>Soal 5</strong></p>
+                            <p>Hasil pemeriksaan medis menunjukkan data berikut:</p>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Pasien</th>
+                                        <th>Denyut Jantung Istirahat</th>
+                                        <th>Keterangan</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Bapak Adi (45 tahun)</td>
+                                        <td>75 kali/menit</td>
+                                        <td>Normal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Ibu Sari (40 tahun)</td>
+                                        <td>68 kali/menit</td>
+                                        <td>Normal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Bayi Dika (6 bulan)</td>
+                                        <td>120 kali/menit</td>
+                                        <td>Normal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Atlet Budi (25 tahun)</td>
+                                        <td>52 kali/menit</td>
+                                        <td>Normal untuk atlet</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <p>Berdasarkan data tersebut, pernyataan yang PALING TEPAT adalah...</p>
+                        </div>
+                    </div>
+
+                    <div class="options">
+                        <div class="option" data-answer="A">A. Bayi Dika mengalami kelainan jantung karena denyutnya terlalu cepat</div>
+                        <div class="option" data-answer="B">B. Atlet Budi mengalami gangguan jantung karena denyutnya terlalu lambat</div>
+                        <div class="option" data-answer="C">C. Denyut jantung bayi lebih cepat karena kebutuhan oksigen per berat badan lebih tinggi</div>
+                        <div class="option" data-answer="D">D. Denyut jantung atlet lebih lambat karena jantungnya tidak sehat</div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="btn btn-submit" onclick="submitAnswer(5, 'C')">Periksa Jawaban ✓</button>
+                        <button class="btn btn-next" onclick="showResult()">Lihat Hasil →</button>
+                    </div>
+
+                    <div class="feedback" id="feedback5"></div>
+                </div>
+            </div>
+
+            <!-- Result Screen -->
+            <div class="result-screen" id="resultScreen">
+                <div class="result-icon" id="resultIcon">🎉</div>
+                <div class="result-title" id="resultTitle">Selamat!</div>
+                <div class="result-score" id="resultScore">5/5</div>
+                <div class="result-message" id="resultMessage">
+                    Luar biasa! Kamu menguasai materi Sistem Peredaran Darah dengan sempurna!
+                </div>
+                <div class="result-buttons">
+                    <button class="btn btn-retry" onclick="retryQuiz()">🔄 Ulangi Latihan</button>
+                    <a href="14.html" class="btn btn-back">📖 Kembali ke Materi</a>
+                    <a href="kisi-kisi-tkad-ipa.html" class="btn btn-home">🏠 Menu Utama</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 1;
+        let score = 0;
+        let answeredQuestions = [];
+
+        const explanations = {
+            1: {
+                correct: "Sempurna! Anda memahami fungsi jantung dengan baik:<br><br><strong>Analisis Data:</strong><br>• Istirahat: 70 denyut/menit (normal)<br>• Setelah lari: 145 denyut/menit (naik 107%!)<br>• 5 menit kemudian: 95 denyut/menit (mulai turun)<br><br><strong>Mengapa B benar?</strong><br>Saat berlari, otot bekerja keras dan membutuhkan O₂ lebih banyak untuk menghasilkan energi (respirasi seluler). Jantung memompa lebih cepat (145 denyut/menit) untuk:<br>• Mengedarkan darah kaya O₂ ke otot yang bekerja<br>• Mengangkut CO₂ hasil metabolisme dari otot ke paru-paru<br>• Memastikan kebutuhan energi otot terpenuhi<br><br>Ini adalah fungsi TRANSPORTASI jantung yang vital!",
+                wrong: "Belum tepat. Mari kita analisis:<br><br><strong>Data menunjukkan:</strong> Denyut naik drastis (70→145) saat aktivitas fisik<br><br><strong>B. BENAR ✓</strong> Jantung pompa lebih cepat → suplai O₂ ke otot meningkat<br><br><strong>Mengapa pilihan lain salah?</strong><br>• <strong>A:</strong> Mengatur suhu = fungsi KULIT (keringat), bukan jantung ✗<br>• <strong>C:</strong> Menyaring racun = fungsi GINJAL, bukan jantung ✗<br>• <strong>D:</strong> Produksi sel darah merah = fungsi SUMSUM TULANG ✗<br><br>Ingat: Fungsi utama jantung adalah MEMOMPA DARAH untuk transportasi O₂ dan nutrisi!"
+            },
+            2: {
+                correct: "Excellent! Anda memahami fungsi katup jantung dengan tepat:<br><br><strong>Analisis Kasus:</strong><br>• Katup bermasalah: <strong>Trikuspid</strong><br>• Lokasi: Antara atrium kanan dan ventrikel kanan<br>• Jumlah daun katup: 3 (tri = tiga)<br>• Masalah: Tidak menutup sempurna → darah bocor balik<br><br><strong>Fungsi Normal Katup Trikuspid:</strong><br>• Membuka saat atrium kanan berkontraksi → darah mengalir ke ventrikel kanan<br>• Menutup saat ventrikel kanan berkontraksi → mencegah darah bocor kembali ke atrium kanan<br>• Memastikan darah mengalir satu arah: atrium kanan → ventrikel kanan → arteri pulmonalis<br><br>Tanpa katup yang sempurna, sebagian darah bocor balik dan jantung harus bekerja lebih keras!",
+                wrong: "Belum tepat. Mari kita perbaiki pemahaman:<br><br><strong>Katup Trikuspid:</strong><br>• Lokasi: Antara atrium KANAN dan ventrikel KANAN<br>• Fungsi: Mencegah darah balik dari ventrikel kanan ke atrium kanan ✓<br><br><strong>Katup Lainnya:</strong><br>• <strong>A:</strong> Katup BIKUSPID/MITRAL (kiri, 2 daun) ✗<br>• <strong>C:</strong> Katup SEMILUNAR AORTA ✗<br>• <strong>D:</strong> Katup SEMILUNAR PULMONAL ✗<br><br><strong>Cara Ingat:</strong><br>• TRIkuspid = 3 daun = sisi KANAN<br>• BIkuspid = 2 daun = sisi KIRI"
+            },
+            3: {
+                correct: "Perfect! Anda memahami struktur dan fungsi ventrikel kiri:<br><br><strong>Mengapa Dinding Ventrikel Kiri Lebih Tebal?</strong><br><br><strong>Fakta:</strong><br>• Ventrikel kiri: 10-12 mm (tebal)<br>• Ventrikel kanan: 3-5 mm (tipis)<br>• Perbedaan: 3x lipat!<br><br><strong>Alasan:</strong><br>• Ventrikel kiri memompa darah ke SELURUH TUBUH (dari kepala sampai kaki)<br>• Jarak sangat jauh → butuh tekanan TINGGI (120 mmHg)<br>• Tekanan tinggi = otot harus kuat → dinding tebal<br>• Ventrikel kanan hanya pompa ke paru-paru (jarak dekat) → tekanan rendah (25 mmHg) → dinding tipis<br><br>Prinsip: Semakin jauh dan semakin tinggi tekanan yang dibutuhkan, semakin tebal otot yang diperlukan!",
+                wrong: "Belum tepat. Perhatikan:<br><br><strong>B. BENAR ✓</strong> Ventrikel kiri pompa ke seluruh tubuh → butuh tekanan tinggi → dinding tebal<br><br><strong>Mengapa pilihan lain salah?</strong><br>• <strong>A:</strong> Ventrikel TIDAK menerima darah, yang menerima adalah ATRIUM ✗<br>• <strong>C:</strong> Ventrikel TIDAK menyimpan darah, fungsinya MEMOMPA ✗<br>• <strong>D:</strong> Produksi sel darah = fungsi SUMSUM TULANG, bukan jantung ✗<br><br><strong>Ingat:</strong><br>Ventrikel kiri → pompa jauh (seluruh tubuh) → tekanan tinggi → dinding TEBAL<br>Ventrikel kanan → pompa dekat (paru-paru) → tekanan rendah → dinding tipis"
+            },
+            4: {
+                correct: "Luar biasa! Anda membaca tabel dengan tepat:<br><br><strong>Analisis Tabel:</strong><br><br><strong>Ventrikel Kiri:</strong><br>• Menerima darah dari: Atrium Kiri (darah dari paru-paru = kaya O₂)<br>• Memompa darah ke: Seluruh tubuh melalui AORTA<br>• Jenis darah: BERSIH (kaya oksigen)<br><br><strong>Perjalanan Darah Bersih:</strong><br>Paru-paru → Vena Pulmonalis → Atrium Kiri → Ventrikel Kiri → Aorta → SELURUH TUBUH<br><br><strong>Mengapa pilihan lain salah?</strong><br>• Atrium Kanan & Ventrikel Kanan: Menangani darah KOTOR (kaya CO₂) dari tubuh<br>• Atrium Kiri: Hanya MENERIMA darah bersih, TIDAK memompa ke tubuh<br><br>Hanya VENTRIKEL KIRI yang memompa darah bersih ke seluruh tubuh!",
+                wrong: "Belum tepat. Perhatikan tabel dengan teliti:<br><br><strong>Yang ditanyakan:</strong> Ruang yang memompa darah kaya O₂ ke SELURUH TUBUH<br><br><strong>Analisis:</strong><br>• <strong>A. Atrium Kanan:</strong> Menerima darah KOTOR dari tubuh ✗<br>• <strong>B. Ventrikel Kanan:</strong> Pompa darah KOTOR ke paru-paru ✗<br>• <strong>C. Atrium Kiri:</strong> Menerima darah BERSIH dari paru-paru, tapi TIDAK pompa ke tubuh (hanya ke ventrikel kiri) ✗<br>• <strong>D. Ventrikel Kiri:</strong> Pompa darah BERSIH ke seluruh tubuh ✓<br><br><strong>Kunci:</strong> VENTRIKEL = pompa, KIRI = darah bersih, ke TUBUH = melalui aorta"
+            },
+            5: {
+                correct: "Sempurna! Anda memahami variasi normal denyut jantung:<br><br><strong>Analisis Data:</strong><br>• Dewasa normal: 60-100 (Pak Adi 75, Bu Sari 68) ✓<br>• Bayi: 100-160 (Bayi Dika 120) ✓ NORMAL!<br>• Atlet: 40-60 (Atlet Budi 52) ✓ NORMAL!<br><br><strong>Mengapa C benar?</strong><br><br><strong>Bayi denyut lebih cepat karena:</strong><br>• Metabolisme lebih tinggi (pertumbuhan cepat)<br>• Kebutuhan O₂ per kg berat badan lebih tinggi<br>• Jantung kecil → volume sekali pompa kecil → pompa lebih sering<br>• Luas permukaan tubuh relatif besar → kehilangan panas lebih banyak<br><br><strong>Atlet denyut lebih lambat karena:</strong><br>• Jantung lebih efisien (terlatih)<br>• Volume sekali pompa lebih besar → tidak perlu pompa sering<br>• Ini SEHAT, bukan sakit!",
+                wrong: "Belum tepat. Perhatikan data dengan cermat:<br><br><strong>Rentang Normal:</strong><br>• Dewasa: 60-100/menit<br>• Bayi: 100-160/menit<br>• Atlet terlatih: 40-60/menit<br><br><strong>Data pasien:</strong><br>• Bayi Dika 120/menit = NORMAL (dalam rentang 100-160) ✓<br>• Atlet Budi 52/menit = NORMAL untuk atlet (dalam rentang 40-60) ✓<br><br><strong>Kesalahan Umum:</strong><br>• <strong>A & B:</strong> Mengira di luar normal = sakit ✗<br>• <strong>D:</strong> Atlet lambat karena TIDAK sehat ✗ (Justru SANGAT SEHAT!)<br><br><strong>C. BENAR ✓</strong> Bayi denyut cepat karena metabolisme tinggi dan kebutuhan O₂ per kg berat badan lebih besar!"
+            }
+        };
+
+        // Handle option click
+        document.querySelectorAll('.option').forEach(option => {
+            option.addEventListener('click', function() {
+                if (!this.classList.contains('disabled')) {
+                    const parent = this.closest('.slide');
+                    parent.querySelectorAll('.option').forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+                    this.classList.add('selected');
+                }
+            });
+        });
+
+        function submitAnswer(questionNum, correctAnswer) {
+            const slide = document.querySelector(`.slide[data-question="${questionNum}"]`);
+            const options = slide.querySelectorAll('.option');
+            const selected = slide.querySelector('.option.selected');
+            const feedback = document.getElementById(`feedback${questionNum}`);
+            const submitBtn = slide.querySelector('.btn-submit');
+            const nextBtn = slide.querySelector('.btn-next');
+
+            if (!selected) {
+                alert('Pilih jawaban terlebih dahulu!');
+                return;
+            }
+
+            // Disable further selection
+            options.forEach(opt => opt.classList.add('disabled'));
+            submitBtn.style.display = 'none';
+            nextBtn.classList.add('show');
+
+            const userAnswer = selected.getAttribute('data-answer');
+            const isCorrect = userAnswer === correctAnswer;
+
+            // Mark correct/wrong
+            options.forEach(opt => {
+                if (opt.getAttribute('data-answer') === correctAnswer) {
+                    opt.classList.add('correct');
+                }
+                if (opt === selected && !isCorrect) {
+                    opt.classList.add('wrong');
+                }
+            });
+
+            // Update score
+            if (isCorrect && !answeredQuestions.includes(questionNum)) {
+                score++;
+                answeredQuestions.push(questionNum);
+                document.getElementById('score').textContent = score;
+            }
+
+            // Show feedback
+            feedback.classList.add('show');
+            feedback.classList.add(isCorrect ? 'correct' : 'wrong');
+            
+            const icon = isCorrect ? '✅' : '❌';
+            const title = isCorrect ? 'Jawaban Benar!' : 'Jawaban Salah!';
+            const explanation = isCorrect ? explanations[questionNum].correct : explanations[questionNum].wrong;
+
+            feedback.innerHTML = `
+                <div class="feedback-header">
+                    <div class="feedback-icon">${icon}</div>
+                    <div class="feedback-title">${title}</div>
+                </div>
+                <div class="feedback-text">${explanation}</div>
+            `;
+
+            // Scroll to feedback
+            setTimeout(() => {
+                feedback.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 300);
+        }
+
+        function nextQuestion() {
+            const currentSlideEl = document.querySelector('.slide.active');
+            currentSlideEl.classList.remove('active');
+
+            currentSlide++;
+            const nextSlideEl = document.querySelector(`.slide[data-question="${currentSlide}"]`);
+            if (nextSlideEl) {
+                nextSlideEl.classList.add('active');
+                document.getElementById('currentQuestion').textContent = currentSlide;
+                
+                // Update progress bar
+                const progress = (currentSlide / 5) * 100;
+                document.getElementById('progressFill').style.width = progress + '%';
+
+                // Scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        function showResult() {
+            document.getElementById('quizContent').style.display = 'none';
+            document.getElementById('resultScreen').classList.add('show');
+            document.querySelector('.progress-container').style.display = 'none';
+
+            const resultScore = document.getElementById('resultScore');
+            const resultIcon = document.getElementById('resultIcon');
+            const resultTitle = document.getElementById('resultTitle');
+            const resultMessage = document.getElementById('resultMessage');
+
+            resultScore.textContent = `${score}/5`;
+
+            if (score === 5) {
+                resultScore.classList.add('excellent');
+                resultIcon.textContent = '🏆';
+                resultTitle.textContent = 'Sempurna!';
+                resultMessage.textContent = 'Luar biasa! Kamu menguasai materi Sistem Peredaran Darah dengan sempurna!';
+            } else if (score >= 3) {
+                resultScore.classList.add('good');
+                resultIcon.textContent = '👍';
+                resultTitle.textContent = 'Bagus!';
+                resultMessage.textContent = 'Kerja yang baik! Terus tingkatkan pemahamanmu dengan belajar lebih banyak.';
+            } else {
+                resultScore.classList.add('poor');
+                resultIcon.textContent = '📚';
+                resultTitle.textContent = 'Tetap Semangat!';
+                resultMessage.textContent = 'Jangan menyerah! Pelajari materi lagi dan coba ulangi latihannya.';
+            }
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function retryQuiz() {
+            // Reset variables
+            currentSlide = 1;
+            score = 0;
+            answeredQuestions = [];
+
+            // Reset UI
+            document.getElementById('score').textContent = '0';
+            document.getElementById('currentQuestion').textContent = '1';
+            document.getElementById('progressFill').style.width = '0%';
+
+            // Reset all slides
+            document.querySelectorAll('.slide').forEach((slide, index) => {
+                slide.classList.remove('active');
+                if (index === 0) slide.classList.add('active');
+
+                // Reset options
+                slide.querySelectorAll('.option').forEach(opt => {
+                    opt.classList.remove('selected', 'correct', 'wrong', 'disabled');
+                });
+
+                // Reset buttons
+                slide.querySelector('.btn-submit').style.display = 'inline-block';
+                slide.querySelector('.btn-next').classList.remove('show');
+
+                // Reset feedback
+                const feedbackEl = slide.querySelector('.feedback');
+                feedbackEl.classList.remove('show', 'correct', 'wrong');
+                feedbackEl.innerHTML = '';
+            });
+
+            // Show quiz content
+            document.getElementById('quizContent').style.display = 'block';
+            document.getElementById('resultScreen').classList.remove('show');
+            document.querySelector('.progress-container').style.display = 'block';
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>

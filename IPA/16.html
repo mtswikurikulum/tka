@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Materi 16: Usaha dan Energi</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&family=Fira+Code:wght@400;500&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #059669;
+            --secondary: #0891b2;
+            --accent: #f59e0b;
+            --dark: #0f172a;
+            --light: #f8fafc;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: linear-gradient(135deg, #0f766e 0%, #0e7490 100%);
+            color: var(--dark);
+            line-height: 1.8;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Navigation Bar */
+        .nav-bar {
+            background: white;
+            border-radius: 16px;
+            padding: 20px 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .nav-title {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn-nav {
+            padding: 12px 24px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95em;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-home {
+            background: linear-gradient(135deg, #64748b, #475569);
+            color: white;
+            box-shadow: 0 4px 12px rgba(100, 116, 139, 0.3);
+        }
+
+        .btn-home:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(100, 116, 139, 0.4);
+        }
+
+        .btn-practice {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+        }
+
+        .btn-practice:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4);
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            border-radius: 20px;
+            padding: 50px 60px;
+            margin-bottom: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+        }
+
+        .header h1 {
+            font-size: 2.8em;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        .header .meta {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.95em;
+            color: #64748b;
+        }
+
+        .meta-item .icon {
+            font-size: 1.3em;
+        }
+
+        /* Content Section */
+        .content {
+            background: white;
+            border-radius: 20px;
+            padding: 50px 60px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .content h2 {
+            font-size: 2em;
+            font-weight: 700;
+            color: var(--primary);
+            margin-top: 40px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid var(--primary);
+        }
+
+        .content h2:first-child {
+            margin-top: 0;
+        }
+
+        .content h3 {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+
+        .content p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .content ul, .content ol {
+            margin: 15px 0 15px 30px;
+        }
+
+        .content li {
+            margin-bottom: 10px;
+        }
+
+        /* Info Box */
+        .info-box {
+            background: linear-gradient(135deg, #e0f2fe 0%, #dbeafe 100%);
+            border-left: 5px solid var(--secondary);
+            padding: 25px 30px;
+            margin: 25px 0;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(8, 145, 178, 0.1);
+        }
+
+        .info-box h4 {
+            color: var(--secondary);
+            font-size: 1.3em;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        /* Warning Box */
+        .warning-box {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-left: 5px solid var(--accent);
+            padding: 25px 30px;
+            margin: 25px 0;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.1);
+        }
+
+        .warning-box h4 {
+            color: #d97706;
+            font-size: 1.3em;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        /* Key Points Box */
+        .key-points {
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+            border-left: 5px solid var(--primary);
+            padding: 25px 30px;
+            margin: 25px 0;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(5, 150, 105, 0.1);
+        }
+
+        .key-points h4 {
+            color: var(--primary);
+            font-size: 1.3em;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        /* Formula Box */
+        .formula-box {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border: 3px solid var(--accent);
+            border-radius: 15px;
+            padding: 25px 30px;
+            margin: 25px 0;
+            text-align: center;
+        }
+
+        .formula {
+            font-size: 1.8em;
+            font-weight: 800;
+            color: var(--dark);
+            font-family: 'Fira Code', monospace;
+            margin: 15px 0;
+        }
+
+        .formula-desc {
+            font-size: 1.05em;
+            color: #64748b;
+            margin-top: 10px;
+        }
+
+        /* Example Box */
+        .example-box {
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 25px 30px;
+            margin: 25px 0;
+        }
+
+        .example-box h4 {
+            color: var(--accent);
+            font-size: 1.2em;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        /* Calculation Steps */
+        .calc-step {
+            background: white;
+            border-left: 4px solid var(--primary);
+            padding: 15px 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+        }
+
+        .calc-step strong {
+            color: var(--primary);
+        }
+
+        /* Question Box */
+        .question {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .question-text {
+            font-size: 1.05em;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option {
+            padding: 15px 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .option.correct {
+            background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+            border-color: var(--primary);
+            font-weight: 600;
+        }
+
+        /* Explanation Box */
+        .explanation {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-radius: 10px;
+            padding: 20px 25px;
+            margin-top: 20px;
+        }
+
+        .explanation h5 {
+            color: #d97706;
+            font-size: 1.15em;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .explanation p {
+            margin-bottom: 12px;
+        }
+
+        .explanation ul {
+            margin: 10px 0 10px 25px;
+        }
+
+        .explanation li {
+            margin-bottom: 8px;
+        }
+
+        /* Table Styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        thead {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 700;
+            font-size: 1.05em;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 15px;
+            }
+
+            .header, .content {
+                padding: 30px 25px;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .content h2 {
+                font-size: 1.6em;
+            }
+
+            .nav-bar {
+                flex-direction: column;
+            }
+
+            .nav-buttons {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .formula {
+                font-size: 1.4em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation Bar -->
+        <div class="nav-bar">
+            <div class="nav-title">📚 Materi IPA - Kelas 8</div>
+            <div class="nav-buttons">
+                <a href="kisi-kisi-tkad-ipa.html" class="btn-nav btn-home">🏠 Menu Utama</a>
+                <a href="Lat16.html" class="btn-nav btn-practice">✏️ Latihan Soal</a>
+            </div>
+        </div>
+
+        <!-- Header -->
+        <div class="header">
+            <h1>⚡ Usaha dan Energi</h1>
+            <div class="meta">
+                <div class="meta-item">
+                    <span class="icon">📖</span>
+                    <span>Materi 16</span>
+                </div>
+                <div class="meta-item">
+                    <span class="icon">🎯</span>
+                    <span>Kelas 8</span>
+                </div>
+                <div class="meta-item">
+                    <span class="icon">⏱️</span>
+                    <span>40 menit</span>
+                </div>
+                <div class="meta-item">
+                    <span class="icon">📊</span>
+                    <span>Level: L2 (Aplikasi)</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <h2>💪 Apa itu Usaha?</h2>
+            <p>
+                Dalam kehidupan sehari-hari, kata "usaha" sering kita dengar dengan berbagai makna. Namun dalam fisika, <strong>usaha</strong> memiliki pengertian yang sangat spesifik dan terukur.
+            </p>
+
+            <div class="info-box">
+                <h4>📌 Definisi Usaha (Work)</h4>
+                <p><strong>Usaha</strong> adalah hasil kali antara gaya yang bekerja pada suatu benda dengan perpindahan benda searah dengan gaya tersebut.</p>
+                <p style="margin-top: 10px;"><strong>Syarat terjadinya usaha:</strong></p>
+                <ul>
+                    <li>Ada <strong>gaya</strong> yang bekerja pada benda</li>
+                    <li>Ada <strong>perpindahan</strong> benda</li>
+                    <li>Gaya dan perpindahan <strong>searah</strong> (atau membentuk sudut)</li>
+                </ul>
+            </div>
+
+            <h3>📐 Rumus Usaha</h3>
+            
+            <div class="formula-box">
+                <p style="font-size: 1.2em; font-weight: 700; margin-bottom: 10px;">Rumus Dasar Usaha:</p>
+                <div class="formula">W = F × s</div>
+                <div class="formula-desc">
+                    <strong>W</strong> = Usaha (Work) dalam Joule (J)<br>
+                    <strong>F</strong> = Gaya (Force) dalam Newton (N)<br>
+                    <strong>s</strong> = Perpindahan (displacement) dalam meter (m)
+                </div>
+            </div>
+
+            <div class="info-box">
+                <h4>💡 Tahukah Kamu?</h4>
+                <p>1 Joule adalah usaha yang dilakukan oleh gaya 1 Newton untuk memindahkan benda sejauh 1 meter. Satuan ini diambil dari nama fisikawan Inggris, James Prescott Joule.</p>
+            </div>
+
+            <h3>📊 Satuan Usaha</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Satuan</th>
+                        <th>Simbol</th>
+                        <th>Konversi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Joule (SI)</strong></td>
+                        <td>J</td>
+                        <td>1 J = 1 N·m = 1 kg·m²/s²</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Kilojoule</strong></td>
+                        <td>kJ</td>
+                        <td>1 kJ = 1.000 J</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Erg (cgs)</strong></td>
+                        <td>erg</td>
+                        <td>1 J = 10.000.000 erg</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Kalori</strong></td>
+                        <td>cal</td>
+                        <td>1 cal = 4,184 J</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Kilokalori</strong></td>
+                        <td>kkal</td>
+                        <td>1 kkal = 4.184 J</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>🔄 Kapan Usaha Bernilai Positif, Negatif, atau Nol?</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Kondisi</th>
+                        <th>Nilai Usaha</th>
+                        <th>Contoh</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Gaya searah dengan perpindahan</strong></td>
+                        <td style="color: #059669; font-weight: 700;">Positif (+)</td>
+                        <td>
+                            • Mendorong meja ke depan<br>
+                            • Mengangkat beban ke atas<br>
+                            • Menarik gerobak
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Gaya berlawanan arah dengan perpindahan</strong></td>
+                        <td style="color: #ef4444; font-weight: 700;">Negatif (-)</td>
+                        <td>
+                            • Gaya gesek saat benda bergerak<br>
+                            • Mengerem kendaraan<br>
+                            • Gaya hambat udara
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Tidak ada perpindahan (s = 0)</strong></td>
+                        <td style="color: #64748b; font-weight: 700;">Nol (0)</td>
+                        <td>
+                            • Menahan beban tanpa bergerak<br>
+                            • Mendorong tembok (tidak bergerak)<br>
+                            • Membawa tas saat berjalan horizontal (gaya tegak lurus perpindahan)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Gaya tegak lurus perpindahan</strong></td>
+                        <td style="color: #64748b; font-weight: 700;">Nol (0)</td>
+                        <td>
+                            • Gaya normal saat benda bergerak horizontal<br>
+                            • Gaya gravitasi saat benda bergerak horizontal
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="warning-box">
+                <h4>⚠️ Perhatikan!</h4>
+                <p><strong>Usaha = 0 TIDAK berarti tidak ada gaya!</strong></p>
+                <p>Contoh: Ketika kamu membawa tas sambil berjalan di jalan datar, kamu memberikan gaya ke atas pada tas (menahan gravitasi), tetapi tas bergerak horizontal. Karena gaya tegak lurus dengan perpindahan, maka usaha yang dilakukan = 0 J!</p>
+            </div>
+
+            <h2>🧮 Cara Menghitung Usaha</h2>
+
+            <h3>Langkah-Langkah Menghitung Usaha:</h3>
+            <ol>
+                <li><strong>Identifikasi besaran yang diketahui:</strong> Gaya (F) dan perpindahan (s)</li>
+                <li><strong>Pastikan satuan sesuai:</strong> F dalam Newton (N), s dalam meter (m)</li>
+                <li><strong>Terapkan rumus:</strong> W = F × s</li>
+                <li><strong>Hitung hasilnya</strong> dalam Joule (J)</li>
+                <li><strong>Tentukan tanda:</strong> Positif jika searah, negatif jika berlawanan</li>
+            </ol>
+
+            <h2>📝 Contoh Soal dan Pembahasan</h2>
+
+            <div class="example-box">
+                <h4>📌 Contoh Soal 1: Usaha Positif</h4>
+                <div class="question">
+                    <p class="question-text">
+                        Seorang anak mendorong kotak dengan gaya 50 N sehingga kotak bergerak sejauh 4 meter searah dengan gaya dorong. Berapakah usaha yang dilakukan anak tersebut?
+                    </p>
+
+                    <div class="explanation">
+                        <h5>💡 Pembahasan:</h5>
+                        
+                        <p><strong>Diketahui:</strong></p>
+                        <ul>
+                            <li>Gaya dorong (F) = 50 N</li>
+                            <li>Perpindahan (s) = 4 m</li>
+                            <li>Gaya searah dengan perpindahan</li>
+                        </ul>
+
+                        <p><strong>Ditanya:</strong> Usaha (W) = ?</p>
+
+                        <p><strong>Penyelesaian:</strong></p>
+                        
+                        <div class="calc-step">
+                            <strong>Langkah 1:</strong> Gunakan rumus usaha<br>
+                            W = F × s
+                        </div>
+
+                        <div class="calc-step">
+                            <strong>Langkah 2:</strong> Substitusi nilai yang diketahui<br>
+                            W = 50 N × 4 m
+                        </div>
+
+                        <div class="calc-step">
+                            <strong>Langkah 3:</strong> Hitung hasilnya<br>
+                            W = 200 N·m<br>
+                            W = 200 J
+                        </div>
+
+                        <p style="margin-top: 20px;"><strong>Jawaban:</strong></p>
+                        <div class="formula-box">
+                            <div class="formula">W = 200 J (Positif)</div>
+                            <p style="margin-top: 10px;">Usaha bernilai positif karena gaya searah dengan perpindahan</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <h4>📌 Contoh Soal 2: Usaha dengan Berbagai Aktivitas</h4>
+                <div class="question">
+                    <p class="question-text">
+                        Perhatikan data berikut tentang beberapa aktivitas:
+                    </p>
+
+                    <table style="margin: 15px 0;">
+                        <thead>
+                            <tr>
+                                <th>Aktivitas</th>
+                                <th>Gaya (N)</th>
+                                <th>Perpindahan (m)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>A. Mendorong meja</td>
+                                <td>80</td>
+                                <td>3</td>
+                            </tr>
+                            <tr>
+                                <td>B. Mengangkat ember</td>
+                                <td>60</td>
+                                <td>2</td>
+                            </tr>
+                            <tr>
+                                <td>C. Menarik gerobak</td>
+                                <td>100</td>
+                                <td>5</td>
+                            </tr>
+                            <tr>
+                                <td>D. Memindahkan kotak</td>
+                                <td>40</td>
+                                <td>8</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p class="question-text">
+                        Aktivitas mana yang melakukan usaha paling besar?
+                    </p>
+
+                    <div class="options">
+                        <div class="option">A. Mendorong meja</div>
+                        <div class="option">B. Mengangkat ember</div>
+                        <div class="option correct">C. Menarik gerobak</div>
+                        <div class="option">D. Memindahkan kotak</div>
+                    </div>
+
+                    <div class="explanation">
+                        <h5>💡 Pembahasan:</h5>
+                        
+                        <p><strong>Hitung usaha untuk setiap aktivitas:</strong></p>
+
+                        <div class="calc-step">
+                            <strong>Aktivitas A: Mendorong meja</strong><br>
+                            W = F × s<br>
+                            W = 80 N × 3 m<br>
+                            W = 240 J
+                        </div>
+
+                        <div class="calc-step">
+                            <strong>Aktivitas B: Mengangkat ember</strong><br>
+                            W = F × s<br>
+                            W = 60 N × 2 m<br>
+                            W = 120 J
+                        </div>
+
+                        <div class="calc-step">
+                            <strong>Aktivitas C: Menarik gerobak</strong><br>
+                            W = F × s<br>
+                            W = 100 N × 5 m<br>
+                            W = 500 J ✓ <strong>(TERBESAR)</strong>
+                        </div>
+
+                        <div class="calc-step">
+                            <strong>Aktivitas D: Memindahkan kotak</strong><br>
+                            W = F × s<br>
+                            W = 40 N × 8 m<br>
+                            W = 320 J
+                        </div>
+
+                        <p style="margin-top: 20px;"><strong>Urutan usaha dari terbesar ke terkecil:</strong></p>
+                        <ol>
+                            <li><strong>C. Menarik gerobak = 500 J</strong> (JAWABAN)</li>
+                            <li>D. Memindahkan kotak = 320 J</li>
+                            <li>A. Mendorong meja = 240 J</li>
+                            <li>B. Mengangkat ember = 120 J</li>
+                        </ol>
+
+                        <div class="formula-box" style="margin-top: 20px;">
+                            <div class="formula">Jawaban: C (500 J)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <h4>📌 Contoh Soal 3: Usaha Nol</h4>
+                <div class="question">
+                    <p class="question-text">
+                        Seorang pekerja mendorong tembok dengan gaya 200 N selama 10 menit, tetapi tembok tidak bergerak sama sekali. Berapakah usaha yang dilakukan pekerja tersebut?
+                    </p>
+
+                    <div class="explanation">
+                        <h5>💡 Pembahasan:</h5>
+                        
+                        <p><strong>Diketahui:</strong></p>
+                        <ul>
+                            <li>Gaya dorong (F) = 200 N</li>
+                            <li>Waktu = 10 menit (tidak relevan untuk usaha!)</li>
+                            <li>Perpindahan (s) = 0 m (tembok tidak bergerak)</li>
+                        </ul>
+
+                        <p><strong>Ditanya:</strong> Usaha (W) = ?</p>
+
+                        <p><strong>Penyelesaian:</strong></p>
+                        
+                        <div class="calc-step">
+                            <strong>Gunakan rumus usaha:</strong><br>
+                            W = F × s<br>
+                            W = 200 N × 0 m<br>
+                            W = 0 J
+                        </div>
+
+                        <div class="warning-box" style="margin-top: 20px;">
+                            <h4>⚠️ Catatan Penting!</h4>
+                            <p><strong>Meskipun pekerja mengeluarkan tenaga dan merasa lelah, dalam fisika TIDAK ADA USAHA yang dilakukan!</strong></p>
+                            <p>Mengapa? Karena syarat usaha adalah ada perpindahan. Tanpa perpindahan (s = 0), maka W = 0 J.</p>
+                            <p>Energi pekerja diubah menjadi panas dalam otot, bukan usaha mekanik.</p>
+                        </div>
+
+                        <div class="formula-box" style="margin-top: 20px;">
+                            <div class="formula">W = 0 J</div>
+                            <p style="margin-top: 10px;">Usaha = nol karena tidak ada perpindahan</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h2>⚡ Energi</h2>
+            
+            <p>
+                <strong>Energi</strong> adalah kemampuan untuk melakukan usaha. Energi dan usaha memiliki satuan yang sama (Joule), karena keduanya saling berkaitan erat.
+            </p>
+
+            <div class="info-box">
+                <h4>💡 Hubungan Usaha dan Energi</h4>
+                <p><strong>Usaha mengubah energi!</strong></p>
+                <p>Ketika kamu melakukan usaha pada suatu benda, kamu mengubah energi dari satu bentuk ke bentuk lain atau memindahkan energi dari satu tempat ke tempat lain.</p>
+                <p style="margin-top: 10px;"><strong>Contoh:</strong></p>
+                <ul>
+                    <li>Mengangkat buku → Energi otot diubah menjadi energi potensial gravitasi</li>
+                    <li>Mendorong mobil → Energi otot diubah menjadi energi kinetik</li>
+                    <li>Mengerem sepeda → Energi kinetik diubah menjadi energi panas (gesekan)</li>
+                </ul>
+            </div>
+
+            <h3>📊 Jenis-Jenis Energi</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Jenis Energi</th>
+                        <th>Pengertian</th>
+                        <th>Contoh</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Energi Kinetik</strong></td>
+                        <td>Energi yang dimiliki benda karena gerakannya</td>
+                        <td>Mobil yang bergerak, bola menggelinding, peluru yang ditembakkan</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Energi Potensial</strong></td>
+                        <td>Energi yang tersimpan karena posisi atau kondisi benda</td>
+                        <td>Buku di atas meja, pegas yang diregangkan, air di bendungan</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Energi Panas (Kalor)</strong></td>
+                        <td>Energi yang berpindah karena perbedaan suhu</td>
+                        <td>Api kompor, matahari, gesekan tangan</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Energi Listrik</strong></td>
+                        <td>Energi dari aliran muatan listrik</td>
+                        <td>Baterai, listrik PLN, petir</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Energi Cahaya</strong></td>
+                        <td>Energi yang dipancarkan dalam bentuk cahaya</td>
+                        <td>Matahari, lampu, laser</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Energi Kimia</strong></td>
+                        <td>Energi yang tersimpan dalam ikatan kimia</td>
+                        <td>Makanan, bahan bakar, baterai</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Energi Bunyi</strong></td>
+                        <td>Energi dari getaran yang merambat</td>
+                        <td>Musik, suara manusia, ledakan</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Energi Nuklir</strong></td>
+                        <td>Energi dari inti atom</td>
+                        <td>Reaktor nuklir, bom atom, matahari</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>🔄 Hukum Kekekalan Energi</h3>
+            <div class="info-box">
+                <h4>⚖️ Hukum Kekekalan Energi</h4>
+                <p><strong>"Energi tidak dapat diciptakan atau dimusnahkan, tetapi dapat diubah dari satu bentuk ke bentuk lain."</strong></p>
+                <p style="margin-top: 10px;">Artinya: Total energi dalam sistem tertutup selalu tetap (konstan).</p>
+            </div>
+
+            <p><strong>Contoh penerapan hukum kekekalan energi:</strong></p>
+            <ul>
+                <li><strong>Pembangkit Listrik Tenaga Air (PLTA):</strong> Energi potensial air → Energi kinetik air → Energi listrik</li>
+                <li><strong>Pembangkit Listrik Tenaga Surya (PLTS):</strong> Energi cahaya matahari → Energi listrik</li>
+                <li><strong>Kendaraan bermotor:</strong> Energi kimia (bensin) → Energi panas → Energi kinetik</li>
+                <li><strong>Lampu pijar:</strong> Energi listrik → Energi cahaya + Energi panas</li>
+            </ul>
+
+            <h2>🌍 Penerapan Usaha dan Energi dalam Kehidupan Sehari-hari</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Aktivitas</th>
+                        <th>Gaya yang Bekerja</th>
+                        <th>Perpindahan</th>
+                        <th>Usaha</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Mendorong kereta belanja di supermarket</td>
+                        <td>Gaya dorong tangan</td>
+                        <td>Jarak yang ditempuh kereta</td>
+                        <td>Positif (searah)</td>
+                    </tr>
+                    <tr>
+                        <td>Mengangkat tas naik tangga</td>
+                        <td>Gaya angkat tangan</td>
+                        <td>Tinggi tangga</td>
+                        <td>Positif (searah)</td>
+                    </tr>
+                    <tr>
+                        <td>Menarik koper di bandara</td>
+                        <td>Gaya tarik tangan</td>
+                        <td>Jarak yang ditempuh</td>
+                        <td>Positif (searah)</td>
+                    </tr>
+                    <tr>
+                        <td>Mengerem sepeda</td>
+                        <td>Gaya gesek rem</td>
+                        <td>Jarak pengereman</td>
+                        <td>Negatif (berlawanan)</td>
+                    </tr>
+                    <tr>
+                        <td>Membawa buku sambil berjalan horizontal</td>
+                        <td>Gaya angkat (vertikal)</td>
+                        <td>Jarak horizontal</td>
+                        <td>Nol (tegak lurus)</td>
+                    </tr>
+                    <tr>
+                        <td>Menahan pintu agar tidak tertutup</td>
+                        <td>Gaya tahan tangan</td>
+                        <td>0 (tidak bergerak)</td>
+                        <td>Nol (tidak ada perpindahan)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>🎓 Rangkuman</h2>
+            <div class="info-box">
+                <ol>
+                    <li><strong>Usaha (W)</strong> adalah hasil kali gaya dengan perpindahan searah gaya: <strong>W = F × s</strong></li>
+                    
+                    <li><strong>Satuan usaha</strong> adalah Joule (J), dimana 1 J = 1 N·m</li>
+                    
+                    <li><strong>Syarat terjadinya usaha:</strong>
+                        <ul>
+                            <li>Ada gaya yang bekerja</li>
+                            <li>Ada perpindahan benda</li>
+                            <li>Gaya dan perpindahan searah (atau membentuk sudut)</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Tanda usaha:</strong>
+                        <ul>
+                            <li>Positif (+) jika gaya searah dengan perpindahan</li>
+                            <li>Negatif (-) jika gaya berlawanan dengan perpindahan</li>
+                            <li>Nol (0) jika tidak ada perpindahan atau gaya tegak lurus perpindahan</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Energi</strong> adalah kemampuan untuk melakukan usaha</li>
+                    
+                    <li><strong>Hukum Kekekalan Energi:</strong> Energi tidak dapat diciptakan atau dimusnahkan, hanya dapat diubah bentuknya</li>
+                    
+                    <li><strong>Hubungan usaha dan energi:</strong> Usaha mengubah energi dari satu bentuk ke bentuk lain</li>
+                </ol>
+            </div>
+
+            <div class="key-points">
+                <h4>💪 Tips Menghitung Usaha</h4>
+                <ul>
+                    <li><strong>Pastikan satuan benar:</strong> F dalam Newton (N), s dalam meter (m), hasil dalam Joule (J)</li>
+                    <li><strong>Perhatikan arah gaya:</strong> Searah = positif, berlawanan = negatif, tegak lurus = nol</li>
+                    <li><strong>Jika tidak ada perpindahan, usaha = 0:</strong> Meskipun ada gaya!</li>
+                    <li><strong>Rumus sederhana:</strong> W = F × s (untuk gaya searah perpindahan)</li>
+                    <li><strong>Bandingkan usaha dengan perkalian:</strong> Usaha terbesar = F × s terbesar</li>
+                    <li><strong>1 Joule sangat kecil:</strong> Usaha mengangkat apel setinggi 1 m ≈ 1 J</li>
+                </ul>
+            </div>
+
+            <div class="warning-box">
+                <h4>⚠️ Kesalahan Umum yang Harus Dihindari</h4>
+                <ul>
+                    <li><strong>Mengira waktu mempengaruhi usaha:</strong> Usaha TIDAK tergantung waktu! W = F × s, bukan F × s × t</li>
+                    <li><strong>Lupa mengecek satuan:</strong> Pastikan F dalam N, s dalam m, hasil dalam J</li>
+                    <li><strong>Salah menentukan tanda usaha:</strong> Perhatikan arah gaya dan perpindahan</li>
+                    <li><strong>Mengira usaha = 0 berarti tidak ada gaya:</strong> Usaha bisa nol meski ada gaya (jika tegak lurus atau tidak ada perpindahan)</li>
+                    <li><strong>Mengabaikan hukum kekekalan energi:</strong> Total energi selalu tetap, hanya berubah bentuk</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Navigation Bottom -->
+        <div class="nav-bar">
+            <div class="nav-buttons" style="width: 100%; justify-content: space-between;">
+                <a href="kisi-kisi-tkad-ipa.html" class="btn-nav btn-home">
+                    🏠 Kembali ke Menu
+                </a>
+                <a href="Lat16.html" class="btn-nav btn-practice">
+                    Lanjut ke Latihan Soal ✏️
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

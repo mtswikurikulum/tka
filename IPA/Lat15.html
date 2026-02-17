@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latihan Soal 15: Gerak Lurus Berubah Beraturan (GLBB)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #8b5cf6;
+            --secondary: #ec4899;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --dark: #1e293b;
+            --light: #f8fafc;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Navigation */
+        .nav-bar {
+            background: white;
+            border-radius: 16px;
+            padding: 15px 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .nav-title {
+            font-size: 1.2em;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn-nav {
+            padding: 10px 20px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-home {
+            background: linear-gradient(135deg, #64748b, #475569);
+            color: white;
+            box-shadow: 0 4px 12px rgba(100, 116, 139, 0.3);
+        }
+
+        .btn-home:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(100, 116, 139, 0.4);
+        }
+
+        .btn-materi {
+            background: linear-gradient(135deg, #059669, #047857);
+            color: white;
+            box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);
+        }
+
+        .btn-materi:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(5, 150, 105, 0.4);
+        }
+
+        /* Quiz Container */
+        .quiz-container {
+            background: white;
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quiz-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--warning));
+            background-size: 200% 100%;
+            animation: gradientMove 3s ease infinite;
+        }
+
+        @keyframes gradientMove {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            margin-bottom: 30px;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .question-number {
+            font-size: 1.1em;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .score-display {
+            font-size: 1em;
+            font-weight: 700;
+            color: var(--success);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background: #e2e8f0;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 20px;
+            transition: width 0.5s ease;
+        }
+
+        /* Question Slide */
+        .slide {
+            display: none;
+            animation: slideIn 0.5s ease;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .question-content {
+            margin-bottom: 30px;
+        }
+
+        .question-title {
+            font-size: 1.3em;
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .question-badge {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.7em;
+            font-weight: 700;
+        }
+
+        .question-text {
+            font-size: 1.05em;
+            line-height: 1.8;
+            color: var(--dark);
+            margin-bottom: 20px;
+        }
+
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        thead {
+            background: linear-gradient(135deg, #059669, #0891b2);
+            color: white;
+        }
+
+        th {
+            padding: 15px 12px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 0.95em;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #e2e8f0;
+            text-align: center;
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        /* Options */
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+        .option {
+            background: #f8fafc;
+            border: 3px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 16px 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1em;
+            font-weight: 500;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .option:hover:not(.disabled) {
+            background: #f1f5f9;
+            border-color: var(--primary);
+            transform: translateX(5px);
+        }
+
+        .option.selected {
+            background: linear-gradient(135deg, #ede9fe, #e9d5ff);
+            border-color: var(--primary);
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.2);
+        }
+
+        .option.correct {
+            background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+            border-color: var(--success);
+            color: #065f46;
+        }
+
+        .option.wrong {
+            background: linear-gradient(135deg, #fee2e2, #fecaca);
+            border-color: var(--danger);
+            color: #991b1b;
+        }
+
+        .option.disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        .option-label {
+            font-weight: 700;
+            min-width: 25px;
+        }
+
+        /* Feedback */
+        .feedback {
+            display: none;
+            margin-top: 25px;
+            padding: 25px;
+            border-radius: 15px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .feedback.show {
+            display: block;
+        }
+
+        .feedback.correct {
+            background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+            border: 2px solid var(--success);
+        }
+
+        .feedback.wrong {
+            background: linear-gradient(135deg, #fee2e2, #fecaca);
+            border: 2px solid var(--danger);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .feedback-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .feedback-icon {
+            font-size: 2.5em;
+        }
+
+        .feedback-title {
+            font-size: 1.4em;
+            font-weight: 800;
+        }
+
+        .feedback.correct .feedback-title {
+            color: #065f46;
+        }
+
+        .feedback.wrong .feedback-title {
+            color: #991b1b;
+        }
+
+        .feedback-text {
+            font-size: 1em;
+            line-height: 1.8;
+            margin-top: 10px;
+        }
+
+        .feedback.correct .feedback-text {
+            color: #064e3b;
+        }
+
+        .feedback.wrong .feedback-text {
+            color: #7f1d1d;
+        }
+
+        .calculation-box {
+            background: #fef3c7;
+            border: 2px solid #fbbf24;
+            border-radius: 12px;
+            padding: 15px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+        }
+
+        .calculation-step {
+            margin: 8px 0;
+            padding: 6px;
+            background: white;
+            border-radius: 6px;
+        }
+
+        /* Buttons */
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.05em;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(139, 92, 246, 0.4);
+        }
+
+        .btn-next {
+            background: linear-gradient(135deg, var(--success), #059669);
+            color: white;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+            display: none;
+        }
+
+        .btn-next.show {
+            display: flex;
+        }
+
+        .btn-next:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(16, 185, 129, 0.4);
+        }
+
+        /* Result Screen */
+        .result-screen {
+            display: none;
+            text-align: center;
+            animation: scaleIn 0.6s ease;
+        }
+
+        .result-screen.show {
+            display: block;
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .result-icon {
+            font-size: 6em;
+            margin-bottom: 20px;
+            animation: bounce 1s ease infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .result-title {
+            font-size: 2.5em;
+            font-weight: 800;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .result-score {
+            font-size: 4em;
+            font-weight: 900;
+            margin: 30px 0;
+        }
+
+        .result-score.excellent {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .result-score.good {
+            background: linear-gradient(135deg, var(--success), #059669);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .result-score.poor {
+            background: linear-gradient(135deg, #f87171, #ef4444);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .result-message {
+            font-size: 1.2em;
+            color: #64748b;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        .result-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-retry, .btn-home-result {
+            padding: 15px 35px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.05em;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-retry {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+        }
+
+        .btn-retry:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(139, 92, 246, 0.4);
+        }
+
+        .btn-home-result {
+            background: linear-gradient(135deg, #64748b, #475569);
+            color: white;
+            box-shadow: 0 4px 15px rgba(100, 116, 139, 0.3);
+        }
+
+        .btn-home-result:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(100, 116, 139, 0.4);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .quiz-container {
+                padding: 25px 20px;
+            }
+
+            .question-title {
+                font-size: 1.1em;
+            }
+
+            .option {
+                padding: 14px 16px;
+                font-size: 0.95em;
+            }
+
+            .result-title {
+                font-size: 2em;
+            }
+
+            .result-score {
+                font-size: 3em;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            table {
+                font-size: 0.9em;
+            }
+
+            th, td {
+                padding: 10px 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation Top -->
+        <div class="nav-bar">
+            <div class="nav-title">✏️ Latihan Soal - GLBB</div>
+            <div class="nav-buttons">
+                <a href="kisi-kisi-tkad-ipa.html" class="btn-nav btn-home">🏠 Menu</a>
+                <a href="15.html" class="btn-nav btn-materi">📖 Materi</a>
+            </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-container">
+            <!-- Progress Bar -->
+            <div class="progress-container">
+                <div class="progress-info">
+                    <div class="question-number">
+                        Soal <span id="currentQuestion">1</span> dari 5
+                    </div>
+                    <div class="score-display">
+                        Skor: <span id="score">0</span>
+                    </div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <!-- Quiz Content -->
+            <div id="quizContent">
+                <!-- Question 1 -->
+                <div class="slide active" data-question="1">
+                    <div class="question-content">
+                        <div class="question-title">
+                            <span class="question-badge">Soal 1</span>
+                            Analisis Jenis Gerak
+                        </div>
+                        <div class="question-text">
+                            Perhatikan tabel hubungan waktu dan kecepatan sebuah sepeda motor berikut!
+                        </div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Waktu (s)</th>
+                                    <th>Kecepatan (m/s)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>0</td>
+                                    <td>0</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>6</td>
+                                </tr>
+                                <tr>
+                                    <td>6</td>
+                                    <td>12</td>
+                                </tr>
+                                <tr>
+                                    <td>9</td>
+                                    <td>18</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="question-text">
+                            Berdasarkan data tersebut, jenis gerak sepeda motor adalah...
+                        </div>
+                    </div>
+
+                    <div class="options">
+                        <div class="option" data-answer="A">
+                            <span class="option-label">A.</span>
+                            <span>Gerak Lurus Beraturan (GLB)</span>
+                        </div>
+                        <div class="option" data-answer="B">
+                            <span class="option-label">B.</span>
+                            <span>GLBB dipercepat dengan percepatan 2 m/s²</span>
+                        </div>
+                        <div class="option" data-answer="C">
+                            <span class="option-label">C.</span>
+                            <span>GLBB diperlambat dengan perlambatan 2 m/s²</span>
+                        </div>
+                        <div class="option" data-answer="D">
+                            <span class="option-label">D.</span>
+                            <span>Gerak tidak beraturan</span>
+                        </div>
+                    </div>
+
+                    <div class="button-group">
+                        <button class="btn btn-submit" onclick="submitAnswer(1, 'B')">
+                            Kirim Jawaban 📤
+                        </button>
+                        <button class="btn btn-next" onclick="nextQuestion()">
+                            Soal Berikutnya ➡️
+                        </button>
+                    </div>
+
+                    <div class="feedback" id="feedback1"></div>
+                </div>
+
+                <!-- Question 2 -->
+                <div class="slide" data-question="2">
+                    <div class="question-content">
+                        <div class="question-title">
+                            <span class="question-badge">Soal 2</span>
+                            Identifikasi GLBB Diperlambat
+                        </div>
+                        <div class="question-text">
+                            Data kecepatan sebuah mobil yang sedang melakukan pengereman:
+                        </div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Waktu (s)</th>
+                                    <th>Kecepatan (m/s)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>0</td>
+                                    <td>40</td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>32</td>
+                                </tr>
+                                <tr>
+                                    <td>8</td>
+                                    <td>24</td>
+                                </tr>
+                                <tr>
+                                    <td>12</td>
+                                    <td>16</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="question-text">
+                            Karakteristik gerak mobil tersebut adalah...
+                        </div>
+                    </div>
+
+                    <div class="options">
+                        <div class="option" data-answer="A">
+                            <span class="option-label">A.</span>
+                            <span>GLBB dipercepat, kecepatan bertambah 8 m/s setiap 4 sekon</span>
+                        </div>
+                        <div class="option" data-answer="B">
+                            <span class="option-label">B.</span>
+                            <span>GLBB diperlambat, kecepatan berkurang 8 m/s setiap 4 sekon dengan perlambatan 2 m/s²</span>
+                        </div>
+                        <div class="option" data-answer="C">
+                            <span class="option-label">C.</span>
+                            <span>GLB dengan kecepatan tetap 8 m/s</span>
+                        </div>
+                        <div class="option" data-answer="D">
+                            <span class="option-label">D.</span>
+                            <span>Gerak tidak beraturan karena perubahan kecepatan tidak sama</span>
+                        </div>
+                    </div>
+
+                    <div class="button-group">
+                        <button class="btn btn-submit" onclick="submitAnswer(2, 'B')">
+                            Kirim Jawaban 📤
+                        </button>
+                        <button class="btn btn-next" onclick="nextQuestion()">
+                            Soal Berikutnya ➡️
+                        </button>
+                    </div>
+
+                    <div class="feedback" id="feedback2"></div>
+                </div>
+
+                <!-- Question 3 -->
+                <div class="slide" data-question="3">
+                    <div class="question-content">
+                        <div class="question-title">
+                            <span class="question-badge">Soal 3</span>
+                            Membedakan GLB dan GLBB
+                        </div>
+                        <div class="question-text">
+                            Perhatikan tabel data gerak sebuah benda berikut!
+                        </div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Waktu (s)</th>
+                                    <th>Kecepatan (m/s)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>0</td>
+                                    <td>15</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>15</td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>15</td>
+                                </tr>
+                                <tr>
+                                    <td>6</td>
+                                    <td>15</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="question-text">
+                            Jenis gerak dan percepatan benda tersebut adalah...
+                        </div>
+                    </div>
+
+                    <div class="options">
+                        <div class="option" data-answer="A">
+                            <span class="option-label">A.</span>
+                            <span>Gerak Lurus Beraturan (GLB) dengan percepatan 0 m/s²</span>
+                        </div>
+                        <div class="option" data-answer="B">
+                            <span class="option-label">B.</span>
+                            <span>GLBB dipercepat dengan percepatan 15 m/s²</span>
+                        </div>
+                        <div class="option" data-answer="C">
+                            <span class="option-label">C.</span>
+                            <span>GLBB diperlambat dengan perlambatan 15 m/s²</span>
+                        </div>
+                        <div class="option" data-answer="D">
+                            <span class="option-label">D.</span>
+                            <span>Gerak tidak beraturan</span>
+                        </div>
+                    </div>
+
+                    <div class="button-group">
+                        <button class="btn btn-submit" onclick="submitAnswer(3, 'A')">
+                            Kirim Jawaban 📤
+                        </button>
+                        <button class="btn btn-next" onclick="nextQuestion()">
+                            Soal Berikutnya ➡️
+                        </button>
+                    </div>
+
+                    <div class="feedback" id="feedback3"></div>
+                </div>
+
+                <!-- Question 4 -->
+                <div class="slide" data-question="4">
+                    <div class="question-content">
+                        <div class="question-title">
+                            <span class="question-badge">Soal 4</span>
+                            Menghitung Percepatan
+                        </div>
+                        <div class="question-text">
+                            Sebuah kereta api yang awalnya diam mulai bergerak dengan data sebagai berikut:
+                        </div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Waktu (s)</th>
+                                    <th>Kecepatan (m/s)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>0</td>
+                                    <td>0</td>
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td>10</td>
+                                </tr>
+                                <tr>
+                                    <td>10</td>
+                                    <td>20</td>
+                                </tr>
+                                <tr>
+                                    <td>15</td>
+                                    <td>30</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="question-text">
+                            Besar percepatan kereta api tersebut adalah...
+                        </div>
+                    </div>
+
+                    <div class="options">
+                        <div class="option" data-answer="A">
+                            <span class="option-label">A.</span>
+                            <span>1 m/s²</span>
+                        </div>
+                        <div class="option" data-answer="B">
+                            <span class="option-label">B.</span>
+                            <span>2 m/s²</span>
+                        </div>
+                        <div class="option" data-answer="C">
+                            <span class="option-label">C.</span>
+                            <span>5 m/s²</span>
+                        </div>
+                        <div class="option" data-answer="D">
+                            <span class="option-label">D.</span>
+                            <span>10 m/s²</span>
+                        </div>
+                    </div>
+
+                    <div class="button-group">
+                        <button class="btn btn-submit" onclick="submitAnswer(4, 'B')">
+                            Kirim Jawaban 📤
+                        </button>
+                        <button class="btn btn-next" onclick="nextQuestion()">
+                            Soal Berikutnya ➡️
+                        </button>
+                    </div>
+
+                    <div class="feedback" id="feedback4"></div>
+                </div>
+
+                <!-- Question 5 -->
+                <div class="slide" data-question="5">
+                    <div class="question-content">
+                        <div class="question-title">
+                            <span class="question-badge">Soal 5</span>
+                            Analisis Karakteristik GLBB
+                        </div>
+                        <div class="question-text">
+                            Perhatikan tabel data gerak sebuah bus berikut!
+                        </div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Waktu (s)</th>
+                                    <th>Kecepatan (m/s)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>0</td>
+                                    <td>25</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>19</td>
+                                </tr>
+                                <tr>
+                                    <td>6</td>
+                                    <td>13</td>
+                                </tr>
+                                <tr>
+                                    <td>9</td>
+                                    <td>7</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="question-text">
+                            Pernyataan yang benar tentang gerak bus tersebut adalah...
+                        </div>
+                    </div>
+
+                    <div class="options">
+                        <div class="option" data-answer="A">
+                            <span class="option-label">A.</span>
+                            <span>Bus melakukan GLBB dipercepat karena kecepatannya berubah setiap waktu</span>
+                        </div>
+                        <div class="option" data-answer="B">
+                            <span class="option-label">B.</span>
+                            <span>Bus melakukan GLB karena perubahan kecepatannya konstan</span>
+                        </div>
+                        <div class="option" data-answer="C">
+                            <span class="option-label">C.</span>
+                            <span>Bus melakukan GLBB diperlambat dengan kecepatan berkurang 6 m/s setiap 3 sekon dan perlambatan 2 m/s²</span>
+                        </div>
+                        <div class="option" data-answer="D">
+                            <span class="option-label">D.</span>
+                            <span>Bus mengalami gerak tidak beraturan karena kecepatannya terus berkurang</span>
+                        </div>
+                    </div>
+
+                    <div class="button-group">
+                        <button class="btn btn-submit" onclick="submitAnswer(5, 'C')">
+                            Kirim Jawaban 📤
+                        </button>
+                        <button class="btn btn-next" onclick="showResult()">
+                            Lihat Hasil 🎯
+                        </button>
+                    </div>
+
+                    <div class="feedback" id="feedback5"></div>
+                </div>
+            </div>
+
+            <!-- Result Screen -->
+            <div class="result-screen" id="resultScreen">
+                <div class="result-icon" id="resultIcon">🏆</div>
+                <div class="result-title" id="resultTitle">Sempurna!</div>
+                <div class="result-score" id="resultScore">5/5</div>
+                <div class="result-message" id="resultMessage">
+                    Luar biasa! Kamu menguasai materi GLBB dengan sempurna!
+                </div>
+                <div class="result-buttons">
+                    <button class="btn-retry" onclick="retryQuiz()">
+                        🔄 Ulangi Latihan
+                    </button>
+                    <a href="kisi-kisi-tkad-ipa.html" class="btn-home-result">
+                        🏠 Kembali ke Menu
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 1;
+        let score = 0;
+        let answeredQuestions = [];
+
+        // Explanations for each question
+        const explanations = {
+            1: {
+                correct: "Sempurna! Jawaban B benar.<br><br><div class='calculation-box'><strong>Analisis perubahan kecepatan:</strong><div class='calculation-step'>t = 0→3 s: Δv = 6 - 0 = 6 m/s</div><div class='calculation-step'>t = 3→6 s: Δv = 12 - 6 = 6 m/s</div><div class='calculation-step'>t = 6→9 s: Δv = 18 - 12 = 6 m/s</div><br><strong>Kesimpulan:</strong><div class='calculation-step' style='background: #dcfce7;'>Perubahan kecepatan SAMA (6 m/s setiap 3 detik) → GLBB</div><br><strong>Hitung percepatan:</strong><div class='calculation-step'>a = Δv / Δt = 6 m/s / 3 s = 2 m/s²</div><div class='calculation-step' style='background: #dcfce7; font-weight: 700;'>a = +2 m/s² (positif) → GLBB DIPERCEPAT ✓</div></div><strong>Karakteristik:</strong><ul><li>✓ Kecepatan bertambah: 0 → 6 → 12 → 18 m/s</li><li>✓ Perubahan kecepatan konstan: +6 m/s setiap 3 s</li><li>✓ Percepatan positif: +2 m/s²</li></ul>",
+                wrong: "Belum tepat. Mari kita analisis data:<br><br><div class='calculation-box'><strong>Langkah 1: Periksa perubahan kecepatan</strong><div class='calculation-step'>0→3 s: 6 - 0 = 6 m/s</div><div class='calculation-step'>3→6 s: 12 - 6 = 6 m/s</div><div class='calculation-step'>6→9 s: 18 - 12 = 6 m/s</div><br><strong>Langkah 2: Cek pola</strong><div class='calculation-step'>Δv SAMA (6 m/s) → GLBB ✓</div><div class='calculation-step'>Kecepatan NAIK → Dipercepat ✓</div><br><strong>Langkah 3: Hitung percepatan</strong><div class='calculation-step'>a = 6 m/s / 3 s = 2 m/s²</div></div><strong>Jawaban benar:</strong> B. GLBB dipercepat dengan percepatan 2 m/s²<br><br><strong>Mengapa bukan A?</strong> GLB kecepatannya TETAP, bukan naik seperti ini."
+            },
+            2: {
+                correct: "Excellent! Jawaban B benar.<br><br><div class='calculation-box'><strong>Analisis perubahan kecepatan:</strong><div class='calculation-step'>0→4 s: Δv = 32 - 40 = -8 m/s</div><div class='calculation-step'>4→8 s: Δv = 24 - 32 = -8 m/s</div><div class='calculation-step'>8→12 s: Δv = 16 - 24 = -8 m/s</div><br><strong>Kesimpulan:</strong><div class='calculation-step' style='background: #fee2e2;'>Perubahan kecepatan SAMA (-8 m/s setiap 4 detik) → GLBB</div><br><strong>Hitung percepatan:</strong><div class='calculation-step'>a = Δv / Δt = -8 m/s / 4 s = -2 m/s²</div><div class='calculation-step' style='background: #fee2e2; font-weight: 700;'>a = -2 m/s² (negatif/perlambatan) → GLBB DIPERLAMBAT ✓</div></div><strong>Karakteristik:</strong><ul><li>✓ Kecepatan berkurang: 40 → 32 → 24 → 16 m/s</li><li>✓ Perubahan kecepatan konstan: -8 m/s setiap 4 s</li><li>✓ Perlambatan: 2 m/s²</li><li>✓ Mobil sedang direm</li></ul>",
+                wrong: "Belum tepat. Mari kita analisis:<br><br><div class='calculation-box'><strong>Periksa perubahan kecepatan:</strong><div class='calculation-step'>0→4 s: 32 - 40 = -8 m/s (turun)</div><div class='calculation-step'>4→8 s: 24 - 32 = -8 m/s (turun)</div><div class='calculation-step'>8→12 s: 16 - 24 = -8 m/s (turun)</div><br><strong>Pola perubahan:</strong><div class='calculation-step'>Δv SAMA (-8 m/s) → GLBB ✓</div><div class='calculation-step'>Δv NEGATIF (turun) → Diperlambat ✓</div><br><strong>Percepatan:</strong><div class='calculation-step'>a = -8 / 4 = -2 m/s² (perlambatan)</div></div><strong>Jawaban benar:</strong> B. GLBB diperlambat, kecepatan berkurang 8 m/s setiap 4 sekon dengan perlambatan 2 m/s²"
+            },
+            3: {
+                correct: "Perfect! Jawaban A benar.<br><br><div class='calculation-box'><strong>Analisis kecepatan:</strong><div class='calculation-step'>t = 0 s: v = 15 m/s</div><div class='calculation-step'>t = 2 s: v = 15 m/s</div><div class='calculation-step'>t = 4 s: v = 15 m/s</div><div class='calculation-step'>t = 6 s: v = 15 m/s</div><br><strong>Perubahan kecepatan:</strong><div class='calculation-step'>Δv = 15 - 15 = 0 m/s (TIDAK BERUBAH)</div><br><strong>Kesimpulan:</strong><div class='calculation-step' style='background: #dbeafe; font-weight: 700;'>Kecepatan TETAP → Gerak Lurus Beraturan (GLB) ✓</div><br><strong>Percepatan:</strong><div class='calculation-step'>a = Δv / Δt = 0 / 2 = 0 m/s²</div></div><strong>Perbedaan GLB dan GLBB:</strong><ul><li><strong>GLB:</strong> Kecepatan tetap, a = 0</li><li><strong>GLBB:</strong> Kecepatan berubah, a ≠ 0</li></ul>",
+                wrong: "Belum tepat. Perhatikan data dengan cermat:<br><br><div class='calculation-box'><strong>Cek kecepatan setiap waktu:</strong><div class='calculation-step'>Semua kecepatan = 15 m/s (SAMA)</div><br><strong>Perubahan kecepatan:</strong><div class='calculation-step'>Δv = 0 m/s (TIDAK ADA PERUBAHAN)</div><br><strong>Jenis gerak:</strong><div class='calculation-step'>Kecepatan TETAP → GLB ✓</div><br><strong>Percepatan:</strong><div class='calculation-step'>a = 0 m/s² (tidak ada percepatan)</div></div><strong>Jawaban benar:</strong> A. Gerak Lurus Beraturan (GLB) dengan percepatan 0 m/s²<br><br><strong>Ingat:</strong> GLBB kecepatannya BERUBAH, kalau tetap berarti GLB!"
+            },
+            4: {
+                correct: "Benar sekali! Jawaban B tepat.<br><br><div class='calculation-box'><strong>Cara 1: Dari perubahan kecepatan</strong><div class='calculation-step'>Δv setiap 5 s = 10 - 0 = 10 m/s</div><div class='calculation-step'>a = Δv / Δt = 10 m/s / 5 s = 2 m/s²</div><br><strong>Cara 2: Dari titik awal-akhir</strong><div class='calculation-step'>v₀ = 0 m/s (t = 0 s)</div><div class='calculation-step'>vₜ = 30 m/s (t = 15 s)</div><div class='calculation-step'>a = (vₜ - v₀) / t</div><div class='calculation-step'>a = (30 - 0) / 15 = 30/15 = 2 m/s²</div><br><strong>Verifikasi:</strong><div class='calculation-step'>0→5 s: Δv = 10 m/s → a = 2 m/s² ✓</div><div class='calculation-step'>5→10 s: Δv = 10 m/s → a = 2 m/s² ✓</div><div class='calculation-step'>10→15 s: Δv = 10 m/s → a = 2 m/s² ✓</div></div><strong>Kesimpulan:</strong> Percepatan konstan = 2 m/s²",
+                wrong: "Belum tepat. Mari kita hitung dengan benar:<br><br><div class='calculation-box'><strong>Data yang diketahui:</strong><div class='calculation-step'>Kecepatan awal (v₀) = 0 m/s</div><div class='calculation-step'>Kecepatan akhir (vₜ) = 30 m/s</div><div class='calculation-step'>Waktu (t) = 15 s</div><br><strong>Rumus percepatan:</strong><div class='calculation-step'>a = (vₜ - v₀) / t</div><br><strong>Hitung:</strong><div class='calculation-step'>a = (30 - 0) / 15</div><div class='calculation-step'>a = 30 / 15</div><div class='calculation-step' style='background: #dcfce7; font-weight: 700;'>a = 2 m/s² ✓</div></div><strong>Jawaban benar:</strong> B. 2 m/s²"
+            },
+            5: {
+                correct: "Sempurna! Jawaban C benar.<br><br><div class='calculation-box'><strong>Analisis perubahan kecepatan:</strong><div class='calculation-step'>0→3 s: Δv = 19 - 25 = -6 m/s</div><div class='calculation-step'>3→6 s: Δv = 13 - 19 = -6 m/s</div><div class='calculation-step'>6→9 s: Δv = 7 - 13 = -6 m/s</div><br><strong>Kesimpulan jenis gerak:</strong><div class='calculation-step' style='background: #fee2e2;'>Δv SAMA (-6 m/s setiap 3 s) → GLBB ✓</div><div class='calculation-step' style='background: #fee2e2;'>Δv NEGATIF (turun) → DIPERLAMBAT ✓</div><br><strong>Hitung perlambatan:</strong><div class='calculation-step'>a = Δv / Δt = -6 m/s / 3 s = -2 m/s²</div><div class='calculation-step' style='background: #fee2e2; font-weight: 700;'>Perlambatan = 2 m/s² ✓</div></div><strong>Verifikasi pernyataan C:</strong><ul><li>✓ GLBB diperlambat → BENAR</li><li>✓ Kecepatan berkurang 6 m/s setiap 3 s → BENAR</li><li>✓ Perlambatan 2 m/s² → BENAR</li></ul>",
+                wrong: "Belum tepat. Mari kita analisis dengan teliti:<br><br><div class='calculation-box'><strong>Periksa perubahan kecepatan:</strong><div class='calculation-step'>Selang 3 s: Δv = -6 m/s (SAMA)</div><br><strong>Jenis gerak:</strong><div class='calculation-step'>Δv sama → GLBB ✓</div><div class='calculation-step'>Kecepatan turun → Diperlambat ✓</div><br><strong>Percepatan:</strong><div class='calculation-step'>a = -6/3 = -2 m/s² (perlambatan 2 m/s²)</div></div><strong>Mengapa bukan A?</strong> Kecepatan TURUN bukan naik, jadi bukan dipercepat.<br><strong>Mengapa bukan B?</strong> GLB kecepatannya TETAP, bukan berubah.<br><strong>Mengapa bukan D?</strong> Perubahan kecepatan SAMA (-6 m/s), jadi BERATURAN.<br><br><strong>Jawaban benar:</strong> C. Bus melakukan GLBB diperlambat dengan kecepatan berkurang 6 m/s setiap 3 sekon dan perlambatan 2 m/s²"
+            }
+        };
+
+        // Handle option click
+        document.querySelectorAll('.option').forEach(option => {
+            option.addEventListener('click', function() {
+                if (!this.classList.contains('disabled')) {
+                    const parent = this.closest('.slide');
+                    parent.querySelectorAll('.option').forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+                    this.classList.add('selected');
+                }
+            });
+        });
+
+        function submitAnswer(questionNum, correctAnswer) {
+            const slide = document.querySelector(`.slide[data-question="${questionNum}"]`);
+            const options = slide.querySelectorAll('.option');
+            const selected = slide.querySelector('.option.selected');
+            const feedback = document.getElementById(`feedback${questionNum}`);
+            const submitBtn = slide.querySelector('.btn-submit');
+            const nextBtn = slide.querySelector('.btn-next');
+
+            if (!selected) {
+                alert('Pilih jawaban terlebih dahulu!');
+                return;
+            }
+
+            // Disable further selection
+            options.forEach(opt => opt.classList.add('disabled'));
+            submitBtn.style.display = 'none';
+            nextBtn.classList.add('show');
+
+            const userAnswer = selected.getAttribute('data-answer');
+            const isCorrect = userAnswer === correctAnswer;
+
+            // Mark correct/wrong
+            options.forEach(opt => {
+                if (opt.getAttribute('data-answer') === correctAnswer) {
+                    opt.classList.add('correct');
+                }
+                if (opt === selected && !isCorrect) {
+                    opt.classList.add('wrong');
+                }
+            });
+
+            // Update score
+            if (isCorrect && !answeredQuestions.includes(questionNum)) {
+                score++;
+                answeredQuestions.push(questionNum);
+                document.getElementById('score').textContent = score;
+            }
+
+            // Show feedback
+            feedback.classList.add('show');
+            feedback.classList.add(isCorrect ? 'correct' : 'wrong');
+            
+            const icon = isCorrect ? '✅' : '❌';
+            const title = isCorrect ? 'Jawaban Benar!' : 'Jawaban Salah!';
+            const explanation = isCorrect ? explanations[questionNum].correct : explanations[questionNum].wrong;
+
+            feedback.innerHTML = `
+                <div class="feedback-header">
+                    <div class="feedback-icon">${icon}</div>
+                    <div class="feedback-title">${title}</div>
+                </div>
+                <div class="feedback-text">${explanation}</div>
+            `;
+
+            // Scroll to feedback
+            setTimeout(() => {
+                feedback.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 300);
+        }
+
+        function nextQuestion() {
+            const currentSlideEl = document.querySelector('.slide.active');
+            currentSlideEl.classList.remove('active');
+
+            currentSlide++;
+            const nextSlideEl = document.querySelector(`.slide[data-question="${currentSlide}"]`);
+            if (nextSlideEl) {
+                nextSlideEl.classList.add('active');
+                document.getElementById('currentQuestion').textContent = currentSlide;
+                
+                // Update progress bar
+                const progress = (currentSlide / 5) * 100;
+                document.getElementById('progressFill').style.width = progress + '%';
+
+                // Scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        function showResult() {
+            document.getElementById('quizContent').style.display = 'none';
+            document.getElementById('resultScreen').classList.add('show');
+            document.querySelector('.progress-container').style.display = 'none';
+
+            const resultScore = document.getElementById('resultScore');
+            const resultIcon = document.getElementById('resultIcon');
+            const resultTitle = document.getElementById('resultTitle');
+            const resultMessage = document.getElementById('resultMessage');
+
+            resultScore.textContent = `${score}/5`;
+
+            if (score === 5) {
+                resultScore.classList.add('excellent');
+                resultIcon.textContent = '🏆';
+                resultTitle.textContent = 'Sempurna!';
+                resultMessage.textContent = 'Luar biasa! Kamu menguasai materi GLBB dengan sempurna!';
+            } else if (score >= 3) {
+                resultScore.classList.add('good');
+                resultIcon.textContent = '👍';
+                resultTitle.textContent = 'Bagus!';
+                resultMessage.textContent = 'Kerja yang baik! Terus tingkatkan pemahamanmu dengan belajar lebih banyak.';
+            } else {
+                resultScore.classList.add('poor');
+                resultIcon.textContent = '📚';
+                resultTitle.textContent = 'Tetap Semangat!';
+                resultMessage.textContent = 'Jangan menyerah! Pelajari materi lagi dan coba ulangi latihannya.';
+            }
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function retryQuiz() {
+            // Reset variables
+            currentSlide = 1;
+            score = 0;
+            answeredQuestions = [];
+
+            // Reset UI
+            document.getElementById('score').textContent = '0';
+            document.getElementById('currentQuestion').textContent = '1';
+            document.getElementById('progressFill').style.width = '0%';
+
+            // Reset all slides
+            document.querySelectorAll('.slide').forEach((slide, index) => {
+                slide.classList.remove('active');
+                if (index === 0) slide.classList.add('active');
+
+                // Reset options
+                slide.querySelectorAll('.option').forEach(opt => {
+                    opt.classList.remove('selected', 'correct', 'wrong', 'disabled');
+                });
+
+                // Reset buttons
+                slide.querySelector('.btn-submit').style.display = 'inline-block';
+                slide.querySelector('.btn-next').classList.remove('show');
+
+                // Reset feedback
+                const feedbackEl = slide.querySelector('.feedback');
+                feedbackEl.classList.remove('show', 'correct', 'wrong');
+                feedbackEl.innerHTML = '';
+            });
+
+            // Show quiz content
+            document.getElementById('quizContent').style.display = 'block';
+            document.getElementById('resultScreen').classList.remove('show');
+            document.querySelector('.progress-container').style.display = 'block';
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>

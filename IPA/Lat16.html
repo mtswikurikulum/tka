@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latihan Soal 16: Usaha dan Energi</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #8b5cf6;
+            --secondary: #ec4899;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --dark: #1e293b;
+            --light: #f8fafc;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Navigation */
+        .nav-bar {
+            background: white;
+            border-radius: 16px;
+            padding: 15px 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .nav-title {
+            font-size: 1.2em;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn-nav {
+            padding: 10px 20px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-home {
+            background: linear-gradient(135deg, #64748b, #475569);
+            color: white;
+            box-shadow: 0 4px 12px rgba(100, 116, 139, 0.3);
+        }
+
+        .btn-home:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(100, 116, 139, 0.4);
+        }
+
+        .btn-materi {
+            background: linear-gradient(135deg, #059669, #047857);
+            color: white;
+            box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);
+        }
+
+        .btn-materi:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(5, 150, 105, 0.4);
+        }
+
+        /* Quiz Container */
+        .quiz-container {
+            background: white;
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quiz-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--warning));
+            background-size: 200% 100%;
+            animation: gradientMove 3s ease infinite;
+        }
+
+        @keyframes gradientMove {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            margin-bottom: 30px;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .question-number {
+            font-size: 1.1em;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .score-display {
+            font-size: 1em;
+            font-weight: 700;
+            color: var(--success);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background: #e2e8f0;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 20px;
+            transition: width 0.5s ease;
+        }
+
+        /* Question Slide */
+        .slide {
+            display: none;
+            animation: slideIn 0.5s ease;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .question-text {
+            font-size: 1.15em;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 25px;
+            line-height: 1.7;
+            padding: 20px;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border-radius: 12px;
+            border-left: 5px solid var(--primary);
+        }
+
+        /* Data Table in Question */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0 20px 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .data-table thead {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        .data-table th {
+            padding: 12px;
+            text-align: left;
+            font-weight: 700;
+        }
+
+        .data-table td {
+            padding: 12px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .data-table tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        .data-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Options */
+        .option {
+            padding: 18px 24px;
+            margin: 12px 0;
+            border: 3px solid #e2e8f0;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 1.05em;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .option:hover:not(.disabled) {
+            border-color: var(--primary);
+            background: linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%);
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.2);
+        }
+
+        .option.selected {
+            border-color: var(--primary);
+            background: linear-gradient(135deg, #ede9fe 0%, #ddd6fe 100%);
+        }
+
+        .option.correct {
+            border-color: var(--success);
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+        }
+
+        .option.wrong {
+            border-color: var(--danger);
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+        }
+
+        .option.disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        .option input[type="radio"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Feedback */
+        .feedback {
+            margin-top: 25px;
+            padding: 25px 30px;
+            border-radius: 15px;
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .feedback.show {
+            display: block;
+        }
+
+        .feedback.correct {
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+            border-left: 6px solid var(--success);
+        }
+
+        .feedback.wrong {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            border-left: 6px solid var(--danger);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .feedback-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .feedback-icon {
+            font-size: 2.5em;
+        }
+
+        .feedback-title {
+            font-size: 1.4em;
+            font-weight: 800;
+        }
+
+        .feedback.correct .feedback-title {
+            color: var(--success);
+        }
+
+        .feedback.wrong .feedback-title {
+            color: var(--danger);
+        }
+
+        .feedback-text {
+            font-size: 1.05em;
+            line-height: 1.7;
+            color: var(--dark);
+        }
+
+        /* Buttons */
+        .btn-container {
+            margin-top: 30px;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 15px 35px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 1.05em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(139, 92, 246, 0.4);
+        }
+
+        .btn-next {
+            background: linear-gradient(135deg, var(--success), #059669);
+            color: white;
+            display: none;
+        }
+
+        .btn-next.show {
+            display: inline-flex;
+        }
+
+        .btn-next:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+        }
+
+        /* Result Screen */
+        .result-screen {
+            display: none;
+            text-align: center;
+            padding: 40px 20px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .result-screen.show {
+            display: block;
+        }
+
+        .result-icon {
+            font-size: 6em;
+            margin-bottom: 20px;
+            animation: bounce 1s ease;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .result-score {
+            font-size: 4em;
+            font-weight: 900;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .result-score.excellent {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .result-score.good {
+            background: linear-gradient(135deg, var(--success), #059669);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .result-score.poor {
+            background: linear-gradient(135deg, var(--danger), #dc2626);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .result-title {
+            font-size: 2.5em;
+            font-weight: 800;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+
+        .result-message {
+            font-size: 1.3em;
+            color: #64748b;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        .result-actions {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-retry {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        .btn-retry:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(139, 92, 246, 0.4);
+        }
+
+        .btn-home-result {
+            background: linear-gradient(135deg, #64748b, #475569);
+            color: white;
+        }
+
+        .btn-home-result:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(100, 116, 139, 0.4);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .quiz-container {
+                padding: 25px 20px;
+            }
+
+            .question-text {
+                font-size: 1.05em;
+            }
+
+            .option {
+                font-size: 1em;
+                padding: 15px 18px;
+            }
+
+            .result-score {
+                font-size: 3em;
+            }
+
+            .result-title {
+                font-size: 2em;
+            }
+
+            .result-message {
+                font-size: 1.1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation Bar -->
+        <div class="nav-bar">
+            <div class="nav-title">✏️ Latihan Soal - Usaha dan Energi</div>
+            <div class="nav-buttons">
+                <a href="kisi-kisi-tkad-ipa.html" class="btn-nav btn-home">🏠 Menu</a>
+                <a href="16.html" class="btn-nav btn-materi">📖 Materi</a>
+            </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-container">
+            <!-- Progress Bar -->
+            <div class="progress-container">
+                <div class="progress-info">
+                    <div class="question-number">
+                        Soal <span id="currentQuestion">1</span> dari 5
+                    </div>
+                    <div class="score-display">
+                        Skor: <span id="score">0</span>/5
+                    </div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <!-- Quiz Content -->
+            <div id="quizContent">
+                <!-- Question 1 -->
+                <div class="slide active" data-question="1">
+                    <div class="question-text">
+                        <strong>Soal 1:</strong><br><br>
+                        Seorang pekerja mendorong peti dengan gaya 120 N sehingga peti bergerak sejauh 5 meter searah dengan gaya dorong. Berapakah usaha yang dilakukan pekerja tersebut?
+                    </div>
+
+                    <div class="option">
+                        <input type="radio" name="q1" value="A">
+                        <span>A. 24 J</span>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q1" value="B">
+                        <span>B. 125 J</span>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q1" value="C">
+                        <span>C. 600 J</span>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q1" value="D">
+                        <span>D. 625 J</span>
+                    </div>
+
+                    <div class="feedback" id="feedback1"></div>
+
+                    <div class="btn-container">
+                        <button class="btn btn-submit" onclick="submitAnswer(1, 'C')">
+                            Cek Jawaban 🔍
+                        </button>
+                        <button class="btn btn-next" onclick="nextQuestion()">
+                            Lanjut ➡️
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Question 2 -->
+                <div class="slide" data-question="2">
+                    <div class="question-text">
+                        <strong>Soal 2:</strong><br><br>
+                        Perhatikan data berikut tentang beberapa aktivitas:
+                    </div>
+
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Aktivitas</th>
+                                <th>Gaya (N)</th>
+                                <th>Perpindahan (m)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>A. Mendorong lemari</td>
+                                <td>150</td>
+                                <td>2</td>
+                            </tr>
+                            <tr>
+                                <td>B. Mengangkat kotak</td>
+                                <td>80</td>
+                                <td>3</td>
+                            </tr>
+                            <tr>
+                                <td>C. Menarik gerobak</td>
+                                <td>200</td>
+                                <td>4</td>
+                            </tr>
+                            <tr>
+                                <td>D. Memindahkan meja</td>
+                                <td>100</td>
+                                <td>6</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="question-text">
+                        Aktivitas mana yang melakukan usaha paling besar?
+                    </div>
+
+                    <div class="option">
+                        <input type="radio" name="q2" value="A">
+                        <span>A. Mendorong lemari (300 J)</span>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q2" value="B">
+                        <span>B. Mengangkat kotak (240 J)</span>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q2" value="C">
+                        <span>C. Menarik gerobak (800 J)</span>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q2" value="D">
+                        <span>D. Memindahkan meja (600 J)</span>
+                    </div>
+
+                    <div class="feedback" id="feedback2"></div>
+
+                    <div class="btn-container">
+                        <button class="btn btn-submit" onclick="submitAnswer(2, 'C')">
+                            Cek Jawaban 🔍
+                        </button>
+                        <button class="btn btn-next" onclick="nextQuestion()">
+                            Lanjut ➡️
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Question 3 -->
+                <div class="slide" data-question="3">
+                    <div class="question-text">
+                        <strong>Soal 3:</strong><br><br>
+                        Seorang siswa mendorong tembok dengan gaya 300 N selama 5 menit, tetapi tembok tidak bergerak sama sekali. Berapakah usaha yang dilakukan siswa tersebut?
+                    </div>
+
+                    <div class="option">
+                        <input type="radio" name="q3" value="A">
+                        <span>A. 0 J</span>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q3" value="B">
+                        <span>B. 300 J</span>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q3" value="C">
+                        <span>C. 1.500 J</span>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q3" value="D">
+                        <span>D. 90.000 J</span>
+                    </div>
+
+                    <div class="feedback" id="feedback3"></div>
+
+                    <div class="btn-container">
+                        <button class="btn btn-submit" onclick="submitAnswer(3, 'A')">
+                            Cek Jawaban 🔍
+                        </button>
+                        <button class="btn btn-next" onclick="nextQuestion()">
+                            Lanjut ➡️
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Question 4 -->
+                <div class="slide" data-question="4">
+                    <div class="question-text">
+                        <strong>Soal 4:</strong><br><br>
+                        Perhatikan tabel berikut:
+                    </div>
+
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Aktivitas</th>
+                                <th>Gaya (N)</th>
+                                <th>Perpindahan (m)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>I. Mendorong mobil mogok</td>
+                                <td>400</td>
+                                <td>10</td>
+                            </tr>
+                            <tr>
+                                <td>II. Mengangkat ember air</td>
+                                <td>50</td>
+                                <td>4</td>
+                            </tr>
+                            <tr>
+                                <td>III. Menarik koper di bandara</td>
+                                <td>80</td>
+                                <td>25</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="question-text">
+                        Urutan aktivitas dari usaha terbesar ke terkecil adalah...
+                    </div>
+
+                    <div class="option">
+                        <input type="radio" name="q4" value="A">
+                        <span>A. I - II - III</span>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q4" value="B">
+                        <span>B. I - III - II</span>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q4" value="C">
+                        <span>C. III - I - II</span>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q4" value="D">
+                        <span>D. II - III - I</span>
+                    </div>
+
+                    <div class="feedback" id="feedback4"></div>
+
+                    <div class="btn-container">
+                        <button class="btn btn-submit" onclick="submitAnswer(4, 'B')">
+                            Cek Jawaban 🔍
+                        </button>
+                        <button class="btn btn-next" onclick="nextQuestion()">
+                            Lanjut ➡️
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Question 5 -->
+                <div class="slide" data-question="5">
+                    <div class="question-text">
+                        <strong>Soal 5:</strong><br><br>
+                        Perhatikan data berikut:
+                    </div>
+
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Aktivitas</th>
+                                <th>Gaya (N)</th>
+                                <th>Perpindahan (m)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>P. Mengangkat barbel</td>
+                                <td>250</td>
+                                <td>1,5</td>
+                            </tr>
+                            <tr>
+                                <td>Q. Mendorong kereta belanja</td>
+                                <td>30</td>
+                                <td>20</td>
+                            </tr>
+                            <tr>
+                                <td>R. Menarik tas koper</td>
+                                <td>60</td>
+                                <td>15</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="question-text">
+                        Jika semua aktivitas dilakukan dengan gaya searah perpindahan, maka pernyataan yang benar adalah...
+                    </div>
+
+                    <div class="option">
+                        <input type="radio" name="q5" value="A">
+                        <span>A. Usaha P = 250 J (paling kecil)</span>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q5" value="B">
+                        <span>B. Usaha Q = 600 J (paling besar)</span>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q5" value="C">
+                        <span>C. Usaha R = 900 J (paling besar)</span>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q5" value="D">
+                        <span>D. Usaha P lebih besar dari usaha Q</span>
+                    </div>
+
+                    <div class="feedback" id="feedback5"></div>
+
+                    <div class="btn-container">
+                        <button class="btn btn-submit" onclick="submitAnswer(5, 'C')">
+                            Cek Jawaban 🔍
+                        </button>
+                        <button class="btn btn-next" onclick="showResult()">
+                            Lihat Hasil 🏆
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Result Screen -->
+            <div class="result-screen" id="resultScreen">
+                <div class="result-icon" id="resultIcon">🏆</div>
+                <div class="result-score" id="resultScore">5/5</div>
+                <div class="result-title" id="resultTitle">Sempurna!</div>
+                <div class="result-message" id="resultMessage">
+                    Luar biasa! Kamu menguasai materi Usaha dan Energi dengan sempurna!
+                </div>
+                <div class="result-actions">
+                    <button class="btn btn-retry" onclick="retryQuiz()">
+                        🔄 Ulangi Latihan
+                    </button>
+                    <a href="kisi-kisi-tkad-ipa.html" class="btn btn-home-result">
+                        🏠 Kembali ke Menu
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 1;
+        let score = 0;
+        let answeredQuestions = [];
+
+        const explanations = {
+            1: {
+                correct: "Benar sekali! 🎉<br><br><strong>C. 600 J</strong><br><br><strong>Pembahasan:</strong><br><br><strong>Diketahui:</strong><br>• Gaya (F) = 120 N<br>• Perpindahan (s) = 5 m<br>• Gaya searah dengan perpindahan<br><br><strong>Ditanya:</strong> Usaha (W) = ?<br><br><strong>Penyelesaian:</strong><br>W = F × s<br>W = 120 N × 5 m<br>W = 600 N·m<br>W = <strong>600 J</strong> ✓<br><br><strong>Kesimpulan:</strong> Usaha yang dilakukan pekerja adalah 600 Joule. Usaha bernilai positif karena gaya searah dengan perpindahan.",
+                wrong: "Belum tepat! 🤔<br><br><strong>Jawaban yang benar: C (600 J)</strong><br><br><strong>Cara menghitung:</strong><br><br>Rumus usaha: <strong>W = F × s</strong><br><br>Diketahui:<br>• F = 120 N<br>• s = 5 m<br><br>Hitung:<br>W = 120 × 5<br>W = 600 J ✓<br><br><strong>Tips:</strong><br>• Pastikan satuan: F dalam N, s dalam m<br>• Kalikan langsung jika gaya searah<br>• Hasil dalam Joule (J)<br><br><strong>Kesalahan umum:</strong><br>• A (24 J) = salah membagi<br>• B (125 J) = salah menjumlahkan<br>• D (625 J) = salah mengkuadratkan"
+            },
+            2: {
+                correct: "Sempurna! 🌟<br><br><strong>C. Menarik gerobak (800 J)</strong><br><br><strong>Pembahasan:</strong><br><br>Hitung usaha setiap aktivitas:<br><br><strong>A. Mendorong lemari</strong><br>W = 150 N × 2 m = 300 J<br><br><strong>B. Mengangkat kotak</strong><br>W = 80 N × 3 m = 240 J<br><br><strong>C. Menarik gerobak</strong><br>W = 200 N × 4 m = <strong>800 J</strong> ✓ (TERBESAR)<br><br><strong>D. Memindahkan meja</strong><br>W = 100 N × 6 m = 600 J<br><br><strong>Urutan dari terbesar:</strong><br>1. C = 800 J (JAWABAN)<br>2. D = 600 J<br>3. A = 300 J<br>4. B = 240 J<br><br><strong>Kesimpulan:</strong> Menarik gerobak melakukan usaha paling besar karena perkalian F × s nya paling besar!",
+                wrong: "Belum tepat! 💡<br><br><strong>Jawaban yang benar: C (800 J)</strong><br><br><strong>Hitung semua usaha:</strong><br><br>• A: 150 × 2 = 300 J<br>• B: 80 × 3 = 240 J<br>• C: 200 × 4 = <strong>800 J</strong> ✓<br>• D: 100 × 6 = 600 J<br><br><strong>Yang terbesar: C (800 J)</strong><br><br><strong>Tips cepat:</strong><br>Usaha terbesar = F × s terbesar<br>Bandingkan hasil perkalian!<br><br>Jangan tertipu:<br>• Gaya terbesar ≠ usaha terbesar<br>• Perpindahan terbesar ≠ usaha terbesar<br>• Yang penting: HASIL KALI F × s"
+            },
+            3: {
+                correct: "Luar biasa! 🎊<br><br><strong>A. 0 J</strong><br><br><strong>Pembahasan:</strong><br><br><strong>Diketahui:</strong><br>• Gaya (F) = 300 N<br>• Waktu = 5 menit (TIDAK RELEVAN!)<br>• Perpindahan (s) = 0 m (tembok tidak bergerak)<br><br><strong>Penyelesaian:</strong><br>W = F × s<br>W = 300 N × 0 m<br>W = <strong>0 J</strong> ✓<br><br><strong>⚠️ PENTING!</strong><br>Meskipun siswa:<br>• Mengeluarkan tenaga besar<br>• Merasa lelah<br>• Mendorong lama (5 menit)<br><br>Dalam fisika: <strong>USAHA = 0</strong><br><br>Mengapa? Karena syarat usaha:<br>1. Ada gaya ✓<br>2. Ada perpindahan ✗ (tembok tidak bergerak)<br><br>Tanpa perpindahan → Tidak ada usaha!<br><br>Energi siswa diubah menjadi panas di otot, bukan usaha mekanik.",
+                wrong: "Belum tepat! 🎯<br><br><strong>Jawaban yang benar: A (0 J)</strong><br><br><strong>Analisis:</strong><br><br>Tembok TIDAK BERGERAK!<br>Perpindahan (s) = 0 m<br><br>Rumus: W = F × s<br>W = 300 × 0<br>W = <strong>0 J</strong> ✓<br><br><strong>JANGAN TERTIPU:</strong><br>• Waktu 5 menit = tidak relevan<br>• Gaya 300 N = ada, tapi...<br>• Tidak ada perpindahan = usaha NOL!<br><br><strong>Ingat:</strong><br>Usaha = 0 jika:<br>1. Tidak ada perpindahan (s=0)<br>2. Gaya tegak lurus perpindahan<br><br>Meski ada gaya dan waktu lama, tanpa perpindahan = usaha NOL!"
+            },
+            4: {
+                correct: "Hebat! 🏆<br><br><strong>B. I - III - II</strong><br><br><strong>Pembahasan:</strong><br><br>Hitung usaha setiap aktivitas:<br><br><strong>I. Mendorong mobil mogok</strong><br>W = F × s<br>W = 400 N × 10 m<br>W = <strong>4.000 J</strong><br><br><strong>II. Mengangkat ember air</strong><br>W = F × s<br>W = 50 N × 4 m<br>W = <strong>200 J</strong><br><br><strong>III. Menarik koper di bandara</strong><br>W = F × s<br>W = 80 N × 25 m<br>W = <strong>2.000 J</strong><br><br><strong>Urutan dari TERBESAR ke TERKECIL:</strong><br>1. I = 4.000 J (terbesar)<br>2. III = 2.000 J<br>3. II = 200 J (terkecil)<br><br><strong>Jawaban: I - III - II</strong> ✓<br><br><strong>Tips:</strong> Bandingkan hasil kali F × s untuk menentukan urutan!",
+                wrong: "Belum tepat! 💪<br><br><strong>Jawaban yang benar: B (I - III - II)</strong><br><br><strong>Hitung dulu semua usaha:</strong><br><br>• I: 400 × 10 = 4.000 J<br>• II: 50 × 4 = 200 J<br>• III: 80 × 25 = 2.000 J<br><br><strong>Urutan terbesar → terkecil:</strong><br>I (4.000) → III (2.000) → II (200)<br><br>Jawaban: <strong>I - III - II</strong> ✓<br><br><strong>Kesalahan umum:</strong><br>• Mengurutkan berdasarkan gaya saja<br>• Mengurutkan berdasarkan perpindahan saja<br>• Tidak menghitung dulu W = F × s<br><br><strong>Yang benar:</strong> Hitung W dulu, baru urutkan!"
+            },
+            5: {
+                correct: "Sempurna! 🌟<br><br><strong>C. Usaha R = 900 J (paling besar)</strong><br><br><strong>Pembahasan:</strong><br><br>Hitung usaha setiap aktivitas:<br><br><strong>P. Mengangkat barbel</strong><br>W = F × s<br>W = 250 N × 1,5 m<br>W = <strong>375 J</strong><br><br><strong>Q. Mendorong kereta belanja</strong><br>W = F × s<br>W = 30 N × 20 m<br>W = <strong>600 J</strong><br><br><strong>R. Menarik tas koper</strong><br>W = F × s<br>W = 60 N × 15 m<br>W = <strong>900 J</strong> ✓ (TERBESAR)<br><br><strong>Analisis setiap pilihan:</strong><br>• A. SALAH: Usaha P = 375 J (bukan paling kecil, ada 250 J)<br>• B. SALAH: Usaha Q = 600 J (bukan paling besar)<br>• C. BENAR: Usaha R = 900 J (PALING BESAR) ✓<br>• D. SALAH: Usaha P (375 J) < Usaha Q (600 J)<br><br><strong>Urutan:</strong> R (900 J) > Q (600 J) > P (375 J)",
+                wrong: "Belum tepat! 🎯<br><br><strong>Jawaban yang benar: C</strong><br><br><strong>Hitung semua usaha:</strong><br><br>• P: 250 × 1,5 = 375 J<br>• Q: 30 × 20 = 600 J<br>• R: 60 × 15 = <strong>900 J</strong> ✓<br><br><strong>Analisis pilihan:</strong><br><br>A ✗ P = 375 J (bukan paling kecil)<br>B ✗ Q = 600 J (bukan paling besar)<br>C ✓ R = 900 J (PALING BESAR!)<br>D ✗ P (375) < Q (600), bukan lebih besar<br><br><strong>Kesimpulan:</strong><br>Usaha terbesar: R = 900 J<br><br><strong>Tips:</strong> Jangan tertipu gaya besar! Usaha = F × s, bukan hanya F!"
+            }
+        };
+
+        // Handle radio selection
+        document.querySelectorAll('.option').forEach(option => {
+            option.addEventListener('click', function() {
+                if (!this.classList.contains('disabled')) {
+                    const radio = this.querySelector('input[type="radio"]');
+                    radio.checked = true;
+                    
+                    // Remove selected class from siblings
+                    const parent = this.parentElement;
+                    parent.querySelectorAll('.option').forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+                    
+                    // Add selected class to this option
+                    this.classList.add('selected');
+                }
+            });
+        });
+
+        function submitAnswer(questionNum, correctAnswer) {
+            const slide = document.querySelector(`.slide[data-question="${questionNum}"]`);
+            const options = slide.querySelectorAll('.option');
+            const radios = slide.querySelectorAll('input[type="radio"]');
+            const feedback = document.getElementById(`feedback${questionNum}`);
+            const submitBtn = slide.querySelector('.btn-submit');
+            const nextBtn = slide.querySelector('.btn-next');
+
+            // Get selected answer
+            let selectedAnswer = null;
+            radios.forEach(radio => {
+                if (radio.checked) selectedAnswer = radio.value;
+            });
+
+            if (!selectedAnswer) {
+                alert('Pilih salah satu jawaban!');
+                return;
+            }
+
+            // Disable further selection
+            options.forEach(opt => opt.classList.add('disabled'));
+            radios.forEach(radio => radio.disabled = true);
+            submitBtn.style.display = 'none';
+            nextBtn.classList.add('show');
+
+            // Check if answer is correct
+            const isCorrect = selectedAnswer === correctAnswer;
+
+            // Mark correct/wrong options
+            options.forEach(opt => {
+                const radio = opt.querySelector('input[type="radio"]');
+                if (radio.value === correctAnswer) {
+                    opt.classList.add('correct');
+                }
+                if (radio.checked && radio.value !== correctAnswer) {
+                    opt.classList.add('wrong');
+                }
+            });
+
+            // Update score
+            if (isCorrect && !answeredQuestions.includes(questionNum)) {
+                score++;
+                answeredQuestions.push(questionNum);
+                document.getElementById('score').textContent = score;
+            }
+
+            // Show feedback
+            feedback.classList.add('show');
+            feedback.classList.add(isCorrect ? 'correct' : 'wrong');
+            
+            const icon = isCorrect ? '✅' : '❌';
+            const title = isCorrect ? 'Jawaban Benar!' : 'Jawaban Salah!';
+            const explanation = isCorrect ? explanations[questionNum].correct : explanations[questionNum].wrong;
+
+            feedback.innerHTML = `
+                <div class="feedback-header">
+                    <div class="feedback-icon">${icon}</div>
+                    <div class="feedback-title">${title}</div>
+                </div>
+                <div class="feedback-text">${explanation}</div>
+            `;
+
+            // Scroll to feedback
+            setTimeout(() => {
+                feedback.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 300);
+        }
+
+        function nextQuestion() {
+            const currentSlideEl = document.querySelector('.slide.active');
+            currentSlideEl.classList.remove('active');
+
+            currentSlide++;
+            const nextSlideEl = document.querySelector(`.slide[data-question="${currentSlide}"]`);
+            if (nextSlideEl) {
+                nextSlideEl.classList.add('active');
+                document.getElementById('currentQuestion').textContent = currentSlide;
+                
+                // Update progress bar
+                const progress = (currentSlide / 5) * 100;
+                document.getElementById('progressFill').style.width = progress + '%';
+
+                // Scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        function showResult() {
+            document.getElementById('quizContent').style.display = 'none';
+            document.getElementById('resultScreen').classList.add('show');
+            document.querySelector('.progress-container').style.display = 'none';
+
+            const resultScore = document.getElementById('resultScore');
+            const resultIcon = document.getElementById('resultIcon');
+            const resultTitle = document.getElementById('resultTitle');
+            const resultMessage = document.getElementById('resultMessage');
+
+            resultScore.textContent = `${score}/5`;
+
+            if (score === 5) {
+                resultScore.classList.add('excellent');
+                resultIcon.textContent = '🏆';
+                resultTitle.textContent = 'Sempurna!';
+                resultMessage.textContent = 'Luar biasa! Kamu menguasai materi Usaha dan Energi dengan sempurna!';
+            } else if (score >= 3) {
+                resultScore.classList.add('good');
+                resultIcon.textContent = '👍';
+                resultTitle.textContent = 'Bagus!';
+                resultMessage.textContent = 'Kerja yang baik! Terus tingkatkan pemahamanmu dengan belajar lebih banyak.';
+            } else {
+                resultScore.classList.add('poor');
+                resultIcon.textContent = '📚';
+                resultTitle.textContent = 'Tetap Semangat!';
+                resultMessage.textContent = 'Jangan menyerah! Pelajari materi lagi dan coba ulangi latihannya.';
+            }
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function retryQuiz() {
+            // Reset variables
+            currentSlide = 1;
+            score = 0;
+            answeredQuestions = [];
+
+            // Reset UI
+            document.getElementById('score').textContent = '0';
+            document.getElementById('currentQuestion').textContent = '1';
+            document.getElementById('progressFill').style.width = '0%';
+
+            // Reset all slides
+            document.querySelectorAll('.slide').forEach((slide, index) => {
+                slide.classList.remove('active');
+                if (index === 0) slide.classList.add('active');
+
+                // Reset options and radios
+                slide.querySelectorAll('.option').forEach(opt => {
+                    opt.classList.remove('selected', 'correct', 'wrong', 'disabled');
+                });
+                
+                slide.querySelectorAll('input[type="radio"]').forEach(radio => {
+                    radio.checked = false;
+                    radio.disabled = false;
+                });
+
+                // Reset buttons
+                slide.querySelector('.btn-submit').style.display = 'inline-block';
+                slide.querySelector('.btn-next').classList.remove('show');
+
+                // Reset feedback
+                const feedbackEl = slide.querySelector('.feedback');
+                feedbackEl.classList.remove('show', 'correct', 'wrong');
+                feedbackEl.innerHTML = '';
+            });
+
+            // Show quiz content
+            document.getElementById('quizContent').style.display = 'block';
+            document.getElementById('resultScreen').classList.remove('show');
+            document.querySelector('.progress-container').style.display = 'block';
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
